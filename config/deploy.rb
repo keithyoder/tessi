@@ -52,3 +52,10 @@ set :keep_releases, 5
 # Optionally, you can symlink your database.yml and/or secrets.yml file from the shared directory during deploy
 # This is useful if you don't want to use ENV variables
 # append :linked_files, 'config/database.yml', 'config/secrets.yml'
+
+namespace :deploy do
+    desc "reload the database with seed data"
+    task :seed do
+      run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=#{rails_env}"
+    end
+  end
