@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sigla: MyString
+  nome: MyString
+  ibge: 1
+
+two:
+  sigla: MyString
+  nome: MyString
+  ibge: 1
