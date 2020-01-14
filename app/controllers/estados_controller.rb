@@ -4,8 +4,7 @@ class EstadosController < ApplicationController
   # GET /estados
   # GET /estados.json
   def index
-    @estados = Estado.order(:name).page params[:page]
-    #@estados = Estado.all
+    @estados = Estado.order(:nome).page params[:page]
   end
 
   # GET /estados/1

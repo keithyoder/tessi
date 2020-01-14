@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cidades
   devise_for :users
   resources :estados
   get 'welcome/index'
