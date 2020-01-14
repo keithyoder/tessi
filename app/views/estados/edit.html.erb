@@ -2,5 +2,6 @@
 
 <%= render 'form', estado: @estado %>
 
-<%= link_to 'Show', @estado %> |
-<%= link_to 'Back', estados_path %>
+<p><%= link_to 'Excluir', @estado, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+
+<p><%= link_to 'Voltar', estados_path %></p>
