@@ -1,7 +1,7 @@
-<h1>Editing Estado</h1>
+<h1>Alterar Estado</h1>
 
 <%= render 'form', estado: @estado %>
 
-<p><%= link_to 'Excluir', @estado, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+<%= link_to '<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Excluir'.html_safe, @estado, method: :delete, class: "btn btn-danger", data: { confirm: 'Você tem certeza?' } %>
 
-<p><%= link_to 'Voltar', estados_path %></p>
+<%= link_to 'Voltar', estados_path, class: "btn btn-primary" %>

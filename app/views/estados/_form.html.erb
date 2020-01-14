@@ -11,22 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :sigla %>
-    <%= form.text_field :sigla %>
+    <%= form.text_field :sigla, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :nome %>
-    <%= form.text_field :nome %>
+    <%= form.text_field :nome, class: "form-control"%>
   </div>
 
-  <div class="field">
+  <div class="from-group">
     <%= form.label :ibge %>
-    <%= form.number_field :ibge %>
+    <%= form.number_field :ibge, class: "form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= button_tag( :class => "btn btn-primary") do %>
+      <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+    <% end %>
   </div>
 <% end %>
