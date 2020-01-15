@@ -1,19 +1,42 @@
-<p id="notice"><%= notice %></p>
+<div class="card">
+  <div class="card-header">
+    <h3><%= index_button(@cidade.estado) %>
+    <%= edit_button(edit_cidade_path(@cidade)) %> Cidade</h3>
+  </div>
+  <div class="card-body">
+    <p>
+      <strong>Nome:</strong>
+      <%= @cidade.nome %>
+    </p>
 
-<p>
-  <strong>Nome:</strong>
-  <%= @cidade.nome %>
-</p>
+    <p>
+      <strong>Estado:</strong>
+      <%= @cidade.estado.nome %>
+    </p>
 
-<p>
-  <strong>Estado:</strong>
-  <%= @cidade.estado %>
-</p>
-
-<p>
-  <strong>Ibge:</strong>
-  <%= @cidade.ibge %>
-</p>
-
-<%= link_to 'Edit', edit_cidade_path(@cidade) %> |
-<%= link_to 'Back', cidades_path %>
+    <p>
+      <strong>IBGE:</strong>
+      <%= @cidade.ibge %>
+    </p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm">
+        <h3><%= new_table_header(new_bairro_path)%> Bairros</h3>
+      </div>
+      <div class="col-sm" align=right>
+        <%= search_form_for @q, url: @cidade do |f| %>
+          <%= f.search_field :nome_cont %>
+          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= render 'bairros/table', bairros: @bairros %>
+  </div>
+</div>

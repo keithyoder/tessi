@@ -1,20 +1,42 @@
-<h1><%= index_button(estados_path) %>
-<%= edit_button(edit_estado_path(@estado)) %> Estado</h1>
-<p>
-  <strong>Sigla:</strong>
-  <%= @estado.sigla %>
-</p>
+<div class="card">
+  <div class="card-header">
+    <h3><%= index_button(estados_path) %>
+    <%= edit_button(edit_estado_path(@estado)) %> Estado</h3>
+  </div>
+  <div class="card-body">
+    <p>
+      <strong>Sigla:</strong>
+      <%= @estado.sigla %>
+    </p>
 
-<p>
-  <strong>Nome:</strong>
-  <%= @estado.nome %>
-</p>
+    <p>
+      <strong>Nome:</strong>
+      <%= @estado.nome %>
+    </p>
 
-<p>
-  <strong>Ibge:</strong>
-  <%= @estado.ibge %>
-</p>
-
-<h3 class="page-header"><%= new_table_header(new_cidade_path)%> Cidades</h3>
-<%= render 'cidades/table', cidades: @cidades %>
-
+    <p>
+      <strong>Ibge:</strong>
+      <%= @estado.ibge %>
+    </p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm">
+        <h3><%= new_table_header(new_cidade_path)%> Cidades</h3>
+      </div>
+      <div class="col-sm" align=right>
+        <%= search_form_for @q, url: @estado do |f| %>
+          <%= f.search_field :nome_cont %>
+          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= render 'cidades/table', cidades: @cidades %>
+  </div>
+</div>

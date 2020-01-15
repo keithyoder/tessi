@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-header">
+    <h3><%= index_button(@bairro.cidade) %>
+    <%= edit_button(edit_bairro_path(@bairro)) %> Bairro</h3>
+  </div>
+  <div class="card-body">
+    <p>
+      <strong>Nome:</strong>
+      <%= @bairro.nome %>
+    </p>
+
+    <p>
+      <strong>Cidade:</strong>
+      <%= @bairro.cidade.nome_uf %>
+    </p>
+
+    <p>
+      <strong>Latitude:</strong>
+      <%= @bairro.latitude %>
+    </p>
+
+    <p>
+      <strong>Longitude:</strong>
+      <%= @bairro.longitude %>
+    </p>
+  </div>
+</div>

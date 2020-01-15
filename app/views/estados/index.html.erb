@@ -1,24 +1,41 @@
-<h1 class="page-header"><%= new_table_header(new_estado_path)%> Estados</h1>
-<div class="table-responsive">
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Sigla</th>
-      <th>Nome</th>
-      <th>IBGE</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @estados.each do |estado| %>
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm">
+        <h3><%= new_table_header(new_estado_path)%> Estados</h3>
+      </div>
+      <div class="col-sm" align=right>
+        <%= search_form_for @q do |f| %>
+          <%= f.search_field :sigla_or_nome_cont %>
+          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+  <div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= estado.sigla %></td>
-        <td><%= link_to estado.nome, estado %></td>
-        <td><%= estado.ibge %></td>
+        <th>Sigla</th>
+        <th>Nome</th>
+        <th>IBGE</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= paginate @estados %>
+    </thead>
+  
+    <tbody>
+      <% @estados.each do |estado| %>
+        <tr>
+          <td><%= estado.sigla %></td>
+          <td><%= link_to estado.nome, estado %></td>
+          <td><%= estado.ibge %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @estados %>
+  </div>
+  </div>
 </div>
-<br>

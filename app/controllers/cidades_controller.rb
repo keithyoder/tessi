@@ -10,6 +10,9 @@ class CidadesController < ApplicationController
   # GET /cidades/1
   # GET /cidades/1.json
   def show
+    @cidade=Cidade.find(params[:id])
+    @q = @cidade.bairros.ransack(params[:q])
+    @bairros = @q.result(order: :nome).page params[:page]
   end
 
   # GET /cidades/new

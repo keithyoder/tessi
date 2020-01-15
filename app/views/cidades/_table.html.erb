@@ -11,7 +11,7 @@
   <tbody>
     <% local_assigns[:cidades].each do |cidade| %>
       <tr>
-        <td><%= link_to cidade.nome, edit_cidade_path(cidade) %></td>
+        <td><%= link_to cidade.nome, cidade %></td>
         <td><%= cidade.estado.nome %></td>
         <td><%= cidade.ibge %></td>
       </tr>

@@ -4,14 +4,16 @@ class EstadosController < ApplicationController
   # GET /estados
   # GET /estados.json
   def index
-    @estados = Estado.order(:nome).page params[:page]
+    @q = Estado.ransack(params[:q])
+    @estados = @q.result(order: :nome).page params[:page]
   end
 
   # GET /estados/1
   # GET /estados/1.json
   def show
     @estado=Estado.find(params[:id])
-    @cidades = @estado.cidades.order(:nome).page params[:page]
+    @q = @estado.cidades.ransack(params[:q])
+    @cidades = @q.result(order: :nome).page params[:page]
   end
 
   # GET /estados/new

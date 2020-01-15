@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_14_121335) do
+ActiveRecord::Schema.define(version: 2020_01_15_175028) do
+
+  create_table "bairros", force: :cascade do |t|
+    t.string "nome"
+    t.integer "cidade_id"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cidade_id"], name: "index_bairros_on_cidade_id"
+  end
 
   create_table "cidades", force: :cascade do |t|
     t.string "nome"
