@@ -12,7 +12,8 @@ class CidadesController < ApplicationController
   def show
     @cidade=Cidade.find(params[:id])
     @q = @cidade.bairros.ransack(params[:q])
-    @bairros = @q.result(order: :nome).page params[:page]
+    @q.sorts = "nome"
+    @bairros = @q.result.page params[:page]
   end
 
   # GET /cidades/new

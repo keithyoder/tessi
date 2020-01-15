@@ -13,7 +13,8 @@ class EstadosController < ApplicationController
   def show
     @estado=Estado.find(params[:id])
     @q = @estado.cidades.ransack(params[:q])
-    @cidades = @q.result(order: :nome).page params[:page]
+    @q.sorts = "nome"
+    @cidades = @q.result.page params[:page]
   end
 
   # GET /estados/new
