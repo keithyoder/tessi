@@ -13,7 +13,7 @@
     <% @estados.each do |estado| %>
       <tr>
         <td><%= estado.sigla %></td>
-        <td><%= link_to estado.nome, edit_estado_path(estado) %></td>
+        <td><%= link_to estado.nome, estado %></td>
         <td><%= estado.ibge %></td>
       </tr>
     <% end %>

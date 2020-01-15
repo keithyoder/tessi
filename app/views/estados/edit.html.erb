@@ -4,4 +4,4 @@
 
 <%= link_to '<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Excluir'.html_safe, @estado, method: :delete, class: "btn btn-danger", data: { confirm: 'Você tem certeza?' } %>
 
-<%= link_to 'Voltar', estados_path, class: "btn btn-primary" %>
+<%= link_to 'Voltar', estado_path(@estado), class: "btn btn-primary" %>

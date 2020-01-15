@@ -1,0 +1,22 @@
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Estado</th>
+      <th>IBGE</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% local_assigns[:cidades].each do |cidade| %>
+      <tr>
+        <td><%= link_to cidade.nome, edit_cidade_path(cidade) %></td>
+        <td><%= cidade.estado.nome %></td>
+        <td><%= cidade.ibge %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= paginate local_assigns[:cidades] %>

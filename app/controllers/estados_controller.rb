@@ -10,6 +10,8 @@ class EstadosController < ApplicationController
   # GET /estados/1
   # GET /estados/1.json
   def show
+    @estado=Estado.find(params[:id])
+    @cidades = @estado.cidades.order(:nome).page params[:page]
   end
 
   # GET /estados/new
@@ -28,7 +30,7 @@ class EstadosController < ApplicationController
 
     respond_to do |format|
       if @estado.save
-        format.html { redirect_to estados_path, notice: 'Estado was successfully created.' }
+        format.html { redirect_to @estado, notice: 'Estado was successfully created.' }
         format.json { render :show, status: :created, location: @estado }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class EstadosController < ApplicationController
   def update
     respond_to do |format|
       if @estado.update(estado_params)
-        format.html { redirect_to estados_path, notice: 'Estado was successfully updated.' }
+        format.html { redirect_to @estado, notice: 'Estado was successfully updated.' }
         format.json { render :show, status: :ok, location: @estado }
       else
         format.html { render :edit }

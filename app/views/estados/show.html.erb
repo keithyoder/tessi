@@ -1,3 +1,5 @@
+<h1><%= index_button(estados_path) %>
+<%= edit_button(edit_estado_path(@estado)) %> Estado</h1>
 <p>
   <strong>Sigla:</strong>
   <%= @estado.sigla %>
@@ -13,6 +15,6 @@
   <%= @estado.ibge %>
 </p>
 
-<%= link_to 'Edit', edit_estado_path(@estado) %> |
-<%= link_to 'Back', estados_path %>
+<h3 class="page-header"><%= new_table_header(new_cidade_path)%> Cidades</h3>
+<%= render 'cidades/table', cidades: @cidades %>
 

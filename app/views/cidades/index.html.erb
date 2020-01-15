@@ -1,23 +1,2 @@
 <h1 class="page-header"><%= new_table_header(new_cidade_path)%> Cidades</h1>
-<div class="table-responsive">
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Estado</th>
-      <th>IBGE</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @cidades.each do |cidade| %>
-      <tr>
-        <td><%= link_to cidade.nome, edit_cidade_path(cidade) %></td>
-        <td><%= cidade.estado.nome %></td>
-        <td><%= cidade.ibge %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= paginate @cidades %>
-<br>
+<%= render 'table', cidades: @cidades %>
