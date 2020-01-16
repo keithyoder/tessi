@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_15_234727) do
+ActiveRecord::Schema.define(version: 2020_01_16_130059) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -47,6 +47,9 @@ ActiveRecord::Schema.define(version: 2020_01_15_234727) do
     t.datetime "updated_at", null: false
     t.index ["bairro_id"], name: "index_logradouros_on_bairro_id"
   end
+
+# Could not dump table "servidores" because of following StandardError
+#   Unknown type 'inet' for column 'ip'
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

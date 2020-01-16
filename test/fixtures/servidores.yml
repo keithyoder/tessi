@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  ip: 1
+  usuario: MyString
+  senha: MyString
+  api_porta: 1
+  ssh_porta: 1
+  snmp_porta: 1
+  snmp_comunidade: MyString
+
+two:
+  nome: MyString
+  ip: 1
+  usuario: MyString
+  senha: MyString
+  api_porta: 1
+  ssh_porta: 1
+  snmp_porta: 1
+  snmp_comunidade: MyString

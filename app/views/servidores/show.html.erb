@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    <h3><%= index_button(servidores_path) %>
+    <%= edit_button(edit_servidor_path(@servidor)) %> Concentrador</h3>
+  </div>
+  <div class="card-body">
+<p>
+  <strong>Nome:</strong>
+  <%= @servidor.nome %>
+</p>
+
+<p>
+  <strong>IP:</strong>
+  <%= @servidor.ip %>
+</p>
+
+<p>
+  <strong>Usuário:</strong>
+  <%= @servidor.usuario %>
+</p>
+
+<p>
+  <strong>Senha:</strong>
+  <%= @servidor.senha %>
+</p>
+
+<p>
+  <strong>Porta API:</strong>
+  <%= @servidor.api_porta %>
+</p>
+
+<p>
+  <strong>Porta SSH:</strong>
+  <%= @servidor.ssh_porta %>
+</p>
+
+<p>
+  <strong>Porta SNMP:</strong>
+  <%= @servidor.snmp_porta %>
+</p>
+
+<p>
+  <strong>Comunidade SNMP:</strong>
+  <%= @servidor.snmp_comunidade %>
+</p>
+</div>

@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@servidor) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :nome %>
+    <%= f.input :ip %>
+    <%= f.input :usuario %>
+    <%= f.input :senha %>
+    <%= f.input :api_porta %>
+    <%= f.input :ssh_porta %>
+    <%= f.input :snmp_porta %>
+    <%= f.input :snmp_comunidade %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
