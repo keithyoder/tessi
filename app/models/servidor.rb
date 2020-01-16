@@ -1,10 +1,10 @@
 class Servidor < ApplicationRecord
   def ppp_users
     begin
-      users = MTik::command(:host => '10.200.8.34', :user => 'admin', :pass => '010407kry', :unencrypted_plaintext => :true, :command => '/ppp/active/print').to_json
-      users[0].count
+      users = MTik::command(:host => self.ip.to_s, :user => self.usuario, :pass => self.senha, :unencrypted_plaintext => :true, :command => '/ppp/active/print').to_json
+      users[0].count.to_s
     rescue
-      puts "Error"
+      "Error"
     end
   end
 
