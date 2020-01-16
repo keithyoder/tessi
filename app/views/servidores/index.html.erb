@@ -6,7 +6,7 @@
       </div>
       <div class="col-sm" align=right>
       <%= search_form_for @q do |f| %>
-        <%= f.search_field :nome_or_ip_cont %>
+        <%= f.search_field :nome_cont %>
         <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
           <i class="fa fa-search" aria-hidden="true"></i>
         <% end %>
@@ -36,3 +36,4 @@
     </table>
   </div>
 </div>
+<%= paginate @servidores %>
