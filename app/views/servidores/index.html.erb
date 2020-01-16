@@ -29,7 +29,7 @@
         <% @servidores.each do |servidor| %>
           <tr>
             <td><%= link_to servidor.nome, servidor %></td>
-            <td><%= servidor.ip %></td>
+            <td><%= servidor.ip.to_s %></td>
           </tr>
         <% end %>
       </tbody>
