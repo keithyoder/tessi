@@ -10,6 +10,10 @@ class BairrosController < ApplicationController
   # GET /bairros/1
   # GET /bairros/1.json
   def show
+    @bairro=Bairro.find(params[:id])
+    @q = @bairro.logradouros.ransack(params[:q])
+    @q.sorts = "nome"
+    @logradouros = @q.result.page params[:page]
   end
 
   # GET /bairros/new

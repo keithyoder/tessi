@@ -25,3 +25,23 @@
     </p>
   </div>
 </div>
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm">
+        <h3><%= new_table_header(new_logradouro_path)%> Logradouros</h3>
+      </div>
+      <div class="col-sm" align=right>
+        <%= search_form_for @q, url: @logradouro do |f| %>
+          <%= f.search_field :nome_cont %>
+          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= render 'logradouros/table', logradouros: @logradouros %>
+  </div>
+</div>

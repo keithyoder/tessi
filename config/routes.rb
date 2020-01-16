@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :logradouros
   resources :bairros
   resources :cidades
   devise_for :users

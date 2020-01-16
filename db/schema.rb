@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_15_175028) do
+ActiveRecord::Schema.define(version: 2020_01_15_234727) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 2020_01_15_175028) do
     t.integer "ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "logradouros", force: :cascade do |t|
+    t.string "nome"
+    t.integer "bairro_id"
+    t.string "cep"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bairro_id"], name: "index_logradouros_on_bairro_id"
   end
 
   create_table "users", force: :cascade do |t|

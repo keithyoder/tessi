@@ -1,0 +1,22 @@
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Bairro</th>
+      <th>CEP</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% local_assigns[:logradouros].each do |logradouro| %>
+      <tr>
+        <td><%= logradouro.nome %></td>
+        <td><%= logradouro.bairro.nome %></td>
+        <td><%= logradouro.cep %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= paginate local_assigns[:logradouros] %>
