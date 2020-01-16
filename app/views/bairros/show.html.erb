@@ -1,4 +1,5 @@
-<div class="card">
+<div class="row">
+<div class="card col-sm">
   <div class="card-header">
     <h3><%= index_button(@bairro.cidade) %>
     <%= edit_button(edit_bairro_path(@bairro)) %> Bairro</h3>
@@ -24,6 +25,12 @@
       <%= @bairro.longitude %>
     </p>
   </div>
+</div>
+<div class="card col-sm">
+  <p align=center>
+  <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=400x300&center=#{@bairro.latitude},#{@bairro.longitude}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map" %>
+  </p>
+</div>
 </div>
 <div class="card">
   <div class="card-header">
