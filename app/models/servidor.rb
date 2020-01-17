@@ -4,7 +4,7 @@ class Servidor < ApplicationRecord
   def ppp_users
     begin
       users = MTik::command(:host => self.ip.to_s, :user => self.usuario,
-        :pass => self.senha, :unencrypted_plaintext => :true, :command => '/ppp/active/print')
+        :pass => self.senha, :use_ssl, :command => '/ppp/active/print')
       (users[0].count - 1).to_s
     rescue StandardError => e  
       e.message
@@ -14,7 +14,7 @@ class Servidor < ApplicationRecord
   def hotspot_users
     begin
       users = MTik::command(:host => self.ip.to_s, :user => self.usuario,
-        :pass => self.senha, :unencrypted_plaintext => :true, :command => '/ip/hotspot/active/print')
+        :pass => self.senha, :use_ssl => :true, :command => '/ip/hotspot/active/print')
       (users[0].count - 1).to_s
     rescue StandardError => e  
       e.message
