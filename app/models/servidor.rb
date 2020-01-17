@@ -21,6 +21,16 @@ class Servidor < ApplicationRecord
     end
   end
 
+  def system_info
+    begin
+      result = (MTik::command(:host => self.ip.to_s, :user => self.usuario,
+        :pass => self.senha, :use_ssl => :true, :command => '/system/resource/print')[0][0])
+      result.slice("uptime", "version", "cpu-load", "board-name")
+    rescue StandardError => e  
+      e.message
+    end
+  end
+
   def ping?
     check = Net::Ping::External.new(self.ip.to_s)
     check.ping?
