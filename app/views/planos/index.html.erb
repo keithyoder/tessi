@@ -30,7 +30,7 @@
         <% @planos.each do |plano| %>
           <tr>
             <td><%= link_to plano.nome, plano %></td>
-            <td><%= plano.mensalidade %></td>
+            <td><%= number_with_precision(plano.mensalidade, :precision => 2) %></td>
             <td><%= plano.velocidade %></td>
           </tr>
         <% end %>
