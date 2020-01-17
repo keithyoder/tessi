@@ -4,7 +4,7 @@ class Servidor < ApplicationRecord
   def ppp_users
     begin
       users = MTik::command(:host => self.ip.to_s, :user => self.usuario,
-        :pass => self.senha, :use_ssl, :command => '/ppp/active/print')
+        :pass => self.senha, :use_ssl => :true, :command => '/ppp/active/print')
       (users[0].count - 1).to_s
     rescue StandardError => e  
       e.message
