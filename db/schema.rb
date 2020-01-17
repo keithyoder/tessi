@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_103253) do
+ActiveRecord::Schema.define(version: 2020_01_17_190242) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(version: 2020_01_17_103253) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bairro_id"], name: "index_logradouros_on_bairro_id"
+  end
+
+  create_table "planos", force: :cascade do |t|
+    t.string "nome"
+    t.decimal "mensalidade", precision: 8, scale: 2
+    t.integer "upload"
+    t.integer "download"
+    t.boolean "burst"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 # Could not dump table "servidores" because of following StandardError

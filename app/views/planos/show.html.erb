@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @plano.nome %>
+</p>
+
+<p>
+  <strong>Mensalidade:</strong>
+  <%= @plano.mensalidade %>
+</p>
+
+<p>
+  <strong>Upload:</strong>
+  <%= @plano.upload %>
+</p>
+
+<p>
+  <strong>Download:</strong>
+  <%= @plano.download %>
+</p>
+
+<p>
+  <strong>Burst:</strong>
+  <%= @plano.burst %>
+</p>
+
+<%= link_to 'Edit', edit_plano_path(@plano) %> |
+<%= link_to 'Back', planos_path %>

@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm">
+        <h3><%= new_table_header(new_servidor_path)%> Planos</h3>
+      </div>
+      <div class="col-sm" align=right>
+      <%= search_form_for @q do |f| %>
+        <%= f.search_field :nome_cont %>
+        <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
+          <i class="fa fa-search" aria-hidden="true"></i>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-body">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Plano</th>
+          <th>Mensalidade</th>
+          <th>Velocidade</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @planos.each do |plano| %>
+          <tr>
+            <td><%= link_to plano.nome, plano %></td>
+            <td><%= plano.mensalidade %></td>
+            <td><%= plano.velocidade %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= paginate @planos %>

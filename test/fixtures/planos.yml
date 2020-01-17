@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  mensalidade: 
+  upload: 1
+  download: 1
+  burst: false
+
+two:
+  nome: MyString
+  mensalidade: 
+  upload: 1
+  download: 1
+  burst: false
