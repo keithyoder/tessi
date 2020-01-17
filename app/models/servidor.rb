@@ -1,4 +1,6 @@
 class Servidor < ApplicationRecord
+  scope :ativo, -> { where("ativo") }
+
   def ppp_users
     begin
       users = MTik::command(:host => self.ip.to_s, :user => self.usuario,
@@ -9,7 +11,7 @@ class Servidor < ApplicationRecord
     end
   end
 
-  def up?
+  def ping?
     check = Net::Ping::External.new(self.ip.to_s)
     check.ping?
   end

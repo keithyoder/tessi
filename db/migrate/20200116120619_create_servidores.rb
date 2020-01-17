@@ -1,16 +1,6 @@
 class CreateServidores < ActiveRecord::Migration[5.2]
   def change
-    create_table :servidores do |t|
-      t.string :nome
-      t.inet :ip
-      t.string :usuario
-      t.string :senha
-      t.integer :api_porta
-      t.integer :ssh_porta
-      t.integer :snmp_porta
-      t.string :snmp_comunidade
-
-      t.timestamps
-    end
+    add_column :servidores, :ativo, :boolean  
+    add_column :servidores, :up, :boolean  
   end
 end
