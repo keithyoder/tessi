@@ -1,6 +1,9 @@
-<h1>Editing Servidor</h1>
-
-<%= render 'form', servidor: @servidor %>
-
-<%= link_to 'Show', @servidor %> |
-<%= link_to 'Back', servidores_path %>
+<div class="card">
+  <div class="card-header">
+    <h3><%= index_button(@servidor) %>
+    <%= delete_button(@servidor) %> Alterar Concentrador</h3>
+  </div>
+  <div class="card-body">
+    <%= render 'form', servidor: @servidor %>
+  </div>
+</div>

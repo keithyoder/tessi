@@ -4,18 +4,44 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :nome %>
-    <%= f.input :ip, as: :string %>
-    <%= f.input :usuario %>
-    <%= f.input :ativo, as: :boolean %>
-    <%= f.input :senha %>
-    <%= f.input :api_porta %>
-    <%= f.input :ssh_porta %>
-    <%= f.input :snmp_porta %>
-    <%= f.input :snmp_comunidade %>
+  <%= f.input :ativo, as: :boolean %>
+  <div class="row">
+      <div class="col">
+        <%= f.input :nome %>
+      </div>
+      <div class="col">
+        <%= f.input :ip, as: :string %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :usuario %>
+      </div>
+      <div class="col">
+        <%= f.input :senha %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :api_porta %>
+      </div>
+      <div class="col">
+        <%= f.input :ssh_porta %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :snmp_porta %>
+      </div>
+      <div class="col">
+        <%= f.input :snmp_comunidade %>
+      </div>
+    </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="actions">
+    <%= button_tag( :class => "btn btn-primary") do %>
+      <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+    <% end %>
   </div>
 <% end %>
