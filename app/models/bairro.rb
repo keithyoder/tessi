@@ -1,3 +1,5 @@
+require 'csv'
+
 class Bairro < ApplicationRecord
   belongs_to :cidade
   has_many :logradouros

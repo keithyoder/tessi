@@ -4,7 +4,12 @@ class BairrosController < ApplicationController
   # GET /bairros
   # GET /bairros.json
   def index
-    @bairros = Bairro.order(:nome).page params[:page]
+    @q = Bairro.ransack(params[:q])
+    @bairros = @q.result(order: :nome).page params[:page]
+    respond_to do |format|
+      format.html
+      format.csv { send_data @bairros.except(:limit, :offset).to_csv, filename: "bairros-#{Date.today}.csv" }
+    end
   end
 
   # GET /bairros/1

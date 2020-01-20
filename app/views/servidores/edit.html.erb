@@ -1,8 +1,5 @@
 <div class="card">
-  <div class="card-header">
-    <h3><%= index_button(@servidor) %>
-    <%= delete_button(@servidor) %> Alterar Concentrador</h3>
-  </div>
+  <%= render 'shared/edit_header', {path: @servidor, titulo: "Concentrador"} %>
   <div class="card-body">
     <%= render 'form', servidor: @servidor %>
   </div>

@@ -1,5 +1,18 @@
+require 'csv'
+
 class Servidor < ApplicationRecord
   scope :ativo, -> { where("ativo") }
+
+  def self.to_csv
+    attributes = %w{id nome ip ativo api_porta ssh_porta snmp_porta snmp_comunidade}
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |servidor|
+        csv << attributes.map{ |attr| servidor.send(attr) }
+      end
+    end
+  end
 
   def ppp_users
     begin

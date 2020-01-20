@@ -7,6 +7,11 @@ class ServidoresController < ApplicationController
     @q = Servidor.ransack(params[:q])
     @q.sorts = "nome"
     @servidores = @q.result.page params[:page]
+    respond_to do |format|
+      format.html
+      format.csv { send_data @servidores.except(:limit, :offset).to_csv, filename: "concentradores  -#{Date.today}.csv" }
+    end
+
   end
 
   # GET /servidores/1

@@ -6,7 +6,11 @@ class EstadosController < ApplicationController
   def index
     @q = Estado.ransack(params[:q])
     @estados = @q.result(order: :nome).page params[:page]
-  end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @estados.except(:limit, :offset).to_csv, filename: "estados-#{Date.today}.csv" }
+    end
+   end
 
   # GET /estados/1
   # GET /estados/1.json
@@ -33,7 +37,7 @@ class EstadosController < ApplicationController
 
     respond_to do |format|
       if @estado.save
-        format.html { redirect_to @estado, notice: 'Estado was successfully created.' }
+        format.html { redirect_to @estado, notice: 'Estado criado com sucesso.' }
         format.json { render :show, status: :created, location: @estado }
       else
         format.html { render :new }

@@ -1,2 +1,6 @@
-<h1 class="page-header"><%= new_table_header(new_cidade_path)%> Cidades</h1>
-<%= render 'table', cidades: @cidades %>
+<div class="card">
+  <%= render '/shared/table_header', {new_path: new_cidade_path, titulo: "Cidades", search_field: :nome_cont} %>
+  <div class="card-body">
+    <%= render 'table', cidades: @cidades %>
+  </div>
+</div>

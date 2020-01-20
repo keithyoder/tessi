@@ -1,9 +1,6 @@
 <div class="row">
 <div class="card col-sm">
-  <div class="card-header">
-    <h3><%= index_button(@bairro.cidade) %>
-    <%= edit_button(edit_bairro_path(@bairro)) %> Bairro</h3>
-  </div>
+  <%= render 'shared/show_header', {object: @bairro, titulo: "Bairro "+@bairro.nome} %>
   <div class="card-body">
     <p>
       <strong>Nome:</strong>

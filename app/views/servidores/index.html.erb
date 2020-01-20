@@ -1,39 +1,25 @@
 <div class="card">
-  <div class="card-header">
-    <div class="row">
-      <div class="col-sm">
-        <h3><%= new_table_header(new_servidor_path)%> Concentradores</h3>
-      </div>
-      <div class="col-sm" align=right>
-      <%= search_form_for @q do |f| %>
-        <%= f.search_field :nome_cont %>
-        <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
-          <i class="fa fa-search" aria-hidden="true"></i>
-        <% end %>
-      <% end %>
-      </div>
+  <%= render '/shared/table_header', {new_path: new_servidor_path, titulo: "Concentradores", search_field: :nome_cont} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>IP</th>
+         </tr>
+        </thead>
+
+        <tbody>
+          <% @servidores.each do |servidor| %>
+            <tr>
+              <td><%= link_to servidor.nome, servidor %></td>
+              <td><%= servidor.ip.to_s %></td>
+           </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
+  <%= paginate @servidores %>
 </div>
-<div class="card-body">
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>IP</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @servidores.each do |servidor| %>
-          <tr>
-            <td><%= link_to servidor.nome, servidor %></td>
-            <td><%= servidor.ip.to_s %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-<%= paginate @servidores %>

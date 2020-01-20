@@ -1,44 +1,22 @@
 <div class="card">
-  <div class="card-header">
-    <h3><%= index_button(servidores_path) %>
-    <%= edit_button(edit_servidor_path(@servidor)) %> Concentrador <%= @servidor.nome %>
-    <button class="btn btn-sm <%= online_button(@servidor.ping?) %>"><i class="fa fa-globe fa-lg" aria-hidden="true"></i></button>
-    </h3>
-  </div>
+  <%= render 'shared/show_header', {object: @servidor, titulo: "Concentrador "+ @servidor.nome} %>
   <div class="card-body">
+    <button class="btn btn-sm <%= online_button(@servidor.ping?) %>">
+    <o>
+    <i class="fa fa-globe fa-lg" aria-hidden="true"></i></button></p>
     <div class="card-columns" style="column-count: 4">
-        <div class="card border-dark">
-          <div class="card-header">Ativo</div>
-          <div class="card-text" align="right"><br><%= @servidor.ativo %></div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">IP</div>
-          <div class="card-text" align="right"><br><%= @servidor.ip %></div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">Usuário</div>
-          <div class="card-text" align="right"><br><%= @servidor.usuario %></div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">Porta API</div>
-          <div class="card-text" align="right"><br><%= @servidor.api_porta %>&nbsp</div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">Porta SSH</div>
-          <div class="card-text" align="right"><br><%= @servidor.ssh_porta %>&nbsp</div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">Porta SNMP</div>
-          <div class="card-text" align="right"><br><%= @servidor.snmp_porta %>&nbsp</div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">SNMP Comunidade</div>
-          <div class="card-text" align="right"><br><%= @servidor.snmp_comunidade %>&nbsp</div>
-        </div>
-      </div>
+      <%= render 'shared/field_card', {campo: "Ativo", valor: @servidor.ativo} %>
+      <%= render 'shared/field_card', {campo: "IP", valor: @servidor.ip} %>
+      <%= render 'shared/field_card', {campo: "Usuário", valor: @servidor.usuario} %>
+      <%= render 'shared/field_card', {campo: "Porta API", valor: @servidor.api_porta} %>
+      <%= render 'shared/field_card', {campo: "Porta SSH", valor: @servidor.ssh_porta} %>
+      <%= render 'shared/field_card', {campo: "Porta SNMP", valor: @servidor.snmp_porta} %>
+      <%= render 'shared/field_card', {campo: "Comunidade SNMP", valor: @servidor.snmp_comunidade} %>
+    </div>
   </div>
 </div>
 
+<% if (@servidor.ping?) %>
 <div class="card">
   <div class="card-header">
     <h3>Status</h3>
@@ -46,19 +24,11 @@
   <div class="card-body">
     <div class="card-columns" style="column-count: 4">
       <% @servidor.system_info.each do |info, value| %>
-        <div class="card border-dark">
-          <div class="card-header"><%= info.titleize %></div>
-          <div class="card-text" align="right"><br><%= value %>&nbsp</div>
-        </div>
+        <%= render 'shared/field_card', {campo: info.titleize, valor: value} %>
       <% end %>
-      <div class="card border-dark">
-        <div class="card-header">Usuários PPPoE</div>
-        <div class="card-text" align="right"><br><%= @servidor.ppp_users %>&nbsp</div>
-      </div>
-      <div class="card border-dark">
-        <div class="card-header">Usuários Hotspot</div>
-        <div class="card-text" align="right"><br><%= @servidor.hotspot_users %>&nbsp</div>
-      </div>
+      <%= render 'shared/field_card', {campo: "Usuários PPPoE", valor: @servidor.ppp_users} %>
+      <%= render 'shared/field_card', {campo: "Usuários Hotspot", valor: @servidor.hotspot_users} %>
     </div>
   </div>
 </div>
+<% end %>

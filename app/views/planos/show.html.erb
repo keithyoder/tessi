@@ -1,26 +1,11 @@
 <div class="card">
-  <div class="card-header">
-    <h3><%= index_button(planos_path) %>
-    <%= edit_button(edit_plano_path(@plano)) %> Plano <%= @plano.nome %></h3>
-  </div>
+  <%= render 'shared/show_header', {object: @plano, titulo: "Plano de Acesso "+ @plano.nome} %>
   <div class="card-body">
     <div class="card-columns" style="column-count: 4">
-        <div class="card border-dark">
-          <div class="card-header">Mensalidade</div>
-          <div class="card-text" align="right"><br><%= @plano.mensalidade %></div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">Download</div>
-          <div class="card-text" align="right"><br><%= @plano.download %></div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">Upload</div>
-          <div class="card-text" align="right"><br><%= @plano.upload %></div>
-        </div>
-        <div class="card border-dark">
-          <div class="card-header">Burst</div>
-          <div class="card-text" align="right"><br><%= @plano.burst %>&nbsp</div>
-        </div>
-      </div>
+      <%= render 'shared/field_card', {campo: "Mensalidade", valor: @plano.mensalidade} %>
+      <%= render 'shared/field_card', {campo: "Download", valor: @plano.download.to_s + " Mbps"} %>
+      <%= render 'shared/field_card', {campo: "Upload", valor: @plano.upload.to_s + " Mbps"} %>
+      <%= render 'shared/field_card', {campo: "Burst", valor: @plano.burst} %>
+    </div>
   </div>
 </div>

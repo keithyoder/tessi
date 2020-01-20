@@ -1,19 +1,5 @@
 <div class="card">
-  <div class="card-header">
-    <div class="row">
-      <div class="col-sm">
-        <h3><%= new_table_header(new_estado_path)%> Estados</h3>
-      </div>
-      <div class="col-sm" align=right>
-        <%= search_form_for @q do |f| %>
-          <%= f.search_field :sigla_or_nome_cont %>
-          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
-            <i class="fa fa-search" aria-hidden="true"></i>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render '/shared/table_header', {new_path: new_estado_path, titulo: "Estados", search_field: :sigla_or_nome_cont} %>
   <div class="card-body">
   <div class="table-responsive">
   <table class="table table-striped">

@@ -1,23 +1,10 @@
 <div class="card">
-  <div class="card-header">
-    <h3><%= index_button(estados_path) %>
-    <%= edit_button(edit_estado_path(@estado)) %> Estado</h3>
-  </div>
+  <%= render 'shared/show_header', {object: @estado, titulo: "Estado "+ @estado.nome} %>
   <div class="card-body">
-    <p>
-      <strong>Sigla:</strong>
-      <%= @estado.sigla %>
-    </p>
-
-    <p>
-      <strong>Nome:</strong>
-      <%= @estado.nome %>
-    </p>
-
-    <p>
-      <strong>Ibge:</strong>
-      <%= @estado.ibge %>
-    </p>
+    <div class="card-columns" style="column-count: 4">
+      <%= render 'shared/field_card', {campo: "Sigla", valor: @estado.sigla} %>
+      <%= render 'shared/field_card', {campo: "IBGE", valor: @estado.ibge} %>
+    </div>
   </div>
 </div>
 <div class="card">

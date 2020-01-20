@@ -7,6 +7,11 @@ class PlanosController < ApplicationController
     @q = Plano.ransack(params[:q])
     @q.sorts = "nome"
     @planos = @q.result.page params[:page]
+    respond_to do |format|
+      format.html
+      format.csv { send_data @planos.except(:limit, :offset).to_csv, filename: "planos-#{Date.today}.csv" }
+    end
+
  end
 
   # GET /planos/1

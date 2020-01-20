@@ -1,6 +1,6 @@
-<h1>Editing Plano</h1>
-
-<%= render 'form', plano: @plano %>
-
-<%= link_to 'Show', @plano %> |
-<%= link_to 'Back', planos_path %>
+<div class="card">
+  <%= render 'shared/edit_header', {path: @plano, titulo: "Plano de Acesso"} %>
+  <div class="card-body">
+    <%= render 'form', plano: @plano %>
+  </div>
+</div>

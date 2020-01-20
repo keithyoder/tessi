@@ -1,22 +1,14 @@
 <div class="card">
-  <div class="card-header">
-    <h3><%= index_button(@logradouro.bairro) %>
-    <%= edit_button(edit_logradouro_path(@logradouro)) %> Logradouro</h3>
-  </div>
-  <div class="card-body">
-    <p>
-      <strong>Nome:</strong>
-      <%= @logradouro.nome %>
-    </p>
-
-    <p>
-      <strong>Bairro:</strong>
-      <%= @logradouro.bairro.nome_cidade_uf %>
-    </p>
-
-    <p>
-      <strong>CEP:</strong>
-      <%= @logradouro.cep %>
-    </p>
+<%= render 'shared/show_header', {object: @logradouro, titulo: "Logradouro "+@logradouro.nome} %>
+<div class="card-body">
+  <div class="card-columns" style="column-count: 4">
+    <div class="card border-dark">
+      <div class="card-header">Bairro</div>
+      <div class="card-text" align="right"><br><%= @logradouro.bairro.nome_cidade_uf %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">CEP</div>
+      <div class="card-text" align="right"><br><%= @logradouro.cep %>&nbsp</div>
+    </div>
   </div>
 </div>
