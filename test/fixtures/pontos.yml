@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  sistema: 1
+  tecnologia: 1
+  servidor: one
+  ip: 
+  usuario: MyString
+  senha: MyString
+
+two:
+  nome: MyString
+  sistema: 1
+  tecnologia: 1
+  servidor: two
+  ip: 
+  usuario: MyString
+  senha: MyString

@@ -1,16 +1,26 @@
 
-<%= simple_form_for(@servidor) do |f| %>
+<%= simple_form_for(@ponto) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-  <%= f.input :ativo %>
     <div class="row">
       <div class="col">
         <%= f.input :nome %>
       </div>
       <div class="col">
-        <%= f.input :ip, as: :string %>
+        <%= f.input :sistema, collection: Ponto.sistemas.keys %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :tecnologia, collection: Ponto.tecnologias.keys %>
+      </div>
+      <div class="col">
+        <%= f.association :servidor, label_method: :nome %>
+      </div>
+      <div class="col">
+        <%= f.input :ip %>
       </div>
     </div>
     <div class="row">
@@ -21,27 +31,9 @@
         <%= f.input :senha %>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <%= f.input :api_porta %>
-      </div>
-      <div class="col">
-        <%= f.input :ssh_porta %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <%= f.input :snmp_porta %>
-      </div>
-      <div class="col">
-        <%= f.input :snmp_comunidade %>
-      </div>
-    </div>
   </div>
 
-  <div class="actions">
-    <%= button_tag( :class => "btn btn-primary") do %>
-      <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
-    <% end %>
+  <div class="form-actions">
+    <%= f.button :submit %>
   </div>
 <% end %>

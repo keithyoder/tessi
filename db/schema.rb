@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_190242) do
+ActiveRecord::Schema.define(version: 2020_01_20_202548) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -58,6 +58,19 @@ ActiveRecord::Schema.define(version: 2020_01_17_190242) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pontos", force: :cascade do |t|
+    t.string "nome"
+    t.integer "sistema"
+    t.integer "tecnologia"
+    t.integer "servidor_id"
+    t.string "ip"
+    t.string "usuario"
+    t.string "senha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["servidor_id"], name: "index_pontos_on_servidor_id"
+  end
+
 # Could not dump table "servidores" because of following StandardError
 #   Unknown type 'inet' for column 'ip'
 
@@ -73,6 +86,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_190242) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "role"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

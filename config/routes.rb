@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pontos
   resources :planos
   resources :servidores
   resources :logradouros

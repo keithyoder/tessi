@@ -1,5 +1,6 @@
 class PlanosController < ApplicationController
   before_action :set_plano, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /planos
   # GET /planos.json

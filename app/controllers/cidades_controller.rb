@@ -1,5 +1,6 @@
 class CidadesController < ApplicationController
   before_action :set_cidade, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /cidades
   # GET /cidades.json

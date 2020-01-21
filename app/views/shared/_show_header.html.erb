@@ -3,8 +3,10 @@
     <%= link_to({controller: controller.controller_name, action: :index}, class: "btn btn-sm btn-outline-dark") do %>
       <i class="fa fa-arrow-left" aria-hidden="true"></i>
     <% end %>
-    <%= link_to({controller: controller.controller_name, action: :edit, id: object}, class: "btn btn-sm btn-outline-dark") do %>
-      <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+    <% if can? :edit, object %>
+      <%= link_to({controller: controller.controller_name, action: :edit, id: object}, class: "btn btn-sm btn-outline-dark") do %>
+        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+      <% end %>
     <% end %>
     <%= titulo %></h3>
 </div>

@@ -1,0 +1,12 @@
+<div class="card">
+  <%= render 'shared/show_header', {object: @ponto, titulo: "Ponto de Acesso "+ @ponto.nome} %>
+  <div class="card-body">
+    <div class="card-columns" style="column-count: 4">
+      <%= render 'shared/field_card', {campo: "Sistema", valor: @ponto.sistema} %>
+      <%= render 'shared/field_card', {campo: "Tecnologia", valor: @ponto.tecnologia} %>
+      <%= render 'shared/field_card', {campo: "Servidor", valor: @ponto.servidor.nome} %>
+      <%= render 'shared/field_card', {campo: "IP", valor: @ponto.ip} %>
+      <%= render 'shared/field_card', {campo: "Usuário", valor: @ponto.usuario} %>
+    </div>
+  </div>
+</div>

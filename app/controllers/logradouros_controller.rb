@@ -1,5 +1,6 @@
 class LogradourosController < ApplicationController
   before_action :set_logradouro, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /logradouros
   # GET /logradouros.json
