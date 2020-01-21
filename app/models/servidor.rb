@@ -1,6 +1,7 @@
 require 'csv'
 
 class Servidor < ApplicationRecord
+  has_many :pontos
   scope :ativo, -> { where("ativo") }
 
   def self.to_csv

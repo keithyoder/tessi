@@ -1,29 +1,6 @@
 <div class="card">
-  <%= render '/shared/table_header', {new_path: new_ponto_path, titulo: "Pontos de Acesso", search_field: :nome_cont} %>
+  <%= render '/shared/table_header', {new_path: new_ponto_path, titulo: "Pontos de Acesso", search_field: :nome_cont, query: @q} %>
   <div class="card-body">
-  <div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Sistema</th>
-        <th>Tecnologia</th>
-        <th>Servidor</th>
-        <th>Ip</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @pontos.each do |ponto| %>
-        <tr>
-          <td><%= link_to ponto.nome, ponto %></td>
-          <td><%= ponto.sistema %></td>
-          <td><%= ponto.tecnologia %></td>
-          <td><%= ponto.servidor.nome %></td>
-          <td><%= ponto.ip %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <%= render 'table', pontos: @pontos %>
   </div>
 </div>

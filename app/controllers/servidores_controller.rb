@@ -18,6 +18,10 @@ class ServidoresController < ApplicationController
   # GET /servidores/1
   # GET /servidores/1.json
   def show
+    @servidor=Servidor.find(params[:id])
+    @q = @servidor.pontos.ransack(params[:q])
+    @q.sorts = "nome"
+    @pontos = @q.result.page params[:page]
   end
 
   # GET /servidores/new

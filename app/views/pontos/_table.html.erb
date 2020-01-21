@@ -1,0 +1,26 @@
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Sistema</th>
+      <th>Tecnologia</th>
+      <th>Servidor</th>
+      <th>IP</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% local_assigns[:pontos].each do |ponto| %>
+      <tr>
+        <td><%= link_to ponto.nome, ponto %></td>
+        <td><%= ponto.sistema %></td>
+        <td><%= ponto.tecnologia %></td>
+        <td><%= ponto.servidor.nome %></td>
+        <td><%= ponto.ip %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= paginate local_assigns[:pontos] %>
