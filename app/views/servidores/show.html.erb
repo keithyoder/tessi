@@ -12,6 +12,8 @@
       <%= render 'shared/field_card', {campo: "Porta SSH", valor: @servidor.ssh_porta} %>
       <%= render 'shared/field_card', {campo: "Porta SNMP", valor: @servidor.snmp_porta} %>
       <%= render 'shared/field_card', {campo: "Comunidade SNMP", valor: @servidor.snmp_comunidade} %>
+      <%= render 'shared/field_card', {campo: "Secret Radius", valor: @servidor.radius_secret} %>
+      <%= render 'shared/field_card', {campo: "Porta Radius", valor: @servidor.radius_porta} %>
     </div>
   </div>
 </div>
