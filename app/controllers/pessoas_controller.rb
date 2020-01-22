@@ -6,7 +6,8 @@ class PessoasController < ApplicationController
   # GET /pessoas.json
   def index
     @q = Pessoa.ransack(params[:q])
-    @pessoas = @q.result(order: :nome).page params[:page]
+    @q.sorts = "nome"
+    @pessoas = @q.result.page params[:page]
   end
 
   # GET /pessoas/1
@@ -44,7 +45,7 @@ class PessoasController < ApplicationController
   def update
     respond_to do |format|
       if @pessoa.update(pessoa_params)
-        format.html { redirect_to @pessoa, notice: 'Pessoa was successfully updated.' }
+        format.html { redirect_to @pessoa, notice: 'Pessoa foi atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @pessoa }
       else
         format.html { render :edit }

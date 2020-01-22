@@ -4,23 +4,63 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :nome %>
-    <%= f.input :tipo %>
-    <%= f.input :cpf %>
-    <%= f.input :cnpj %>
-    <%= f.input :rg %>
-    <%= f.input :ie %>
-    <%= f.input :nascimento %>
-    <%= f.association :logradouro %>
-    <%= f.input :numero %>
-    <%= f.input :complemento %>
-    <%= f.input :nomemae %>
-    <%= f.input :email %>
-    <%= f.input :telefone1 %>
-    <%= f.input :telefone2 %>
+    <div class="row">
+      <div class="col-8">
+        <%= f.input :nome %>
+      </div>
+      <div class="col">
+        <%= f.input :tipo, collection: Pessoa.tipos.keys %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :cpf %>
+      </div>
+      <div class="col">
+        <%= f.input :cnpj %>
+      </div>
+      <div class="col">
+        <%= f.input :rg %>
+      </div>
+      <div class="col">
+        <%= f.input :ie %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :nascimento %>
+      </div>
+      <div class="col">
+        <%= f.input :nomemae %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-6">
+        <%= f.association :logradouro, label_method: :endereco %>
+      </div>
+      <div class="col">
+        <%= f.input :numero %>
+      </div>
+      <div class="col">
+        <%= f.input :complemento %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :email %>
+      </div>
+      <div class="col">
+        <%= f.input :telefone1 %>
+      </div>
+      <div class="col">
+        <%= f.input :telefone2 %>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+  <%= button_tag( :class => "btn btn-primary") do %>
+    <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+  <% end %>
+</div>
 <% end %>

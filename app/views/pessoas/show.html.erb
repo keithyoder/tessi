@@ -1,74 +1,43 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Nome:</strong>
-  <%= @pessoa.nome %>
-</p>
-
-<p>
-  <strong>Tipo:</strong>
-  <%= @pessoa.tipo %>
-</p>
-
-<p>
-  <strong>Cpf:</strong>
-  <%= @pessoa.cpf %>
-</p>
-
-<p>
-  <strong>Cnpj:</strong>
-  <%= @pessoa.cnpj %>
-</p>
-
-<p>
-  <strong>Rg:</strong>
-  <%= @pessoa.rg %>
-</p>
-
-<p>
-  <strong>Ie:</strong>
-  <%= @pessoa.ie %>
-</p>
-
-<p>
-  <strong>Nascimento:</strong>
-  <%= @pessoa.nascimento %>
-</p>
-
-<p>
-  <strong>Logradouro:</strong>
-  <%= @pessoa.logradouro %>
-</p>
-
-<p>
-  <strong>Numero:</strong>
-  <%= @pessoa.numero %>
-</p>
-
-<p>
-  <strong>Complemento:</strong>
-  <%= @pessoa.complemento %>
-</p>
-
-<p>
-  <strong>Nomemae:</strong>
-  <%= @pessoa.nomemae %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @pessoa.email %>
-</p>
-
-<p>
-  <strong>Telefone1:</strong>
-  <%= @pessoa.telefone1 %>
-</p>
-
-<p>
-  <strong>Telefone2:</strong>
-  <%= @pessoa.telefone2 %>
-</p>
-
-<%= link_to 'Edit', edit_pessoa_path(@pessoa) %> |
-<%= link_to 'Back', pessoas_path %>
+<div class="card">
+<%= render 'shared/show_header', {object: @pessoa, titulo: "Pessoa "+@pessoa.nome} %>
+<div class="card-body">
+  <div class="card-columns" style="column-count: 4">
+    <div class="card border-dark">
+      <div class="card-header">Tipo</div>
+      <div class="card-text" align="right"><br><%= @pessoa.tipo %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">CPF / CNPJ</div>
+      <div class="card-text" align="right"><br><%= @pessoa.tipo == "Pessoa Física" ? @pessoa.cpf : @pessoa.cnpj %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">RG / IE</div>
+      <div class="card-text" align="right"><br><%= @pessoa.tipo == "Pessoa Física" ? @pessoa.rg : @pessoa.ie %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">Nascimento</div>
+      <div class="card-text" align="right"><br><%= @pessoa.nascimento %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">Endereço</div>
+      <div class="card-text" align="right"><%= @pessoa.endereco %>&nbsp
+        <br><%= @pessoa.logradouro.bairro.nome_cidade_uf %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">Nome da Mãe</div>
+      <div class="card-text" align="right"><br><%= @pessoa.nomemae %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">E-mail</div>
+      <div class="card-text" align="right"><br><%= @pessoa.email %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">Telefone 1</div>
+      <div class="card-text" align="right"><br><%= @pessoa.telefone1 %>&nbsp</div>
+    </div>
+    <div class="card border-dark">
+      <div class="card-header">Telefone 2</div>
+      <div class="card-text" align="right"><br><%= @pessoa.telefone2 %>&nbsp</div>
+    </div>
+  </div>
+</div>
