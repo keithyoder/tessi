@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :plano_enviar_atributos
+  resources :plano_verificar_atributos
   resources :pontos
   resources :planos
   resources :servidores

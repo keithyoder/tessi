@@ -77,6 +77,6 @@ class PlanosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plano_params
-      params.require(:plano).permit(:nome, :mensalidade, :upload, :download, :burst)
+      params.require(:plano).permit(:nome, :mensalidade, :upload, :download, :burst, :page)
     end
 end

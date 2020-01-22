@@ -1,0 +1,1 @@
+json.partial! "plano_verificar_atributos/plano_verificar_atributo", plano_verificar_atributo: @plano_verificar_atributo

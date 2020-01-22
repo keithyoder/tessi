@@ -12,7 +12,7 @@
     <% local_assigns[:logradouros].each do |logradouro| %>
       <tr>
         <td><%= link_to logradouro.nome, logradouro %></td>
-        <td><%= logradouro.bairro.nome %></td>
+        <td><%= logradouro.bairro.nome_cidade_uf %></td>
         <td><%= logradouro.cep %></td>
       </tr>
     <% end %>

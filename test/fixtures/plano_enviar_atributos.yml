@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plano: one
+  atributo: MyString
+  op: MyString
+  valor: MyString
+
+two:
+  plano: two
+  atributo: MyString
+  op: MyString
+  valor: MyString

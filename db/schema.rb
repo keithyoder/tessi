@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_120556) do
+ActiveRecord::Schema.define(version: 2020_01_22_005235) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_120556) do
     t.string "ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["estado_id", "nome"], name: "index_cidades_on_estado_id_and_nome", unique: true
     t.index ["estado_id"], name: "index_cidades_on_estado_id"
   end
 
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_120556) do
     t.integer "ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["nome"], name: "index_estados_on_nome", unique: true
   end
 
   create_table "logradouros", force: :cascade do |t|
@@ -48,6 +50,28 @@ ActiveRecord::Schema.define(version: 2020_01_21_120556) do
     t.index ["bairro_id"], name: "index_logradouros_on_bairro_id"
   end
 
+  create_table "plano_enviar_atributos", force: :cascade do |t|
+    t.integer "plano_id"
+    t.string "atributo"
+    t.string "op"
+    t.string "valor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plano_id", "atributo"], name: "index_plano_enviar_atributos_on_plano_id_and_atributo", unique: true
+    t.index ["plano_id"], name: "index_plano_enviar_atributos_on_plano_id"
+  end
+
+  create_table "plano_verificar_atributos", force: :cascade do |t|
+    t.integer "plano_id"
+    t.string "atributo"
+    t.string "op"
+    t.string "valor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plano_id", "atributo"], name: "index_plano_verificar_atributos_on_plano_id_and_atributo", unique: true
+    t.index ["plano_id"], name: "index_plano_verificar_atributos_on_plano_id"
+  end
+
   create_table "planos", force: :cascade do |t|
     t.string "nome"
     t.decimal "mensalidade", precision: 8, scale: 2
@@ -56,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_120556) do
     t.boolean "burst"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["nome"], name: "index_planos_on_nome", unique: true
   end
 
   create_table "pontos", force: :cascade do |t|

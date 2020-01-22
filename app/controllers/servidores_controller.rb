@@ -81,6 +81,7 @@ class ServidoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def servidor_params
-      params.require(:servidor).permit(:nome, :ip, :usuario, :senha, :api_porta, :ssh_porta, :snmp_porta, :snmp_comunidade)
+      params.require(:servidor).permit(:nome, :ip, :usuario, :senha, :api_porta, :ssh_porta, :snmp_porta, :snmp_comunidade,
+        :radius_porta, :radius_secret)
     end
 end

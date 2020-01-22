@@ -1,3 +1,14 @@
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#home">Plano</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#radius">Radius</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="planos-tabs">
+<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 <div class="card">
   <%= render 'shared/show_header', {object: @plano, titulo: "Plano de Acesso "+ @plano.nome} %>
   <div class="card-body">
@@ -9,3 +20,8 @@
     </div>
   </div>
 </div>
+
+</div>
+<div class="tab-pane fade" id="radius" role="tabpanel" aria-labelledby="radius-tab">
+</div>
+

@@ -5,7 +5,8 @@ class LogradourosController < ApplicationController
   # GET /logradouros
   # GET /logradouros.json
   def index
-    @logradouros = Logradouro.order(:nome).page params[:page]
+    @q = Logradouro.ransack(params[:q])
+    @logradouros = @q.result(order: :nome).page params[:page]
   end
 
   # GET /logradouros/1
