@@ -18,6 +18,9 @@ class PlanosController < ApplicationController
   # GET /planos/1
   # GET /planos/1.json
   def show
+    @planos = Plano.find(params[:id])
+    @plano_verificar_atributos = @planos.plano_verificar_atributos
+    @plano_enviar_atributos = @planos.plano_enviar_atributos
   end
 
   # GET /planos/new

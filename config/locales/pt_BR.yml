@@ -1,2 +1,10 @@
-en:
+pt-BR:
   hello: "Olá Mundo"
+  date:
+    order:
+      - :day
+      - :month
+      - :year
+    month_names:
+      [~, janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro]
+

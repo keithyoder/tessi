@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_005235) do
+ActiveRecord::Schema.define(version: 2020_01_22_133812) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -48,6 +48,27 @@ ActiveRecord::Schema.define(version: 2020_01_22_005235) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bairro_id"], name: "index_logradouros_on_bairro_id"
+  end
+
+  create_table "pessoas", force: :cascade do |t|
+    t.string "nome"
+    t.integer "tipo"
+    t.string "cpf"
+    t.string "cnpj"
+    t.string "rg"
+    t.string "ie"
+    t.date "nascimento"
+    t.integer "logradouro_id"
+    t.string "numero"
+    t.string "complemento"
+    t.string "nomemae"
+    t.string "email"
+    t.string "telefone1"
+    t.string "telefone2"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["logradouro_id"], name: "index_pessoas_on_logradouro_id"
+    t.index ["nome"], name: "index_pessoas_on_nome"
   end
 
   create_table "plano_enviar_atributos", force: :cascade do |t|

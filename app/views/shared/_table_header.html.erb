@@ -5,6 +5,7 @@
     <%= titulo %></h3>
   </div>
   <div class="col-sm" align=right>
+  <% if defined?(@q) %>
     <%= search_form_for @q do |f| %>
       <%= f.search_field search_field %>
       <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
@@ -13,6 +14,7 @@
       <%= link_to '<i class="fa fa-file-excel-o" aria-hidden="true"></i>'.html_safe,
         current_page_params.merge(format: :csv), class: "btn btn-sm btn-outline-dark" %>
     <% end %>
+  <% end %>
   </div>
 </div>
 </div>

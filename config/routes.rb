@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pessoas
   resources :plano_enviar_atributos
   resources :plano_verificar_atributos
   resources :pontos
