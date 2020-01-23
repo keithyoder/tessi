@@ -1,19 +1,51 @@
-
 <%= simple_form_for(@conexao) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :pessoa %>
-    <%= f.association :plano %>
-    <%= f.association :ponto %>
-    <%= f.input :ip %>
-    <%= f.input :velocidade %>
-    <%= f.input :bloqueado %>
-    <%= f.input :auto_bloqueio %>
+    <div class="row">
+      <div class="col">
+        <%= f.association :pessoa, label_method: :nome %>
+      </div>
+      <div class="col">
+        <%= f.association :plano, label_method: :nome %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <%= f.association :ponto, label_method: :nome %>
+      </div>
+      <div class="col">
+        <%= f.input :ip %>
+      </div>
+      <div class="col">
+        <%= f.input :usuario %>
+      </div>
+      <div class="col">
+        <%= f.input :senha %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :velocidade %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <%= f.input :observacao %>
+      </div>
+      <div class="col">
+        <%= f.input :bloqueado %>
+      </div>
+      <div class="col">
+        <%= f.input :auto_bloqueio %>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+  <%= button_tag( :class => "btn btn-primary") do %>
+    <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+  <% end %>
+</div>
 <% end %>

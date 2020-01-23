@@ -20,7 +20,7 @@
               <td><%= link_to conexao.plano.nome, conexao %></td>
               <td><%= conexao.ponto.nome %></td>
               <td><%= conexao.ip %></td>
-              <td><%= conexao.bloqueado %></td>
+              <td><%= conexao.bloqueado.as_checkbox %></td>
            </tr>
           <% end %>
         </tbody>

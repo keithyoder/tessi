@@ -1,39 +1,17 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Pessoa:</strong>
-  <%= @conexao.pessoa %>
-</p>
-
-<p>
-  <strong>Plano:</strong>
-  <%= @conexao.plano %>
-</p>
-
-<p>
-  <strong>Ponto:</strong>
-  <%= @conexao.ponto %>
-</p>
-
-<p>
-  <strong>Ip:</strong>
-  <%= @conexao.ip %>
-</p>
-
-<p>
-  <strong>Velocidade:</strong>
-  <%= @conexao.velocidade %>
-</p>
-
-<p>
-  <strong>Bloqueado:</strong>
-  <%= @conexao.bloqueado %>
-</p>
-
-<p>
-  <strong>Auto bloqueio:</strong>
-  <%= @conexao.auto_bloqueio %>
-</p>
-
-<%= link_to 'Edit', edit_conexao_path(@conexao) %> |
-<%= link_to 'Back', conexoes_path %>
+<div class="card">
+  <%= render 'shared/show_header', {object: @conexao, titulo: "Conexão "+ @conexao.pessoa.nome} %>
+  <div class="card-body">
+    <div class="card-columns" style="column-count: 4">
+      <%= render 'shared/field_card', {campo: "Assinante", valor: @conexao.pessoa.nome} %>
+      <%= render 'shared/field_card', {campo: "IP", valor: @conexao.ip} %>
+      <%= render 'shared/field_card', {campo: "Usuário", valor: @conexao.usuario} %>
+      <%= render 'shared/field_card', {campo: "Senha", valor: @conexao.senha} %>
+      <%= render 'shared/field_card', {campo: "Plano", valor: @conexao.plano.nome} %>
+      <%= render 'shared/field_card', {campo: "Ponto de Acesso", valor: @conexao.ponto.nome} %>
+      <%= render 'shared/field_card', {campo: "Bloqueado", valor: @conexao.bloqueado.as_simnao.capitalize} %>
+      <%= render 'shared/field_card', {campo: "Observação", valor: @conexao.observacao} %>
+      <%= render 'shared/field_card', {campo: "Velociade Personalizada", valor: @conexao.velocidade} %>
+      <%= render 'shared/field_card', {campo: "Auto Bloqueio", valor: @conexao.auto_bloqueio.as_simnao.capitalize} %>
+    </div>
+  </div>
+</div>

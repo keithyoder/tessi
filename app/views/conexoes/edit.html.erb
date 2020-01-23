@@ -1,6 +1,6 @@
-<h1>Editing Conexao</h1>
-
-<%= render 'form', conexao: @conexao %>
-
-<%= link_to 'Show', @conexao %> |
-<%= link_to 'Back', conexoes_path %>
+<div class="card">
+  <%= render 'shared/edit_header', {object: @conexao, titulo: "Conexão"} %>
+  <div class="card-body">
+    <%= render 'form', conexao: @conexao %>
+  </div>
+</div>
