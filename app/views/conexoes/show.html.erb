@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pessoa:</strong>
+  <%= @conexao.pessoa %>
+</p>
+
+<p>
+  <strong>Plano:</strong>
+  <%= @conexao.plano %>
+</p>
+
+<p>
+  <strong>Ponto:</strong>
+  <%= @conexao.ponto %>
+</p>
+
+<p>
+  <strong>Ip:</strong>
+  <%= @conexao.ip %>
+</p>
+
+<p>
+  <strong>Velocidade:</strong>
+  <%= @conexao.velocidade %>
+</p>
+
+<p>
+  <strong>Bloqueado:</strong>
+  <%= @conexao.bloqueado %>
+</p>
+
+<p>
+  <strong>Auto bloqueio:</strong>
+  <%= @conexao.auto_bloqueio %>
+</p>
+
+<%= link_to 'Edit', edit_conexao_path(@conexao) %> |
+<%= link_to 'Back', conexoes_path %>

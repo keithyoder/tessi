@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :pessoas
+  resources :conexoes
+  resources :pessoas do
+    get :autocomplete_logradouro_nome, :on => :collection
+  end
   resources :plano_enviar_atributos
   resources :plano_verificar_atributos
   resources :pontos

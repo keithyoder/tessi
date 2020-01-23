@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_133812) do
+ActiveRecord::Schema.define(version: 2020_01_23_143339) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -30,6 +30,24 @@ ActiveRecord::Schema.define(version: 2020_01_22_133812) do
     t.datetime "updated_at", null: false
     t.index ["estado_id", "nome"], name: "index_cidades_on_estado_id_and_nome", unique: true
     t.index ["estado_id"], name: "index_cidades_on_estado_id"
+  end
+
+  create_table "conexoes", force: :cascade do |t|
+    t.integer "pessoa_id"
+    t.integer "plano_id"
+    t.integer "ponto_id"
+    t.string "ip"
+    t.string "velocidade"
+    t.boolean "bloqueado"
+    t.boolean "auto_bloqueio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "observacao"
+    t.string "usuario"
+    t.string "senha"
+    t.index ["pessoa_id"], name: "index_conexoes_on_pessoa_id"
+    t.index ["plano_id"], name: "index_conexoes_on_plano_id"
+    t.index ["ponto_id"], name: "index_conexoes_on_ponto_id"
   end
 
   create_table "estados", force: :cascade do |t|

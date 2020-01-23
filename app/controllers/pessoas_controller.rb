@@ -1,6 +1,7 @@
 class PessoasController < ApplicationController
   before_action :set_pessoa, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  autocomplete :logradouro, :nome, :full => true, :display_value => :endereco
 
   # GET /pessoas
   # GET /pessoas.json

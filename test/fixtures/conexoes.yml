@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pessoa: one
+  plano: one
+  ponto: one
+  ip: 
+  velocidade: MyString
+  bloqueado: false
+  auto_bloqueio: false
+
+two:
+  pessoa: two
+  plano: two
+  ponto: two
+  ip: 
+  velocidade: MyString
+  bloqueado: false
+  auto_bloqueio: false
