@@ -17,6 +17,8 @@ class PontosController < ApplicationController
   # GET /pontos/1
   # GET /pontos/1.json
   def show
+    @ponto = Ponto.find(params[:id])
+    @conexoes = @ponto.conexoes.page params[:page]
   end
 
   # GET /pontos/new

@@ -1,0 +1,31 @@
+<div class="card">
+  <%= render '/shared/table_header', {new_path: new_conexao_path, titulo: "Conexões", search_field: :ip_cont} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Pessoa</th>
+            <th>Plano</th>
+            <th>Ponto</th>
+            <th>IP</th>
+            <th>Bloqueado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @conexoes.each do |conexao| %>
+            <tr>
+              <td><%= conexao.pessoa.nome %></td>
+              <td><%= link_to conexao.plano.nome, conexao %></td>
+              <td><%= conexao.ponto.nome %></td>
+              <td><%= conexao.ip %></td>
+              <td><%= conexao.bloqueado.as_checkbox %></td>
+           </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%= paginate @conexoes %>
+</div>
