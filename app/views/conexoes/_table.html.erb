@@ -7,7 +7,9 @@
           <tr>
             <th>Pessoa</th>
             <th>Plano</th>
-            <th>Ponto</th>
+            <% if !defined?(exclude) or exclude != 'ponto' %>
+              <th>Ponto</th>
+            <% end %>
             <th>IP</th>
             <th>Bloqueado</th>
           </tr>
@@ -16,10 +18,12 @@
         <tbody>
           <% @conexoes.each do |conexao| %>
             <tr>
-              <td><%= conexao.pessoa.nome %></td>
-              <td><%= link_to conexao.plano.nome, conexao %></td>
-              <td><%= conexao.ponto.nome %></td>
-              <td><%= conexao.ip %></td>
+              <td><%= link_to conexao.pessoa.nome, conexao.pessoa %></td>
+              <td><%= link_to conexao.plano.nome, conexao.plano %></td>
+              <% if !defined?(exclude) or exclude != 'ponto' %>
+                <td><%= conexao.ponto.nome %></td>
+              <% end %>
+              <td><%= link_to conexao.ip, conexao %></td>
               <td><%= conexao.bloqueado.as_checkbox %></td>
            </tr>
           <% end %>

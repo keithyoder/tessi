@@ -17,3 +17,13 @@ class FalseClass
     "não"
   end
 end
+
+class NilClass
+  def as_checkbox
+    ""
+  end
+
+  def as_simnao
+    ""
+  end
+end
