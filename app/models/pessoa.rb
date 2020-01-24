@@ -13,4 +13,12 @@ class Pessoa < ApplicationRecord
   def idade
     ((Time.zone.now - nascimento.to_time) / 1.year.seconds).floor
   end
+
+  def cpf_cnpj
+    self.cpf.present? ? self.cpf : self.cpf
+  end
+
+  def rg_ie
+    self.rg.present? ? self.rg : self.ie
+  end
 end
