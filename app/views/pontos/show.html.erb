@@ -1,9 +1,9 @@
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#ponto">Ponto de Acesso</a>
+    <a class="nav-link <%= params[:tab] == "conexoes" ? "": "active" %> data-toggle="tab" href="#ponto">Ponto de Acesso</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#conexoes">Conexões</a>
+    <a class="nav-link <%= params[:tab] == "conexoes" ? "active": "" %>" data-toggle="tab" href="#conexoes">Conexões</a>
   </li>
 </ul>
 
