@@ -30,6 +30,8 @@
       <% end %>
       <%= render 'shared/field_card', {campo: "Usuários PPPoE", valor: @servidor.ppp_users} %>
       <%= render 'shared/field_card', {campo: "Usuários Hotspot", valor: @servidor.hotspot_users} %>
+      <%= render 'shared/field_card', {campo: "Conexões", valor: @servidor.conexoes.count} %>
+      <%= render 'shared/field_card', {campo: "Bloqueados", valor: @servidor.conexoes.bloqueado.count} %>
     </div>
   </div>
 </div>
