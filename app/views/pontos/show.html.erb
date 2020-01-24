@@ -18,6 +18,8 @@
           <%= render 'shared/field_card', {campo: "Servidor", valor: @ponto.servidor.nome} %>
           <%= render 'shared/field_card', {campo: "IP", valor: @ponto.ip} %>
           <%= render 'shared/field_card', {campo: "Usuário", valor: @ponto.usuario} %>
+          <%= render 'shared/field_card', {campo: "Conexões", valor: @ponto.conexoes.count} %>
+          <%= render 'shared/field_card', {campo: "Bloqueados", valor: @ponto.conexoes.bloqueado.count} %>
         </div>
       </div>
     </div>

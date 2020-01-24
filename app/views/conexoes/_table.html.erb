@@ -5,7 +5,9 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Pessoa</th>
+            <% if !defined?(exclude) or exclude != 'pessoa' %>
+              <th>Pessoa</th>
+            <% end %>
             <th>Plano</th>
             <% if !defined?(exclude) or exclude != 'ponto' %>
               <th>Ponto</th>
@@ -18,7 +20,9 @@
         <tbody>
           <% @conexoes.each do |conexao| %>
             <tr>
-              <td><%= link_to conexao.pessoa.nome, conexao.pessoa %></td>
+              <% if !defined?(exclude) or exclude != 'pessoa' %>
+                <td><%= link_to conexao.pessoa.nome, conexao.pessoa %></td>
+              <% end %>
               <td><%= link_to conexao.plano.nome, conexao.plano %></td>
               <% if !defined?(exclude) or exclude != 'ponto' %>
                 <td><%= conexao.ponto.nome %></td>

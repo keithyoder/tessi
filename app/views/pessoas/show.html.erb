@@ -1,43 +1,32 @@
-<div class="card">
-<%= render 'shared/show_header', {object: @pessoa, titulo: "Pessoa "+@pessoa.nome} %>
-<div class="card-body">
-  <div class="card-columns" style="column-count: 4">
-    <div class="card border-dark">
-      <div class="card-header">Tipo</div>
-      <div class="card-text" align="right"><br><%= @pessoa.tipo %>&nbsp</div>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#pessoa">Pessoa</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#conexoes">Conexões</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="pessoa" role="tabpanel" aria-labelledby="pessoa-tab">
+    <div class="card">
+      <%= render 'shared/show_header', {object: @pessoa, titulo: "Pessoa "+@pessoa.nome} %>
+      <div class="card-body">
+        <div class="card-columns" style="column-count: 4">
+          <%= render 'shared/field_card', {campo: "Tipo", valor: @pessoa.tipo} %>
+          <%= render 'shared/field_card', {campo: "CPF / CNPJ", valor: @pessoa.tipo == "Pessoa Física" ? @pessoa.cpf : @pessoa.cnpj} %>
+          <%= render 'shared/field_card', {campo: "RG / IE", valor: @pessoa.tipo == "Pessoa Física" ? @pessoa.rg : @pessoa.ie} %>
+          <%= render 'shared/field_card', {campo: "Nascimento", valor: @pessoa.nascimento} %>
+          <%= render 'shared/field_card', {campo: "Endereço", valor: @pessoa.endereco + '<br>'.html_safe+@pessoa.logradouro.bairro.nome_cidade_uf} %>
+          <%= render 'shared/field_card', {campo: "Nome da Mãe", valor: @pessoa.nomemae} %>
+          <%= render 'shared/field_card', {campo: "E-mail", valor: @pessoa.email} %>
+          <%= render 'shared/field_card', {campo: "Telefone 1", valor: @pessoa.telefone1} %>
+          <%= render 'shared/field_card', {campo: "Telefone 2", valor: @pessoa.telefone2} %>
+        </div>
+      </div>
     </div>
-    <div class="card border-dark">
-      <div class="card-header">CPF / CNPJ</div>
-      <div class="card-text" align="right"><br><%= @pessoa.tipo == "Pessoa Física" ? @pessoa.cpf : @pessoa.cnpj %>&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">RG / IE</div>
-      <div class="card-text" align="right"><br><%= @pessoa.tipo == "Pessoa Física" ? @pessoa.rg : @pessoa.ie %>&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">Nascimento</div>
-      <div class="card-text" align="right"><br><%= @pessoa.nascimento %> (<%= @pessoa.idade %> anos)&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">Endereço</div>
-      <div class="card-text" align="right"><%= @pessoa.endereco %>&nbsp
-        <br><%= @pessoa.logradouro.bairro.nome_cidade_uf %>&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">Nome da Mãe</div>
-      <div class="card-text" align="right"><br><%= @pessoa.nomemae %>&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">E-mail</div>
-      <div class="card-text" align="right"><br><%= @pessoa.email %>&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">Telefone 1</div>
-      <div class="card-text" align="right"><br><%= @pessoa.telefone1 %>&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">Telefone 2</div>
-      <div class="card-text" align="right"><br><%= @pessoa.telefone2 %>&nbsp</div>
-    </div>
+  </div>
+  <div class="tab-pane fade" id="conexoes" role="tabpanel" aria-labelledby="conexoes-tab">
+    <h3><%= @pessoa.nome %></h3>
+    <%= render 'conexoes/table', {exclude: "pessoa"} %>
   </div>
 </div>
