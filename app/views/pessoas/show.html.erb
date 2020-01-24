@@ -13,8 +13,8 @@
       <div class="card-body">
         <div class="card-columns" style="column-count: 4">
           <%= render 'shared/field_card', {campo: "Tipo", valor: @pessoa.tipo} %>
-          <%= render 'shared/field_card', {campo: "CPF / CNPJ", valor: @pessoa.tipo == "Pessoa Física" ? @pessoa.cpf : @pessoa.cnpj} %>
-          <%= render 'shared/field_card', {campo: "RG / IE", valor: @pessoa.tipo == "Pessoa Física" ? @pessoa.rg : @pessoa.ie} %>
+          <%= render 'shared/field_card', {campo: "CPF / CNPJ", valor: @pessoa.tipo == "Pessoa Física" ? @pessoa.cpf.as_s : @pessoa.cnpj.as_s} %>
+          <%= render 'shared/field_card', {campo: "RG / IE", valor: @pessoa.tipo == "Pessoa Física" ? @pessoa.rg.as_s : @pessoa.ie.as_s} %>
           <%= render 'shared/field_card', {campo: "Nascimento", valor: @pessoa.nascimento} %>
           <%= render 'shared/field_card', {campo: "Endereço", valor: @pessoa.endereco + '<br>'.html_safe+@pessoa.logradouro.bairro.nome_cidade_uf} %>
           <%= render 'shared/field_card', {campo: "Nome da Mãe", valor: @pessoa.nomemae} %>
