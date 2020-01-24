@@ -40,7 +40,7 @@ class Ability
       elsif user.tecnico_n2?
         can :read, :all
         can [:create, :update], [Cidade, Bairro, Logradouro]
-        can [:create, :update], [Servidor]
+        can [:create, :update], [Servidor, Conexao]
       elsif user.financeiro_n1?
         can :read, :all
         can [:create, :update], [Cidade, Bairro, Logradouro]
