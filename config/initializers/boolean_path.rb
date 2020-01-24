@@ -26,4 +26,8 @@ class NilClass
   def as_simnao
     ""
   end
+
+  def as_string
+    ""
+  end
 end

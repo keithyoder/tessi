@@ -3,8 +3,8 @@
   <thead>
     <tr>
       <th>Nome</th>
-      <th>Sistema</th>
-      <th>Tecnologia</th>
+      <th>Conexões</th>
+      <th>Bloqueados</th>
       <th>Servidor</th>
       <th>IP</th>
     </tr>
@@ -14,9 +14,9 @@
     <% local_assigns[:pontos].each do |ponto| %>
       <tr>
         <td><%= link_to ponto.nome, ponto %></td>
-        <td><%= ponto.sistema %></td>
-        <td><%= ponto.tecnologia %></td>
-        <td><%= ponto.servidor.nome %></td>
+        <td><%= ponto.conexoes.count %></td>
+        <td><%= ponto.bloqueado.count %></td>
+        <td><%= link_to ponto.servidor.nome, ponto.servidor %></td>
         <td><%= ponto.ip %></td>
       </tr>
     <% end %>
