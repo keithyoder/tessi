@@ -20,6 +20,8 @@
       <%= render 'shared/field_card', {campo: "Observação", valor: @conexao.observacao} %>
       <%= render 'shared/field_card', {campo: "Velociade Personalizada", valor: @conexao.velocidade} %>
       <%= render 'shared/field_card', {campo: "Auto Bloqueio", valor: @conexao.auto_bloqueio.as_simnao.capitalize} %>
+      <%= render 'shared/field_card', {campo: "Tempo Logado", valor: @conexao.status_hotspot['uptime'] || "Desconectado"} %>
+
     </div>
   </div>
 </div>

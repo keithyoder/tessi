@@ -36,17 +36,17 @@ class Ability
         cannot :destroy, Estado
       elsif user.tecnico_n1?
         can :read, :all
-        can [:create, :update], [Cidade, Bairro, Logradouro]
+        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao]
       elsif user.tecnico_n2?
         can :read, :all
         can [:create, :update], [Cidade, Bairro, Logradouro]
-        can [:create, :update], [Servidor, Conexao]
+        can [:create, :update], [Servidor, Ponto, Conexao]
       elsif user.financeiro_n1?
         can :read, :all
-        can [:create, :update], [Cidade, Bairro, Logradouro]
+        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao]
       elsif user.financeiro_n2?
         can :read, :all
-        can [:create, :update], [Cidade, Bairro, Logradouro]
+        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao]
       end
     end
   end
