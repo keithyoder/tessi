@@ -2,12 +2,20 @@
   <%= render 'shared/show_header', {object: @conexao, titulo: "Conexão "+ @conexao.pessoa.nome} %>
   <div class="card-body">
     <div class="card-columns" style="column-count: 4">
-      <%= render 'shared/field_card', {campo: "Assinante", valor: @conexao.pessoa.nome} %>
-      <%= render 'shared/field_card', {campo: "IP", valor: link_to(@conexao.ip, 'http://'+@conexao.ip.to_s, target: "_blank")} %>
+      <%= link_to @conexao.pessoa do %>
+        <%= render 'shared/field_card', {campo: "Assinante", valor: @conexao.pessoa.nome} %>
+      <% end %>
+      <%= link_to 'http://'+@conexao.ip.to_s, target: "_blank" do %>
+        <%= render 'shared/field_card', {campo: "IP", valor: @conexao.ip} %>
+      <% end %>
       <%= render 'shared/field_card', {campo: "Usuário", valor: @conexao.usuario} %>
       <%= render 'shared/field_card', {campo: "Senha", valor: @conexao.senha} %>
-      <%= render 'shared/field_card', {campo: "Plano", valor: @conexao.plano.nome} %>
-      <%= render 'shared/field_card', {campo: "Ponto de Acesso", valor: @conexao.ponto.nome} %>
+      <%= link_to @conexao.plano do %>
+        <%= render 'shared/field_card', {campo: "Plano", valor: @conexao.plano.nome} %>
+      <% end %>
+      <%= link_to @conexao.ponto do %>
+        <%= render 'shared/field_card', {campo: "Ponto de Acesso", valor: @conexao.ponto.nome} %>
+      <% end %>
       <%= render 'shared/field_card', {campo: "Bloqueado", valor: @conexao.bloqueado.as_simnao.capitalize} %>
       <%= render 'shared/field_card', {campo: "Observação", valor: @conexao.observacao} %>
       <%= render 'shared/field_card', {campo: "Velociade Personalizada", valor: @conexao.velocidade} %>

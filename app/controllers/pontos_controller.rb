@@ -18,7 +18,9 @@ class PontosController < ApplicationController
   # GET /pontos/1.json
   def show
     @ponto = Ponto.find(params[:id])
-    @conexoes = @ponto.conexoes.order(:ip).page params[:page]
+    @q = @ponto.conexoes.ransack(params[:q])
+    @q.sorts = "ip"
+    @conexoes = @q.result.page params[:page]
   end
 
   # GET /pontos/new
