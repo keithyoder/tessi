@@ -17,8 +17,11 @@ class Servidor < ApplicationRecord
   end
 
   def mk_command(command)
-    MTik::command(:host => self.ip.to_s, :user => self.usuario,
-      :pass => self.senha, :use_ssl => :true, :command => command)
+    begin
+      MTik::command(:host => self.ip.to_s, :user => self.usuario,
+        :pass => self.senha, :use_ssl => :true, :command => command)
+    rescue
+    end
   end
 
   def ppp_users
