@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  conexao: one
+  atributo: MyString
+  op: MyString
+  valor: MyString
+
+two:
+  conexao: two
+  atributo: MyString
+  op: MyString
+  valor: MyString

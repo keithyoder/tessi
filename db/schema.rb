@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_143339) do
+ActiveRecord::Schema.define(version: 2020_01_24_234957) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -30,6 +30,26 @@ ActiveRecord::Schema.define(version: 2020_01_23_143339) do
     t.datetime "updated_at", null: false
     t.index ["estado_id", "nome"], name: "index_cidades_on_estado_id_and_nome", unique: true
     t.index ["estado_id"], name: "index_cidades_on_estado_id"
+  end
+
+  create_table "conexao_enviar_atributos", force: :cascade do |t|
+    t.integer "conexao_id"
+    t.string "atributo"
+    t.string "op"
+    t.string "valor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conexao_id"], name: "index_conexao_enviar_atributos_on_conexao_id"
+  end
+
+  create_table "conexao_verificar_atributos", force: :cascade do |t|
+    t.integer "conexao_id"
+    t.string "atributo"
+    t.string "op"
+    t.string "valor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conexao_id"], name: "index_conexao_verificar_atributos_on_conexao_id"
   end
 
   create_table "conexoes", force: :cascade do |t|
