@@ -8,8 +8,8 @@ class Conexao < ApplicationRecord
   scope :bloqueado, -> { where("bloqueado") }
 
   after_save do
-    atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'password').first_or_create
-    atr.op = '=='
+    atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Cleartext-Password').first_or_create
+    atr.op = ':='
     atr.valor = self.senha
     atr.save
   end

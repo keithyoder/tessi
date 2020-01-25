@@ -17,10 +17,12 @@ class Servidor < ApplicationRecord
   end
 
   def mk_command(command)
-    begin
-      MTik::command(:host => self.ip.to_s, :user => self.usuario,
-        :pass => self.senha, :use_ssl => :true, :command => command)
-    rescue
+    if self.usuario.presence? && self.senha.presence?
+      begin
+        MTik::command(:host => self.ip.to_s, :user => self.usuario,
+          :pass => self.senha, :use_ssl => :true, :command => command)
+      rescue
+      end
     end
   end
 
