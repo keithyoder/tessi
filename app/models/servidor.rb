@@ -17,7 +17,7 @@ class Servidor < ApplicationRecord
   end
 
   def mk_command(command)
-    if self.usuario.presence? && self.senha.presence?
+    if self.usuario.present? && self.senha.present?
       begin
         MTik::command(:host => self.ip.to_s, :user => self.usuario,
           :pass => self.senha, :use_ssl => :true, :command => command)
