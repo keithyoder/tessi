@@ -14,7 +14,7 @@
         <tbody>
           <% @autenticacoes.each do |autenticacao| %>
             <tr>
-              <td><%= autenticacao.username %></td>
+              <td><%= link_to autenticacao.username, autenticacao.conexao %></td>
               <td><%= autenticacao.reply %></td>
               <td><%= autenticacao.authdate %></td>
             </tr>
