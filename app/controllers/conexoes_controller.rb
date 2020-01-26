@@ -14,7 +14,7 @@ class ConexoesController < ApplicationController
   # GET /conexoes/1.json
   def show
     @conexao = Conexao.find(params[:id])
-    @autenticacoes = @conexao.autenticacoes.order(:authdate, :desc).page params[:page]
+    @autenticacoes = @conexao.autenticacoes.order(authdate: :desc).page params[:page]
   end
 
   # GET /conexoes/new
