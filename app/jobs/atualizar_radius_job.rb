@@ -9,4 +9,4 @@ class AtualizarRadiusJob < ApplicationJob
   end
 end
 
-AtualizarRadiusJob.perform_now()
+#AtualizarRadiusJob.perform_now()
