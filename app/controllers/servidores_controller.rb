@@ -22,6 +22,7 @@ class ServidoresController < ApplicationController
     @q = @servidor.pontos.ransack(params[:q])
     @q.sorts = "nome"
     @pontos = @q.result.page params[:page]
+    @autenticacoes = @servidor.autenticacoes.order(authdate: :desc).page params[:page]
   end
 
   # GET /servidores/new

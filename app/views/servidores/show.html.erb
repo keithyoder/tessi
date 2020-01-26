@@ -1,61 +1,78 @@
-<div class="card">
-  <%= render 'shared/show_header', {object: @servidor, titulo: "Concentrador "+ @servidor.nome} %>
-  <div class="card-body">
-    <button class="btn btn-sm <%= online_button(@servidor.ping?) %>">
-    <o>
-    <i class="fa fa-globe fa-lg" aria-hidden="true"></i></button></p>
-    <div class="card-columns" style="column-count: 4">
-      <%= render 'shared/field_card', {campo: "Ativo", valor: @servidor.ativo} %>
-      <%= render 'shared/field_card', {campo: "IP", valor: @servidor.ip} %>
-      <%= render 'shared/field_card', {campo: "Usuário", valor: @servidor.usuario} %>
-      <%= render 'shared/field_card', {campo: "Porta API", valor: @servidor.api_porta} %>
-      <%= render 'shared/field_card', {campo: "Porta SSH", valor: @servidor.ssh_porta} %>
-      <%= render 'shared/field_card', {campo: "Porta SNMP", valor: @servidor.snmp_porta} %>
-      <%= render 'shared/field_card', {campo: "Comunidade SNMP", valor: @servidor.snmp_comunidade} %>
-      <%= render 'shared/field_card', {campo: "Secret Radius", valor: @servidor.radius_secret} %>
-      <%= render 'shared/field_card', {campo: "Porta Radius", valor: @servidor.radius_porta} %>
-    </div>
-  </div>
-</div>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#concentrador">Concentrador</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#autenticacao">Autenticação</a>
+  </li>
+</ul>
 
-<% if (@servidor.ping?) %>
-<div class="card">
-  <div class="card-header">
-    <h3>Status</h3>
-  </div>
-  <div class="card-body">
-    <div class="card-columns" style="column-count: 4">
-      <% @servidor.system_info.each do |info, value| %>
-        <%= render 'shared/field_card', {campo: info.titleize, valor: value} %>
-      <% end %>
-      <%= render 'shared/field_card', {campo: "Usuários PPPoE", valor: @servidor.ppp_users} %>
-      <%= render 'shared/field_card', {campo: "Usuários Hotspot", valor: @servidor.hotspot_users} %>
-      <%= render 'shared/field_card', {campo: "Conexões", valor: @servidor.conexoes.count} %>
-      <%= render 'shared/field_card', {campo: "Bloqueados", valor: @servidor.conexoes.bloqueado.count} %>
+<div class="tab-content" id="concentrador-tabs">
+  <div class="tab-pane fade show active" id="concentrador" role="tabpanel" aria-labelledby="conecentrador-tab">
+    <div class="card">
+      <%= render 'shared/show_header', {object: @servidor, titulo: "Concentrador "+ @servidor.nome} %>
+      <div class="card-body">
+        <button class="btn btn-sm <%= online_button(@servidor.ping?) %>">
+        <o><i class="fa fa-globe fa-lg" aria-hidden="true"></i></button></p>
+        <div class="card-columns" style="column-count: 4">
+          <%= render 'shared/field_card', {campo: "Ativo", valor: @servidor.ativo} %>
+          <%= render 'shared/field_card', {campo: "IP", valor: @servidor.ip} %>
+          <%= render 'shared/field_card', {campo: "Usuário", valor: @servidor.usuario} %>
+          <%= render 'shared/field_card', {campo: "Porta API", valor: @servidor.api_porta} %>
+          <%= render 'shared/field_card', {campo: "Porta SSH", valor: @servidor.ssh_porta} %>
+          <%= render 'shared/field_card', {campo: "Porta SNMP", valor: @servidor.snmp_porta} %>
+          <%= render 'shared/field_card', {campo: "Comunidade SNMP", valor: @servidor.snmp_comunidade} %>
+          <%= render 'shared/field_card', {campo: "Secret Radius", valor: @servidor.radius_secret} %>
+          <%= render 'shared/field_card', {campo: "Porta Radius", valor: @servidor.radius_porta} %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<% end %>
 
-<div class="card">
-<div class="card-header">
-<div class="row">
-  <div class="col-sm">
-    <h3><%= link_to '<i class="fa fa-plus" aria-hidden="true"></i>'.html_safe, new_ponto_path, class: "btn btn-sm btn-outline-dark" %>
-    Pontos de Acesso</h3>
-  </div>
-  <div class="col-sm" align=right>
-    <%= search_form_for @q do |f| %>
-      <%= f.search_field :nome_cont %>
-      <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
-        <i class="fa fa-search" aria-hidden="true"></i>
-      <% end %>
-      <%= link_to '<i class="fa fa-file-excel-o" aria-hidden="true"></i>'.html_safe,
-        current_page_params.merge(format: :csv), class: "btn btn-sm btn-outline-dark" %>
+    <% if (@servidor.ping?) %>
+    <div class="card">
+      <div class="card-header">
+        <h3>Status</h3>
+      </div>
+      <div class="card-body">
+        <div class="card-columns" style="column-count: 4">
+          <% @servidor.system_info.each do |info, value| %>
+            <%= render 'shared/field_card', {campo: info.titleize, valor: value} %>
+          <% end %>
+          <%= render 'shared/field_card', {campo: "Usuários PPPoE", valor: @servidor.ppp_users} %>
+          <%= render 'shared/field_card', {campo: "Usuários Hotspot", valor: @servidor.hotspot_users} %>
+          <%= render 'shared/field_card', {campo: "Conexões", valor: @servidor.conexoes.count} %>
+          <%= render 'shared/field_card', {campo: "Bloqueados", valor: @servidor.conexoes.bloqueado.count} %>
+        </div>
+      </div>
+    </div>
     <% end %>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-sm">
+            <h3><%= link_to '<i class="fa fa-plus" aria-hidden="true"></i>'.html_safe, new_ponto_path, class: "btn btn-sm btn-outline-dark" %>
+            Pontos de Acesso</h3>
+          </div>
+          <div class="col-sm" align=right>
+            <%= search_form_for @q do |f| %>
+              <%= f.search_field :nome_cont %>
+              <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
+                <i class="fa fa-search" aria-hidden="true"></i>
+              <% end %>
+              <%= link_to '<i class="fa fa-file-excel-o" aria-hidden="true"></i>'.html_safe,
+                current_page_params.merge(format: :csv), class: "btn btn-sm btn-outline-dark" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <%= render 'pontos/table', pontos: @pontos %>
+      </div>
+    </div>
   </div>
-</div>
-</div>  <div class="card-body">
-    <%= render 'pontos/table', pontos: @pontos %>
+  <div class="tab-pane fade" id="autenticacao" role="tabpanel" aria-labelledby="autenticacao-tab">
+    <h3><%= @servidor.nome %></h3>
+    <%= render 'autenticacoes/table' %>
   </div>
 </div>

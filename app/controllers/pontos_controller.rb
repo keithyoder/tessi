@@ -21,6 +21,7 @@ class PontosController < ApplicationController
     @q = @ponto.conexoes.ransack(params[:q])
     @q.sorts = "ip"
     @conexoes = @q.result.page params[:page]
+    @autenticacoes = @ponto.autenticacoes
   end
 
   # GET /pontos/new

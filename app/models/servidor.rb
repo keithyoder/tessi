@@ -3,6 +3,8 @@ require 'csv'
 class Servidor < ApplicationRecord
   has_many :pontos
   has_many :conexoes, through: :pontos
+  has_many :autenticacoes, :through => :pontos
+
   scope :ativo, -> { where("ativo") }
 
   def self.to_csv
