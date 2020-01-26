@@ -10,10 +10,12 @@ class Conexao < ApplicationRecord
 
   after_touch :save
   after_save do
-    atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Cleartext-Password').first_or_create
-    atr.op = ':='
-    atr.valor = self.senha
-    atr.save
+    if self.usuario.present? && self.senha.present?
+      atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Cleartext-Password').first_or_create
+      atr.op = ':='
+      atr.valor = self.senha
+      atr.save
+    end
 
     if self.ponto.tecnologia == :Radio
       atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Mikrotik-Host-Ip').first_or_create

@@ -3,7 +3,6 @@ class AtualizarRadiusJob < ApplicationJob
 
   def perform(*args)
     Conexao.all.each do | conexao |
-        puts conexao.usuario
         conexao.touch
       end
   end
