@@ -14,6 +14,13 @@ class Conexao < ApplicationRecord
     atr.op = ':='
     atr.valor = self.senha
     atr.save
+
+    if self.ponto.tecnologia == :Radio
+      atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Mikrotik-Host-Ip').first_or_create
+      atr.op = ':='
+      atr.valor = self.ip.to_s
+      atr.save
+    end
   end
 
   def status_hotspot

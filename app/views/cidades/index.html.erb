@@ -1,5 +1,5 @@
 <div class="card">
-  <%= render '/shared/table_header', {new_path: new_cidade_path, titulo: "Cidades", search_field: :nome_cont} %>
+  <%= render '/shared/table_header', {new_path: new_cidade_path, titulo: "Cidades", search_string: :nome_cont} %>
   <div class="card-body">
     <%= render 'table', cidades: @cidades %>
   </div>
