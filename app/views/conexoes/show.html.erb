@@ -1,3 +1,14 @@
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#conexao">Conexão</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#autenticacao">Autenticação</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="conexao-tabs">
+<div class="tab-pane fade show active" id="conexao" role="tabpanel" aria-labelledby="conexao-tab">
 <div class="card">
   <%= render 'shared/show_header', {object: @conexao, titulo: "Conexão "+ @conexao.pessoa.nome} %>
   <div class="card-body">
@@ -21,7 +32,12 @@
       <%= render 'shared/field_card', {campo: "Velociade Personalizada", valor: @conexao.velocidade} %>
       <%= render 'shared/field_card', {campo: "Auto Bloqueio", valor: @conexao.auto_bloqueio.as_simnao.capitalize} %>
       <%= render 'shared/field_card', {campo: "Tempo Logado", valor: @conexao.status_hotspot['uptime'] || "Desconectado"} %>
-
     </div>
   </div>
+</div>
+
+</div>
+<div class="tab-pane fade" id="autenticacao" role="tabpanel" aria-labelledby="autenticacao-tab">
+  <h3><%= @conexao.pessoa.nome %></h3>
+  <%= render 'autenticacoes/table' %>
 </div>

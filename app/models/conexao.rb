@@ -5,6 +5,7 @@ class Conexao < ApplicationRecord
   has_one :servidor, through: :ponto
   has_many :conexao_enviar_atributos
   has_many :conexao_verificar_atributos
+  has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
 
   after_save do
