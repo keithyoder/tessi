@@ -8,6 +8,7 @@ class Conexao < ApplicationRecord
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
 
+  after_touch :save
   after_save do
     atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Cleartext-Password').first_or_create
     atr.op = ':='
