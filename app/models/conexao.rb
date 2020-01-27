@@ -26,6 +26,11 @@ class Conexao < ApplicationRecord
   end
 
   def status_hotspot
-    self.servidor.mk_command(['/ip/hotspot/active/print', '?user='+self.usuario.to_s])[0][0]
+    result = self.servidor.mk_command(['/ip/hotspot/active/print', '?user='+self.usuario.to_s])
+    if result.present?
+      result[0][0]
+    else
+      ['uptime' => "Desconectado"]
+    end
   end
 end

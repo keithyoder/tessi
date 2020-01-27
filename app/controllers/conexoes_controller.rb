@@ -74,6 +74,7 @@ class ConexoesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def conexao_params
-      params.require(:conexao).permit(:pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado, :auto_bloqueio, :usuario, :senha)
+      params.require(:conexao).permit(:pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
+        :auto_bloqueio, :usuario, :senha, :observacao)
     end
 end

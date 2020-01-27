@@ -1,28 +1,12 @@
 <div class="card">
-<%= render 'shared/show_header', {object: @cidade, titulo: "Cidade "+ @cidade.nome} %>
-<div class="card-body">
-  <div class="card-columns" style="column-count: 4">
-    <%= render 'shared/field_card', {campo: "Estado", valor: @cidade.estado.nome} %>
-    <%= render 'shared/field_card', {campo: "IBGE", valor: @cidade.ibge} %>
-  </div>
-</div>
-<div class="card">
-  <div class="card-header">
-    <div class="row">
-      <div class="col-sm">
-        <h3><%= new_table_header(new_bairro_path)%> Bairros</h3>
-      </div>
-      <div class="col-sm" align=right>
-        <%= search_form_for @q, url: @cidade do |f| %>
-          <%= f.search_field :nome_cont %>
-          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
-            <i class="fa fa-search" aria-hidden="true"></i>
-          <% end %>
-        <% end %>
-      </div>
+  <%= render 'shared/show_header', {object: @cidade} %>
+  <div class="card-body">
+    <div class="card-columns" style="column-count: 4">
+      <%= link_to @cidade.estado do %>
+        <%= render 'shared/field_card', {campo: "Estado", valor: @cidade.estado.nome} %>
+      <% end %>
+      <%= render 'shared/field_card', {campo: "IBGE", valor: @cidade.ibge} %>
     </div>
   </div>
-  <div class="card-body">
-    <%= render 'bairros/table', bairros: @bairros %>
-  </div>
+  <%= render 'bairros/table', bairros: @bairros %>
 </div>

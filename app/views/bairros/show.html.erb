@@ -1,51 +1,20 @@
 <div class="row">
-<div class="card col-sm">
-  <%= render 'shared/show_header', {object: @bairro, titulo: "Bairro "+@bairro.nome} %>
-  <div class="card-body">
-    <p>
-      <strong>Nome:</strong>
-      <%= @bairro.nome %>
-    </p>
-
-    <p>
-      <strong>Cidade:</strong>
-      <%= @bairro.cidade.nome_uf %>
-    </p>
-
-    <p>
-      <strong>Latitude:</strong>
-      <%= @bairro.latitude %>
-    </p>
-
-    <p>
-      <strong>Longitude:</strong>
-      <%= @bairro.longitude %>
-    </p>
-  </div>
-</div>
-<div class="card col-sm">
-  <p align=center>
-  <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=400x300&center=#{@bairro.latitude},#{@bairro.longitude}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map" %>
-  </p>
-</div>
-</div>
-<div class="card">
-  <div class="card-header">
-    <div class="row">
-      <div class="col-sm">
-        <h3><%= new_table_header(new_logradouro_path)%> Logradouros</h3>
-      </div>
-      <div class="col-sm" align=right>
-        <%= search_form_for @q, url: @logradouro do |f| %>
-          <%= f.search_field :nome_cont %>
-          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
-            <i class="fa fa-search" aria-hidden="true"></i>
-          <% end %>
+  <div class="card col-sm">
+    <%= render 'shared/show_header', {object: @bairro} %>
+    <div class="card-body">
+      <div class="card-columns" style="column-count: 3">
+        <%= link_to @bairro.cidade do %>
+          <%= render 'shared/field_card', {campo: "Cidade", valor: @bairro.cidade.nome_uf} %>
         <% end %>
+        <%= render 'shared/field_card', {campo: "Latitude", valor: @bairro.latitude} %>
+        <%= render 'shared/field_card', {campo: "Longitude", valor: @bairro.longitude} %>
       </div>
     </div>
   </div>
-  <div class="card-body">
-    <%= render 'logradouros/table', logradouros: @logradouros %>
+  <div class="card col-sm">
+    <p align=center>
+    <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=400x300&center=#{@bairro.latitude},#{@bairro.longitude}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map" %>
+    </p>
   </div>
 </div>
+<%= render 'logradouros/table', logradouros: @logradouros %>

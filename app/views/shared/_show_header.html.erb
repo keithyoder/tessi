@@ -8,5 +8,5 @@
         <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
       <% end %>
     <% end %>
-    <%= titulo %></h3>
+    <%= defined?(titulo) ? titulo : object.model_name.singular.capitalize + ' ' + object.nome %></h3>
 </div>

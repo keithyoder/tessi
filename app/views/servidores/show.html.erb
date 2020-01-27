@@ -3,6 +3,9 @@
     <a class="nav-link active" data-toggle="tab" href="#concentrador">Concentrador</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#pontos">Pontos de Acesso</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#autenticacao">Autenticação</a>
   </li>
 </ul>
@@ -46,30 +49,9 @@
       </div>
     </div>
     <% end %>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="row">
-          <div class="col-sm">
-            <h3><%= link_to '<i class="fa fa-plus" aria-hidden="true"></i>'.html_safe, new_ponto_path, class: "btn btn-sm btn-outline-dark" %>
-            Pontos de Acesso</h3>
-          </div>
-          <div class="col-sm" align=right>
-            <%= search_form_for @q do |f| %>
-              <%= f.search_field :nome_cont %>
-              <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
-                <i class="fa fa-search" aria-hidden="true"></i>
-              <% end %>
-              <%= link_to '<i class="fa fa-file-excel-o" aria-hidden="true"></i>'.html_safe,
-                current_page_params.merge(format: :csv), class: "btn btn-sm btn-outline-dark" %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <%= render 'pontos/table', pontos: @pontos %>
-      </div>
-    </div>
+  </div>
+  <div class="tab-pane fade" id="pontos" role="tabpanel" aria-labelledby="pontos-tab">
+    <%= render 'pontos/table', pontos: @pontos %>
   </div>
   <div class="tab-pane fade" id="autenticacao" role="tabpanel" aria-labelledby="autenticacao-tab">
     <h3><%= @servidor.nome %></h3>

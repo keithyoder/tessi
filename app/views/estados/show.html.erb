@@ -1,5 +1,5 @@
 <div class="card">
-  <%= render 'shared/show_header', {object: @estado, titulo: "Estado "+ @estado.nome} %>
+  <%= render 'shared/show_header', {object: @estado} %>
   <div class="card-body">
     <div class="card-columns" style="column-count: 4">
       <%= render 'shared/field_card', {campo: "Sigla", valor: @estado.sigla} %>
@@ -8,8 +8,5 @@
   </div>
 </div>
 <div class="card">
-  <%= render '/shared/table_header', {new_path: new_cidade_path, titulo: "Cidades", search_string: :nome_cont} %>
-  <div class="card-body">
-    <%= render 'cidades/table', cidades: @cidades %>
-  </div>
+  <%= render 'cidades/table', cidades: @cidades %>
 </div>

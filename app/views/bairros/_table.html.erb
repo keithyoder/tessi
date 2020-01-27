@@ -1,24 +1,28 @@
-<div class="table-responsive">
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Cidade</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% local_assigns[:bairros].each do |bairro| %>
-      <tr>
-        <td><%= link_to bairro.nome, bairro %></td>
-        <td><%= bairro.cidade.nome_uf %></td>
-        <td><%= bairro.latitude %></td>
-        <td><%= bairro.longitude %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="card">
+  <%= render '/shared/table_header', {object: @bairros, search_string: :nome_cont} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @bairros.each do |bairro| %>
+            <tr>
+              <td><%= link_to bairro.nome, bairro %></td>
+              <td><%= bairro.cidade.nome_uf %></td>
+              <td><%= bairro.latitude %></td>
+              <td><%= bairro.longitude %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate local_assigns[:bairros] %>
+  </div>
 </div>
-<%= paginate local_assigns[:bairros] %>

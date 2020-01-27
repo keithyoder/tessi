@@ -1,5 +1,5 @@
 <div class="card">
-  <%= render '/shared/table_header', {new_path: new_estado_path, titulo: "Estados", search_string: :sigla_or_nome_cont} %>
+  <%= render '/shared/table_header', {object: @estados, search_string: :sigla_or_nome_cont} %>
   <div class="card-body">
   <div class="table-responsive">
   <table class="table table-striped">

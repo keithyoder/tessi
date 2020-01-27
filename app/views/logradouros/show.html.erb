@@ -1,14 +1,10 @@
 <div class="card">
-<%= render 'shared/show_header', {object: @logradouro, titulo: "Logradouro "+@logradouro.nome} %>
+<%= render 'shared/show_header', {object: @logradouro} %>
 <div class="card-body">
-  <div class="card-columns" style="column-count: 4">
-    <div class="card border-dark">
-      <div class="card-header">Bairro</div>
-      <div class="card-text" align="right"><br><%= @logradouro.bairro.nome_cidade_uf %>&nbsp</div>
-    </div>
-    <div class="card border-dark">
-      <div class="card-header">CEP</div>
-      <div class="card-text" align="right"><br><%= @logradouro.cep %>&nbsp</div>
-    </div>
+  <div class="card-columns" style="column-count: 3">
+    <%= link_to @logradouro.bairro do %>
+      <%= render 'shared/field_card', {campo: "Bairro", valor: @logradouro.bairro.nome_cidade_uf} %>
+    <% end %>
+    <%= render 'shared/field_card', {campo: "CEP", valor: @logradouro.cep} %>
   </div>
 </div>

@@ -16,7 +16,7 @@
       <%= render 'shared/field_card', {campo: "Mensalidade", valor: @plano.mensalidade} %>
       <%= render 'shared/field_card', {campo: "Download", valor: @plano.download.to_s + " Mbps"} %>
       <%= render 'shared/field_card', {campo: "Upload", valor: @plano.upload.to_s + " Mbps"} %>
-      <%= render 'shared/field_card', {campo: "Burst", valor: @plano.burst} %>
+      <%= render 'shared/field_card', {campo: "Burst", valor: @plano.burst.as_simnao.capitalize} %>
     </div>
   </div>
 </div>

@@ -3,6 +3,14 @@ require 'csv'
 class Estado < ApplicationRecord
   has_many :cidades
 
+  def titulo
+    "Estado"
+  end
+
+  def search
+    "nome_cont"
+  end
+  
   def self.to_csv
     attributes = %w{id sigla nome ibge}
     CSV.generate(headers: true) do |csv|

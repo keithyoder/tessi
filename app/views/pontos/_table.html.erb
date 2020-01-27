@@ -1,26 +1,30 @@
-<div class="table-responsive">
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Conexões</th>
-      <th>Bloqueados</th>
-      <th>Servidor</th>
-      <th>IP</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% local_assigns[:pontos].each do |ponto| %>
-      <tr>
-        <td><%= link_to ponto.nome, ponto %></td>
-        <td><%= ponto.conexoes.count %></td>
-        <td><%= ponto.conexoes.bloqueado.count  %></td>
-        <td><%= link_to ponto.servidor.nome, ponto.servidor %></td>
-        <td><%= ponto.ip %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="card">
+  <%= render '/shared/table_header', {object: @pontos, titulo: "Pontos de Acesso", search_string: :nome_cont, query: @q} %>
+  <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Conexões</th>
+          <th>Bloqueados</th>
+          <th>Servidor</th>
+          <th>IP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @pontos.each do |ponto| %>
+          <tr>
+            <td><%= link_to ponto.nome, ponto %></td>
+            <td><%= ponto.conexoes.count %></td>
+            <td><%= ponto.conexoes.bloqueado.count  %></td>
+            <td><%= link_to ponto.servidor.nome, ponto.servidor %></td>
+            <td><%= ponto.ip %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @pontos %>
+  </div>
 </div>
-<%= paginate local_assigns[:pontos] %>

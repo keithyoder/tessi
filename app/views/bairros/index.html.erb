@@ -1,6 +1,1 @@
-<div class="card">
-  <%= render '/shared/table_header', {new_path: new_bairro_path, titulo: "Bairros", search_string: :nome_cont} %>
-  <div class="card-body">
-    <%= render 'table', bairros: @bairros %>
-  </div>
-</div>
+<%= render 'table', bairros: @bairros %>
