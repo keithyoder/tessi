@@ -8,21 +8,7 @@
   </div>
 </div>
 <div class="card">
-  <div class="card-header">
-    <div class="row">
-      <div class="col-sm">
-        <h3><%= new_table_header(new_cidade_path)%> Cidades</h3>
-      </div>
-      <div class="col-sm" align=right>
-        <%= search_form_for @q, url: @estado do |f| %>
-          <%= f.search_field :nome_cont %>
-          <%= button_tag( :class => "btn btn-sm btn-outline-dark") do %>
-            <i class="fa fa-search" aria-hidden="true"></i>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render '/shared/table_header', {new_path: new_cidade_path, titulo: "Cidades", search_string: :nome_cont} %>
   <div class="card-body">
     <%= render 'cidades/table', cidades: @cidades %>
   </div>
