@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :conexao_enviar_atributos
   resources :conexao_verificar_atributos
-  resources :conexoes
+  resources :conexoes do
+    get :suspenso, :on => :collection
+  end
   resources :pessoas do
     get :autocomplete_logradouro_nome, :on => :collection
   end

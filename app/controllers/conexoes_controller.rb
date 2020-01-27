@@ -10,6 +10,13 @@ class ConexoesController < ApplicationController
     @conexoes = @q.result.page params[:page]
   end
 
+  def suspenso
+    @conexoes = Conexao.bloqueado
+    @q = Conexao.ransack(params[:q])
+    @q.sorts = 'ponto_id'
+    @conexoes = @q.result.page params[:page]
+  end
+
   # GET /conexoes/1
   # GET /conexoes/1.json
   def show
