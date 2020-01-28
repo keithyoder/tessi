@@ -3,8 +3,8 @@ class Conexao < ApplicationRecord
   belongs_to :plano
   belongs_to :ponto
   has_one :servidor, through: :ponto
-  has_many :conexao_enviar_atributos
-  has_many :conexao_verificar_atributos
+  has_many :conexao_enviar_atributos, dependent: :delete_all
+  has_many :conexao_verificar_atributos, dependent: :delete_all
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
 
@@ -17,7 +17,7 @@ class Conexao < ApplicationRecord
       atr.save
     end
 
-    if self.ponto.tecnologia == :Radio
+    if self.ponto.tecnologia == "Radio"
       atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Mikrotik-Host-Ip').first_or_create
       atr.op = ':='
       atr.valor = self.ip.to_s

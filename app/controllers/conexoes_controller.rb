@@ -22,6 +22,8 @@ class ConexoesController < ApplicationController
   def show
     @conexao = Conexao.find(params[:id])
     @autenticacoes = @conexao.autenticacoes.order(authdate: :desc).page params[:page]
+    @conexao_verificar_atributos = @conexao.conexao_verificar_atributos.order(:atributo)
+    @conexao_enviar_atributos = @conexao.conexao_enviar_atributos.order(:atributo)
   end
 
   # GET /conexoes/new

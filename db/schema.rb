@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_24_234957) do
+ActiveRecord::Schema.define(version: 2020_01_28_225237) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_01_24_234957) do
     t.string "valor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["conexao_id", "atributo"], name: "index_conexao_enviar_atributos_on_conexao_id_and_atributo", unique: true
     t.index ["conexao_id"], name: "index_conexao_enviar_atributos_on_conexao_id"
   end
 
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 2020_01_24_234957) do
     t.string "valor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["conexao_id", "atributo"], name: "index_conexao_verificar_atributos_on_conexao_id_and_atributo", unique: true
     t.index ["conexao_id"], name: "index_conexao_verificar_atributos_on_conexao_id"
   end
 
@@ -153,6 +155,40 @@ ActiveRecord::Schema.define(version: 2020_01_24_234957) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["servidor_id"], name: "index_pontos_on_servidor_id"
+  end
+
+  create_table "radacct", primary_key: "radacctid", id: :bigint, default: nil, force: :cascade do |t|
+    t.string "acctsessionid", limit: 64, default: "", null: false
+    t.string "acctuniqueid", limit: 32, default: "", null: false
+    t.string "username", limit: 64, default: "", null: false
+    t.string "groupname", limit: 64, default: "", null: false
+    t.string "realm", limit: 64, default: ""
+    t.string "nasipaddress", limit: 15, default: "", null: false
+    t.string "nasportid", limit: 15
+    t.string "nasporttype", limit: 32
+    t.datetime "acctstarttime"
+    t.datetime "acctupdatetime"
+    t.datetime "acctstoptime"
+    t.integer "acctinterval", limit: 12
+    t.integer "acctsessiontime", limit: 12
+    t.string "acctauthentic", limit: 32
+    t.string "connectinfo_start", limit: 50
+    t.string "connectinfo_stop", limit: 50
+    t.bigint "acctinputoctets"
+    t.bigint "acctoutputoctets"
+    t.string "calledstationid", limit: 50, default: "", null: false
+    t.string "callingstationid", limit: 50, default: "", null: false
+    t.string "acctterminatecause", limit: 32, default: "", null: false
+    t.string "servicetype", limit: 32
+    t.string "framedprotocol", limit: 32
+    t.string "framedipaddress", limit: 15, default: "", null: false
+  end
+
+  create_table "radpostauth", force: :cascade do |t|
+    t.string "username", limit: 64, default: "", null: false
+    t.string "pass", limit: 64, default: "", null: false
+    t.string "reply", limit: 32, default: "", null: false
+    t.datetime "authdate", null: false
   end
 
 # Could not dump table "servidores" because of following StandardError

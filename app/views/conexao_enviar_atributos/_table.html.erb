@@ -1,0 +1,28 @@
+<div class="card">
+  <%= render '/shared/table_header', {object: @conexao_enviar_atributos, titulo: "Radius Enviar", search_string: :atributo_cont} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>Atributo</th>
+            <th>Op</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @conexao_enviar_atributos.each do |atributo| %>
+            <tr>
+              <td><%= atributo.conexao.usuario %></td>
+              <td><%= link_to atributo.atributo, verificar_atributo %></td>
+              <td><%= atributo.op %></td>
+              <td><%= atributo.valor %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,9 @@
     <a class="nav-link active" data-toggle="tab" href="#conexao">Conexão</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#radius">Radius</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#autenticacao">Autenticação</a>
   </li>
 </ul>
@@ -36,6 +39,11 @@
   </div>
 </div>
 
+</div>
+<div class="tab-pane fade" id="radius" role="tabpanel" aria-labelledby="radius-tab">
+  <h3><%= @conexao.pessoa.nome %></h3>
+  <%= render 'conexao_verificar_atributos/table' %>
+  <%= render 'conexao_enviar_atributos/table' %>
 </div>
 <div class="tab-pane fade" id="autenticacao" role="tabpanel" aria-labelledby="autenticacao-tab">
   <h3><%= @conexao.pessoa.nome %></h3>
