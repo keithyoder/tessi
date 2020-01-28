@@ -35,5 +35,5 @@
       </table>
     </div>
   </div>
-  <%= paginate @conexoes, :params => {:tab => "conexoes"} %>
+  <%= paginate @conexoes, remote: true, :params => {:tab => "conexoes"} %>
 </div>
