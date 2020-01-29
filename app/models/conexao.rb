@@ -25,6 +25,17 @@ class Conexao < ApplicationRecord
     end
   end
 
+  def self.to_csv
+    attributes = %w{id Pessoa Plano Ponto IP}
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |conexao|
+        csv << [conexao.id, conexao.pessoa.nome, conexao.plano.nome, conexao.ponto.nome, conexao.ip]
+      end
+    end
+  end
+
   def status_hotspot
     result = self.servidor.mk_command(['/ip/hotspot/active/print', '?user='+self.usuario.to_s])
     if result.present?

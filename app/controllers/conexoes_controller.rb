@@ -14,6 +14,10 @@ class ConexoesController < ApplicationController
     @q = Conexao.bloqueado.ransack(params[:q])
     @q.sorts = 'ponto_id'
     @conexoes = @q.result.page params[:page]
+    respond_to do |format|
+      format.html
+      format.csv { send_data @conexoes.except(:limit, :offset).to_csv, filename: "suspensos-#{Date.today}.csv" }
+    end
   end
 
   # GET /conexoes/1
