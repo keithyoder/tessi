@@ -19,7 +19,7 @@ class Conexao < ApplicationRecord
 
     if self.ponto.tecnologia == "Radio"
       atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Mikrotik-Host-Ip').first_or_create
-      atr.op = ':='
+      atr.op = '=='
       atr.valor = self.ip.to_s
       atr.save
     end

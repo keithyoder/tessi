@@ -7,6 +7,7 @@ class ConexoesController < ApplicationController
   def index
     @conexoes = Conexao.all
     @q = Conexao.ransack(params[:q])
+    @q.sorts = "pessoa_nome"
     @conexoes = @q.result.page params[:page]
   end
 
