@@ -5,15 +5,13 @@ class ConexoesController < ApplicationController
   # GET /conexoes
   # GET /conexoes.json
   def index
-    @conexoes = Conexao.all
     @q = Conexao.ransack(params[:q])
     @q.sorts = "pessoa_nome"
     @conexoes = @q.result.page params[:page]
   end
 
   def suspenso
-    @conexoes = Conexao.bloqueado
-    @q = Conexao.ransack(params[:q])
+    @q = Conexao.bloqueado.ransack(params[:q])
     @q.sorts = 'ponto_id'
     @conexoes = @q.result.page params[:page]
   end

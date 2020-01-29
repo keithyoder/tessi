@@ -21,4 +21,9 @@ class Pessoa < ApplicationRecord
   def rg_ie
     self.rg.present? ? self.rg : self.ie
   end
+
+  def assinante?
+    conexoes.count > 0
+  end
+
 end
