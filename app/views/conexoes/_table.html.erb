@@ -13,7 +13,8 @@
               <th>Ponto</th>
             <% end %>
             <th>IP</th>
-            <th>Bloqueado</th>
+            <th>Bloq.</th>
+            <th>Inadim.</th>
           </tr>
         </thead>
 
@@ -29,6 +30,7 @@
               <% end %>
               <td><%= link_to conexao.ip, conexao %></td>
               <td><%= conexao.bloqueado.as_checkbox %></td>
+              <td><%= conexao.inadimplente.as_checkbox %></td>
            </tr>
           <% end %>
         </tbody>
