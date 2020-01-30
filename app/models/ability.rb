@@ -31,22 +31,19 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     if user.present?
+      can :read, :all
       if user.admin?
         can :manage, :all
         cannot :destroy, Estado
       elsif user.tecnico_n1?
-        can :read, :all
-        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao]
+        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao, Pessoa]
       elsif user.tecnico_n2?
-        can :read, :all
         can [:create, :update], [Cidade, Bairro, Logradouro]
-        can [:create, :update], [Servidor, Ponto, Conexao]
+        can [:create, :update], [Servidor, Ponto, Conexao, Pessoa]
       elsif user.financeiro_n1?
-        can :read, :all
-        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao]
+        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao, Pessoa]
       elsif user.financeiro_n2?
-        can :read, :all
-        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao]
+        can [:create, :update], [Cidade, Bairro, Logradouro, Conexao, Pessoa]
       end
     end
   end
