@@ -1,4 +1,5 @@
 <div class="card">
+  <% params = defined?(params) ? params : {} %>
   <%= render '/shared/table_header', {object: @logradouros, search_string: :nome_cont, params: params} %>
   <div class="card-body">
     <div class="table-responsive">
