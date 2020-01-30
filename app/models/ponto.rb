@@ -9,9 +9,12 @@ class Ponto < ApplicationRecord
   enum sistema: {:Ubnt => 1, :Mikrotik => 2, :Chima => 3, :Outro => 4}
 
   before_save do
-    info = self.snmp
-    self.frequencia = info[:frequencia]
-    self.ssid = info[:ssid]
+    begin
+      info = self.snmp
+      self.frequencia = info[:frequencia]
+      self.ssid = info[:ssid]
+    rescue
+    end
   end
 
   def self.to_csv
