@@ -3,15 +3,13 @@ class AtualizarConcentradoresEPontosJob < ApplicationJob
 
   def perform
     Servidor.ativo.each do | servidor |
-      #begin
+      begin
         info = servidor.system_info
-        puts info.as_json
         servidor.equipamento = info[:'board-name']
         servidor.versao = info[:version]
         servidor.save     
-      #rescue => exception
-        
-      #end
+      rescue => exception  
+      end
     end
     Ponto.Ubnt.each do | ponto |
       begin
