@@ -6,6 +6,8 @@
       <thead>
         <tr>
           <th>Nome</th>
+          <th>SSID</th>
+          <th>Freq.</th>
           <th>Conexões</th>
           <th>Bloqueados</th>
           <th>Servidor</th>
@@ -16,6 +18,8 @@
         <% @pontos.each do |ponto| %>
           <tr>
             <td><%= link_to ponto.nome, ponto %></td>
+            <td><%= ponto.ssid %></td>
+            <td><%= ponto.frequencia %> Mhz</td>
             <td><%= ponto.conexoes.count %></td>
             <td><%= ponto.conexoes.bloqueado.count  %></td>
             <td><%= link_to ponto.servidor.nome, ponto.servidor %></td>
