@@ -31,7 +31,7 @@ class Ponto < ApplicationRecord
       :ssid => "SNMPv2-SMI::enterprises.41112.1.4.5.1.2.1",
       :frequencia => "SNMPv2-SMI::enterprises.41112.1.4.1.1.4.1"
     }
-    SNMP::Manager.open(:host => self.ip, :community => 'public', :port => 161, :version => :SNMPv1) do |manager|
+    SNMP::Manager.open(:host => self.ip.to_s, :community => 'public', :port => 161, :version => :SNMPv1) do |manager|
       response = manager.get(campos.values)
       result = {}
       response.each_varbind do |vb|
