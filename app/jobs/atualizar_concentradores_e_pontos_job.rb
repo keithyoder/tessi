@@ -24,4 +24,4 @@ class AtualizarConcentradoresEPontosJob < ApplicationJob
   end
 end
 
-AtualizarConcentradoresEPontosJob.perform()
+#AtualizarConcentradoresEPontosJob.perform()
