@@ -30,8 +30,10 @@
       <%= link_to @conexao.ponto do %>
         <%= render 'shared/field_card', {campo: "Ponto de Acesso", valor: @conexao.ponto.nome} %>
       <% end %>
-      <%= render 'shared/field_card', {campo: "Bloqueado", valor: @conexao.bloqueado.as_simnao.capitalize} %>
-      <%= render 'shared/field_card', {campo: "Inadimplente", valor: @conexao.inadimplente.as_simnao.capitalize} %>
+      <%= render 'shared/field_card', {campo: "Suspenso", valor: @conexao.bloqueado.as_simnao.capitalize,
+        cor: @conexao.bloqueado ? 'bg-warning' : 'bg-primary'} %>
+      <%= render 'shared/field_card', {campo: "Inadimplente", valor: @conexao.inadimplente.as_simnao.capitalize,
+        cor: @conexao.inadimplente ? 'bg-warning' : 'bg-primary'} %>
       <%= render 'shared/field_card', {campo: "Observação", valor: @conexao.observacao} %>
       <%= render 'shared/field_card', {campo: "Velociade Personalizada", valor: @conexao.velocidade} %>
       <%= render 'shared/field_card', {campo: "Auto Bloqueio", valor: @conexao.auto_bloqueio.as_simnao.capitalize} %>

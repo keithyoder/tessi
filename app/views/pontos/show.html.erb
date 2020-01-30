@@ -17,6 +17,7 @@
         <div class="card-columns" style="column-count: 4">
           <%= render 'shared/field_card', {campo: "Sistema", valor: @ponto.sistema} %>
           <%= render 'shared/field_card', {campo: "Tecnologia", valor: @ponto.tecnologia} %>
+          <%= render 'shared/field_card', {campo: "SSID", valor: @ponto.ssid} %>
           <%= link_to @ponto.servidor do %>
             <%= render 'shared/field_card', {campo: "Servidor", valor: @ponto.servidor.nome} %>
           <% end %>
@@ -26,6 +27,7 @@
           <%= render 'shared/field_card', {campo: "Usuário", valor: @ponto.usuario} %>
           <%= render 'shared/field_card', {campo: "Conexões", valor: @ponto.conexoes.count} %>
           <%= render 'shared/field_card', {campo: "Bloqueados", valor: @ponto.conexoes.bloqueado.count} %>
+          <%= render 'shared/field_card', {campo: "Frequência", valor: @ponto.frequencia} %>
         </div>
       </div>
     </div>

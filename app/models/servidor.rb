@@ -59,4 +59,8 @@ class Servidor < ApplicationRecord
     check = Net::Ping::External.new(self.ip.to_s)
     check.ping?
   end
+
+  def autenticando?
+    self.autenticacoes.where('authdate > ?', 12.hours.ago).count > 0
+  end
 end
