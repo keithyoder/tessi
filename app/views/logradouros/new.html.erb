@@ -1,5 +1,6 @@
-<h1>New Logradouro</h1>
-
-<%= render 'form', logradouro: @logradouro %>
-
-<%= link_to 'Back', logradouros_path %>
+<div class="card">
+  <%= render 'shared/new_header', {object: @logradouro, titulo: "Logradouro"} %>
+  <div class="card-body">
+    <%= render 'form', logradouro: @logradouro %>
+  </div>
+</div>

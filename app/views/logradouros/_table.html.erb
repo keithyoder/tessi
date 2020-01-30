@@ -1,5 +1,5 @@
 <div class="card">
-  <%= render '/shared/table_header', {object: @logradouros, search_field: :nome_cont} %>
+  <%= render '/shared/table_header', {object: @logradouros, search_string: :nome_cont, params: params} %>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-striped">

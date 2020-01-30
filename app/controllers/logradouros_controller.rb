@@ -21,6 +21,7 @@ class LogradourosController < ApplicationController
   # GET /logradouros/new
   def new
     @logradouro = Logradouro.new
+    @logradouro.bairro_id = params[:bairro_id]
   end
 
   # GET /logradouros/1/edit
