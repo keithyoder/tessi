@@ -8,6 +8,12 @@ class Ponto < ApplicationRecord
   enum tecnologia: {:Radio => 1, :Fibra => 2}
   enum sistema: {:Ubnt => 1, :Mikrotik => 2, :Chima => 3, :Outro => 4}
 
+  before_save do
+    info = self.snmp
+    self.frequencia = info[:frequencia]
+    self.ssid = info[:ssid]
+  end
+
   def self.to_csv
     attributes = %w{id nome ip sistema tecnologia}
     CSV.generate(headers: true) do |csv|
