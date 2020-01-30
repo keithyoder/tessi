@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-sm">
     <h3>
-    <% if defined?(object) && can?(:create, object) %>
+    <% if defined?(object) && can?(:create, object.model) %>
       <%= link_to({controller: object.model_name.plural, action: :new }, class: "d-print-none btn btn-sm btn-outline-dark") do %>
         <i class="fa fa-plus" aria-hidden="true"></i>
       <% end %>
