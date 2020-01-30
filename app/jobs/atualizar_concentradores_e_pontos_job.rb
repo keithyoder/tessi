@@ -2,21 +2,22 @@ class AtualizarConcentradoresEPontosJob < ApplicationJob
   queue_as :default
 
   def perform
-    Servidor.ativo.all.each do | servidor |
-      begin
+    Servidor.ativo.each do | servidor |
+      #begin
         info = servidor.system_info
-        servidor.equipamento = info.board_name
-        servidor.versao = info.version
+        puts info.as_json
+        servidor.equipamento = info[:'board-name']
+        servidor.versao = info[:version]
         servidor.save     
-      rescue => exception
+      #rescue => exception
         
-      end
+      #end
     end
-    Ponto.all.each do | ponto |
+    Ponto.Ubnt.each do | ponto |
       begin
         info = ponto.snmp
-        ponto.ssid = info.ssid
-        ponto.frequencia = info.frequencia
+        ponto.ssid = info[:ssid]
+        ponto.frequencia = info[:frequencia]
         ponto.save     
       rescue => exception
         
