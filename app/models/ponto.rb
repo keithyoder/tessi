@@ -32,7 +32,11 @@ class Ponto < ApplicationRecord
     campos = {
       :uptime => "SNMPv2-MIB::sysUpTime.0",
       :ssid => "SNMPv2-SMI::enterprises.41112.1.4.5.1.2.1",
-      :frequencia => "SNMPv2-SMI::enterprises.41112.1.4.1.1.4.1"
+      :frequencia => "SNMPv2-SMI::enterprises.41112.1.4.1.1.4.1",
+      :canal_tamanho => "SNMPv2-SMI::enterprises.41112.1.4.5.1.14.1",
+      :conectados => "SNMPv2-SMI::enterprises.41112.1.4.5.1.15.1",
+      :qualidade_airmax => "SNMPv2-SMI::enterprises.41112.1.4.6.1.3.1",
+      :station_ccq => "SNMPv2-SMI::enterprises.41112.1.4.5.1.7.1"
     }
     SNMP::Manager.open(:host => self.ip.to_s, :community => 'public', :port => 161, :version => :SNMPv1) do |manager|
       response = manager.get(campos.values)

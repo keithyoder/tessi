@@ -25,6 +25,14 @@ class Conexao < ApplicationRecord
     end
   end
 
+  after_update do
+    puts("after_udate") 
+    if self.saved_change_to_plano_id?
+      puts("changed") 
+      self.desconectar_hotspot
+    end
+  end
+
   def self.to_csv
     attributes = %w{id Pessoa Plano Ponto IP}
     CSV.generate(headers: true) do |csv|
@@ -44,4 +52,9 @@ class Conexao < ApplicationRecord
       ['uptime' => "Desconectado"]
     end
   end
+
+  def desconectar_hotspot
+    id = self.servidor.mk_command(['/ip/hotspot/active/print', '?user='+self.usuario.to_s])[0][0][".id"]
+    result = self.servidor.mk_command(['/ip/hotspot/active/remove', '=.id='+id])
+    end
 end
