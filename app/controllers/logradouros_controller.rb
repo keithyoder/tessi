@@ -16,6 +16,8 @@ class LogradourosController < ApplicationController
   # GET /logradouros/1
   # GET /logradouros/1.json
   def show
+    @logradouro = Logradouro.find(params[:id])
+    @conexoes = @logradouro.conexoes.page params[:page]
   end
 
   # GET /logradouros/new
