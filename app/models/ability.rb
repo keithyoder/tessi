@@ -41,7 +41,7 @@ class Ability
         cannot :destroy, Estado
       elsif user.tecnico_n1?
       elsif user.tecnico_n2?
-        can :update, Cidade
+        can :update, [Cidade, Ponto]
       elsif user.financeiro_n1?
       elsif user.financeiro_n2?
         can :update, Cidade

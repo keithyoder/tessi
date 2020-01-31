@@ -26,9 +26,7 @@ class Conexao < ApplicationRecord
   end
 
   after_update do
-    puts("after_udate") 
-    if self.saved_change_to_plano_id?
-      puts("changed") 
+    if self.saved_change_to_plano_id? || self.saved_change_to_bloqueado? || self.saved_change_to_inadimplente?
       self.desconectar_hotspot
     end
   end
