@@ -19,6 +19,13 @@
       <%= link_to @conexao.pessoa do %>
         <%= render 'shared/field_card', {campo: "Assinante", valor: @conexao.pessoa.nome} %>
       <% end %>
+      <% if @conexao.contrato.present? %>
+        <%= link_to @conexao.contrato do %>
+          <%= render 'shared/field_card', {campo: "Contrato", valor: @conexao.contrato.id.to_s + ' ' + @conexao.contrato.adesao.to_s} %>
+        <% end %>
+      <% else %>
+        <%= render 'shared/field_card', {campo: "Contrato", valor: "Sem contrato"} %>
+      <% end %>
       <%= link_to 'http://'+@conexao.ip.to_s, target: "_blank" do %>
         <%= render 'shared/field_card', {campo: "IP", valor: @conexao.ip} %>
       <% end %>

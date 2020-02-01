@@ -3,6 +3,7 @@ class Conexao < ApplicationRecord
   belongs_to :plano
   belongs_to :ponto
   has_one :servidor, through: :ponto
+  belongs_to :contrato
   has_many :conexao_enviar_atributos, dependent: :delete_all
   has_many :conexao_verificar_atributos, dependent: :delete_all
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
