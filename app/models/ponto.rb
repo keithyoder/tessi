@@ -7,12 +7,15 @@ class Ponto < ApplicationRecord
   
   enum tecnologia: {:Radio => 1, :Fibra => 2}
   enum sistema: {:Ubnt => 1, :Mikrotik => 2, :Chima => 3, :Outro => 4}
+  enum equipamento: { 'Ubiquiti Loco M5' => 'locoM5', 'Ubiquiti Loco M5' => 'rocketM5',
+    'Ubiquiti Litebeam AC-16-120' => 'litebeamAC' }
 
   before_save do
     begin
       info = self.snmp
       self.frequencia = info[:frequencia]
       self.ssid = info[:ssid]
+      self.canal_tamanho = info[:canal_tamanho]
     rescue
     end
   end

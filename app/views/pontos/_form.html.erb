@@ -30,6 +30,9 @@
       <div class="col">
         <%= f.input :senha %>
       </div>
+      <div class="col">
+        <%= f.input :equipamento, collection: Ponto.equipamentos.keys %>
+      </div>
     </div>
   </div>
 

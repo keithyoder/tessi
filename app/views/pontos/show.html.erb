@@ -27,7 +27,9 @@
           <%= render 'shared/field_card', {campo: "Usuário", valor: @ponto.usuario} %>
           <%= render 'shared/field_card', {campo: "Conexões", valor: @ponto.conexoes.count} %>
           <%= render 'shared/field_card', {campo: "Bloqueados", valor: @ponto.conexoes.bloqueado.count} %>
-          <%= render 'shared/field_card', {campo: "Frequência", valor: @ponto.frequencia} %>
+          <%= render 'shared/field_card', {campo: "Frequência", valor: @ponto.frequencia.to_s + " Mhz"} %>
+          <%= render 'shared/field_card', {campo: "Largura Canal", valor: @ponto.canal_tamanho.to_s + " Mhz"} %>
+          <%= render 'shared/field_card', {campo: "Equipamento", valor: @ponto.equipamento} %>
         </div>
       </div>
     </div>

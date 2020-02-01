@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Faturas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Contrato</th>
+      <th>Valor</th>
+      <th>Vencimento</th>
+      <th>Nossonumero</th>
+      <th>Parcela</th>
+      <th>Arquivo remessa</th>
+      <th>Data remessa</th>
+      <th>Data cancelamento</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @faturas.each do |fatura| %>
+      <tr>
+        <td><%= fatura.contrato %></td>
+        <td><%= fatura.valor %></td>
+        <td><%= fatura.vencimento %></td>
+        <td><%= fatura.nossonumero %></td>
+        <td><%= fatura.parcela %></td>
+        <td><%= fatura.arquivo_remessa %></td>
+        <td><%= fatura.data_remessa %></td>
+        <td><%= fatura.data_cancelamento %></td>
+        <td><%= link_to 'Show', fatura %></td>
+        <td><%= link_to 'Edit', edit_fatura_path(fatura) %></td>
+        <td><%= link_to 'Destroy', fatura, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fatura', new_fatura_path %>

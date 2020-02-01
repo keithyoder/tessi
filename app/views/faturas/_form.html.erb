@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@fatura) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :contrato %>
+    <%= f.input :valor %>
+    <%= f.input :vencimento %>
+    <%= f.input :nossonumero %>
+    <%= f.input :parcela %>
+    <%= f.input :arquivo_remessa %>
+    <%= f.input :data_remessa %>
+    <%= f.input :data_cancelamento %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

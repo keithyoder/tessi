@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Contrato:</strong>
+  <%= @fatura.contrato %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= @fatura.valor %>
+</p>
+
+<p>
+  <strong>Vencimento:</strong>
+  <%= @fatura.vencimento %>
+</p>
+
+<p>
+  <strong>Nossonumero:</strong>
+  <%= @fatura.nossonumero %>
+</p>
+
+<p>
+  <strong>Parcela:</strong>
+  <%= @fatura.parcela %>
+</p>
+
+<p>
+  <strong>Arquivo remessa:</strong>
+  <%= @fatura.arquivo_remessa %>
+</p>
+
+<p>
+  <strong>Data remessa:</strong>
+  <%= @fatura.data_remessa %>
+</p>
+
+<p>
+  <strong>Data cancelamento:</strong>
+  <%= @fatura.data_cancelamento %>
+</p>
+
+<%= link_to 'Edit', edit_fatura_path(@fatura) %> |
+<%= link_to 'Back', faturas_path %>

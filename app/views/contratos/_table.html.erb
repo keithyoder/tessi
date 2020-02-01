@@ -1,0 +1,29 @@
+<div class="card">
+  <% params = defined?(params) ? params : {} %>
+  <%= render '/shared/table_header', {object: @contratos, search_string: :pessoa_nome_cont, params: params} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Plano</th>
+            <th>Adesão</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @contratos.each do |contrato| %>
+            <tr>
+              <td><%= link_to contrato.pessoa.nome, contrato.pessoa %></td>
+              <td><%= link_to contrato.plano.nome, contrato.plano %></td>
+              <td><%= link_to contrato.adesao, contrato %></td>
+              <td><%= contrato.status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate @contratos %>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_191505) do
+ActiveRecord::Schema.define(version: 2020_02_01_150927) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -89,9 +89,29 @@ ActiveRecord::Schema.define(version: 2020_01_30_191505) do
     t.string "usuario"
     t.string "senha"
     t.boolean "inadimplente", default: false, null: false
+    t.integer "contrato_id"
+    t.index ["contrato_id"], name: "index_conexoes_on_contrato_id"
     t.index ["pessoa_id"], name: "index_conexoes_on_pessoa_id"
     t.index ["plano_id"], name: "index_conexoes_on_plano_id"
     t.index ["ponto_id"], name: "index_conexoes_on_ponto_id"
+  end
+
+  create_table "contratos", force: :cascade do |t|
+    t.integer "pessoa_id", null: false
+    t.integer "plano_id", null: false
+    t.integer "status"
+    t.integer "dia_vencimento"
+    t.date "adesao"
+    t.decimal "valor_instalacao", precision: 8, scale: 2
+    t.integer "numero_conexoes", default: 1
+    t.date "cancelamento"
+    t.boolean "emite_nf", default: true
+    t.date "primeiro_vencimento"
+    t.integer "prazo_meses", default: 12
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pessoa_id"], name: "index_contratos_on_pessoa_id"
+    t.index ["plano_id"], name: "index_contratos_on_plano_id"
   end
 
   create_table "estados", force: :cascade do |t|
@@ -101,6 +121,20 @@ ActiveRecord::Schema.define(version: 2020_01_30_191505) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["nome"], name: "index_estados_on_nome", unique: true
+  end
+
+  create_table "faturas", force: :cascade do |t|
+    t.integer "contrato_id"
+    t.decimal "valor", null: false
+    t.date "vencimento", null: false
+    t.integer "nossonumero", null: false
+    t.integer "parcela", null: false
+    t.string "arquivo_remessa"
+    t.date "data_remessa"
+    t.date "data_cancelamento"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contrato_id"], name: "index_faturas_on_contrato_id"
   end
 
   create_table "logradouros", force: :cascade do |t|
@@ -178,6 +212,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_191505) do
     t.datetime "updated_at", null: false
     t.string "ssid"
     t.string "frequencia"
+    t.integer "canal_tamanho"
+    t.string "equipamento"
     t.index ["servidor_id"], name: "index_pontos_on_servidor_id"
   end
 

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pessoa: one
+  plano: one
+  status: 1
+  dia_vencimento: 1
+  adesao: 2020-02-01
+  valor_instalacao: 9.99
+  numero_conexoes: 1
+  cancelamento: 2020-02-01
+  emite_nf: false
+  primeiro_vencimento: 2020-02-01
+  prazo_meses: 1
+
+two:
+  pessoa: two
+  plano: two
+  status: 1
+  dia_vencimento: 1
+  adesao: 2020-02-01
+  valor_instalacao: 9.99
+  numero_conexoes: 1
+  cancelamento: 2020-02-01
+  emite_nf: false
+  primeiro_vencimento: 2020-02-01
+  prazo_meses: 1

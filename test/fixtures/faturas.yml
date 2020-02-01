@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  contrato: one
+  valor: 9.99
+  vencimento: 2020-02-01
+  nossonumero: 1
+  parcela: 1
+  arquivo_remessa: 
+  data_remessa: 
+  data_cancelamento: 2020-02-01
+
+two:
+  contrato: two
+  valor: 9.99
+  vencimento: 2020-02-01
+  nossonumero: 1
+  parcela: 1
+  arquivo_remessa: 
+  data_remessa: 
+  data_cancelamento: 2020-02-01

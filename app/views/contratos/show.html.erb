@@ -1,0 +1,39 @@
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#contrato">Contrato</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#fatruas">Faturas</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade show <%= params[:tab] == "faturas" ? "": "show active" %>" id="contrato"
+    role="tabpanel" aria-labelledby="contrato-tab">
+    <div class="card">
+      <%= render 'shared/show_header', {object: @contrato, titulo: @contrato.pessoa.nome} %>
+      <div class="card-body">
+        <div class="card-columns" style="column-count: 3">
+          <%= link_to @contrato.pessoa do %>
+            <%= render 'shared/field_card', {campo: "Pessoa", valor: @contrato.pessoa.nome} %>
+          <% end %>
+          <%= link_to @contrato.plano do %>
+            <%= render 'shared/field_card', {campo: "Plano", valor: @contrato.plano.nome} %>
+          <% end %>
+          <%= render 'shared/field_card', {campo: "Status", valor: @contrato.status} %>
+          <%= render 'shared/field_card', {campo: "Dia Vencimento", valor: @contrato.dia_vencimento} %>
+          <%= render 'shared/field_card', {campo: "Data Adesão", valor: @contrato.adesao} %>
+          <%= render 'shared/field_card', {campo: "Valor Instalação", valor: @contrato.valor_instalacao} %>
+          <%= render 'shared/field_card', {campo: "Número de Conexões", valor: @contrato.numero_conexoes} %>
+          <%= render 'shared/field_card', {campo: "Data de Cancelamento", valor: @contrato.cancelamento} %>
+          <%= render 'shared/field_card', {campo: "Emitir NF", valor: @contrato.emite_nf.as_simnao} %>
+          <%= render 'shared/field_card', {campo: "Primeiro Vencimento", valor: @contrato.primeiro_vencimento} %>
+          <%= render 'shared/field_card', {campo: "Prazo (meses)", valor: @contrato.prazo_meses} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade <%= params[:tab] == "faturas" ? "show active": "" %>" id="faturas"
+    role="tabpanel" aria-labelledby="faturas-tab">
+    <h3><%= @contrato.pessoa.nome %></h3>
+  </div>
+</div>
