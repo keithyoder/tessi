@@ -43,15 +43,18 @@
           <% end %>
           <%= render 'shared/field_card', {campo: "Usuários PPPoE", valor: @servidor.ppp_users} %>
           <%= render 'shared/field_card', {campo: "Usuários Hotspot", valor: @servidor.hotspot_users} %>
-          <%= render 'shared/field_card', {campo: "Conexões", valor: @servidor.conexoes.count} %>
-          <%= render 'shared/field_card', {campo: "Bloqueados", valor: @servidor.conexoes.bloqueado.count} %>
         </div>
       </div>
     </div>
     <% end %>
   </div>
   <div class="tab-pane fade" id="pontos" role="tabpanel" aria-labelledby="pontos-tab">
-    <%= render 'pontos/table', pontos: @pontos %>
+    <div class="card-columns" style="column-count: 4">
+      <%= render 'shared/field_card', {campo: "Conexões", valor: @servidor.conexoes.count} %>
+      <%= render 'shared/field_card', {campo: "Bloqueados", valor: @servidor.conexoes.bloqueado.count} %>
+      <%= render 'shared/field_card', {campo: "Inadimplentes", valor: @servidor.conexoes.inadimplente.count} %>
+    </div>
+    <%= render 'pontos/table', {exclude: "servidor"} %>
   </div>
   <div class="tab-pane fade" id="autenticacao" role="tabpanel" aria-labelledby="autenticacao-tab">
     <h3><%= @servidor.nome %></h3>

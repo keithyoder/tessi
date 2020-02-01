@@ -7,6 +7,7 @@ class Conexao < ApplicationRecord
   has_many :conexao_verificar_atributos, dependent: :delete_all
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
+  scope :inadimplente, -> { where("inadimplente") }
 
   after_touch :save
   after_save do

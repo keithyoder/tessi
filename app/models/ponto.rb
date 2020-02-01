@@ -20,7 +20,7 @@ class Ponto < ApplicationRecord
     end
   end
 
-  def self.to_csv
+  def to_csv
     attributes = %w{id nome ip sistema tecnologia}
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -29,6 +29,10 @@ class Ponto < ApplicationRecord
         csv << attributes.map{ |attr| estado.send(attr) }
       end
     end
+  end
+
+  def frequencia_text
+    self.frequencia.to_s + " MHz" + (self.canal_tamanho.present? ? " (" + self.canal_tamanho.to_s + ")" : "")
   end
 
   def snmp
