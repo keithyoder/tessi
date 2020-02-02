@@ -6,19 +6,23 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Nome</th>
+            <% if !defined?(exclude) or exclude != 'pessoa' %>
+              <th>Nome</th>
+            <% end %>
             <th>Plano</th>
             <th>Adesão</th>
-            <th>Status</th>
+            <th>Cancelamento</th>
           </tr>
         </thead>
         <tbody>
           <% @contratos.each do |contrato| %>
             <tr>
-              <td><%= link_to contrato.pessoa.nome, contrato.pessoa %></td>
+              <% if !defined?(exclude) or exclude != 'pessoa' %>
+                <td><%= link_to contrato.pessoa.nome, contrato.pessoa %></td>
+              <% end %>
               <td><%= link_to contrato.plano.nome, contrato.plano %></td>
               <td><%= link_to contrato.adesao, contrato %></td>
-              <td><%= contrato.status %></td>
+              <td><%= contrato.cancelamento %></td>
             </tr>
           <% end %>
         </tbody>

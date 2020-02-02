@@ -1,0 +1,29 @@
+<div class="card">
+  <% params = defined?(params) ? params : {} %>
+  <%= render '/shared/table_header', {object: @faturas, params: params} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Parcela</th>
+            <th>Vencimento</th>
+            <th>Valor</th>
+            <th>Nosso Número</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @faturas.each do |fatura| %>
+            <tr>
+              <td><%= fatura.parcela %></td>
+              <td><%= link_to contrato.vencimento, fatura %></td>
+              <td><%= fatura.valor %></td>
+              <td><%= fatura.nossonumero %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate @faturas %>
+  </div>
+</div>

@@ -16,6 +16,7 @@ class PessoasController < ApplicationController
   def show
     @pessoa = Pessoa.find(params[:id])
     @conexoes = @pessoa.conexoes.order(:ip).page params[:page]
+    @contratos = @pessoa.contratos.order(:adesao).page params[:page]
   end
 
   # GET /pessoas/new

@@ -13,6 +13,8 @@ class ContratosController < ApplicationController
   # GET /contratos/1
   # GET /contratos/1.json
   def show
+    @contrato = Contrato.find(params[:id])
+    @faturas = @contrato.faturas.order(:ip).page params[:page]
   end
 
   # GET /contratos/new

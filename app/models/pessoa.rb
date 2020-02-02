@@ -1,6 +1,7 @@
 class Pessoa < ApplicationRecord
   belongs_to :logradouro
   has_many :conexoes
+  has_many :contratos
   has_one_attached :rg_imagem
 
   delegate :endereco, to: :logradouro, prefix: :logradouro
