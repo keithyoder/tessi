@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   end
   resources :plano_enviar_atributos
   resources :plano_verificar_atributos
-  resources :pontos
+  resources :pontos do
+    get :snmp, :on => :collection
+  end
   resources :planos
   resources :servidores
   resources :logradouros

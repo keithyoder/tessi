@@ -14,6 +14,14 @@ class PontosController < ApplicationController
     end
   end
 
+  def snmp
+    AtualizarConcentradoresEPontosJob.perform_later()
+    respond_to do |format|
+      format.html { redirect_to pontos_url, notice: 'Varredura SNMP inicada.' }
+      format.json { head :no_content }
+    end
+  end
+
   # GET /pontos/1
   # GET /pontos/1.json
   def show

@@ -1,6 +1,1 @@
-<div class="card">
-  <%= render '/shared/table_header', {new_path: new_ponto_path, titulo: "Pontos de Acesso", search_string: :nome_cont, query: @q} %>
-  <div class="card-body">
-    <%= render 'table', pontos: @pontos %>
-  </div>
-</div>
+<%= render 'table', pontos: @pontos %>
