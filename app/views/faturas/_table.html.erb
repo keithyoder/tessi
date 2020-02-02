@@ -16,7 +16,7 @@
           <% @faturas.each do |fatura| %>
             <tr>
               <td><%= fatura.parcela %></td>
-              <td><%= link_to contrato.vencimento, fatura %></td>
+              <td><%= link_to fatura.vencimento, fatura %></td>
               <td><%= fatura.valor %></td>
               <td><%= fatura.nossonumero %></td>
             </tr>
