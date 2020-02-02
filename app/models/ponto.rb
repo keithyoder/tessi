@@ -10,6 +10,7 @@ class Ponto < ApplicationRecord
   enum equipamento: { 'Ubiquiti Loco M5' => 'locoM5', 'Ubiquiti Rocket M5' => 'rocketM5',
     'Ubiquiti Litebeam AC-16-120' => 'litebeamAC' }
 
+  after_touch :save
   before_save do
     begin
       info = self.snmp

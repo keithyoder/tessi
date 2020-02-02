@@ -13,11 +13,12 @@ class AtualizarConcentradoresEPontosJob < ApplicationJob
     #end
     Ponto.Ubnt.each do | ponto |
       begin
-        info = ponto.snmp
-        ponto.ssid = info[:ssid]
-        ponto.frequencia = info[:frequencia]
-        ponto.canal_tamanho = info[:canal_tamanho]
-        ponto.save     
+        ponto.touch
+        #info = ponto.snmp
+        #ponto.ssid = info[:ssid]
+        #ponto.frequencia = info[:frequencia]
+        #ponto.canal_tamanho = info[:canal_tamanho]
+        #ponto.save     
       rescue => exception
         
       end
