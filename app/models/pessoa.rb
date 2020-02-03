@@ -6,7 +6,7 @@ class Pessoa < ApplicationRecord
 
   delegate :endereco, to: :logradouro, prefix: :logradouro
 
-  enum tipo: {"Pessoa Física" => 1, "Pessoa Júridica" => 2}
+  enum tipo: {"Pessoa Física" => 1, "Pessoa Jurídica" => 2}
 
   def endereco
     self.logradouro.nome + ', ' + self.numero + ' ' + self.complemento
