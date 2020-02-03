@@ -6,7 +6,8 @@ class Cidade < ApplicationRecord
   has_many :logradouros, through: :bairros
   has_many :pessoas, through: :logradouros
   has_many :conexoes, through: :pessoas
-  scope :assinantes, -> { joins(:conexoes).distinct }
+  has_many :pontos, through: :conexoes
+  scope :assinantes, -> { select('cidades.*, pontos.tecnologia').joins(:conexoes, :pontos).distinct }
 
   def titulo
     "Cidade"
@@ -31,19 +32,27 @@ class Cidade < ApplicationRecord
     self.nome + " - " + self.estado.sigla
   end
 
-  def quantas_conexoes(tipo, tecnologia)
-    collection = self.conexoes.ativo
-    case tecnologia
-    when :Radio
-      collection = collection.radio
-    when :Fibra
-      collection = collection.fibra
-    end
+  def quantas_conexoes(tipo, velocidade)
+    collection = self.conexoes
     case tipo
     when "Pessoa Física"
-      colleciton = collection.pessoa_fisica
+      collection = collection.pessoa_fisica
     when "Pessoa Jurídica"
       collection = collection.pessoa_juridica
+    end
+    case velocidade
+    when 1
+      collection = collection.ate_1M
+    when 2
+      collection = collection.ate_2M
+    when 8
+      collection = collection.ate_8M
+    when 12
+      collection = collection.ate_12M
+    when 34
+      collection = collection.ate_34M
+    when 100
+      collection = collection.acima_34M
     end
     collection.count
   end

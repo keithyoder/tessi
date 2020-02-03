@@ -14,6 +14,12 @@ class Conexao < ApplicationRecord
   scope :fibra, -> { joins(:ponto).where(pontos: {tecnologia: :Fibra}) }
   scope :pessoa_fisica, -> { joins(:pessoa).where(pessoas: {tipo: "Pessoa Física"}) }
   scope :pessoa_juridica, -> { joins(:pessoa).where(pessoas: {tipo: "Pessoa Jurídica"}) }
+  scope :ate_1M, -> { joins(:plano).where("planos.download <= 1")}
+  scope :ate_2M, -> { joins(:plano).where("planos.download BETWEEN 1.01 AND 2")}
+  scope :ate_8M, -> { joins(:plano).where("planos.download BETWEEN 2.01 AND 8")}
+  scope :ate_12M, -> { joins(:plano).where("planos.download BETWEEN 8.01 AND 12")}
+  scope :ate_34M, -> { joins(:plano).where("planos.download BETWEEN 12.01 AND 34")}
+  scope :acima_34M, -> { joins(:plano).where("planos.download > 34")}
 
   after_touch :save
   after_save do
