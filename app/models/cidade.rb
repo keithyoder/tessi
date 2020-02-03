@@ -33,7 +33,7 @@ class Cidade < ApplicationRecord
   end
 
   def quantas_conexoes(tipo, velocidade)
-    collection = self.conexoes
+    collection = self.conexoes.ativo
     case self.tecnologia
     when 1
       collection = collection.radio
