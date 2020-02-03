@@ -47,6 +47,8 @@
       </div>
     </div>
     <% end %>
+    <%= @servidor.backup.attached? ? link_to("Backup "+@servidor.backup.created_at.to_formatted_s,
+      rails_blob_path(@servidor.backup, disposition: 'attachment')) : '' %>
   </div>
   <div class="tab-pane fade" id="pontos" role="tabpanel" aria-labelledby="pontos-tab">
     <div class="card-columns" style="column-count: 4">

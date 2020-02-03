@@ -1,9 +1,10 @@
-require 'csv'
-
 class Servidor < ApplicationRecord
+  require 'csv'
+  require 'open-uri'
   has_many :pontos
   has_many :conexoes, through: :pontos
   has_many :autenticacoes, :through => :pontos
+  has_one_attached :backup
 
   scope :ativo, -> { where("ativo") }
 
@@ -62,5 +63,12 @@ class Servidor < ApplicationRecord
 
   def autenticando?
     self.autenticacoes.where('authdate > ?', 12.hours.ago).count > 0
+  end
+
+  def copiar_backup
+    login = URI.escape(self.usuario) + ':' + URI.escape(self.senha)
+    filename = URI.escape(self.nome)
+    fi = open("ftp://#{login}@#{self.ip.to_s}/#{filename}-backup.rsc")
+    self.backup.attach(io: fi, filename: "#{self.nome}-backup.rsc")
   end
 end
