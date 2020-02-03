@@ -8,9 +8,12 @@ class Conexao < ApplicationRecord
   has_many :conexao_verificar_atributos, dependent: :delete_all
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
+  scope :ativo, -> { where("not bloqueado") }
   scope :inadimplente, -> { where("inadimplente") }
   scope :radio, -> { joins(:ponto).where(pontos: {tecnologia: :Radio}) }
   scope :fibra, -> { joins(:ponto).where(pontos: {tecnologia: :Fibra}) }
+  scope :pessoa_fisica, -> { joins(:pessoa).where(pessoas: {tipo: "Pessoa Física"}) }
+  scope :pessoa_juridica, -> { joins(:pessoa).where(pessoas: {tipo: "Pessoa Jurídica"}) }
 
   after_touch :save
   after_save do

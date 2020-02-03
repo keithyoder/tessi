@@ -32,11 +32,20 @@ class Cidade < ApplicationRecord
   end
 
   def quantas_conexoes(tipo, tecnologia)
-    if tecnologia == :Radio
-      self.conexoes.radio.count
-    elsif tecnologia == :Fibra
-      self.conexoes.fibra.count
+    collection = self.conexoes.ativo
+    case tecnologia
+    when :Radio
+      colleciton = collection.radio
+    when :Fibra
+      collection = collection.fibra
     end
+    case tipo
+    when "Pessoa Física"
+      colleciton = collection.pessoa_fisica
+    when "Pessoa Jurídica"
+      collection = collection.pessoa_juridica
+    end
+    collection.count
   end
 
 end

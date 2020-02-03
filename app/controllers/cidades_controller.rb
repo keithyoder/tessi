@@ -14,7 +14,7 @@ class CidadesController < ApplicationController
   end
 
   def sici
-    @sici = Cidade.assinantes
+    @sici = Cidade.assinantes.order(:nome)
     respond_to do |format|
       format.html
       format.csv { send_data @sici.except(:limit, :offset).to_csv, filename: "sici-#{Date.today}.csv" }
