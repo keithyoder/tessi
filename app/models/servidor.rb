@@ -71,4 +71,16 @@ class Servidor < ApplicationRecord
     fi = open("ftp://#{login}@#{self.ip.to_s}/#{filename}-backup.rsc")
     self.backup.attach(io: fi, filename: "#{self.nome}-backup.rsc")
   end
+
+  def backup_status
+    if self.backup.attached?
+      if self.backup.created_at > 1.week.ago
+        "Recente"
+      else
+        "Antigo"
+      end
+    else
+      "Nenhum"
+    end
+  end
 end

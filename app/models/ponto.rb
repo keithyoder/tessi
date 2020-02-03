@@ -8,7 +8,8 @@ class Ponto < ApplicationRecord
   enum tecnologia: {:Radio => 1, :Fibra => 2}
   enum sistema: {:Ubnt => 1, :Mikrotik => 2, :Chima => 3, :Outro => 4}
   enum equipamento: { 'Ubiquiti Loco M5' => 'locoM5', 'Ubiquiti Rocket M5' => 'rocketM5',
-    'Ubiquiti Litebeam AC-16-120' => 'litebeamAC' }
+    'Ubiquiti Litebeam AC-16-120' => 'litebeamAC', "Ubiquiti Powerbeam M5" => 'powerbeamM5',
+    'Ubiquiti Nanostation M5' => 'nanostationM5' }
 
   after_touch :save
   before_save do

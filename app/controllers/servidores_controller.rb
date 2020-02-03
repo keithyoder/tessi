@@ -35,9 +35,12 @@ class ServidoresController < ApplicationController
   end
 
   def backups
-    MikrotikBackupJob.perform_later
+    if request.format == :job
+      MikrotikBackupJob.perform_later
+    end
     respond_to do |format|
-      format.html { redirect_to servidores_path, notice: 'Backup iniciado.' }
+      format.job { redirect_to backups_servidores_path, notice: 'Backup iniciado.' }
+      format.html { render :backups }
       format.json { head :no_content }
     end
   end

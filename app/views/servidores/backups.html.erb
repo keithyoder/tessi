@@ -1,0 +1,27 @@
+<div class="card">
+  <%= render '/shared/table_header', {object: @servidores, titulo: "Backups dos Concentradores", search_string: :nome_cont} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>IP</th>
+            <th>Backup</th>
+         </tr>
+        </thead>
+
+        <tbody>
+          <% @servidores.each do |servidor| %>
+            <tr>
+              <td><%= link_to servidor.nome, servidor %></td>
+              <td><%= servidor.ip.to_s %></td>
+              <td><%= servidor.backup_status %></td>
+           </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%= paginate @servidores if @servidores.respond_to? :total_pages %>
+</div>
