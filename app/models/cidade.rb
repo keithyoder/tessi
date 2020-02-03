@@ -34,6 +34,13 @@ class Cidade < ApplicationRecord
 
   def quantas_conexoes(tipo, velocidade)
     collection = self.conexoes
+    case self.tecnologia
+    when 1
+      collection = collection.radio
+    when 2
+      collection = collection.fibra
+    end
+
     case tipo
     when "Pessoa Física"
       collection = collection.pessoa_fisica
