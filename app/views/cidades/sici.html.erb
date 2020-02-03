@@ -1,0 +1,29 @@
+<div class="card">
+  <%= render '/shared/table_header', {object: @cidades, titulo: "SICI", search_string: :nome_cont} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Estado</th>
+            <th>IBGE</th>
+            <th>Rádio</th>
+            <th>Fibra</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sici.each do |cidade| %>
+            <tr>
+              <td><%= link_to cidade.nome, cidade %></td>
+              <td><%= cidade.estado.nome %></td>
+              <td><%= cidade.ibge %></td>
+              <td><%= cidade.quantas_conexoes(1, :Radio) %></td>
+              <td><%= cidade.quantas_conexoes(1, :Fibra) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

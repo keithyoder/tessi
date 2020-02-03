@@ -13,6 +13,14 @@ class CidadesController < ApplicationController
     end
   end
 
+  def sici
+    @sici = Cidade.assinantes
+    respond_to do |format|
+      format.html
+      format.csv { send_data @sici.except(:limit, :offset).to_csv, filename: "sici-#{Date.today}.csv" }
+    end
+  end
+
   # GET /cidades/1
   # GET /cidades/1.json
   def show

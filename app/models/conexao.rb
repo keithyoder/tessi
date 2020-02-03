@@ -9,6 +9,8 @@ class Conexao < ApplicationRecord
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
   scope :inadimplente, -> { where("inadimplente") }
+  scope :radio, -> { joins(:ponto).where(pontos: {tecnologia: :Radio}) }
+  scope :fibra, -> { joins(:ponto).where(pontos: {tecnologia: :Fibra}) }
 
   after_touch :save
   after_save do
@@ -56,5 +58,5 @@ class Conexao < ApplicationRecord
   def desconectar_hotspot
     id = self.servidor.mk_command(['/ip/hotspot/active/print', '?user='+self.usuario.to_s])[0][0][".id"]
     result = self.servidor.mk_command(['/ip/hotspot/active/remove', '=.id='+id])
-    end
+  end
 end

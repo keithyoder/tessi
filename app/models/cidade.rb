@@ -3,6 +3,10 @@ require 'csv'
 class Cidade < ApplicationRecord
   belongs_to :estado
   has_many :bairros
+  has_many :logradouros, through: :bairros
+  has_many :pessoas, through: :logradouros
+  has_many :conexoes, through: :pessoas
+  scope :assinantes, -> { joins(:conexoes).distinct }
 
   def titulo
     "Cidade"
@@ -26,4 +30,13 @@ class Cidade < ApplicationRecord
   def nome_uf
     self.nome + " - " + self.estado.sigla
   end
+
+  def quantas_conexoes(tipo, tecnologia)
+    if tecnologia == :Radio
+      self.conexoes.radio.count
+    elsif tecnologia == :Fibra
+      self.conexoes.fibra.count
+    end
+  end
+
 end

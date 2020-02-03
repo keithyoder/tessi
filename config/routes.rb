@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   end
   resources :logradouros
   resources :bairros
-  resources :cidades
+  resources :cidades do
+    get :sici, :on => :collection
+  end
   devise_for :users
   resources :estados
   get 'welcome/index'

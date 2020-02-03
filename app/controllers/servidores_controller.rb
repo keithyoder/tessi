@@ -37,6 +37,8 @@ class ServidoresController < ApplicationController
   def backups
     if request.format == :job
       MikrotikBackupJob.perform_later
+    else
+      @servidores = Servidor.ativo.order(:nome)
     end
     respond_to do |format|
       format.job { redirect_to backups_servidores_path, notice: 'Backup iniciado.' }
