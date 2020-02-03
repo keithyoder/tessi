@@ -25,15 +25,15 @@
             <td><%= link_to ponto.nome, ponto %></td>
             <td><%= ponto.ssid %></td>
             <td><%= ponto.frequencia_text %></td>
-            <td><%= ponto.conexoes.count %></td>
-            <td><%= ponto.conexoes.bloqueado.count  %></td>
+            <td class="text-center"><%= ponto.conexoes.count %></td>
+            <td class="text-center"><%= ponto.conexoes.bloqueado.count  %></td>
             <% if !defined?(exclude) or exclude != 'equipamento' %>
               <td><%= ponto.equipamento  %></td>
             <% end %>
             <% if !defined?(exclude) or exclude != 'servidor' %>
               <td><%= link_to ponto.servidor.nome, ponto.servidor %></td>
             <% end %>
-            <td><%= ponto.ip %></td>
+            <td><%= ponto.ip.present? ? link_to(ponto.ip.to_s, 'http://'+ponto.ip.to_s, target: "_blank") : "Sem IP" %></td>
           </tr>
         <% end %>
       </tbody>

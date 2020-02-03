@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :planos
   resources :servidores do
     get :backup, :on => :member
+    get :backups, :on => :collection
   end
   resources :logradouros
   resources :bairros

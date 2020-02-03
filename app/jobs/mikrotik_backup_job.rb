@@ -2,7 +2,12 @@ class MikrotikBackupJob < ApplicationJob
   queue_as :default
 
   def perform
-    Servidor.find(1).copiar_backup
+    Servidor.ativo.each do | servidor |
+      begin
+        servidor.copiar_backup
+      rescue
+      end
+    end
   end
 end
 

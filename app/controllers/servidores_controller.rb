@@ -34,6 +34,14 @@ class ServidoresController < ApplicationController
     end
   end
 
+  def backups
+    MikrotikBackupJob.perform_later
+    respond_to do |format|
+      format.html { redirect_to servidores_path, notice: 'Backup iniciado.' }
+      format.json { head :no_content }
+    end
+  end
+
   # GET /servidores/new
   def new
     @servidor = Servidor.new
