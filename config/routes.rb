@@ -15,7 +15,9 @@ Rails.application.routes.draw do
     get :snmp, :on => :collection
   end
   resources :planos
-  resources :servidores
+  resources :servidores do
+    get :backup, :on => :member
+  end
   resources :logradouros
   resources :bairros
   resources :cidades

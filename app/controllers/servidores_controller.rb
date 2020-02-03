@@ -25,6 +25,15 @@ class ServidoresController < ApplicationController
     @autenticacoes = @servidor.autenticacoes.order(authdate: :desc).page params[:page]
   end
 
+  def backup
+    @servidor=Servidor.find(params[:id])
+    @servidor.copiar_backup
+    respond_to do |format|
+      format.html { redirect_to @servidor, notice: 'Backup iniciado.' }
+      format.json { head :no_content }
+    end
+  end
+
   # GET /servidores/new
   def new
     @servidor = Servidor.new

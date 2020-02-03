@@ -47,6 +47,7 @@
       </div>
     </div>
     <% end %>
+    <%= link_to "Novo Backup", backup_servidor_path %><br>
     <%= @servidor.backup.attached? ? link_to("Backup "+@servidor.backup.created_at.to_formatted_s,
       rails_blob_path(@servidor.backup, disposition: 'attachment')) : '' %>
   </div>

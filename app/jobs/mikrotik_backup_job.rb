@@ -6,4 +6,4 @@ class MikrotikBackupJob < ApplicationJob
   end
 end
 
-MikrotikBackupJob.perform_later()
+#MikrotikBackupJob.perform_later()
