@@ -17,7 +17,7 @@ class Pessoa < ApplicationRecord
   end
 
   def cpf_cnpj
-    self.cpf.present? ? self.cpf : self.cpf
+    self.cpf.present? ? self.cpf : self.cnpj
   end
 
   def rg_ie

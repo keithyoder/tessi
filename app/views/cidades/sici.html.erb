@@ -5,12 +5,11 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th colspan=3></th>
+            <th colspan=2></th>
             <th class="text-center" colspan=2>Rádio</th>
             <th class="text-center" colspan=2>Fibra</th>
           <tr>
-            <th>Nome</th>
-            <th>Estado</th>
+            <th>Município</th>
             <th>IBGE</th>
             <th>Física</th>
             <th>Jurídica</th>
@@ -21,8 +20,7 @@
         <tbody>
           <% @sici.each do |cidade| %>
             <tr>
-              <td><%= link_to cidade.nome, cidade %></td>
-              <td><%= cidade.estado.nome %></td>
+              <td><%= link_to cidade.nome_uf, cidade %></td>
               <td><%= cidade.ibge %></td>
               <td><%= cidade.quantas_conexoes("Pessoa Física", :Radio) %></td>
               <td><%= cidade.quantas_conexoes("Pessoa Jurídica", :Radio) %></td>
@@ -31,6 +29,15 @@
             </tr>
           <% end %>
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan=2>Total</th>
+            <th><%= @conexoes.pessoa_fisica.radio.count %></th>
+            <th><%= @conexoes.pessoa_juridica.radio.count %></th>
+            <th><%= @conexoes.pessoa_fisica.fibra.count %></th>
+            <th><%= @conexoes.pessoa_juridica.fibra.count %></th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>

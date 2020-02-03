@@ -15,6 +15,7 @@ class CidadesController < ApplicationController
 
   def sici
     @sici = Cidade.assinantes.order(:nome)
+    @conexoes = Conexao.ativo
     respond_to do |format|
       format.html
       format.csv { send_data @sici.except(:limit, :offset).to_csv, filename: "sici-#{Date.today}.csv" }

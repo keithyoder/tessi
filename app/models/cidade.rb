@@ -35,7 +35,7 @@ class Cidade < ApplicationRecord
     collection = self.conexoes.ativo
     case tecnologia
     when :Radio
-      colleciton = collection.radio
+      collection = collection.radio
     when :Fibra
       collection = collection.fibra
     end
