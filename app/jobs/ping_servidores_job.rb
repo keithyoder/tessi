@@ -1,7 +1,7 @@
 class PingServidoresJob
   include Sidekiq::Worker
   
-  def perform(name, count)
+  def perform
     Servidor.ativo.each do | servidor |
       servidor.up = servidor.ping?
       servidor.save
