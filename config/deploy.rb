@@ -54,3 +54,4 @@ set :keep_releases, 5
 # This is useful if you don't want to use ENV variables
 # append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
+set :default_environment, 'JAVA_HOME' => "/usr/lib/jvm/java-11-openjdk-amd64"
