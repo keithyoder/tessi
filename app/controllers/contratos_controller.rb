@@ -16,7 +16,7 @@ class ContratosController < ApplicationController
   def show
     @contrato = Contrato.find(params[:id])
     if request.format != :pdf
-      @faturas = @contrato.faturas.order(:parcela).page params[:page]
+      @faturas = @contrato.faturas.order(parcela: :desc).page params[:page]
     else
       puts "create pdf"
       pdf = FillablePDF.new('public/termo.pdf')
