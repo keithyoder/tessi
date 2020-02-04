@@ -18,7 +18,9 @@ class ContratosController < ApplicationController
     if request.format != :pdf
       @faturas = @contrato.faturas.order(:parcela).page params[:page]
     else
+      puts "create pdf"
       pdf = FillablePDF.new('public/termo.pdf')
+      puts "set fields"
       pdf.set_fields(
         assinante_nome: @contrato.pessoa.nome,
         assinante_cpf_cnpj: @contrato.pessoa.cpf,
@@ -46,8 +48,11 @@ class ContratosController < ApplicationController
         forma_pagamento: 'Boleto',
         contrato_data: I18n.localize(@contrato.adesao, format: :long)
       )
+      puts "create temp file"
       file = Tempfile.new('contrato')
+      puts "save pdf"
       pdf.save_as(file, flatten: true)
+      puts "close"
       pdf.close 
     end
     respond_to do |format|
