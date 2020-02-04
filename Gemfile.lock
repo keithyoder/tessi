@@ -118,6 +118,8 @@ GEM
     faraday (0.17.3)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.3)
+    fillable-pdf (0.8.0)
+      rjb (~> 1.6)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
     geocoder (1.5.1)
@@ -232,6 +234,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rjb (1.6.1)
     ruby-vips (2.0.14)
       ffi (~> 1.9)
     ruby_dep (1.5.0)
@@ -326,6 +329,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
+  fillable-pdf
   font-awesome-rails
   geocoder
   her
