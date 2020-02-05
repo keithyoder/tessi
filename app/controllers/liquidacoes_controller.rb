@@ -3,7 +3,7 @@ class LiquidacoesController < ApplicationController
 
   def index
     @liquidacoes = Fatura.select("date(liquidacao) as data, count(*) as liquidacoes, sum(valor_liquidacao) as valor")
-        .where("liquidacao not null")
+        .where("not liquidacao is null")
         .group(:liquidacao)
         .order(liquidacao: :desc)
         .page params[:page]
