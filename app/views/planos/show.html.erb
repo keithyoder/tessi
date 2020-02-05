@@ -13,7 +13,8 @@
   <%= render 'shared/show_header', {object: @plano, titulo: "Plano de Acesso "+ @plano.nome} %>
   <div class="card-body">
     <div class="card-columns" style="column-count: 4">
-      <%= render 'shared/field_card', {campo: "Mensalidade", valor: @plano.mensalidade} %>
+      <%= render 'shared/field_card', {campo: "Mensalidade", valor: number_to_currency(@plano.mensalidade)} %>
+      <%= render 'shared/field_card', {campo: "Desconto", valor: number_to_currency(@plano.desconto)} %>
       <%= render 'shared/field_card', {campo: "Download", valor: @plano.download.to_s + " Mbps"} %>
       <%= render 'shared/field_card', {campo: "Upload", valor: @plano.upload.to_s + " Mbps"} %>
       <%= render 'shared/field_card', {campo: "Burst", valor: @plano.burst.as_simnao.capitalize} %>

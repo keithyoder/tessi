@@ -21,12 +21,12 @@
           <% end %>
           <%= render 'shared/field_card', {campo: "Status", valor: @contrato.status} %>
           <%= render 'shared/field_card', {campo: "Dia Vencimento", valor: @contrato.dia_vencimento} %>
-          <%= render 'shared/field_card', {campo: "Data Adesão", valor: @contrato.adesao} %>
-          <%= render 'shared/field_card', {campo: "Valor Instalação", valor: @contrato.valor_instalacao} %>
+          <%= render 'shared/field_card', {campo: "Data Adesão", valor: l(@contrato.adesao)} %>
+          <%= render 'shared/field_card', {campo: "Valor Instalação", valor: number_to_currency(@contrato.valor_instalacao)} %>
           <%= render 'shared/field_card', {campo: "Número de Conexões", valor: @contrato.numero_conexoes} %>
-          <%= render 'shared/field_card', {campo: "Data de Cancelamento", valor: @contrato.cancelamento} %>
+          <%= render 'shared/field_card', {campo: "Data de Cancelamento", valor: l(@contrato.cancelamento, default: "")} %>
           <%= render 'shared/field_card', {campo: "Emitir NF", valor: @contrato.emite_nf.as_simnao} %>
-          <%= render 'shared/field_card', {campo: "Primeiro Vencimento", valor: @contrato.primeiro_vencimento} %>
+          <%= render 'shared/field_card', {campo: "Primeiro Vencimento", valor: l(@contrato.primeiro_vencimento, default: "")} %>
           <%= render 'shared/field_card', {campo: "Prazo (meses)", valor: @contrato.prazo_meses} %>
         </div>
       </div>
