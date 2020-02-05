@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :liquidacoes
   resources :faturas
   resources :contratos
   resources :conexao_enviar_atributos

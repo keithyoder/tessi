@@ -1,0 +1,27 @@
+<div class="card">
+  <%= render '/shared/table_header', {object: @liquidacoes, titulo: "Liquidações"} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Pagamentos</th>
+            <th>Valor Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @liquidacoes.each do |liquidacao| %>
+            <tr>
+              <td><%= liquidacao.data %></td>
+              <td><%= liquidacao.liquidacoes %></td>
+              <td><%= liquidacao.valor %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @liquidacoes %>
+    </div>
+  </div>
+</div>

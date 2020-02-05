@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_05_131023) do
+ActiveRecord::Schema.define(version: 2020_02_05_164709) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -142,6 +142,9 @@ ActiveRecord::Schema.define(version: 2020_02_05_131023) do
     t.date "periodo_inicio"
     t.date "periodo_fim"
     t.index ["contrato_id"], name: "index_faturas_on_contrato_id"
+    t.index ["liquidacao"], name: "index_faturas_on_liquidacao"
+    t.index ["meio_liquidacao", "liquidacao"], name: "index_faturas_on_meio_liquidacao_and_liquidacao"
+    t.index ["vencimento"], name: "index_faturas_on_vencimento"
   end
 
   create_table "logradouros", force: :cascade do |t|
