@@ -5,7 +5,13 @@ class FaturasController < ApplicationController
   # GET /faturas
   # GET /faturas.json
   def index
-    @faturas = Fatura.all.page params[:page]
+    if params.key?(:inadimplentes)
+      @faturas = Fatura.inadimplentes.order(vencimento: :desc).page params[:page]
+    elsif params.key?(:suspensos)
+      @faturas = Fatura.suspensos.order(vencimento: :desc).page params[:page]
+    else
+      @faturas = Fatura.all.order(vencimento: :desc).page params[:page]
+    end
   end
 
   # GET /faturas/1

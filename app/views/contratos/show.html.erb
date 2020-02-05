@@ -35,6 +35,6 @@
   <div class="tab-pane fade <%= params[:tab] == "faturas" ? "show active": "" %>" id="faturas"
     role="tabpanel" aria-labelledby="faturas-tab">
     <h3><%= @contrato.pessoa.nome %></h3>
-    <%= render 'faturas/table' %>
+    <%= render 'faturas/table', {exclude: 'pessoa'} %>
   </div>
 </div>
