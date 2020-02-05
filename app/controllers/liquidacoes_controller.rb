@@ -2,15 +2,23 @@ class LiquidacoesController < ApplicationController
     load_and_authorize_resource :fatura, :through => :liquidacoes 
 
   def index
-    @liquidacoes = Fatura.select("date(liquidacao) as data, count(*) as liquidacoes, sum(valor_liquidacao) as valor")
+    @liquidacoes = Fatura.select("min(liquidacao) as data, count(*) as liquidacoes, sum(valor_liquidacao) as valor")
         .where("not liquidacao is null")
-        .group(:liquidacao)
         .order(liquidacao: :desc)
-        .page params[:page]
+    if params.key?(:ano)
+        @liquidacoes = @liquidacoes.group("strftime('%Y', liquidacao)")
+    else    
+        @liquidacoes = @liquidacoes.group(:liquidacao)
+    end
+    @liquidacoes.page params[:page]
   end
     
   def show
-    @liquidacoes = Fatura.where("liquidacao = ?", params[:id]).page params[:page]
+    @liquidacoes = Fatura.where("liquidacao = ?", params[:id])
+    if params.key?(:meio)
+        @liquidacoes = @liquidacoes.where('meio_liquidacao = ?', params[:meio])
+    end
+    @liquidacoes = @liquidacoes.page params[:page]
   end
 
 end

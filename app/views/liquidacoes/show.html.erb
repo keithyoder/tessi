@@ -1,5 +1,5 @@
 <div class="card">
-  <%= render '/shared/table_header', {object: @liquidacoes, titulo: "Liquidações por dia"} %>
+  <%= render '/shared/table_header', {object: @liquidacoes, titulo: "Liquidações "+l(params[:id].to_date) } %>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-striped">
@@ -8,7 +8,7 @@
             <th>Assinante</th>
             <th>Contrato</th>
             <th>Parcela</th>
-            <th>Form de Pagamento</th>
+            <th>Forma de Pagamento</th>
             <th>Valor</th>
             <th>Vencimento</th>
           </tr>
@@ -21,7 +21,7 @@
               <td><%= link_to liquidacao.contrato.id, liquidacao.contrato %></td>
               <td><%= liquidacao.parcela %></td>
               <td><%= liquidacao.meio_liquidacao %></td>
-              <td><%= number_to_currency(liquidacao.valor) %></td>
+              <td><%= number_to_currency(liquidacao.valor_liquidacao) %></td>
               <td><%= l(liquidacao.vencimento) %></td>
             </tr>
           <% end %>
