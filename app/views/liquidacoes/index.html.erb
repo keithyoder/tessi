@@ -14,9 +14,9 @@
         <tbody>
           <% @liquidacoes.each do |liquidacao| %>
             <tr>
-              <td><%= liquidacao.data %></td>
+              <td><%= link_to l(liquidacao.data.to_date), liquidacao_path(liquidacao.data) %></td>
               <td><%= liquidacao.liquidacoes %></td>
-              <td><%= liquidacao.valor %></td>
+              <td><%= number_to_currency(liquidacao.valor) %></td>
             </tr>
           <% end %>
         </tbody>

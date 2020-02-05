@@ -1,0 +1,33 @@
+<div class="card">
+  <%= render '/shared/table_header', {object: @liquidacoes, titulo: "Liquidações por dia"} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Assinante</th>
+            <th>Contrato</th>
+            <th>Parcela</th>
+            <th>Form de Pagamento</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @liquidacoes.each do |liquidacao| %>
+            <tr>
+              <td><%= link_to liquidacao.contrato.pessoa.nome, liquidacao.contrato.pessoa %></td>
+              <td><%= link_to liquidacao.contrato.id, liquidacao.contrato %></td>
+              <td><%= liquidacao.parcela %></td>
+              <td><%= liquidacao.meio_liquidacao %></td>
+              <td><%= number_to_currency(liquidacao.valor) %></td>
+              <td><%= l(liquidacao.vencimento) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @liquidacoes %>
+    </div>
+  </div>
+</div>
