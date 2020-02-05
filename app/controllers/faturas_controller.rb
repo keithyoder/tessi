@@ -1,10 +1,11 @@
 class FaturasController < ApplicationController
+  load_and_authorize_resource
   before_action :set_fatura, only: [:show, :edit, :update, :destroy]
 
   # GET /faturas
   # GET /faturas.json
   def index
-    @faturas = Fatura.all
+    @faturas = Fatura.all.page params[:page]
   end
 
   # GET /faturas/1

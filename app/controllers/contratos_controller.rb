@@ -13,6 +13,7 @@ class ContratosController < ApplicationController
 
   # GET /contratos/1
   # GET /contratos/1.json
+  # GET /contratos/1.pdf
   def show
     @contrato = Contrato.find(params[:id])
     if request.format != :pdf
@@ -56,7 +57,7 @@ class ContratosController < ApplicationController
       pdf.close 
     end
     respond_to do |format|
-      format.html
+      format.html { render :show }
       format.pdf { send_file(file, file_name: "Termo Adesão "+@contrato.pessoa.nome, type: :pdf, disposition: :inline) }
     end
   end

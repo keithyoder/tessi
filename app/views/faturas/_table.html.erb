@@ -17,8 +17,8 @@
           <% @faturas.each do |fatura| %>
             <tr>
               <td><%= fatura.parcela %></td>
-              <td><%= link_to I18n.localize(fatura.vencimento), fatura %></td>
-              <td><%= I18n.localize(fatura.liquidacao) %></td>
+              <td><%= link_to I18n.l(fatura.vencimento), fatura %></td>
+              <td><%= I18n.l(fatura.liquidacao, default: '') %></td>
               <td><%= number_to_currency(fatura.valor) %></td>
               <td><%= fatura.nossonumero %></td>
             </tr>
