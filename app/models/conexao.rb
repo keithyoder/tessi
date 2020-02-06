@@ -4,6 +4,7 @@ class Conexao < ApplicationRecord
   belongs_to :ponto
   has_one :servidor, through: :ponto
   belongs_to :contrato
+  has_many :faturas, through: :contrato
   has_many :conexao_enviar_atributos, dependent: :delete_all
   has_many :conexao_verificar_atributos, dependent: :delete_all
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
@@ -20,6 +21,7 @@ class Conexao < ApplicationRecord
   scope :ate_12M, -> { joins(:plano).where("planos.download BETWEEN 8.01 AND 12")}
   scope :ate_34M, -> { joins(:plano).where("planos.download BETWEEN 12.01 AND 34")}
   scope :acima_34M, -> { joins(:plano).where("planos.download > 34")}
+
 
   after_touch :save
   after_save do
@@ -65,7 +67,10 @@ class Conexao < ApplicationRecord
   end
 
   def desconectar_hotspot
-    id = self.servidor.mk_command(['/ip/hotspot/active/print', '?user='+self.usuario.to_s])[0][0][".id"]
-    result = self.servidor.mk_command(['/ip/hotspot/active/remove', '=.id='+id])
+    if self.ponto.tecnologia == :Radio
+      id = self.servidor.mk_command(['/ip/hotspot/active/print', '?user='+self.usuario.to_s])[0][0][".id"]
+      result = self.servidor.mk_command(['/ip/hotspot/active/remove', '=.id='+id])
+    end
   end
+
 end

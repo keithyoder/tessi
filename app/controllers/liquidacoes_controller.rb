@@ -2,13 +2,21 @@ class LiquidacoesController < ApplicationController
     load_and_authorize_resource :fatura, :through => :liquidacoes 
 
   def index
-    @liquidacoes = Fatura.select("min(liquidacao) as data, count(*) as liquidacoes, sum(valor_liquidacao) as valor")
+    @liquidacoes = Fatura.select("count(*) as liquidacoes, sum(valor_liquidacao) as valor")
         .where("not liquidacao is null")
-        .order(liquidacao: :desc)
-    if params.key?(:ano)
-        @liquidacoes = @liquidacoes.group("strftime('%Y', liquidacao)")
+    if params.key?(:mes)
+      @liquidacoes = @liquidacoes.select("extract(month from liquidacao)::int as mes")
+        .where("extract(year from liquidacao) = ?", params[:ano])
+        .group("extract(month from liquidacao)")
+        .order(:mes)    
+      @chart = Fatura.where("extract(year from liquidacao) = ?", params[:ano]).group("extract(month from liquidacao)").sum(:valor_liquidacao)
+      elsif params.key?(:ano)
+      @liquidacoes = @liquidacoes.select("extract(year from liquidacao)::int as ano")
+        .group("extract(year from liquidacao)")
+        .order(:ano)
+      @chart = Fatura.where("not liquidacao is null").group("extract(year from liquidacao)").sum(:valor_liquidacao)
     else    
-        @liquidacoes = @liquidacoes.group(:liquidacao)
+      @liquidacoes = @liquidacoes.select("liquidacao as data").group(:liquidacao).order(liquidacao: :desc)
     end
     @liquidacoes.page params[:page]
   end
@@ -21,4 +29,9 @@ class LiquidacoesController < ApplicationController
     @liquidacoes = @liquidacoes.page params[:page]
   end
 
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def liquidacoes_params
+      params.permit(:mes, :ano)
+    end
 end

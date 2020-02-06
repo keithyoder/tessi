@@ -18,4 +18,6 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require autocomplete-rails
+//= require chartkick
+//= require Chart.bundle
 //= require_tree .

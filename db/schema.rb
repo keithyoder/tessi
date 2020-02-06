@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_02_05_164709) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -240,8 +243,8 @@ ActiveRecord::Schema.define(version: 2020_02_05_164709) do
     t.datetime "acctstarttime"
     t.datetime "acctupdatetime"
     t.datetime "acctstoptime"
-    t.integer "acctinterval", limit: 12
-    t.integer "acctsessiontime", limit: 12
+    t.bigint "acctinterval"
+    t.bigint "acctsessiontime"
     t.string "acctauthentic", limit: 32
     t.string "connectinfo_start", limit: 50
     t.string "connectinfo_stop", limit: 50
@@ -261,9 +264,6 @@ ActiveRecord::Schema.define(version: 2020_02_05_164709) do
     t.string "reply", limit: 32, default: "", null: false
     t.datetime "authdate", null: false
   end
-
-# Could not dump table "servidores" because of following StandardError
-#   Unknown type 'inet' for column 'ip'
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
