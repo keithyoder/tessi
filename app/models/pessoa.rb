@@ -1,5 +1,7 @@
 class Pessoa < ApplicationRecord
   belongs_to :logradouro
+  has_one :bairro, through: :logradouro
+  has_one :cidade, through: :logradouro
   has_many :conexoes
   has_many :contratos
   has_one_attached :rg_imagem

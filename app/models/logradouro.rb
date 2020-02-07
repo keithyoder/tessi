@@ -2,6 +2,7 @@ require 'csv'
 
 class Logradouro < ApplicationRecord
   belongs_to :bairro
+  has_one :cidade, through: :bairro
   has_many :pessoas
   has_many :conexoes, :through => :pessoas
 

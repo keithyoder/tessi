@@ -1,1 +1,47 @@
 <%= image_tag("logo-cores.svg", id: "logo") %>
+
+<div class="card-columns" style="column-count: 4">
+
+<div class="card">
+  <div class="card-header">
+    Conexões ativas
+  </div>
+  <div class="card-body text-center">
+    <h1><%= total_conexoes = Conexao.ativo.count
+    number_with_delimiter(total_conexoes) %></h1>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    Tecnologia
+  </div>
+  <div class="card-body text-center">
+    <%= pie_chart Conexao.joins(:ponto).group(:tecnologia).count.map {|k,v| [Ponto.tecnologias.key(k), v] }.to_h %>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    Conexões suspensas
+  </div>
+  <div class="card-body text-center">
+    <h1><%= number_with_delimiter(Conexao.bloqueado.count) %></h1>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    Conexões inadimplentes
+  </div>
+  <div class="card-body text-center">
+    <h1><%= number_with_delimiter(Conexao.inadimplente.count) %></h1>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    Cidades
+  </div>
+  <div class="card-body text-center">
+    <%= pie_chart Conexao.ativo.joins(:cidade).group("cidades.nome").order(count: :desc).limit(5).count %>
+  </div>
+</div>
+
+</div>

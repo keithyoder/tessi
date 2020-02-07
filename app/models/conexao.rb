@@ -4,6 +4,7 @@ class Conexao < ApplicationRecord
   belongs_to :ponto
   has_one :servidor, through: :ponto
   belongs_to :contrato
+  has_one :cidade, through: :pessoa
   has_many :faturas, through: :contrato
   has_many :conexao_enviar_atributos, dependent: :delete_all
   has_many :conexao_verificar_atributos, dependent: :delete_all
