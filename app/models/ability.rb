@@ -44,8 +44,10 @@ class Ability
         can :update, [Cidade, Ponto]
         can :backup, :backups, Servidor
       elsif user.financeiro_n1?
+        can :liquidacao, [Fatura]
       elsif user.financeiro_n2?
         can :update, Cidade
+        can :liquidacao, [Fatura]
       end
     end
   end
