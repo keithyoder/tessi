@@ -23,7 +23,6 @@ class Conexao < ApplicationRecord
   scope :ate_34M, -> { joins(:plano).where("planos.download BETWEEN 12.01 AND 34")}
   scope :acima_34M, -> { joins(:plano).where("planos.download > 34")}
 
-
   after_touch :save
   after_save do
     if self.usuario.present? && self.senha.present?
