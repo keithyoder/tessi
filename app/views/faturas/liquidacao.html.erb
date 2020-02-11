@@ -23,9 +23,9 @@
       </div>
       <div class="card-columns" style="column-count: 3">
       <div class="form-inputs">
-        <%= f.input :liquidacao, as: :string %>   
-        <%= f.input :meio_liquidacao, collection: Fatura.meio_liquidacoes.keys %>
-        <%= f.input :valor_liquidacao %>
+        <%= f.input :liquidacao, as: :string, :label => "Data de Pagamento" %>   
+        <%= f.input :meio_liquidacao, :label => "Forma de Pagamento", collection: Fatura.meio_liquidacoes.keys %>
+        <%= f.input :valor_liquidacao, :label => "Valor a Receber" %>
       </div>
       </div>
       <div class="actions">
