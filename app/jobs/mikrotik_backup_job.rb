@@ -12,3 +12,4 @@ class MikrotikBackupJob < ApplicationJob
 end
 
 #MikrotikBackupJob.perform_later()
+Sidekiq::Cron::Job.create(name: 'Backup Concentradores - uma vez por dia', cron: '20 9 * * *', class: 'MikrotikBackupJob')

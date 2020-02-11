@@ -20,4 +20,6 @@
 //= require autocomplete-rails
 //= require chartkick
 //= require Chart.bundle
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker.pt-BR
 //= require_tree .

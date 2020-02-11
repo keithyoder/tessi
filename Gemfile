@@ -87,4 +87,7 @@ gem 'snmp'
 gem 'image_processing'
 gem 'fillable-pdf'
 gem 'prawn-rails'
-gem "chartkick"
+gem 'chartkick'
+gem 'oauth2'
+gem 'qbo_api'
+gem 'rails-settings-cached', '~> 2.0'

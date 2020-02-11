@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_05_164709) do
+ActiveRecord::Schema.define(version: 2020_02_10_113238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,6 +265,33 @@ ActiveRecord::Schema.define(version: 2020_02_05_164709) do
     t.datetime "authdate", null: false
   end
 
+  create_table "servidores", force: :cascade do |t|
+    t.string "nome"
+    t.string "usuario"
+    t.string "senha"
+    t.integer "api_porta"
+    t.integer "ssh_porta"
+    t.integer "snmp_porta"
+    t.string "snmp_comunidade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.inet "ip"
+    t.boolean "ativo"
+    t.boolean "up"
+    t.string "radius_secret"
+    t.integer "radius_porta"
+    t.string "versao"
+    t.string "equipamento"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "var", null: false
+    t.text "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["var"], name: "index_settings_on_var", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -283,4 +310,5 @@ ActiveRecord::Schema.define(version: 2020_02_05_164709) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cidades", "estados"
 end

@@ -1,0 +1,11 @@
+Constant:
+  baseURL: https://appcenter.intuit.com/connect/oauth2
+  tokenURL: https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer
+  scope: com.intuit.quickbooks.accounting
+  resfresh_grant_type: refresh_token
+  response_type: code
+  grant_type: authorization_code
+Settings:
+  host_uri: https://localhost:3000
+  redirect_uri: https://localhost:3000/token/new
+  state: randomState

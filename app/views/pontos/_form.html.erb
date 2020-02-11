@@ -17,7 +17,7 @@
         <%= f.input :tecnologia, collection: Ponto.tecnologias.keys %>
       </div>
       <div class="col">
-        <%= f.association :servidor, label_method: :nome %>
+        <%= f.association :servidor, collection: Servidor.ativo.order(:nome), label_method: :nome %>
       </div>
       <div class="col">
         <%= f.input :ip, as: :string %>

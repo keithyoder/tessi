@@ -1,6 +1,6 @@
 class FaturasController < ApplicationController
   load_and_authorize_resource
-  before_action :set_fatura, only: [:show, :edit, :update, :destroy]
+  before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao]
 
   # GET /faturas
   # GET /faturas.json
@@ -26,6 +26,13 @@ class FaturasController < ApplicationController
 
   # GET /faturas/1/edit
   def edit
+  end
+
+  def liquidacao
+    respond_to do |format|
+      format.html { render :liquidacao }
+      format.json { render json: @fatura.errors, status: :unprocessable_entity }
+    end
   end
 
   # POST /faturas
@@ -76,6 +83,7 @@ class FaturasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fatura_params
-      params.require(:fatura).permit(:contrato_id, :valor, :vencimento, :nossonumero, :parcela, :arquivo_remessa, :data_remessa, :data_cancelamento)
+      params.require(:fatura).permit(:contrato_id, :valor, :vencimento, :nossonumero, :parcela,
+        :arquivo_remessa, :data_remessa, :data_cancelamento, :meio_liquidacao, :valor_liquidacao, :liquidacao)
     end
 end

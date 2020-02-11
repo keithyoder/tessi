@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :liquidacoes
-  resources :faturas
+  resources :faturas do
+    get :liquidacao, :on => :member
+  end
   resources :contratos
   resources :conexao_enviar_atributos
   resources :conexao_verificar_atributos
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
   end
   devise_for :users
   resources :estados
+  resources :token
   get 'welcome/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'welcome#index'
