@@ -1,5 +1,5 @@
 class MikrotikBackupJob < ApplicationJob
-  include Sidekiq::Worker
+  #include Sidekiq::Worker
 
   def perform
     Servidor.ativo.each do | servidor |
@@ -12,4 +12,4 @@ class MikrotikBackupJob < ApplicationJob
 end
 
 #MikrotikBackupJob.perform_later()
-Sidekiq::Cron::Job.create(name: 'Backup Concentradores - uma vez por dia', cron: '20 9 * * *', class: 'MikrotikBackupJob')
+#Sidekiq::Cron::Job.create(name: 'Backup Concentradores - uma vez por dia', cron: '20 9 * * *', class: 'MikrotikBackupJob')
