@@ -118,6 +118,7 @@ GEM
     et-orbi (1.2.2)
       tzinfo
     execjs (2.7.0)
+    extensobr (0.1.0)
     faraday (0.17.3)
       multipart-post (>= 1.2, < 3)
     faraday-detailed_logger (2.2.0)
@@ -370,6 +371,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
+  extensobr
   fillable-pdf
   font-awesome-rails
   geocoder

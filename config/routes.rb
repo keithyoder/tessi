@@ -27,7 +27,10 @@ Rails.application.routes.draw do
   resources :cidades do
     get :sici, :on => :collection
   end
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
   resources :estados
   resources :token
   get 'welcome/index'
