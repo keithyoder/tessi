@@ -1,5 +1,5 @@
 class MikrotikBackupJob < ApplicationJob
-  queue_as :default
+  include Sidekiq::Worker
 
   def perform
     Servidor.ativo.each do | servidor |
