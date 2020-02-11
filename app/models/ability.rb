@@ -42,12 +42,12 @@ class Ability
       elsif user.tecnico_n1?
       elsif user.tecnico_n2?
         can :update, [Cidade, Ponto]
-        can :backup, :backups, Servidor
+        can [:backup, :backups], Servidor
       elsif user.financeiro_n1?
-        can :liquidacao, [Fatura]
+        can [:update, :liquidacao], Fatura
       elsif user.financeiro_n2?
         can :update, Cidade
-        can :liquidacao, [Fatura]
+        can [:update, :liquidacao], Fatura
       end
     end
   end
