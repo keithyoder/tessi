@@ -42,7 +42,7 @@
     var dLiquidacao = Date.parse(liquidacao)
     dias = Math.floor((Date.parse(liquidacao) - Date.parse(vencimento)) / (1000 * 3600 * 24));
     if (dias > 0) {
-      return Math.round(((1 + multa) * valor + (juros / 30 * dias) * valor) * 100)/100;
+      return Math.round(((1 + multa) * valor + (juros / 30 * dias) * valor) * 10)/10;
     } else {
       return valor - desconto;
     }
@@ -51,7 +51,8 @@
   $('#fatura_liquidacao').datepicker({
     uiLibrary: 'bootstrap4',
     format: 'dd/mm/yyyy',
-    locale: 'pt-BR'
+    locale: 'pt-BR',
+    maxDate: '+1d'
   }).on('change', function (e) { 
     $('#fatura_valor_liquidacao').val(calcular_total(
         <%= @fatura.valor %>,
