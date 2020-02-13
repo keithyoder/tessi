@@ -13,6 +13,14 @@
 </div>
 <div class="card">
   <div class="card-header">
+    Conexões Radius
+  </div>
+  <div class="card-body text-center">
+    <h1><%= number_with_delimiter(RadAcct.where("acctstoptime is null and acctstarttime > ?", 2.days.ago).distinct.count) %></h1>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
     Tecnologia
   </div>
   <div class="card-body text-center">

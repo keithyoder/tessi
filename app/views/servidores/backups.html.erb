@@ -28,6 +28,7 @@
                   <%= link_to rails_blob_path(servidor.backup, disposition: 'attachment') do %>
                     <button class="btn btn-sm btn-primary">
                       <o><i class="fa fa-download fa-lg" aria-hidden="true"></i> 
+                      (<%= number_to_human_size(servidor.backup.blob.byte_size) %>) 
                       Há <%= time_ago_in_words(servidor.backup.created_at) %>
                     </button>
                   <% end %>

@@ -12,13 +12,12 @@ class ServidoresController < ApplicationController
       format.html
       format.csv { send_data @servidores.except(:limit, :offset).to_csv, filename: "concentradores  -#{Date.today}.csv" }
     end
-
   end
 
   # GET /servidores/1
   # GET /servidores/1.json
   def show
-    @servidor=Servidor.find(params[:id])
+    @servidor = Servidor.find(params[:id])
     @q = @servidor.pontos.ransack(params[:q])
     @q.sorts = "nome"
     @pontos = @q.result.page params[:page]
@@ -26,10 +25,10 @@ class ServidoresController < ApplicationController
   end
 
   def backup
-    @servidor=Servidor.find(params[:id])
+    @servidor = Servidor.find(params[:id])
     @servidor.copiar_backup
     respond_to do |format|
-      format.html { redirect_to @servidor, notice: 'Backup iniciado.' }
+      format.html { redirect_to @servidor, notice: "Backup iniciado." }
       format.json { head :no_content }
     end
   end
@@ -41,7 +40,7 @@ class ServidoresController < ApplicationController
       @servidores = Servidor.ativo.order(:nome)
     end
     respond_to do |format|
-      format.job { redirect_to backups_servidores_path, notice: 'Backup iniciado.' }
+      format.job { redirect_to backups_servidores_path, notice: "Backup iniciado." }
       format.html { render :backups }
       format.json { head :no_content }
     end
@@ -63,7 +62,7 @@ class ServidoresController < ApplicationController
 
     respond_to do |format|
       if @servidor.save
-        format.html { redirect_to @servidor, notice: 'Servidor was successfully created.' }
+        format.html { redirect_to @servidor, notice: "Servidor was successfully created." }
         format.json { render :show, status: :created, location: @servidor }
       else
         format.html { render :new }
@@ -77,7 +76,7 @@ class ServidoresController < ApplicationController
   def update
     respond_to do |format|
       if @servidor.update(servidor_params)
-        format.html { redirect_to @servidor, notice: 'Servidor was successfully updated.' }
+        format.html { redirect_to @servidor, notice: "Servidor was successfully updated." }
         format.json { render :show, status: :ok, location: @servidor }
       else
         format.html { render :edit }
@@ -91,20 +90,21 @@ class ServidoresController < ApplicationController
   def destroy
     @servidor.destroy
     respond_to do |format|
-      format.html { redirect_to servidores_url, notice: 'Servidor was successfully destroyed.' }
+      format.html { redirect_to servidores_url, notice: "Servidor was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_servidor
-      @servidor = Servidor.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def servidor_params
-      params.require(:servidor).permit(:nome, :ip, :usuario, :senha, :api_porta, :ssh_porta, :snmp_porta, :snmp_comunidade,
-        :radius_porta, :radius_secret)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_servidor
+    @servidor = Servidor.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def servidor_params
+    params.require(:servidor).permit(:nome, :ip, :usuario, :senha, :api_porta, :ssh_porta, :snmp_porta, :snmp_comunidade,
+                                     :radius_porta, :radius_secret, :ativo)
+  end
 end
