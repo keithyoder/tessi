@@ -1,5 +1,6 @@
-PATH
-  remote: ../mtik
+GIT
+  remote: https://github.com/astounding/mtik.git
+  revision: 1181245d409ae9cac946b01c83ef90b293008ae4
   specs:
     mtik (4.0.4)
 
