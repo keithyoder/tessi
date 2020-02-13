@@ -1,7 +1,7 @@
 <div class="card">
   <%= render '/shared/table_header', {object: @servidores, titulo: "Backups dos Concentradores", search_string: :nome_cont} %>
   <div class="card-body">
-                    <%= link_to(backups_servidores_url, :format => :job) do %>
+                    <%= link_to backups_servidores_url(:format => 'job') do %>
                     <button class="btn btn-sm btn-primary">
                       <o><i class="fa fa-download fa-lg" aria-hidden="true"></i> 
                       Criar Backups

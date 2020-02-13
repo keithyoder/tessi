@@ -23,7 +23,7 @@ class Servidor < ApplicationRecord
     if self.usuario.present? && self.senha.present?
       begin
         MTik::command(:host => self.ip.to_s, :user => self.usuario,
-          :pass => self.senha, :use_ssl => :true, :command => command)
+          :pass => self.senha, :use_ssl => :true, :unencrypted_plaintext => :true, :command => command)
       rescue
       end
     end

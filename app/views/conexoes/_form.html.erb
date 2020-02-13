@@ -12,16 +12,19 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
-        <%= f.association :ponto, label_method: :nome %>
+      <div class="col-2">
+        <%= f.association :contrato, collection: @conexao.pessoa.contratos, label_method: :id %>
       </div>
       <div class="col">
+        <%= f.association :ponto, label_method: :nome %>
+      </div>
+      <div class="col-2">
         <%= f.input :ip, as: :string %>
       </div>
       <div class="col">
         <%= f.input :usuario %>
       </div>
-      <div class="col">
+      <div class="col-2">
         <%= f.input :senha %>
       </div>
     </div>
@@ -47,7 +50,7 @@
   </div>
 
   <div class="form-actions">
-  <%= button_tag( :class => "btn btn-primary") do %>
+  <%= button_tag(:class => "btn btn-primary") do %>
     <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
   <% end %>
 </div>

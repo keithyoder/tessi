@@ -12,7 +12,7 @@ class ConexoesController < ApplicationController
 
   def suspenso
     @q = Conexao.bloqueado.ransack(params[:q])
-    @q.sorts = 'ponto_id'
+    @q.sorts = "ponto_id"
     @conexoes = @q.result.page params[:page]
     respond_to do |format|
       format.html
@@ -45,7 +45,7 @@ class ConexoesController < ApplicationController
 
     respond_to do |format|
       if @conexao.save
-        format.html { redirect_to @conexao, notice: 'Conexao was successfully created.' }
+        format.html { redirect_to @conexao, notice: "Conexao was successfully created." }
         format.json { render :show, status: :created, location: @conexao }
       else
         format.html { render :new }
@@ -59,7 +59,7 @@ class ConexoesController < ApplicationController
   def update
     respond_to do |format|
       if @conexao.update(conexao_params)
-        format.html { redirect_to @conexao, notice: 'Conexao was successfully updated.' }
+        format.html { redirect_to @conexao, notice: "Conexao was successfully updated." }
         format.json { render :show, status: :ok, location: @conexao }
       else
         format.html { render :edit }
@@ -73,20 +73,21 @@ class ConexoesController < ApplicationController
   def destroy
     @conexao.destroy
     respond_to do |format|
-      format.html { redirect_to conexoes_url, notice: 'Conexao was successfully destroyed.' }
+      format.html { redirect_to conexoes_url, notice: "Conexao was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_conexao
-      @conexao = Conexao.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def conexao_params
-      params.require(:conexao).permit(:pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
-        :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_conexao
+    @conexao = Conexao.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def conexao_params
+    params.require(:conexao).permit(:pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
+                                    :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente)
+  end
 end
