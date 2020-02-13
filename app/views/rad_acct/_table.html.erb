@@ -6,17 +6,19 @@
         <thead>
           <tr>
             <th>Dia</th>
-            <th>Upload</th>
             <th>Download</th>
+            <th>Upload</th>
+            <th>Ratio</th>
           </tr>
         </thead>
 
         <tbody>
           <% @conexao.rad_accts.trafego.each do |trafego| %>
             <tr>
-              <td><%= trafego.dia %></td>
-              <td><%= number_to_human_size(trafego.upload) %></td>
+              <td><%= l(trafego.dia) %></td>
               <td><%= number_to_human_size(trafego.download) %></td>
+              <td><%= number_to_human_size(trafego.upload) %></td>
+              <td><%= number_to_percentage(trafego.upload * 100 / trafego.download) %></td>
             </tr>
           <% end %>
         </tbody>
