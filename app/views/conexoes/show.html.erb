@@ -8,6 +8,9 @@
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#autenticacao">Autenticação</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#trafego">Trâfego</a>
+  </li>
 </ul>
 
 <div class="tab-content" id="conexao-tabs">
@@ -50,11 +53,15 @@
 
 </div>
 <div class="tab-pane fade" id="radius" role="tabpanel" aria-labelledby="radius-tab">
-  <h3><%= @conexao.pessoa.nome %></h3>
+  <h3><%= @conexao.pessoa.nome %> - <%= @conexao.ip.to_s %></h3>
   <%= render 'conexao_verificar_atributos/table' %>
   <%= render 'conexao_enviar_atributos/table' %>
 </div>
 <div class="tab-pane fade" id="autenticacao" role="tabpanel" aria-labelledby="autenticacao-tab">
-  <h3><%= @conexao.pessoa.nome %></h3>
+  <h3><%= @conexao.pessoa.nome %> - <%= @conexao.ip.to_s %></h3>
   <%= render 'autenticacoes/table' %>
+</div>
+<div class="tab-pane fade" id="trafego" role="tabpanel" aria-labelledby="trafego-tab">
+  <h3><%= @conexao.pessoa.nome %> - <%= @conexao.ip.to_s %></h3>
+  <%= render 'rad_acct/table' %>
 </div>

@@ -9,6 +9,7 @@ class Conexao < ApplicationRecord
   has_many :conexao_enviar_atributos, dependent: :delete_all
   has_many :conexao_verificar_atributos, dependent: :delete_all
   has_many :autenticacoes, :primary_key => :usuario, :foreign_key => :username
+  has_many :rad_accts, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
   scope :ativo, -> { where("not bloqueado") }
   scope :inadimplente, -> { where("inadimplente") }

@@ -1,0 +1,26 @@
+<div class="card">
+  <%= render '/shared/table_header', { titulo: "Trâfego" } %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Dia</th>
+            <th>Upload</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @conexao.rad_accts.trafego.each do |trafego| %>
+            <tr>
+              <td><%= trafego.dia %></td>
+              <td><%= trafego.upload %></td>
+              <td><%= trafego.download %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
