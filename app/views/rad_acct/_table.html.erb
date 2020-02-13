@@ -15,8 +15,8 @@
           <% @conexao.rad_accts.trafego.each do |trafego| %>
             <tr>
               <td><%= trafego.dia %></td>
-              <td><%= trafego.upload %></td>
-              <td><%= trafego.download %></td>
+              <td><%= number_to_human_size(trafego.upload) %></td>
+              <td><%= number_to_human_size(trafego.download) %></td>
             </tr>
           <% end %>
         </tbody>

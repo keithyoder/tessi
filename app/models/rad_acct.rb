@@ -5,5 +5,6 @@ class RadAcct < ApplicationRecord
   scope :trafego, -> {
           select("date(acctstoptime) as dia, sum(acctoutputoctets) as upload, sum(acctinputoctets) as download")
             .group("date(acctstoptime)")
+            .order("date(acctstoptime) desc")
         }
 end
