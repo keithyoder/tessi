@@ -20,7 +20,7 @@ class ConexoesController < ApplicationController
     end
   end
 
-  def snmp
+  def integrar
     AtualizarRadiusJob.perform_later()
     respond_to do |format|
       format.html { redirect_to conexoes_url, notice: 'Integração Radius inicada.' }
