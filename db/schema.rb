@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_172223) do
+ActiveRecord::Schema.define(version: 2020_02_15_135749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(version: 2020_02_11_172223) do
     t.string "senha"
     t.boolean "inadimplente", default: false, null: false
     t.integer "contrato_id"
+    t.string "mac"
+    t.integer "tipo"
     t.index ["contrato_id"], name: "index_conexoes_on_contrato_id"
     t.index ["pessoa_id"], name: "index_conexoes_on_pessoa_id"
     t.index ["plano_id"], name: "index_conexoes_on_plano_id"

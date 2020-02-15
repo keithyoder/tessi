@@ -20,6 +20,14 @@ class ConexoesController < ApplicationController
     end
   end
 
+  def snmp
+    AtualizarRadiusJob.perform_later()
+    respond_to do |format|
+      format.html { redirect_to conexoes_url, notice: 'Integração Radius inicada.' }
+      format.json { head :no_content }
+    end
+  end
+
   # GET /conexoes/1
   # GET /conexoes/1.json
   def show
@@ -88,6 +96,6 @@ class ConexoesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def conexao_params
     params.require(:conexao).permit(:pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
-                                    :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente)
+                                    :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente, :tipo, :mac)
   end
 end

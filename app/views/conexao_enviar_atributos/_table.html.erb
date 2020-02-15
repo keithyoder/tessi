@@ -16,7 +16,7 @@
           <% @conexao_enviar_atributos.each do |atributo| %>
             <tr>
               <td><%= atributo.conexao.usuario %></td>
-              <td><%= link_to atributo.atributo, verificar_atributo %></td>
+              <td><%= link_to atributo.atributo, atributo %></td>
               <td><%= atributo.op %></td>
               <td><%= atributo.valor %></td>
             </tr>

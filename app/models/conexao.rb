@@ -39,6 +39,18 @@ class Conexao < ApplicationRecord
       atr.valor = self.ip.to_s
       atr.save
     end
+
+    if self.ponto.tecnologia == "Fibra"
+      atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Calling-Station-Id').first_or_create
+      atr.op = '=='
+      atr.valor = self.mac
+      atr.save
+      atr = ConexaoEnviarAtributo.where(conexao: self, atributo: 'Framed-IP-Address').first_or_create
+      atr.op = ':='
+      atr.valor = self.ip.to_s
+      atr.save
+    end
+
   end
 
   after_update do

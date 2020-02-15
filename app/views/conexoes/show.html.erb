@@ -22,6 +22,7 @@
       <%= link_to @conexao.pessoa do %>
         <%= render 'shared/field_card', {campo: "Assinante", valor: @conexao.pessoa.nome} %>
       <% end %>
+      <%= render 'shared/field_card', {campo: "Tipo de Conexão", valor: @conexao.tipo} %>
       <% if @conexao.contrato.present? %>
         <%= link_to @conexao.contrato do %>
           <%= render 'shared/field_card', {campo: "Contrato", valor: @conexao.contrato.id.to_s + ' ' + @conexao.contrato.adesao.to_s} %>
@@ -34,6 +35,7 @@
       <% end %>
       <%= render 'shared/field_card', {campo: "Usuário", valor: @conexao.usuario} %>
       <%= render 'shared/field_card', {campo: "Senha", valor: @conexao.senha} %>
+      <%= render 'shared/field_card', {campo: "MAC", valor: @conexao.mac} %>
       <%= link_to @conexao.plano do %>
         <%= render 'shared/field_card', {campo: "Plano", valor: @conexao.plano.nome} %>
       <% end %>
