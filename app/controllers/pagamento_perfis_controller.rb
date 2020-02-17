@@ -1,4 +1,5 @@
 class PagamentoPerfisController < ApplicationController
+  load_and_authorize_resource
   before_action :set_pagamento_perfil, only: [:show, :edit, :update, :destroy]
 
   # GET /pagamento_perfis
@@ -28,7 +29,7 @@ class PagamentoPerfisController < ApplicationController
 
     respond_to do |format|
       if @pagamento_perfil.save
-        format.html { redirect_to @pagamento_perfil, notice: 'Pagamento perfil was successfully created.' }
+        format.html { redirect_to @pagamento_perfil, notice: "Pagamento perfil was successfully created." }
         format.json { render :show, status: :created, location: @pagamento_perfil }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class PagamentoPerfisController < ApplicationController
   def update
     respond_to do |format|
       if @pagamento_perfil.update(pagamento_perfil_params)
-        format.html { redirect_to @pagamento_perfil, notice: 'Pagamento perfil was successfully updated.' }
+        format.html { redirect_to @pagamento_perfil, notice: "Pagamento perfil was successfully updated." }
         format.json { render :show, status: :ok, location: @pagamento_perfil }
       else
         format.html { render :edit }
@@ -56,19 +57,20 @@ class PagamentoPerfisController < ApplicationController
   def destroy
     @pagamento_perfil.destroy
     respond_to do |format|
-      format.html { redirect_to pagamento_perfis_url, notice: 'Pagamento perfil was successfully destroyed.' }
+      format.html { redirect_to pagamento_perfis_url, notice: "Pagamento perfil was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pagamento_perfil
-      @pagamento_perfil = PagamentoPerfil.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def pagamento_perfil_params
-      params.require(:pagamento_perfil).permit(:nome, :tipo, :cedente, :agencia, :conta, :carteira)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pagamento_perfil
+    @pagamento_perfil = PagamentoPerfil.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def pagamento_perfil_params
+    params.require(:pagamento_perfil).permit(:nome, :tipo, :cedente, :agencia, :conta, :carteira)
+  end
 end

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :liquidacoes
   resources :faturas do
     get :liquidacao, :on => :member
+    get :boleto, :on => :member
   end
   resources :contratos
   resources :conexao_enviar_atributos
@@ -30,9 +31,9 @@ Rails.application.routes.draw do
     get :sici, :on => :collection
   end
   devise_for :users, controllers: {
-            sessions: "users/sessions",
-            registrations: "users/registrations",
-          }
+                       sessions: "users/sessions",
+                       registrations: "users/registrations",
+                     }
   resources :estados
   resources :token
   resources :settings
