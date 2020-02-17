@@ -46,12 +46,14 @@ class FaturasController < ApplicationController
     @boleto.valor = @fatura.valor
     @boleto.agencia = @fatura.pagamento_perfil.agencia
     @boleto.conta_corrente = @fatura.pagamento_perfil.conta
-    @boleto.variacao = @fatura.pagamento_perfil.carteira
+    @boleto.carteira = @fatura.pagamento_perfil.carteira
+    @boleto.variacao = 'COB'
+    @boleto.especie_documento = 'DS'
     @boleto.nosso_numero = @fatura.nossonumero
     @boleto.data_vencimento = @fatura.vencimento
     @boleto.instrucao1 = "Desconto de #{number_to_currency(@fatura.contrato.plano.desconto)} para pagamento até o dia #{l(@fatura.vencimento)}"
     @boleto.instrucao2 = "Mensalidade de Internet - SCM - Plano: #{@fatura.contrato.plano.nome}"
-    @boleto.instrucao3 = "Período de referência: #{l(@fatura.periodo_inicio)} - #{l(@fatura.periodo_fim)}}"
+    @boleto.instrucao3 = "Período de referência: #{l(@fatura.periodo_inicio)} - #{l(@fatura.periodo_fim)}"
     @boleto.instrucao4 = "Após o vencimento cobrar multa de 2% e juros de 1% ao mês (pro rata die)"
     @boleto.instrucao5 = "S.A.C 0800-725-2129 - sac.tessi.com.br"
     @boleto.instrucao6 = "Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos."
