@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: 
+  tipo: 
+  cedente: 
+  agencia: 
+  conta: 
+  carteira: MyString
+
+two:
+  nome: 
+  tipo: 
+  cedente: 
+  agencia: 
+  conta: 
+  carteira: MyString

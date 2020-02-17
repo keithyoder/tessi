@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @pagamento_perfil.nome %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @pagamento_perfil.tipo %>
+</p>
+
+<p>
+  <strong>Cedente:</strong>
+  <%= @pagamento_perfil.cedente %>
+</p>
+
+<p>
+  <strong>Agencia:</strong>
+  <%= @pagamento_perfil.agencia %>
+</p>
+
+<p>
+  <strong>Conta:</strong>
+  <%= @pagamento_perfil.conta %>
+</p>
+
+<p>
+  <strong>Carteira:</strong>
+  <%= @pagamento_perfil.carteira %>
+</p>
+
+<%= link_to 'Edit', edit_pagamento_perfil_path(@pagamento_perfil) %> |
+<%= link_to 'Back', pagamento_perfis_path %>

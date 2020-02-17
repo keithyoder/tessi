@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_15_135749) do
+ActiveRecord::Schema.define(version: 2020_02_17_110247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,8 @@ ActiveRecord::Schema.define(version: 2020_02_15_135749) do
     t.integer "prazo_meses", default: 12
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "pagamento_perfil_id"
+    t.index ["pagamento_perfil_id"], name: "index_contratos_on_pagamento_perfil_id"
     t.index ["pessoa_id"], name: "index_contratos_on_pessoa_id"
     t.index ["plano_id"], name: "index_contratos_on_plano_id"
   end
@@ -146,9 +148,11 @@ ActiveRecord::Schema.define(version: 2020_02_15_135749) do
     t.integer "meio_liquidacao"
     t.date "periodo_inicio"
     t.date "periodo_fim"
+    t.bigint "pagamento_perfil_id"
     t.index ["contrato_id"], name: "index_faturas_on_contrato_id"
     t.index ["liquidacao"], name: "index_faturas_on_liquidacao"
     t.index ["meio_liquidacao", "liquidacao"], name: "index_faturas_on_meio_liquidacao_and_liquidacao"
+    t.index ["pagamento_perfil_id"], name: "index_faturas_on_pagamento_perfil_id"
     t.index ["vencimento"], name: "index_faturas_on_vencimento"
   end
 
@@ -159,6 +163,17 @@ ActiveRecord::Schema.define(version: 2020_02_15_135749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bairro_id"], name: "index_logradouros_on_bairro_id"
+  end
+
+  create_table "pagamento_perfis", force: :cascade do |t|
+    t.string "nome"
+    t.integer "tipo"
+    t.integer "cedente"
+    t.integer "agencia"
+    t.integer "conta"
+    t.string "carteira"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pessoas", force: :cascade do |t|
@@ -315,4 +330,6 @@ ActiveRecord::Schema.define(version: 2020_02_15_135749) do
   end
 
   add_foreign_key "cidades", "estados"
+  add_foreign_key "contratos", "pagamento_perfis"
+  add_foreign_key "faturas", "pagamento_perfis"
 end

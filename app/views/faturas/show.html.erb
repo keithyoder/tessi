@@ -36,6 +36,7 @@
           <%= link_to @fatura.contrato.plano do %>
             <%= render 'shared/field_card', {campo: "Plano", valor: @fatura.contrato.plano.nome} %>
           <% end %>
+          <%= render 'shared/field_card', {campo: "Perfil de Cobrança", valor: @fatura.pagamento_perfil.nome} %>
           <%= render 'shared/field_card', {campo: "Parcela", valor: @fatura.parcela} %>
           <%= render 'shared/field_card', {campo: "Vencimento", valor: l(@fatura.vencimento)} %>
           <%= render 'shared/field_card', {campo: "Valor", valor: number_to_currency(@fatura.valor)} %>

@@ -19,6 +19,7 @@
           <%= link_to @contrato.plano do %>
             <%= render 'shared/field_card', {campo: "Plano", valor: @contrato.plano.nome} %>
           <% end %>
+          <%= render 'shared/field_card', {campo: "Perfil de Cobrança", valor: @contrato.pagamento_perfil.nome} %>
           <%= render 'shared/field_card', {campo: "Status", valor: @contrato.status} %>
           <%= render 'shared/field_card', {campo: "Dia Vencimento", valor: @contrato.dia_vencimento} %>
           <%= render 'shared/field_card', {campo: "Data Adesão", valor: l(@contrato.adesao)} %>

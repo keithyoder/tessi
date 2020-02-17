@@ -1,0 +1,2 @@
+class PagamentoPerfil < ApplicationRecord
+end

@@ -65,6 +65,11 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
+    brcobranca (9.2.4)
+      parseline (~> 1.0.3)
+      rghost (~> 0.9)
+      rghost_barcode (~> 0.9)
+      unidecoder (>= 1.1.2)
     builder (3.2.4)
     byebug (11.1.1)
     cancancan (3.0.2)
@@ -202,6 +207,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     orm_adapter (0.5.0)
+    parseline (1.0.3)
     pdf-core (0.7.0)
     pg (1.2.2)
     polyamorous (2.3.2)
@@ -277,6 +283,8 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rghost (0.9.7)
+    rghost_barcode (0.9)
     rjb (1.6.1)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
@@ -341,6 +349,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    unidecoder (1.1.2)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (3.7.0)
@@ -360,6 +369,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap
+  brcobranca
   byebug
   cancancan
   capistrano (~> 3.11)
