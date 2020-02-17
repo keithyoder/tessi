@@ -37,25 +37,25 @@ class FaturasController < ApplicationController
 
   def boleto
     @boleto = Brcobranca::Boleto::Santander.new
-    @boleto.convenio = "1238798"
-    @boleto.cedente = "Alipio Barbosa"
-    @boleto.documento_cedente = "12345678912"
+    @boleto.convenio = @fatura.pagamento_perfil.cedente
+    @boleto.cedente = "Tessi - Serviços em Telecomunicações Ltda"
+    @boleto.documento_cedente = '07.159.053/0001-07'
     @boleto.sacado = @fatura.pessoa.nome
     @boleto.sacado_documento = @fatura.pessoa.cpf
     @boleto.valor = @fatura.valor
-    @boleto.agencia = "4042"
-    @boleto.conta_corrente = "61900"
-    @boleto.variacao = "19"
-    @boleto.nosso_numero = "111"
+    @boleto.agencia = @fatura.pagamento_perfil.agencia
+    @boleto.conta_corrente = @fatura.pagamento_perfil.conta
+    @boleto.variacao = @fatura.pagamento_perfil.carteira
+    @boleto.nosso_numero = @fatura.nossonumero
     @boleto.data_vencimento = @fatura.vencimento
-    @boleto.instrucao1 = "Pagável na rede bancária até a data de vencimento."
-    @boleto.instrucao2 = "Juros de mora de 2.0% mensal(R$ 0,09 ao dia)"
-    @boleto.instrucao3 = "DESCONTO DE R$ 29,50 APÓS 05/11/2006 ATÉ 15/11/2006"
-    @boleto.instrucao4 = "NÃO RECEBER APÓS 15/11/2006"
-    @boleto.instrucao5 = "Após vencimento pagável somente nas agências do Banco do Brasil"
-    @boleto.instrucao6 = "ACRESCER R$ 4,00 REFERENTE AO BOLETO BANCÁRIO"
-    @boleto.sacado_endereco = "Av. Rubéns de Mendonça, 157 - 78008-000 - Cuiabá/MT"
-    @boleto.cedente_endereco = "Av. Rubéns de Mendonça, 1000 - 78008-000 - Cuiabá/MT"
+    @boleto.instrucao1 = "Desconto de #{number_to_currencty(@fatura.desconto)} para pagamento até o dia #{l(@fatura.vencimento)}"
+    @boleto.instrucao2 = "Mensalidade de Internet - SCM - Plano: #{@fatura.plano.nome}"
+    @boleto.instrucao3 = "Período de referência: #{l(@fatura.periodo_inicio)} - #{l(@fatura.periodo_fim)}}"
+    @boleto.instrucao4 = "Após o vencimento cobrar multa de 2% e juros de 1% ao mês (pro rata die)"
+    @boleto.instrucao5 = "S.A.C 0800-725-2129 - sac.tessi.com.br"
+    @boleto.instrucao6 = "Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos."
+    @boleto.sacado_endereco = @fatura.pessoa.endereco + ' - ' _ @fatura.pessoa.bairro.nome_cidade_uf
+    @boleto.cedente_endereco = "Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000"
     headers['Content-Type'] = 'application/pdf'
     send_data @boleto.to(:pdf), :filename => "boleto_santander.pdf"
   end
