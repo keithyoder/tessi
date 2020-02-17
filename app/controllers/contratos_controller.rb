@@ -16,7 +16,7 @@ class ContratosController < ApplicationController
     @contrato.faturas.where("liquidacao is null").each do |fatura|
       result << fatura.boleto
     end
-    render Brcobranca::Boleto::Base.lote(result) # para carne pdf
+    send_data Brcobranca::Boleto::Base.lote(result), :filename => 'boletos.pdf', :type => :pdf
   end
 
   # GET /contratos/1
