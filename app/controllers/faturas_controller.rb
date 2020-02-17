@@ -1,5 +1,4 @@
 class FaturasController < ApplicationController
-  include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
   before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao, :boleto]
 
@@ -37,30 +36,7 @@ class FaturasController < ApplicationController
   end
 
   def boleto
-    @boleto = Brcobranca::Boleto::Santander.new
-    @boleto.convenio = @fatura.pagamento_perfil.cedente
-    @boleto.cedente = "Tessi - Serviços em Telecomunicações Ltda"
-    @boleto.documento_cedente = '07.159.053/0001-07'
-    @boleto.sacado = @fatura.pessoa.nome
-    @boleto.sacado_documento = @fatura.pessoa.cpf
-    @boleto.valor = @fatura.valor
-    @boleto.agencia = @fatura.pagamento_perfil.agencia
-    @boleto.conta_corrente = @fatura.pagamento_perfil.conta
-    @boleto.carteira = @fatura.pagamento_perfil.carteira
-    @boleto.variacao = 'COB'
-    @boleto.especie_documento = 'DS'
-    @boleto.nosso_numero = @fatura.nossonumero
-    @boleto.data_vencimento = @fatura.vencimento
-    @boleto.instrucao1 = "Desconto de #{number_to_currency(@fatura.contrato.plano.desconto)} para pagamento até o dia #{l(@fatura.vencimento)}"
-    @boleto.instrucao2 = "Mensalidade de Internet - SCM - Plano: #{@fatura.contrato.plano.nome}"
-    @boleto.instrucao3 = "Período de referência: #{l(@fatura.periodo_inicio)} - #{l(@fatura.periodo_fim)}"
-    @boleto.instrucao4 = "Após o vencimento cobrar multa de 2% e juros de 1% ao mês (pro rata die)"
-    @boleto.instrucao5 = "S.A.C 0800-725-2129 - sac.tessi.com.br"
-    @boleto.instrucao6 = "Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos."
-    @boleto.sacado_endereco = @fatura.pessoa.endereco + ' - ' + @fatura.pessoa.bairro.nome_cidade_uf
-    @boleto.cedente_endereco = "Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000"
-    headers['Content-Type'] = 'application/pdf'
-    send_data @boleto.to(:pdf), :filename => "boleto_santander.pdf"
+    render @fatura.boleto.to(:pdf), :filename => "boleto.pdf"
   end
 
   # POST /faturas
@@ -70,7 +46,7 @@ class FaturasController < ApplicationController
 
     respond_to do |format|
       if @fatura.save
-        format.html { redirect_to @fatura, notice: 'Fatura was successfully created.' }
+        format.html { redirect_to @fatura, notice: "Fatura was successfully created." }
         format.json { render :show, status: :created, location: @fatura }
       else
         format.html { render :new }
@@ -84,7 +60,7 @@ class FaturasController < ApplicationController
   def update
     respond_to do |format|
       if @fatura.update(fatura_params)
-        format.html { redirect_to @fatura, notice: 'Fatura was successfully updated.' }
+        format.html { redirect_to @fatura, notice: "Fatura was successfully updated." }
         format.json { render :show, status: :ok, location: @fatura }
       else
         format.html { render :edit }
@@ -98,20 +74,21 @@ class FaturasController < ApplicationController
   def destroy
     @fatura.destroy
     respond_to do |format|
-      format.html { redirect_to faturas_url, notice: 'Fatura was successfully destroyed.' }
+      format.html { redirect_to faturas_url, notice: "Fatura was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_fatura
-      @fatura = Fatura.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def fatura_params
-      params.require(:fatura).permit(:contrato_id, :valor, :vencimento, :nossonumero, :parcela,
-        :arquivo_remessa, :data_remessa, :data_cancelamento, :meio_liquidacao, :valor_liquidacao, :liquidacao)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_fatura
+    @fatura = Fatura.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def fatura_params
+    params.require(:fatura).permit(:contrato_id, :valor, :vencimento, :nossonumero, :parcela,
+                                   :arquivo_remessa, :data_remessa, :data_cancelamento, :meio_liquidacao, :valor_liquidacao, :liquidacao)
+  end
 end

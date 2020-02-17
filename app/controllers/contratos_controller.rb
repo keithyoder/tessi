@@ -11,6 +11,14 @@ class ContratosController < ApplicationController
     @contratos = @q.result.page params[:page]
   end
 
+  def boletos
+    result = []
+    @contrato.faturas.where("liquidacao is null").each do |fatura|
+      result << fatura.boleto
+    end
+    render Brcobranca::Boleto::Base.lote(result) # para carne pdf
+  end
+
   # GET /contratos/1
   # GET /contratos/1.json
   # GET /contratos/1.pdf

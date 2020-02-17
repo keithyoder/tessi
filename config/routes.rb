@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     get :liquidacao, :on => :member
     get :boleto, :on => :member
   end
-  resources :contratos
+  resources :contratos do
+    get :boletos, :on => :member
+  end
   resources :conexao_enviar_atributos
   resources :conexao_verificar_atributos
   resources :conexoes do
