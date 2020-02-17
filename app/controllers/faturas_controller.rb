@@ -1,4 +1,5 @@
 class FaturasController < ApplicationController
+  include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
   before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao, :boleto]
 
@@ -48,13 +49,13 @@ class FaturasController < ApplicationController
     @boleto.variacao = @fatura.pagamento_perfil.carteira
     @boleto.nosso_numero = @fatura.nossonumero
     @boleto.data_vencimento = @fatura.vencimento
-    @boleto.instrucao1 = "Desconto de #{number_to_currencty(@fatura.desconto)} para pagamento até o dia #{l(@fatura.vencimento)}"
-    @boleto.instrucao2 = "Mensalidade de Internet - SCM - Plano: #{@fatura.plano.nome}"
+    @boleto.instrucao1 = "Desconto de #{number_to_currency(@fatura.contrato.plano.desconto)} para pagamento até o dia #{l(@fatura.vencimento)}"
+    @boleto.instrucao2 = "Mensalidade de Internet - SCM - Plano: #{@fatura.contrato.plano.nome}"
     @boleto.instrucao3 = "Período de referência: #{l(@fatura.periodo_inicio)} - #{l(@fatura.periodo_fim)}}"
     @boleto.instrucao4 = "Após o vencimento cobrar multa de 2% e juros de 1% ao mês (pro rata die)"
     @boleto.instrucao5 = "S.A.C 0800-725-2129 - sac.tessi.com.br"
     @boleto.instrucao6 = "Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos."
-    @boleto.sacado_endereco = @fatura.pessoa.endereco + ' - ' _ @fatura.pessoa.bairro.nome_cidade_uf
+    @boleto.sacado_endereco = @fatura.pessoa.endereco + ' - ' + @fatura.pessoa.bairro.nome_cidade_uf
     @boleto.cedente_endereco = "Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000"
     headers['Content-Type'] = 'application/pdf'
     send_data @boleto.to(:pdf), :filename => "boleto_santander.pdf"
