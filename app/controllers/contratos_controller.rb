@@ -13,10 +13,10 @@ class ContratosController < ApplicationController
 
   def boletos
     result = []
-    @contrato.faturas.where("liquidacao is null").each do |fatura|
+    @contrato.faturas.where("liquidacao is null").order(:vencimento).each do |fatura|
       result << fatura.boleto
     end
-    send_data Brcobranca::Boleto::Base.lote(result), :filename => 'boletos.pdf', :type => :pdf
+    send_data Brcobranca::Boleto::Base.lote(result), :filename => 'boletos.pdf', :type => :pdf, :disposition => 'inline'
   end
 
   # GET /contratos/1

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :retornos
   resources :pagamento_perfis
   resources :liquidacoes
   resources :faturas do

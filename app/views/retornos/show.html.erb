@@ -1,0 +1,63 @@
+<p>
+  <strong>Pagamento perfil:</strong>
+  <%= @retorno.pagamento_perfil.nome %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @retorno.data %>
+</p>
+
+<p>
+  <strong>Sequencia:</strong>
+  <%= @retorno.sequencia %>
+</p>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Assinante</th>
+            <th>Nosso Número</th>
+            <th>Ocorrência</th>
+            <th>Pagamento</th>
+            <th>Vencimento</th>
+            <th>Valor Título</th>
+            <th>Juros</th>
+            <th>Desconto</th>
+            <th>Recebido</th>
+            <th>Banco</th>
+            <th>Agência</th>
+         </tr>
+        </thead>
+
+        <tbody>
+          <% @linhas.each do |linha| %>
+            <tr>
+              <td><%= @faturas.where(nossonumero: linha.nosso_numero.to_i/10).first %>
+              <td><%= linha.nosso_numero %></td>
+              <td><%= linha.codigo_ocorrencia %></td>
+              <td><%= l(cnab_to_date(linha.data_ocorrencia)) %></td>
+              <td><%= l(cnab_to_date(linha.data_vencimento)) %></td>
+              <td><%= cnab_to_currency(linha.valor_titulo) %></td>
+              <td><%= cnab_to_currency(linha.juros_mora) %></td>
+              <td><%= cnab_to_currency(linha.desconto_concedito) %></td>
+              <td><%= cnab_to_currency(linha.valor_recebido) %></td>
+              <td><%= linha.banco_recebedor %></td>
+              <td><%= linha.agencia_recebedora_com_dv %></td>
+           </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+<%= simple_form_for(@retorno) do |f| %>
+  <div class="actions">
+    <%= button_tag(:class => "btn btn-primary") do %>
+      <i class="fa fa-floppy-o" aria-hidden="true"></i> Processar
+    <% end %>
+  </div>
+<% end %>
+
+
+<%= link_to "Edit", edit_retorno_path(@retorno) %> |
+<%= link_to "Back", retornos_path %>

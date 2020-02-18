@@ -36,7 +36,7 @@ class FaturasController < ApplicationController
   end
 
   def boleto
-    send_data @fatura.boleto.to(:pdf), :filename => "boleto.pdf", :type => :pdf
+    send_data @fatura.boleto.to(:pdf), :filename => "boleto.pdf", :type => :pdf, :disposition => "inline"
   end
 
   # POST /faturas

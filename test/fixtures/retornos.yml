@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pagamento_perfil: MyString
+  reference,: MyString
+  data: MyString
+  date,: MyString
+  sequencia: MyString
+  integer: MyString
+
+two:
+  pagamento_perfil: MyString
+  reference,: MyString
+  data: MyString
+  date,: MyString
+  sequencia: MyString
+  integer: MyString

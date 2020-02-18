@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_17_110247) do
+ActiveRecord::Schema.define(version: 2020_02_18_140357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,9 +149,14 @@ ActiveRecord::Schema.define(version: 2020_02_17_110247) do
     t.date "periodo_inicio"
     t.date "periodo_fim"
     t.bigint "pagamento_perfil_id"
+    t.decimal "juros_recebidos"
+    t.decimal "desconto_concedido"
+    t.integer "banco"
+    t.integer "agencia"
     t.index ["contrato_id"], name: "index_faturas_on_contrato_id"
     t.index ["liquidacao"], name: "index_faturas_on_liquidacao"
     t.index ["meio_liquidacao", "liquidacao"], name: "index_faturas_on_meio_liquidacao_and_liquidacao"
+    t.index ["pagamento_perfil_id", "nossonumero"], name: "index_faturas_on_pagamento_perfil_id_and_nossonumero"
     t.index ["pagamento_perfil_id"], name: "index_faturas_on_pagamento_perfil_id"
     t.index ["vencimento"], name: "index_faturas_on_vencimento"
   end
@@ -280,6 +285,15 @@ ActiveRecord::Schema.define(version: 2020_02_17_110247) do
     t.string "pass", limit: 64, default: "", null: false
     t.string "reply", limit: 32, default: "", null: false
     t.datetime "authdate", null: false
+  end
+
+  create_table "retornos", force: :cascade do |t|
+    t.bigint "pagamento_perfil_id"
+    t.date "data"
+    t.integer "sequencia"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pagamento_perfil_id"], name: "index_retornos_on_pagamento_perfil_id"
   end
 
   create_table "servidores", force: :cascade do |t|
