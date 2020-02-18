@@ -53,6 +53,7 @@ class RetornosController < ApplicationController
           agencia: linha.agencia_recebedora_com_dv[0...-1],
           valor_liquidacao: cnab_float(linha.valor_recebido),
         }
+        fatura.save
       end
     end
     respond_to do |format|

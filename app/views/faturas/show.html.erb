@@ -54,7 +54,7 @@
           <%= render 'shared/field_card', {campo: "Meio de Liquidação", valor: @fatura.meio_liquidacao} %>
           <%= render 'shared/field_card', {campo: "Vencimento Original", valor: l(@fatura.vencimento_original, default: "")} %>
           <%= render 'shared/field_card', {campo: "Valor Original", valor: number_to_currency(@fatura.valor_original)} %>
-          <%= render 'shared/field_card', {campo: "Juros Cobrados", valor: number_to_currency(@fatura.juros_cobrados)} %>
+          <%= render 'shared/field_card', {campo: "Juros Recebidos", valor: number_to_currency(@fatura.juros_recebidos)} %>
           <%= render 'shared/field_card', {campo: "Desconto Concedido", valor: number_to_currency(@fatura.desconto_concedido)} %>
           <%= render 'shared/field_card', {campo: "Banco / Agência", valor: @fatura.banco.to_s + ' / ' + @fatura.agencia.to_s} %>
         </div>
