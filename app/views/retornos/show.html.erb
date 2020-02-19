@@ -17,7 +17,6 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Assinante</th>
             <th>Nosso Número</th>
             <th>Ocorrência</th>
             <th>Pagamento</th>
@@ -34,7 +33,6 @@
         <tbody>
           <% @linhas.each do |linha| %>
             <tr>
-              <td><%= @faturas.where(nossonumero: linha.nosso_numero.to_i/10).first %>
               <td><%= linha.nosso_numero %></td>
               <td><%= linha.codigo_ocorrencia %></td>
               <td><%= l(cnab_to_date(linha.data_ocorrencia)) %></td>

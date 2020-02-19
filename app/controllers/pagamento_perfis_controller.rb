@@ -5,7 +5,7 @@ class PagamentoPerfisController < ApplicationController
   # GET /pagamento_perfis
   # GET /pagamento_perfis.json
   def index
-    @pagamento_perfis = PagamentoPerfil.all
+    @pagamento_perfis = PagamentoPerfil.order("nome").all
   end
 
   # GET /pagamento_perfis/1
