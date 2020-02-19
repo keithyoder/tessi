@@ -11,14 +11,13 @@ class Fatura < ApplicationRecord
 
   after_update do
     if saved_change_to_liquidacao?
-        contrato.conexoes.update_all inadimplente: contrato.faturas_em_atraso(5) > 0
-        contrato.conexoes.update_all bloqueado: contrato.faturas_em_atraso(15) > 0
+      contrato.conexoes.update_all inadimplente: contrato.faturas_em_atraso(5) > 0
+      contrato.conexoes.update_all bloqueado: contrato.faturas_em_atraso(15) > 0
     end
   end
 
   def boleto
-    Brcobranca::Boleto::Santander.new(
-    {
+    info = {
       :convenio => pagamento_perfil.cedente,
       :cedente => "Tessi - Serviços em Telecomunicações Ltda",
       :documento_cedente => '07.159.053/0001-07',
@@ -40,6 +39,14 @@ class Fatura < ApplicationRecord
       :instrucao6 => "Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.",
       :sacado_endereco => pessoa.endereco + ' - ' + pessoa.bairro.nome_cidade_uf,
       :cedente_endereco => "Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000"
-    })
+    }
+    case pagamento_perfil.banco
+    when 33
+      Brcobranca::Boleto::Santander.new(info)
+    when 1
+      Brcobranca::Boleto::BancoBrasil.new(info)
+    else
+      nil
+    end
   end
 end
