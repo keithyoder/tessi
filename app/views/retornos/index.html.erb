@@ -1,31 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div class="card">
+  <%= render '/shared/table_header', {object: @retornos, titulo: "Retorno Bancário", search_string: :data_cont} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Perfil</th>
+            <th>Data</th>
+            <th>Sequência</th>
+         </tr>
+        </thead>
 
-<h1>Retornos</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Pagamento perfil</th>
-      <th>Data</th>
-      <th>Sequencia</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @retornos.each do |retorno| %>
-      <tr>
-        <td><%= retorno.pagamento_perfil %></td>
-        <td><%= retorno.data %></td>
-        <td><%= retorno.sequencia %></td>
-        <td><%= link_to "Show", retorno %></td>
-        <td><%= link_to "Edit", edit_retorno_path(retorno) %></td>
-        <td><%= link_to "Destroy", retorno, method: :delete, data: { confirm: "Are you sure?" } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to "New Retorno", new_retorno_path %>
+        <tbody>
+          <% @retornos.each do |retorno| %>
+            <tr>
+              <td><%= link_to retorno.pagamento_perfil.nome, retorno.pagamento_perfil %></td>
+              <td><%= link_to retorno.data, retorno %></td>
+              <td><%= retorno.sequencia %></td>
+           </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%= paginate @retornos %>
+</div>

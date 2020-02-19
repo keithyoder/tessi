@@ -5,7 +5,9 @@ class RetornosController < ApplicationController
   # GET /retornos
   # GET /retornos.json
   def index
-    @retornos = Retorno.all
+    @q = Retorno.ransack(params[:q])
+    @q.sorts = "data desc"
+    @retornos = @q.result.page params[:page]
   end
 
   # GET /retornos/1
@@ -43,28 +45,17 @@ class RetornosController < ApplicationController
   # PATCH/PUT /retornos/1
   # PATCH/PUT /retornos/1.json
   def update
-    Brcobranca::Retorno::Cnab240::Santander.load_lines(ActiveStorage::Blob.service.path_for(@retorno.arquivo.key)).each do |linha|
-      fatura = Fatura.where(
-        pagamento_perfil: @retorno.pagamento_perfil,
-        nossonumero: helpers.cnab_to_nosso_numero(linha.nosso_numero),
-      ).first
-      if fatura.present?
-        desconto = [0, helpers.cnab_to_float(linha.valor_recebido) - fatura.valor].min
-        fatura.attributes = {
-          liquidacao: helpers.cnab_to_date(linha.data_ocorrencia),
-          juros_recebidos: helpers.cnab_to_float(linha.juros_mora),
-          banco: linha.banco_recebedor,
-          desconto_concedido: desconto,
-          agencia: linha.agencia_recebedora_com_dv[0...-1],
-          valor_liquidacao: helpers.cnab_to_float(linha.valor_recebido),
-          meio_liquidacao: :RetornoBancario,
-        }
-        fatura.save
+    begin
+      @retorno.processar
+      respond_to do |format|
+        format.html { redirect_to @retorno, notice: "Retorno was successfully updated." }
+        format.json { render :show, status: :ok, location: @retorno }
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to @retorno, notice: "Retorno was successfully updated." }
-      format.json { render :show, status: :ok, location: @retorno }
+    rescue StandardError => e
+      respond_to do |format|
+        format.html { redirect_to @retorno, error: e.message }
+        format.json { render :show, status: :ok, location: @retorno }
+      end
     end
   end
 
