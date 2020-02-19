@@ -18,4 +18,8 @@ class Contrato < ApplicationRecord
             .having("count(faturas.*) = 0")
             .distinct
         }
+
+  def faturas_em_atraso(dias)
+    faturas.where("liquidacao is null and vencimento < ?", dias.days.ago).count
+  end
 end

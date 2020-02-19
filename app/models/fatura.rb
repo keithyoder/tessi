@@ -9,6 +9,13 @@ class Fatura < ApplicationRecord
   scope :suspensos, -> { where("liquidacao is null and vencimento < ?", 15.days.ago) }
   enum meio_liquidacao: { :RetornoBancario => 1, :Dinheiro => 2, :Cheque => 3, :CartaoCredito => 4, :Outros => 5 }
 
+  after_update do
+    if saved_change_to_liquidacao?
+        contrato.conexoes.update_all inadimplente: contrato.faturas_em_atraso(5) > 0
+        contrato.conexoes.update_all bloqueado: contrato.faturas_em_atraso(15) > 0
+    end
+  end
+
   def boleto
     Brcobranca::Boleto::Santander.new(
     {

@@ -35,23 +35,25 @@ class Retorno < ApplicationRecord
       raise StandardError.new "Arquivo não é compatível com o convênio selecionado"
     end
     Brcobranca::Retorno::Cnab240::Santander.load_lines(path).each do |linha|
-      fatura = Fatura.where(
-        pagamento_perfil: pagamento_perfil,
-        nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
-      ).first
-      if fatura.present?
-        desconto = [0, cnab_to_float(linha.valor_recebido) - fatura.valor].min
-        fatura.attributes = {
-          liquidacao: cnab_to_date(linha.data_ocorrencia),
-          juros_recebidos: cnab_to_float(linha.juros_mora),
-          banco: linha.banco_recebedor,
-          desconto_concedido: desconto,
-          agencia: linha.agencia_recebedora_com_dv[0...-1],
-          valor_liquidacao: cnab_to_float(linha.valor_recebido),
-          meio_liquidacao: :RetornoBancario,
-          retorno: self,
-        }
-        fatura.save
+      if linha.codigo_ocorrencia.to_i == 6
+        fatura = Fatura.where(
+          pagamento_perfil: pagamento_perfil,
+          nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
+        ).first
+        if fatura.present?
+          desconto = [0, cnab_to_float(linha.valor_recebido) - fatura.valor].min
+          fatura.attributes = {
+            liquidacao: cnab_to_date(linha.data_ocorrencia),
+            juros_recebidos: cnab_to_float(linha.juros_mora),
+            banco: linha.banco_recebedor,
+            desconto_concedido: desconto,
+            agencia: linha.agencia_recebedora_com_dv[0...-1],
+            valor_liquidacao: cnab_to_float(linha.valor_recebido),
+            meio_liquidacao: :RetornoBancario,
+            retorno: self,
+          }
+          fatura.save
+        end
       end
     end
   end
