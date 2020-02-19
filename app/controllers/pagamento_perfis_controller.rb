@@ -71,6 +71,6 @@ class PagamentoPerfisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def pagamento_perfil_params
-    params.require(:pagamento_perfil).permit(:nome, :tipo, :cedente, :agencia, :conta, :carteira)
+    params.require(:pagamento_perfil).permit(:nome, :tipo, :cedente, :agencia, :conta, :carteira, :banco)
   end
 end

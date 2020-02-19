@@ -1,5 +1,6 @@
-<h1>New Pagamento Perfil</h1>
-
-<%= render 'form', pagamento_perfil: @pagamento_perfil %>
-
-<%= link_to 'Back', pagamento_perfis_path %>
+<div class="card">
+  <%= render "shared/new_header", { object: @pagamento_perfil, titulo: "Perfil de Pagamento" } %>
+  <div class="card-body">
+    <%= render "form" %>
+  </div>
+</div>

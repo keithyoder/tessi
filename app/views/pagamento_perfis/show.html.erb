@@ -1,34 +1,13 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Nome:</strong>
-  <%= @pagamento_perfil.nome %>
-</p>
-
-<p>
-  <strong>Tipo:</strong>
-  <%= @pagamento_perfil.tipo %>
-</p>
-
-<p>
-  <strong>Cedente:</strong>
-  <%= @pagamento_perfil.cedente %>
-</p>
-
-<p>
-  <strong>Agencia:</strong>
-  <%= @pagamento_perfil.agencia %>
-</p>
-
-<p>
-  <strong>Conta:</strong>
-  <%= @pagamento_perfil.conta %>
-</p>
-
-<p>
-  <strong>Carteira:</strong>
-  <%= @pagamento_perfil.carteira %>
-</p>
-
-<%= link_to 'Edit', edit_pagamento_perfil_path(@pagamento_perfil) %> |
-<%= link_to 'Back', pagamento_perfis_path %>
+<div class="card">
+  <%= render 'shared/show_header', {object: @pagamento_perfil, titulo: "Perfis de Pagamento "} %>
+  <div class="card-body">
+    <div class="card-columns" style="column-count: 4">
+      <%= render 'shared/field_card', {campo: "Nome", valor: @pagamento_perfil.nome} %>
+      <%= render 'shared/field_card', {campo: "Tipo", valor: @pagamento_perfil.tipo} %>
+      <%= render 'shared/field_card', {campo: "Banco", valor: @pagamento_perfil.banco} %>
+      <%= render 'shared/field_card', {campo: "Agência", valor: @pagamento_perfil.agencia} %>
+      <%= render 'shared/field_card', {campo: "Convênio", valor: @pagamento_perfil.cedente} %>
+      <%= render 'shared/field_card', {campo: "Carteira", valor: @pagamento_perfil.carteira} %>
+    </div>
+  </div>
+</div>

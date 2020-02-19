@@ -8,6 +8,7 @@
             <th>Perfil</th>
             <th>Data</th>
             <th>Sequência</th>
+            <th>Registros</th>
          </tr>
         </thead>
 
@@ -17,6 +18,7 @@
               <td><%= link_to retorno.pagamento_perfil.nome, retorno.pagamento_perfil %></td>
               <td><%= link_to retorno.data, retorno %></td>
               <td><%= retorno.sequencia %></td>
+              <td><%= retorno.faturas.count %>
            </tr>
           <% end %>
         </tbody>

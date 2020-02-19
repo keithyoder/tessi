@@ -1,6 +1,6 @@
-<h1>Editing Pagamento Perfil</h1>
-
-<%= render 'form', pagamento_perfil: @pagamento_perfil %>
-
-<%= link_to 'Show', @pagamento_perfil %> |
-<%= link_to 'Back', pagamento_perfis_path %>
+<div class="card">
+  <%= render "shared/edit_header", { object: @pagamento_perfil, titulo: "Perfil de Pagamento" } %>
+  <div class="card-body">
+    <%= render "form" %>
+  </div>
+</div>

@@ -4,15 +4,33 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :nome %>
-    <%= f.input :tipo %>
-    <%= f.input :cedente %>
-    <%= f.input :agencia %>
-    <%= f.input :conta %>
-    <%= f.input :carteira %>
+    <div class="row">
+      <div class="col">
+        <%= f.input :nome %>
+      </div>
+      <div class="col">
+        <%= f.input :tipo, collection: PagamentoPerfil.tipos.keys %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :banco %>
+      </div>
+      <div class="col">
+        <%= f.input :agencia %>
+      </div>
+      <div class="col">
+        <%= f.input :cedente %>
+      </div>
+      <div class="col">
+        <%= f.input :carteira %>
+      </div>
+    </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="actions">
+    <%= button_tag(:class => "btn btn-primary") do %>
+      <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+    <% end %>
   </div>
 <% end %>
