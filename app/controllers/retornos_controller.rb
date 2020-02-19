@@ -44,14 +44,20 @@ class RetornosController < ApplicationController
   # PATCH/PUT /retornos/1.json
   def update
     Brcobranca::Retorno::Cnab240::Santander.load_lines(ActiveStorage::Blob.service.path_for(@retorno.arquivo.key)).each do |linha|
-      fatura = Fatura.where(pagamento_perfil: @retorno.pagamento_perfil, nossonumero: linha.nosso_numero[0...-1]).first
-      if fatura
+      fatura = Fatura.where(
+        pagamento_perfil: @retorno.pagamento_perfil,
+        nossonumero: helpers.cnab_to_nosso_numero(linha.nosso_numero),
+      ).first
+      if fatura.present?
+        desconto = [0, helpers.cnab_to_float(linha.valor_recebido) - fatura.valor].min
         fatura.attributes = {
-          liquidacao: cnab_data(linha.data_ocorrencia),
-          juros_cobrado: cnab_float(linha.juros_mora),
+          liquidacao: helpers.cnab_to_date(linha.data_ocorrencia),
+          juros_recebidos: helpers.cnab_to_float(linha.juros_mora),
           banco: linha.banco_recebedor,
+          desconto_concedido: desconto,
           agencia: linha.agencia_recebedora_com_dv[0...-1],
-          valor_liquidacao: cnab_float(linha.valor_recebido),
+          valor_liquidacao: helpers.cnab_to_float(linha.valor_recebido),
+          meio_liquidacao: :RetornoBancario,
         }
         fatura.save
       end
