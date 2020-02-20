@@ -57,6 +57,11 @@
           <%= render 'shared/field_card', {campo: "Juros Recebidos", valor: number_to_currency(@fatura.juros_recebidos)} %>
           <%= render 'shared/field_card', {campo: "Desconto Concedido", valor: number_to_currency(@fatura.desconto_concedido)} %>
           <%= render 'shared/field_card', {campo: "Banco / Agência", valor: @fatura.banco.to_s + ' / ' + @fatura.agencia.to_s} %>
+          <% if @fatura.retorno.present? %>
+            <%= link_to @fatura.retorno do %>
+              <%= render 'shared/field_card', {campo: "Retorno", valor: @fatura.retorno.sequencia} %>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>

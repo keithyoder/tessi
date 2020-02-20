@@ -1,17 +1,11 @@
-<p>
-  <strong>Pagamento perfil:</strong>
-  <%= @retorno.pagamento_perfil.nome %>
-</p>
-
-<p>
-  <strong>Data:</strong>
-  <%= @retorno.data %>
-</p>
-
-<p>
-  <strong>Sequencia:</strong>
-  <%= @retorno.sequencia %>
-</p>
+<div class="card">
+  <%= render 'shared/show_header', {object: @retorno, titulo: "Retorno Bancário"} %>
+  <div class="card-body">
+    <div class="card-columns" style="column-count: 4">
+      <%= render 'shared/field_card', {campo: "Perfil", valor: @retorno.pagamento_perfil.nome} %>
+      <%= render 'shared/field_card', {campo: "Data", valor: l(@retorno.data, default: '')} %>
+      <%= render 'shared/field_card', {campo: "Sequência", valor: @retorno.sequencia} %>
+    </div>
 
     <div class="table-responsive">
       <table class="table table-striped">
@@ -56,6 +50,5 @@
   </div>
 <% end %>
 
-
-<%= link_to "Edit", edit_retorno_path(@retorno) %> |
-<%= link_to "Back", retornos_path %>
+</div>
+</div>

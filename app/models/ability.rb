@@ -48,6 +48,7 @@ class Ability
       elsif user.financeiro_n2?
         can :update, Cidade
         can [:update, :liquidacao], Fatura
+        can [:create, :update], Retorno
       end
     end
   end
