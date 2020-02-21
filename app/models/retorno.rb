@@ -70,7 +70,7 @@ class Retorno < ApplicationRecord
             fatura.attributes = {
               registro: self
             }
-          when [9, 10]
+          when 9, 10
             # titulo baixado manualmente
             fatura.attributes = {
               baixa: self
