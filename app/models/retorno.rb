@@ -3,6 +3,8 @@ require 'cobranca/retorno_240'
 class Retorno < ApplicationRecord
   belongs_to :pagamento_perfil
   has_many :faturas
+  has_many :registros, class_name: :Fatura, foreign_key: :registro_id
+  has_many :baixas, class_name: :Fatura, foreign_key: :baixa_id 
   has_one_attached :arquivo
 
   def verificar_header
@@ -32,7 +34,6 @@ class Retorno < ApplicationRecord
   def processar
     verificar_header
     Brcobranca::Retorno::Cnab240::Santander.load_lines(ActiveStorage::Blob.service.path_for(arquivo.key)).each do |linha|
-      puts "Fatura query********************************"
       fatura = Fatura.where(
         pagamento_perfil: pagamento_perfil,
         nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
