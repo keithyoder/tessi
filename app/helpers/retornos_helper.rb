@@ -8,6 +8,7 @@ module RetornosHelper
   end
 
   def cnab_to_date(s)
+    puts s
     Date.strptime(s, "%d%m%y")
   end
 

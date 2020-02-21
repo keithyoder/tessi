@@ -26,18 +26,20 @@
 
         <tbody>
           <% @linhas.each do |linha| %>
-            <tr>
-              <td><%= linha.nosso_numero %></td>
-              <td><%= linha.codigo_ocorrencia %></td>
-              <td><%= l(cnab_to_date(linha.data_ocorrencia)) %></td>
-              <td><%= l(cnab_to_date(linha.data_vencimento)) %></td>
-              <td><%= cnab_to_currency(linha.valor_titulo) %></td>
-              <td><%= cnab_to_currency(linha.juros_mora) %></td>
-              <td><%= cnab_to_currency(linha.desconto_concedito) %></td>
-              <td><%= cnab_to_currency(linha.valor_recebido) %></td>
-              <td><%= linha.banco_recebedor %></td>
-              <td><%= linha.agencia_recebedora_com_dv %></td>
-           </tr>
+            <% if linha.data_vencimento.to_i > 0 %>
+              <tr>
+                <td><%= linha.nosso_numero %></td>
+                <td><%= linha.codigo_ocorrencia %></td>
+                <td><%= l(cnab_to_date(linha.data_ocorrencia)) %></td>
+                <td><%= l(cnab_to_date(linha.data_vencimento)) %></td>
+                <td><%= cnab_to_currency(linha.valor_titulo) %></td>
+                <td><%= cnab_to_currency(linha.juros_mora) %></td>
+                <td><%= cnab_to_currency(linha.desconto_concedito) %></td>
+                <td><%= cnab_to_currency(linha.valor_recebido) %></td>
+                <td><%= linha.banco_recebedor %></td>
+                <td><%= linha.agencia_recebedora_com_dv %></td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

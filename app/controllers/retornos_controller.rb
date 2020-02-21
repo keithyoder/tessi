@@ -14,7 +14,7 @@ class RetornosController < ApplicationController
   # GET /retornos/1.json
   def show
     @faturas = Fatura.where(pagamento_perfil: @retorno.pagamento_perfil)
-    @linhas = Brcobranca::Retorno::Cnab240::Santander.load_lines ActiveStorage::Blob.service.path_for(@retorno.arquivo.key)
+    @linhas = @retorno.carregar_arquivo
   end
 
   # GET /retornos/new
