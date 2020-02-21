@@ -1,5 +1,6 @@
-<h1>New Retorno</h1>
-
-<%= render 'form', retorno: @retorno %>
-
-<%= link_to 'Back', retornos_path %>
+<div class="card">
+  <%= render "shared/new_header", { object: @retorno, titulo: "Retorno Bancário" } %>
+  <div class="card-body">
+    <%= render "form" %>
+  </div>
+</div>

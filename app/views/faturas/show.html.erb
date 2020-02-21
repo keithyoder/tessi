@@ -62,6 +62,16 @@
               <%= render 'shared/field_card', {campo: "Retorno", valor: @fatura.retorno.sequencia} %>
             <% end %>
           <% end %>
+          <% if @fatura.registro.present? %>
+            <%= link_to @fatura.registro do %>
+              <%= render 'shared/field_card', {campo: "Registro", valor: @fatura.registro.sequencia} %>
+            <% end %>
+          <% end %>
+          <% if @fatura.baixa.present? %>
+            <%= link_to @fatura.baixa do %>
+              <%= render 'shared/field_card', {campo: "Baixa", valor: @fatura.baixa.sequencia} %>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>

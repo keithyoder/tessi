@@ -1,46 +1,47 @@
-require "parseline"
-
-class RetornoHeader
-  attr_accessor :sequencia
-  attr_accessor :data
-  attr_accessor :convenio
-  attr_accessor :banco
-
-  extend ParseLine::FixedWidth
-
-  fixed_width_layout do |parse|
-    parse.field :banco, 0..2
-    parse.field :convenio, 52..62
-    parse.field :data, 143..150
-    parse.field :sequencia, 157..162
-  end
-end
+require 'cobranca/retorno_240'
 
 class Retorno < ApplicationRecord
   belongs_to :pagamento_perfil
   has_many :faturas
   has_one_attached :arquivo
 
-  def processar
-    path = ActiveStorage::Blob.service.path_for(arquivo.key)
-    data_file = File.readlines(path)
-    header = RetornoHeader.load_line data_file.first
-    if header.convenio.to_i == pagamento_perfil.cedente
-      self.attributes = {
-        sequencia: header.sequencia,
-        data: cnab_to_date(header.data),
-      }
-      self.save
-    else
-      raise StandardError.new "Arquivo não é compatível com o convênio selecionado"
+  def verificar_header
+    case pagamento_perfil.tipo
+    when "Boleto"
+      case pagamento_perfil.banco
+      when 33
+        data_file = File.readlines(ActiveStorage::Blob.service.path_for(arquivo.key))
+        header = Retorno240Header.load_line data_file.first
+        puts header.convenio
+        if header.convenio.to_i == pagamento_perfil.cedente
+          self.attributes = {
+            sequencia: header.sequencia,
+            data: cnab_to_date(header.data),
+          }
+          self.save
+        else
+          raise StandardError.new "Arquivo não é compatível com o convênio selecionado"
+        end
+      when 1
+      when 104
+      end
+    when "Débito Automático"
     end
-    Brcobranca::Retorno::Cnab240::Santander.load_lines(path).each do |linha|
-      if linha.codigo_ocorrencia.to_i == 6
-        fatura = Fatura.where(
-          pagamento_perfil: pagamento_perfil,
-          nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
-        ).first
-        if fatura.present?
+  end
+
+  def processar
+    verificar_header
+    Brcobranca::Retorno::Cnab240::Santander.load_lines(ActiveStorage::Blob.service.path_for(arquivo.key)).each do |linha|
+      puts "Fatura query********************************"
+      fatura = Fatura.where(
+        pagamento_perfil: pagamento_perfil,
+        nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
+      ).first
+      puts fatura.to_s
+      if fatura.present?
+        case linha.codigo_ocorrencia.to_i
+        when 6
+          # titulo liquidado
           desconto = [0, cnab_to_float(linha.valor_recebido) - fatura.valor].min
           fatura.attributes = {
             liquidacao: cnab_to_date(linha.data_ocorrencia),
@@ -52,8 +53,18 @@ class Retorno < ApplicationRecord
             meio_liquidacao: :RetornoBancario,
             retorno: self,
           }
-          fatura.save
+        when 2
+          # titulo registrado
+          fatura.attributes = {
+            registro: self
+          }
+        when 9
+          # titulo baixado manualmente
+          fatura.attributes = {
+            baixa: self
+          }
         end
+        fatura.save
       end
     end
   end

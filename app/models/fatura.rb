@@ -3,6 +3,8 @@ class Fatura < ApplicationRecord
   belongs_to :contrato
   belongs_to :pagamento_perfil
   belongs_to :retorno, optional: true
+  belongs_to :registro, class_name: :Retorno, optional: true
+  belongs_to :baixa, class_name: :Retorno, optional: true
   has_one :pessoa, through: :contrato
   paginates_per 18
   scope :inadimplentes, -> { where("liquidacao is null and vencimento < ?", 5.days.ago) }

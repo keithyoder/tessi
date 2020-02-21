@@ -53,7 +53,7 @@ class RetornosController < ApplicationController
       end
     rescue StandardError => e
       respond_to do |format|
-        format.html { redirect_to @retorno, error: e.message }
+        format.html { redirect_to @retorno, notice: e.message }
         format.json { render :show, status: :ok, location: @retorno }
       end
     end
