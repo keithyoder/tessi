@@ -34,6 +34,8 @@ class Ability
       if user.role?
         can :read, :all
         can :suspenso, Conexao
+        can :boletos, Contrato
+        can :boleto, Fatura
         can [:create, :update], [Bairro, Logradouro, Conexao, Pessoa]
       end
       if user.admin?
