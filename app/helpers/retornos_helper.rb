@@ -8,12 +8,15 @@ module RetornosHelper
   end
 
   def cnab_to_date(s)
-    puts s
     Date.strptime(s, "%d%m%y")
   end
 
-  def cnab_to_nosso_numero(s)
+  def cnab_to_nosso_numero_santander(s)
     #remove leading zeros and trailing digit
     s.sub!(/^[0]+/, "")[0...-1]
+  end
+
+  def cnab_to_nosso_numero_bb(s)
+    s[10..-1].sub!(/^[0]+/, "")
   end
 end

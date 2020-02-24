@@ -28,7 +28,12 @@
           <% @linhas.each do |linha| %>
             <% if linha.data_vencimento.to_i > 0 %>
               <tr>
-                <td><%= linha.nosso_numero %></td>
+                <td>
+                  <% nossonumero = @retorno.pagamento_perfil.banco == 33 ? cnab_to_nosso_numero_santander(linha.nosso_numero) : cnab_to_nosso_numero_bb(linha.nosso_numero) %>
+                  <%= link_to faturas_path q: {nossonumero_eq: nossonumero}, target: "_blank" do %>
+                    <%= nossonumero %>
+                  <% end %>
+                </td>
                 <td><%= linha.codigo_ocorrencia %></td>
                 <td><%= l(cnab_to_date(linha.data_ocorrencia)) %></td>
                 <td><%= l(cnab_to_date(linha.data_vencimento)) %></td>

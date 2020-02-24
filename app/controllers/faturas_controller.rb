@@ -10,7 +10,8 @@ class FaturasController < ApplicationController
     elsif params.key?(:suspensos)
       @faturas = Fatura.suspensos.order(vencimento: :desc).page params[:page]
     else
-      @faturas = Fatura.all.order(vencimento: :desc).page params[:page]
+      @q = Fatura.ransack(params[:q])
+      @faturas = @q.result(vencimento: :desc).page params[:page]
     end
   end
 
