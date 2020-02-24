@@ -10,7 +10,31 @@
   <div class="tab-pane fade show <%= params[:tab] == "faturas" ? "": "show active" %>" id="contrato"
     role="tabpanel" aria-labelledby="contrato-tab">
     <div class="card">
-      <%= render 'shared/show_header', {object: @contrato, titulo: @contrato.pessoa.nome} %>
+      <div class="card-header">
+        <div class="row">
+          <div class="col-sm">
+            <h3>
+              <%= link_to(@contrato.pessoa, class: "btn btn-sm btn-outline-dark") do %>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              <% end %>
+              <% if can? :update, @contrato %>
+                <%= link_to(edit_contrato_path, class: "btn btn-sm btn-outline-dark") do %>
+                  <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                <% end %>
+              <% end %>
+              <%= @contrato.pessoa.nome %>
+            </h3>
+          </div>
+          <div class="d-print-none col-sm-3" align=right>
+            <%= link_to(boletos_contrato_path, class: "btn btn-sm btn-outline-dark", target: "_blank") do %>
+              <i class="fa fa-bank fa-lg" aria-hidden="true"></i> Boletos
+            <% end %>
+            <%= link_to(current_page_params.merge(format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do %>
+              <i class="fa fa-print fa-lg" aria-hidden="true"></i>
+            <% end %>
+          </div>
+        </div>
+      </div>
       <div class="card-body">
         <div class="card-columns" style="column-count: 3">
           <%= link_to @contrato.pessoa do %>

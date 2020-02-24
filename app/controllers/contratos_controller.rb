@@ -28,9 +28,7 @@ class ContratosController < ApplicationController
     if request.format != :pdf
       @faturas = @contrato.faturas.order(parcela: :desc).page params[:page]
     else
-      puts "create pdf"
       pdf = FillablePDF.new('public/termo.pdf')
-      puts "set fields"
       pdf.set_fields(
         assinante_nome: @contrato.pessoa.nome,
         assinante_cpf_cnpj: @contrato.pessoa.cpf,
