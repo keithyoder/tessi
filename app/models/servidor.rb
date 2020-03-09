@@ -75,12 +75,12 @@ class Servidor < ApplicationRecord
   def backup_status
     if self.backup.attached?
       if self.backup.created_at > 1.week.ago
-        "Recente"
+        "primary"
+      elsif self.backup.created_at > 2.week.ago
+        "warning"
       else
-        "Antigo"
+        "danger"
       end
-    else
-      "Nenhum"
     end
   end
 end

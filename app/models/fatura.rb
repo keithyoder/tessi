@@ -6,6 +6,11 @@ class Fatura < ApplicationRecord
   belongs_to :registro, class_name: :Retorno, optional: true
   belongs_to :baixa, class_name: :Retorno, optional: true
   has_one :pessoa, through: :contrato
+  has_one :logradouro, through: :pessoa
+  has_one :bairro, through: :logradouro
+  has_one :cidade, through: :bairro
+  has_one :estado, through: :cidade
+  has_one :plano, through: :contrato
   paginates_per 18
   scope :inadimplentes, -> { where("liquidacao is null and vencimento < ?", 5.days.ago) }
   scope :suspensos, -> { where("liquidacao is null and vencimento < ?", 15.days.ago) }
@@ -16,6 +21,21 @@ class Fatura < ApplicationRecord
       contrato.conexoes.update_all inadimplente: contrato.faturas_em_atraso(5) > 0
       contrato.conexoes.update_all bloqueado: contrato.faturas_em_atraso(15) > 0
     end
+  end
+
+  def remessa
+    Brcobranca::Remessa::Pagamento.new(valor: valor,
+      data_vencimento: vencimento,
+      nosso_numero: nossonumero,
+      documento_sacado: pessoa.cpf.gsub(/[^0-9 ]/, ''),
+      nome_sacado: pessoa.nome,
+      endereco_sacado: logradouro.nome + ', ' + pessoa.numero + ' ' + pessoa.complemento,
+      bairro_sacado: bairro.nome,
+      cep_sacado: logradouro.cep,
+      cidade_sacado: cidade.nome,
+      uf_sacado: estado.sigla,
+      valor_desconto: plano.desconto,
+      data_desconto: vencimento)
   end
 
   def boleto

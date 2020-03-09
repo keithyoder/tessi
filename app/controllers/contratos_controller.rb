@@ -14,7 +14,9 @@ class ContratosController < ApplicationController
   def boletos
     result = []
     Brcobranca.configuration.gerador = :rghost_carne
-    @contrato.faturas.where("liquidacao is null").order(:vencimento).each do |fatura|
+    @contrato.faturas.where('liquidacao is null')
+    .where(vencimento: 1.day.ago..Date::Infinity.new)
+    .order(:vencimento).each do |fatura|
       result << fatura.boleto
     end
     send_data Brcobranca::Boleto::Base.lote_carne(result), :filename => 'boletos.pdf', :type => :pdf, :disposition => 'inline'

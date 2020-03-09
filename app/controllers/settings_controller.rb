@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
   load_and_authorize_resource
-  before_action :get_setting, only: [:edit, :update]
+  #before_action :get_setting, only: [:edit, :update]
 
   def create
     puts setting_params.to_s

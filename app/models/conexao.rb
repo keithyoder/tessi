@@ -35,6 +35,8 @@ class Conexao < ApplicationRecord
     end
 
     if self.ponto.tecnologia == "Radio"
+      ConexaoVerificarAtributo.where(conexao: self, atributo: 'Calling-Station-Id').destroy_all
+      ConexaoEnviarAtributo.where(conexao: self, atributo: 'Framed-IP-Address').destroy_all
       atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Mikrotik-Host-Ip').first_or_create
       atr.op = '=='
       atr.valor = self.ip.to_s
@@ -42,6 +44,7 @@ class Conexao < ApplicationRecord
     end
 
     if self.ponto.tecnologia == "Fibra"
+      ConexaoVerificarAtributo.where(conexao: self, atributo: 'Mikrotik-Host-Ip').destroy_all
       atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Calling-Station-Id').first_or_create
       atr.op = '=='
       atr.valor = self.mac

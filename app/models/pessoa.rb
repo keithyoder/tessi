@@ -11,7 +11,7 @@ class Pessoa < ApplicationRecord
   enum tipo: {"Pessoa Física" => 1, "Pessoa Jurídica" => 2}
 
   def endereco
-    self.logradouro.nome + ', ' + self.numero + ' ' + self.complemento
+    logradouro.nome + ', ' + numero + ' ' + complemento
   end
 
   def idade

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :retornos
-  resources :pagamento_perfis
+  resources :pagamento_perfis do
+    get :remessa, :on => :member
+  end
   resources :liquidacoes
   resources :faturas do
     get :liquidacao, :on => :member
