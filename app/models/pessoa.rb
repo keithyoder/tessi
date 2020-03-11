@@ -19,7 +19,11 @@ class Pessoa < ApplicationRecord
   end
 
   def cpf_cnpj
-    self.cpf.present? ? self.cpf : self.cnpj
+    if self.cpf.present?
+      pessoa.cpf.gsub(/[^0-9 ]/, '')
+    else
+      pessoa.cnpj.gsub(/[^0-9 ]/, '')
+    end
   end
 
   def rg_ie
