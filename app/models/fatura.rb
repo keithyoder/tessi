@@ -41,8 +41,8 @@ class Fatura < ApplicationRecord
   def boleto
     info = {
       :convenio => pagamento_perfil.cedente,
-      :cedente => Settings.razao_social,
-      :documento_cedente => Settings.cnpj,
+      :cedente => Setting.razao_social,
+      :documento_cedente => Setting.cnpj,
       :sacado => pessoa.nome,
       :sacado_documento => pessoa.cpf_cnpj,
       :valor => valor,

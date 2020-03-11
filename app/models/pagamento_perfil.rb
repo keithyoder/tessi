@@ -10,7 +10,7 @@ class PagamentoPerfil < ApplicationRecord
       digito_conta: '1',
       empresa_mae: 'asd',
       sequencial_remessa: '1',
-      documento_cedente: Settings.cnpj,
+      documento_cedente: Setting.cnpj,
       pagamentos: pagamentos,
       codigo_transmissao: '123456'
     }
