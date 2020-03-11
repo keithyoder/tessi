@@ -20,9 +20,9 @@ class Pessoa < ApplicationRecord
 
   def cpf_cnpj
     if self.cpf.present?
-      pessoa.cpf.gsub(/[^0-9 ]/, '')
+      cpf.gsub(/[^0-9 ]/, '')
     else
-      pessoa.cnpj.gsub(/[^0-9 ]/, '')
+      cnpj.gsub(/[^0-9 ]/, '')
     end
   end
 
