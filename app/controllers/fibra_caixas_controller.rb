@@ -11,6 +11,7 @@ class FibraCaixasController < ApplicationController
   # GET /fibra_caixas/1
   # GET /fibra_caixas/1.json
   def show
+    @conexoes = @fibra_caixa.conexoes.page params[:page]
   end
 
   # GET /fibra_caixas/new
