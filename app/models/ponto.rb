@@ -4,6 +4,8 @@ class Ponto < ApplicationRecord
   belongs_to :servidor
   has_many :conexoes
   has_many :autenticacoes, :through => :conexoes, :source => :autenticacoes
+  scope :ativo, -> { joins(:servidor).where("servidores.ativo") }
+  scope :fibra, -> { where(tecnologia: :Fibra) }
   
   enum tecnologia: {:Radio => 1, :Fibra => 2}
   enum sistema: {:Ubnt => 1, :Mikrotik => 2, :Chima => 3, :Outro => 4}

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  fibra_rede: one
+  capacidade: 1
+
+two:
+  nome: MyString
+  fibra_rede: two
+  capacidade: 1

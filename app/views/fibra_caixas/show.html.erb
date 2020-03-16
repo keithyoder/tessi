@@ -1,0 +1,12 @@
+<div class="card">
+  <%= render 'shared/show_header', {object: @fibra_caixa, titulo: "Caixa de Atendimento #{@fibra_caixa.nome}"} %>
+  <div class="card-body">
+    <div class="card-columns" style="column-count: 4">
+      <%= render 'shared/field_card', {campo: "Caixa", valor: @fibra_caixa.nome} %>
+      <%= render 'shared/field_card', {campo: "Rede", valor: @fibra_caixa.fibra_rede.nome} %>
+      <%= render 'shared/field_card', {campo: "Capacidade", valor: @fibra_caixa.capacidade} %>
+    </div>
+  </div>
+</div>
+<div class="card">
+</div>

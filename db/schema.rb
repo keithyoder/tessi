@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_103903) do
+ActiveRecord::Schema.define(version: 2020_03_16_120017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,9 @@ ActiveRecord::Schema.define(version: 2020_02_21_103903) do
     t.integer "contrato_id"
     t.string "mac"
     t.integer "tipo"
+    t.bigint "caixa_id"
+    t.integer "porta"
+    t.index ["caixa_id"], name: "index_conexoes_on_caixa_id"
     t.index ["contrato_id"], name: "index_conexoes_on_contrato_id"
     t.index ["pessoa_id"], name: "index_conexoes_on_pessoa_id"
     t.index ["plano_id"], name: "index_conexoes_on_plano_id"
@@ -165,6 +168,23 @@ ActiveRecord::Schema.define(version: 2020_02_21_103903) do
     t.index ["registro_id"], name: "index_faturas_on_registro_id"
     t.index ["retorno_id"], name: "index_faturas_on_retorno_id"
     t.index ["vencimento"], name: "index_faturas_on_vencimento"
+  end
+
+  create_table "fibra_caixas", force: :cascade do |t|
+    t.string "nome"
+    t.bigint "fibra_rede_id"
+    t.integer "capacidade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fibra_rede_id"], name: "index_fibra_caixas_on_fibra_rede_id"
+  end
+
+  create_table "fibra_redes", force: :cascade do |t|
+    t.string "nome"
+    t.bigint "ponto_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ponto_id"], name: "index_fibra_redes_on_ponto_id"
   end
 
   create_table "logradouros", force: :cascade do |t|
@@ -355,4 +375,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_103903) do
   add_foreign_key "faturas", "pagamento_perfis"
   add_foreign_key "faturas", "retornos", column: "baixa_id"
   add_foreign_key "faturas", "retornos", column: "registro_id"
+  add_foreign_key "fibra_caixas", "fibra_redes"
+  add_foreign_key "fibra_redes", "pontos"
 end

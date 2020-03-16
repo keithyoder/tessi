@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :fibra_caixas
+  resources :fibra_redes
   resources :retornos
   resources :pagamento_perfis do
     get :remessa, :on => :member
