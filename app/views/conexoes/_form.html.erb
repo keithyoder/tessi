@@ -44,7 +44,7 @@
         <%= f.input :observacao %>
       </div>
       <div class="col">
-        <%= f.association :caixa, label_method: :nome %>
+        <%= f.association :caixa, collection: @caixas, label_method: :nome %>
       </div>
       <div class="col">
         <%= f.input :porta %>
