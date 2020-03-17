@@ -2,7 +2,7 @@ class Conexao < ApplicationRecord
   belongs_to :pessoa
   belongs_to :plano
   belongs_to :ponto
-  belongs_to :caixa, :class_name => 'FibraCaixa'
+  belongs_to :caixa, :class_name => 'FibraCaixa', optional: true
   has_one :servidor, through: :ponto
   belongs_to :contrato
   has_one :cidade, through: :pessoa
