@@ -4,7 +4,7 @@ class Conexao < ApplicationRecord
   belongs_to :ponto
   belongs_to :caixa, :class_name => 'FibraCaixa', optional: true
   has_one :servidor, through: :ponto
-  belongs_to :contrato
+  belongs_to :contrato, optional: true
   has_one :cidade, through: :pessoa
   has_many :faturas, through: :contrato
   has_many :conexao_enviar_atributos, dependent: :delete_all
