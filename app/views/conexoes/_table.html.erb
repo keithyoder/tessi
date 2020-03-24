@@ -12,6 +12,7 @@
             <% if !defined?(exclude) or exclude != 'ponto' %>
               <th>Ponto</th>
             <% end %>
+            <th>Usuário</th>
             <th>IP</th>
             <th>Bloq.</th>
             <th>Inadim.</th>
@@ -28,7 +29,8 @@
               <% if !defined?(exclude) or exclude != 'ponto' %>
                 <td><%= link_to conexao.ponto.nome, conexao.ponto %></td>
               <% end %>
-              <td><%= link_to conexao.ip, conexao %></td>
+              <td><%= link_to conexao.usuario, conexao %></td>
+              <td><%= conexao.ip %></td>
               <td><%= conexao.bloqueado.as_checkbox %></td>
               <td><%= conexao.inadimplente.as_checkbox %></td>
            </tr>
