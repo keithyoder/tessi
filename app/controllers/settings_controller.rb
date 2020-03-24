@@ -12,6 +12,6 @@ class SettingsController < ApplicationController
 
   private
     def setting_params
-      params.require(:setting).permit(:razao_social, :cnpj, :juros, :multa)
+      params.require(:setting).permit(:razao_social, :cnpj, :juros, :multa, :ie, :telefone, :site)
     end
 end

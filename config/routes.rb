@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :faturas do
     get :liquidacao, :on => :member
     get :boleto, :on => :member
+    get :nf, :on => :member
   end
   resources :contratos do
     get :boletos, :on => :member

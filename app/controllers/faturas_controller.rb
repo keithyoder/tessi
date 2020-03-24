@@ -1,6 +1,6 @@
 class FaturasController < ApplicationController
   load_and_authorize_resource
-  before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao, :boleto]
+  before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao, :boleto, :nf]
 
   # GET /faturas
   # GET /faturas.json
@@ -33,6 +33,12 @@ class FaturasController < ApplicationController
     respond_to do |format|
       format.html { render :liquidacao }
       format.json { render json: @fatura.errors, status: :unprocessable_entity }
+    end
+  end
+
+  def nf
+    respond_to do |format|
+      format.pdf { render :nf }
     end
   end
 

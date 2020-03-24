@@ -38,12 +38,12 @@ prawn_document(:page_size => 'A5', :margin => [12,12,12,12]) do |pdf|
   pdf.rounded_rectangle [200,35], 180, 25, 5
   pdf.close_and_stroke
   pdf.draw_text "Prestadora", :size => 8, :style => :bold, :at => [esquerda,202]
-  pdf.draw_text 'Tessi - Serviços de Telecomunicação Ltda', :size => 10, :at => [esquerda,190]
-  pdf.draw_text 'CNPJ: 07.159.053/0001-07', :size => 10, :at => [esquerda,178]
+  pdf.draw_text Setting.razao_social, :size => 10, :at => [esquerda,190]
+  pdf.draw_text "CNPJ: #{Cnpj.new(Setting.cnpj)}", :size => 10, :at => [esquerda,178]
   pdf.draw_text ('Rua Treze de Maio, 5B - Centro - Pesqueira - PE'), :size => 10, :at => [esquerda,166]
   pdf.draw_text "Assinante", :size => 8, :style => :bold, :at => [esquerda,147]
   pdf.draw_text @fatura.pessoa.nome, :size => 10, :at => [esquerda,136]
-  pdf.draw_text 'CPF: '+@fatura.pessoa.cpf, :size => 10, :at => [esquerda,124]
+  pdf.draw_text 'CPF: '+@fatura.pessoa.cpf.to_s, :size => 10, :at => [esquerda,124]
   pdf.draw_text (@fatura.pessoa.endereco + ' - ' + @fatura.pessoa.bairro.nome_cidade_uf), :size => 10, :at => [esquerda,112]
   pdf.text_box "Recebemos de #{@fatura.pessoa.nome} a importância de #{number_to_currency(@fatura.valor_liquidacao)} "+
     "(#{Extenso.moeda((@fatura.valor_liquidacao*100).to_i).downcase}) como quitação da parcela #{@fatura.parcela} " +

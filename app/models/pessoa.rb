@@ -5,6 +5,8 @@ class Pessoa < ApplicationRecord
   has_many :conexoes
   has_many :contratos
   has_one_attached :rg_imagem
+  usar_como_cnpj :cnpj
+  usar_como_cpf :cpf
 
   delegate :endereco, to: :logradouro, prefix: :logradouro
 
@@ -20,9 +22,17 @@ class Pessoa < ApplicationRecord
 
   def cpf_cnpj
     if self.cpf.present?
-      cpf.gsub(/[^0-9 ]/, '')
+      cpf.to_s.gsub(/[^0-9 ]/, '')
     else
-      cnpj.gsub(/[^0-9 ]/, '')
+      cnpj.to_s.gsub(/[^0-9 ]/, '')
+    end
+  end
+
+  def tipo_documento
+    if tipo == "Pessoa Física"
+      "CPF"
+    else
+      "CNPJ"
     end
   end
 

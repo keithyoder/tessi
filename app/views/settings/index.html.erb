@@ -13,6 +13,18 @@
     <%= f.text_field :cnpj, value: Setting.cnpj, class: "form-control"  %>
   </div>
   <div class="form-group">
+    <label class="control-label">IE</label>
+    <%= f.text_field :ie, value: Setting.ie, class: "form-control"  %>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Telefone</label>
+    <%= f.text_field :telefone, value: Setting.telefone, class: "form-control"  %>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Site</label>
+    <%= f.text_field :site, value: Setting.site, class: "form-control"  %>
+  </div>
+  <div class="form-group">
     <label class="control-label">Multa por atraso</label>
     <%= f.number_field :multa, value: Setting.multa, class: "form-control", step: :any %>
   </div>

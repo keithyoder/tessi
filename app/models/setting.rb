@@ -6,6 +6,9 @@ class Setting < RailsSettings::Base
   # field :host, type: :string, default: "http://localhost:3000"
   field :razao_social, default: "", type: :string
   field :cnpj, default: "", type: :string
+  field :ie, default: "", type: :string
+  field :site, default: "", type: :string
+  field :telefone, default: "", type: :string
   field :juros, default: 0.1, type: :decimal
   field :multa, default: 0.2, type: :decimal
 
