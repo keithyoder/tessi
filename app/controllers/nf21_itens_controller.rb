@@ -69,6 +69,6 @@ class Nf21ItensController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def nf21_item_params
-      params.require(:nf21_item).permit(:nf_21, :references, :item, :text)
+      params.require(:nf21_item).permit(:nf_21, :item)
     end
 end

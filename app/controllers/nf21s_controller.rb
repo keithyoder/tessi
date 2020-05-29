@@ -69,6 +69,6 @@ class Nf21sController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def nf21_params
-      params.require(:nf21).permit(:emissao, :date,, :numero, :integer,, :valor, :decimal,, :cadastro, :text,, :mestre, :text)
+      params.require(:nf21).permit(:emissao, :numero, :valor, :cadastro, :mestre)
     end
 end
