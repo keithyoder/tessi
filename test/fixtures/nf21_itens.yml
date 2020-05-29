@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nf_21: MyString
+  references: MyString
+  item: MyString
+  text: MyString
+
+two:
+  nf_21: MyString
+  references: MyString
+  item: MyString
+  text: MyString

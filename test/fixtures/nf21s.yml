@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  emissao: MyString
+  date,: MyString
+  numero: MyString
+  integer,: MyString
+  valor: MyString
+  decimal,: MyString
+  cadastro: MyString
+  text,: MyString
+  mestre: MyString
+  text: MyString
+
+two:
+  emissao: MyString
+  date,: MyString
+  numero: MyString
+  integer,: MyString
+  valor: MyString
+  decimal,: MyString
+  cadastro: MyString
+  text,: MyString
+  mestre: MyString
+  text: MyString

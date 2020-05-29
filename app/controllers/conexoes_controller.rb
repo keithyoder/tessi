@@ -48,14 +48,14 @@ class ConexoesController < ApplicationController
 
   # GET /conexoes/1/edit
   def edit
-    @caixas = @conexao.ponto.caixas.joins(:fibra_rede, :ponto).order("pontos.nome, fibra_caixas.nome").all
+    get_caixas
   end
 
   # POST /conexoes
   # POST /conexoes.json
   def create
     @conexao = Conexao.new(conexao_params)
-
+    get_caixas
     respond_to do |format|
       if @conexao.save
         format.html { redirect_to @conexao, notice: "Conexao was successfully created." }
@@ -70,6 +70,7 @@ class ConexoesController < ApplicationController
   # PATCH/PUT /conexoes/1
   # PATCH/PUT /conexoes/1.json
   def update
+    get_caixas
     respond_to do |format|
       if @conexao.update(conexao_params)
         format.html { redirect_to @conexao, notice: "Conexao was successfully updated." }
@@ -96,6 +97,10 @@ class ConexoesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_conexao
     @conexao = Conexao.find(params[:id])
+  end
+
+  def get_caixas
+    @caixas = @conexao.ponto.caixas.joins(:fibra_rede, :ponto).order("pontos.nome, fibra_caixas.nome").all
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

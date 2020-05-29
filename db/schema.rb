@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_16_120017) do
+ActiveRecord::Schema.define(version: 2020_05_17_100830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,26 @@ ActiveRecord::Schema.define(version: 2020_03_16_120017) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bairro_id"], name: "index_logradouros_on_bairro_id"
+  end
+
+  create_table "nf21_itens", force: :cascade do |t|
+    t.bigint "nf21_id"
+    t.text "item"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nf21_id"], name: "index_nf21_itens_on_nf21_id"
+  end
+
+  create_table "nf21s", force: :cascade do |t|
+    t.bigint "fatura_id"
+    t.date "emissao"
+    t.integer "numero"
+    t.decimal "valor", precision: 8, scale: 2
+    t.text "cadastro"
+    t.text "mestre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fatura_id"], name: "index_nf21s_on_fatura_id"
   end
 
   create_table "pagamento_perfis", force: :cascade do |t|

@@ -83,7 +83,7 @@ prawn_document(:page_size => 'A4', :margin => [20.mm,20.mm,20.mm,20.mm]) do |pdf
   pdf.draw_text @fatura.pessoa.nome, :size => 12, :at => [esquerda,190.mm]
   pdf.draw_text @fatura.pessoa.endereco, :size => 10, :at => [esquerda,185.mm]
   pdf.draw_text @fatura.pessoa.bairro.nome_cidade_uf, :size => 10, :at => [esquerda,180.mm]
-  pdf.draw_text "#{@fatura.pessoa.tipo_documento}: #{@fatura.pessoa.cpf || @fatura.pessoa.cnpj}", :size => 10, :at => [esquerda,175.mm]
+  pdf.draw_text "#{@fatura.pessoa.tipo_documento}: #{@fatura.pessoa.cpf.presence || @fatura.pessoa.cnpj}", :size => 10, :at => [esquerda,175.mm]
   pdf.draw_text "IE: #{@fatura.pessoa.ie.presence || 'ISENTO'}", :size => 10, :at => [esquerda+55.mm,175.mm]
 
 

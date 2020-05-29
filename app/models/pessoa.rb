@@ -21,7 +21,7 @@ class Pessoa < ApplicationRecord
   end
 
   def cpf_cnpj
-    if self.cpf.present?
+    if cpf.numero.present?
       cpf.to_s.gsub(/[^0-9 ]/, '')
     else
       cnpj.to_s.gsub(/[^0-9 ]/, '')
@@ -37,7 +37,7 @@ class Pessoa < ApplicationRecord
   end
 
   def rg_ie
-    self.rg.present? ? self.rg : self.ie
+    rg.present? ? self.rg : self.ie
   end
 
   def assinante?

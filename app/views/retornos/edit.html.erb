@@ -1,6 +1,6 @@
-<h1>Editing Retorno</h1>
-
-<%= render 'form', retorno: @retorno %>
-
-<%= link_to 'Show', @retorno %> |
-<%= link_to 'Back', retornos_path %>
+<div class="card">
+  <%= render 'shared/edit_header', {object: @ponto, titulo: "Retorno Bancário"} %>
+  <div class="card-body">
+    <%= render 'form', retorno: @retorno %>
+  </div>
+</div>

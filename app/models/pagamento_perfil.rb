@@ -2,7 +2,7 @@ class PagamentoPerfil < ApplicationRecord
   has_many :faturas
   enum tipo: { "Boleto" => 3, "Débito Automático" => 2 }
 
-  def remessa(pagamentos)
+  def remessa(pagamentos, codigo_transmissao: '1')
     info = {
       carteira: carteira.to_s,
       agencia: agencia.to_s,
@@ -12,7 +12,7 @@ class PagamentoPerfil < ApplicationRecord
       sequencial_remessa: '1',
       documento_cedente: Setting.cnpj,
       pagamentos: pagamentos,
-      codigo_transmissao: '123456'
+      codigo_transmissao: codigo_transmissao
     }
     case banco
     when 33

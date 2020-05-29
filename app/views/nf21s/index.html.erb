@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Nf21s</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Emissao</th>
+      <th>Date,</th>
+      <th>Numero</th>
+      <th>Integer,</th>
+      <th>Valor</th>
+      <th>Decimal,</th>
+      <th>Cadastro</th>
+      <th>Text,</th>
+      <th>Mestre</th>
+      <th>Text</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @nf21s.each do |nf21| %>
+      <tr>
+        <td><%= nf21.emissao %></td>
+        <td><%= nf21.date, %></td>
+        <td><%= nf21.numero %></td>
+        <td><%= nf21.integer, %></td>
+        <td><%= nf21.valor %></td>
+        <td><%= nf21.decimal, %></td>
+        <td><%= nf21.cadastro %></td>
+        <td><%= nf21.text, %></td>
+        <td><%= nf21.mestre %></td>
+        <td><%= nf21.text %></td>
+        <td><%= link_to 'Show', nf21 %></td>
+        <td><%= link_to 'Edit', edit_nf21_path(nf21) %></td>
+        <td><%= link_to 'Destroy', nf21, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Nf21', new_nf21_path %>

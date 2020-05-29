@@ -26,6 +26,12 @@ class Conexao < ApplicationRecord
   scope :acima_34M, -> { joins(:plano).where("planos.download > 34")}
   enum tipo: {:Cobranca => 1, :Cortesia => 2, :Outro_3 => 3, :Outro_4 => 4, :Outros => 5}
 
+  validates_format_of :mac, :with =>
+    /\A([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}\z/i,
+    :on => :create,
+    :on => :update,
+    :message => "Endereço MAC inválido"
+
   after_touch :save
   after_save do
     if self.usuario.present? && self.senha.present?
