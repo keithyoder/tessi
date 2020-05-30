@@ -8,6 +8,7 @@
           <tr>
             <th>Rede</th>
             <th>Ponto de Acesso</th>
+            <th>Conexões</th>
           </tr>
         </thead>
         <tbody>
@@ -15,6 +16,7 @@
             <tr>
               <td><%= link_to rede.nome, rede %></td>
               <td><%= link_to rede.ponto.nome, rede.ponto %></td>
+              <td><%= rede.conexoes.count %></td>
             </tr>
           <% end %>
         </tbody>
