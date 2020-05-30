@@ -3,7 +3,9 @@
   <div class="card-body">
     <div class="card-columns" style="column-count: 4">
       <%= render 'shared/field_card', {campo: "Rede", valor: @fibra_rede.nome} %>
-      <%= render 'shared/field_card', {campo: "Ponto de Acesso", valor: @fibra_rede.ponto.nome} %>
+      <%= link_to @fibra_rede.ponto do %>
+        <%= render 'shared/field_card', {campo: "Ponto de Acesso", valor: @fibra_rede.ponto.nome} %>
+      <% end %>
     </div>
   </div>
 </div>
