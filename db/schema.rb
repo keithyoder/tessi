@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_17_100830) do
+ActiveRecord::Schema.define(version: 2020_05_31_191003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,7 +176,12 @@ ActiveRecord::Schema.define(version: 2020_05_17_100830) do
     t.integer "capacidade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "logradouro_id"
+    t.string "poste"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
     t.index ["fibra_rede_id"], name: "index_fibra_caixas_on_fibra_rede_id"
+    t.index ["logradouro_id"], name: "index_fibra_caixas_on_logradouro_id"
   end
 
   create_table "fibra_redes", force: :cascade do |t|

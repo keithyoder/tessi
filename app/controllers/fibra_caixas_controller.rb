@@ -71,6 +71,6 @@ class FibraCaixasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fibra_caixa_params
-      params.require(:fibra_caixa).permit(:nome, :fibra_rede_id, :capacidade)
+      params.require(:fibra_caixa).permit(:nome, :fibra_rede_id, :capacidade, :poste, :logradouro_id, :latitude, :longitude)
     end
 end

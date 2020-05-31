@@ -3,8 +3,10 @@ require 'csv'
 class Logradouro < ApplicationRecord
   belongs_to :bairro
   has_one :cidade, through: :bairro
+  has_one :estado, through: :cidade
   has_many :pessoas
   has_many :conexoes, :through => :pessoas
+  has_many :fibra_caixas
 
   def endereco
     self.nome + ' - ' + self.bairro.nome_cidade_uf
