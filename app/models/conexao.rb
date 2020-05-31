@@ -98,7 +98,7 @@ class Conexao < ApplicationRecord
   end
 
   def conectado
-    rad_accts.where('AcctStopTime is null').count > 0
+    rad_accts.where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago).count > 0
   end
 
 end
