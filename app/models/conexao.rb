@@ -13,6 +13,7 @@ class Conexao < ApplicationRecord
   has_many :rad_accts, :primary_key => :usuario, :foreign_key => :username
   scope :bloqueado, -> { where("bloqueado") }
   scope :ativo, -> { where("not bloqueado") }
+  scope :conectada, -> { select('conexoes.*').distinct.joins(:rad_accts).where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago) }
   scope :inadimplente, -> { where("inadimplente") }
   scope :radio, -> { joins(:ponto).where(pontos: {tecnologia: :Radio}) }
   scope :fibra, -> { joins(:ponto).where(pontos: {tecnologia: :Fibra}) }
