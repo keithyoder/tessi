@@ -16,6 +16,7 @@
             <th>IP</th>
             <th>Bloq.</th>
             <th>Inadim.</th>
+            <th>Conectado?</th>
           </tr>
         </thead>
 
@@ -33,6 +34,7 @@
               <td><%= conexao.ip %></td>
               <td><%= conexao.bloqueado.as_checkbox %></td>
               <td><%= conexao.inadimplente.as_checkbox %></td>
+              <td><%= conexao.conectado.as_checkbox %></td>
            </tr>
           <% end %>
         </tbody>
