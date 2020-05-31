@@ -11,7 +11,7 @@
         <%= f.association :plano, label_method: :nome %>
       </div>
       <div class="col-4">
-        <%= f.input :tipo, collection: Conexao.tipos %>
+        <%= f.input :tipo, collection: Conexao.tipos, label_method: :nome %>
       </div>
     </div>
     <div class="row">

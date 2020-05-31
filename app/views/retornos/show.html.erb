@@ -25,7 +25,7 @@
         </thead>
 
         <tbody>
-          <% @linhas.each do |linha| %>
+          <% (@linhas || []).each do |linha| %>
             <% if linha.data_vencimento.to_i > 0 %>
               <tr>
                 <td>
