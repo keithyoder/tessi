@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_31_191003) do
+ActiveRecord::Schema.define(version: 2020_06_01_140825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2020_05_31_191003) do
     t.integer "tipo"
     t.bigint "caixa_id"
     t.integer "porta"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
     t.index ["caixa_id"], name: "index_conexoes_on_caixa_id"
     t.index ["contrato_id"], name: "index_conexoes_on_contrato_id"
     t.index ["pessoa_id"], name: "index_conexoes_on_pessoa_id"

@@ -107,6 +107,6 @@ class ConexoesController < ApplicationController
   def conexao_params
     params.require(:conexao).permit(:pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
                                     :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente,
-                                    :tipo, :mac, :contrato_id, :caixa_id, :porta)
+                                    :tipo, :mac, :contrato_id, :caixa_id, :porta, :latitude, :longitude)
   end
 end
