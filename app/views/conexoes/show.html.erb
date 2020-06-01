@@ -61,9 +61,11 @@
   </div>
   <div class="row">
     <div class="card col-lg">
-      <p align=center>
-      <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=1000x400&center=#{@conexao.latitude},#{@conexao.longitude}&markers=|#{@conexao.latitude},#{@conexao.longitude}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map" %>
-      </p>
+      <%= link_to "http://maps.google.com/maps?q=#{@conexao.latitude},#{@conexao.longitude}&ll=#{@conexao.latitude},#{@conexao.longitude}&z=18", target: "_blank" do %>
+        <p align=center>
+        <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=1000x400&center=#{@conexao.latitude},#{@conexao.longitude}&markers=|#{@conexao.latitude},#{@conexao.longitude}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map" %>
+        </p>
+      <% end %>
     </div>
   </div>
 </div>
