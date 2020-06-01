@@ -18,7 +18,7 @@
           <% @fibra_caixas.each do |caixa| %>
             <tr>
               <td><%= link_to caixa.nome, caixa %></td>
-              <td><%= link_to caixa.logradouro, caixa.logradouro.present? ? caixa.logradouro.nome : '' %></td>
+              <td><%= link_to caixa.logradouro.present? ? caixa.logradouro.nome : '', caixa.logradouro %></td>
               <td><%= link_to caixa.fibra_rede.nome, caixa.fibra_rede %></td>
               <td><%= caixa.capacidade %>
               <td><%= caixa.conexoes.count %>

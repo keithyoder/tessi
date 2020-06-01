@@ -6,7 +6,7 @@ class FibraRedesController < ApplicationController
   # GET /fibra_redes.json
   def index
     @q = FibraRede.ransack(params[:q])
-    @q.sorts = "ponto_nome, nome"
+    @q.sorts = ["ponto_nome", "nome"]
     @fibra_redes = @q.result.page params[:page]
   end
 
