@@ -42,6 +42,7 @@ class Ability
         can :manage, :all
         cannot :destroy, Estado
       elsif user.tecnico_n1?
+        can [:update], [FibraCaixa]
       elsif user.tecnico_n2?
         can :update, [Cidade, Ponto]
         can [:create, :update], [FibraRede, FibraCaixa]

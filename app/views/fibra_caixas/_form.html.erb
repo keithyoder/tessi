@@ -9,7 +9,7 @@
         <%= f.input :nome %>
       </div>
       <div class="col">
-        <%= f.association :fibra_rede, label_method: :nome %>
+        <%= f.association :fibra_rede, collection: FibraRede.order(:nome), label_method: :nome %>
       </div>
       <div class="col">
         <%= f.input :capacidade %>
