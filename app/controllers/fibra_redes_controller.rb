@@ -75,6 +75,6 @@ class FibraRedesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fibra_rede_params
-      params.require(:fibra_rede).permit(:nome, :ponto_id)
+      params.require(:fibra_rede).permit(:nome, :ponto_id, :fibra_cor)
     end
 end

@@ -6,6 +6,7 @@
       <%= link_to @fibra_rede.ponto do %>
         <%= render 'shared/field_card', {campo: "Ponto de Acesso", valor: @fibra_rede.ponto.nome} %>
       <% end %>
+      <%= render 'shared/field_card', {campo: "Cor da Fibra", valor: @fibra_rede.fibra_cor} %>
       <%= render 'shared/field_card', {campo: "Conexões", valor: @fibra_rede.conexoes.count} %>
     </div>
   </div>

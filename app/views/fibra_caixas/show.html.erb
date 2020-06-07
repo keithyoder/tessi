@@ -3,11 +3,11 @@
     <%= render 'shared/show_header', {object: @fibra_caixa, titulo: "Caixa de Atendimento #{@fibra_caixa.nome}"} %>
     <div class="card-body">
       <div class="card-columns" style="column-count: 2">
-        <%= render 'shared/field_card', {campo: "Caixa", valor: @fibra_caixa.nome} %>
         <%= link_to @fibra_caixa.fibra_rede do %>
           <%= render 'shared/field_card', {campo: "Rede", valor: @fibra_caixa.fibra_rede.nome} %>
         <% end %>
         <%= render 'shared/field_card', {campo: "Capacidade", valor: "#{@fibra_caixa.conexoes.count}/#{@fibra_caixa.capacidade}"} %>
+        <%= render 'shared/field_card', {campo: "Cor da Fibra", valor: @fibra_caixa.fibra_cor} %>
         <%= link_to @fibra_caixa.logradouro do %>
           <%= render 'shared/field_card', {campo: "Logradouro",
             valor: @fibra_caixa.logradouro.present? ? @fibra_caixa.logradouro.nome : ""} %>
