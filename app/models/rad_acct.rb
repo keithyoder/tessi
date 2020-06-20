@@ -4,8 +4,9 @@ class RadAcct < ApplicationRecord
   belongs_to :conexao, :primary_key => :username, :foreign_key => :usuario
   scope :trafego, -> {
           select("date(acctstoptime) as dia, sum(acctoutputoctets) as download, sum(acctinputoctets) as upload")
-            .where("not acctstoptime is null and acctstoptime > ?", 30.days.ago)
+            .where("not acctstoptime is null and acctstoptime > ?", 180.days.ago)
             .group("date(acctstoptime)")
             .order("date(acctstoptime) desc")
+            .limit(30)
         }
 end
