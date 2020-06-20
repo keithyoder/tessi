@@ -51,10 +51,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-8">
+      <div class="col-3">
         <%= f.input :latitude %>
       </div>
-      <div class="col-8">
+      <div class="col-3">
         <%= f.input :longitude %>
       </div>
       <div class="col">
@@ -70,8 +70,11 @@
   </div>
 
   <div class="form-actions">
-  <%= button_tag(:class => "btn btn-primary") do %>
-    <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
-  <% end %>
-</div>
+    <%= button_tag( type: 'button', onclick: "getConexaoLocation()", class: 'btn btn-primary') do %>
+      <i class="fa fa-location_arrow" aria-hidden="true"></i> GPS
+    <% end %>
+    <%= button_tag(:class => "btn btn-primary") do %>
+      <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+    <% end %>
+  </div>
 <% end %>
