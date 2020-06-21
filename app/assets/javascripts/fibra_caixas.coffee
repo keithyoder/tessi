@@ -21,5 +21,5 @@ window.getLocation = ->
     navigator.geolocation.getCurrentPosition success, error,
       {enableHighAccuracy: true,
       timeout: 60000,
-      maximumAge: 0}
+      maximumAge: 10}
   return
