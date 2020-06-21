@@ -7,9 +7,9 @@ success = (pos) ->
   $('#fibra_caixa_latitude').val crd.latitude
   $('#fibra_caixa_longitude').val crd.longitude
   console.log 'Your current position is:'
-  console.log 'Latitude : ${crd.latitude}'
-  console.log 'Longitude: ${crd.longitude}'
-  console.log 'More or less ${crd.accuracy} meters.'
+  console.log 'Latitude : #{crd.latitude}'
+  console.log 'Longitude: #{crd.longitude}'
+  console.log 'More or less #{crd.accuracy} meters.'
   return
 
 error = (err) ->
@@ -20,6 +20,6 @@ window.getLocation = ->
   if navigator.geolocation
     navigator.geolocation.getCurrentPosition success, error,
       {enableHighAccuracy: true,
-      timeout: 5000,
+      timeout: 60000,
       maximumAge: 0}
   return

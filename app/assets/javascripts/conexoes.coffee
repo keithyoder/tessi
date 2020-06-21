@@ -20,6 +20,6 @@ window.getConexaoLocation = ->
   if navigator.geolocation
     navigator.geolocation.getCurrentPosition success, error,
       {enableHighAccuracy: true,
-      timeout: 5000,
+      timeout: 60000,
       maximumAge: 0}
   return
