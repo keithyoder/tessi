@@ -60,4 +60,14 @@ class Ponto < ApplicationRecord
       result
     end
   end
+
+  def google_maps_pins
+    result = 'markers=color:blue%7Clabel:C'
+    conexoes.each do |cnx|
+      if cnx.latitude.present?
+        result += cnx.latitude + ',' + cnx.longitude
+      end 
+    end
+    return result
+  end
 end
