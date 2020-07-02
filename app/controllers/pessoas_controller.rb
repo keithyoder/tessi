@@ -6,7 +6,7 @@ class PessoasController < ApplicationController
   # GET /pessoas
   # GET /pessoas.json
   def index
-    @q = Pessoa.ransack(params[:q])
+    @q = Pessoa.includes(:logradouro, :bairro, :cidade, :estado).ransack(params[:q])
     @q.sorts = "nome"
     @pessoas = @q.result.page params[:page]
   end
