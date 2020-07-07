@@ -9,6 +9,7 @@
             <th>Nome</th>
             <th>Bairro</th>
             <th>CEP</th>
+            <th>Assinantes</th>
           </tr>
         </thead>
         <tbody>
@@ -17,6 +18,7 @@
               <td><%= link_to logradouro.nome, logradouro %></td>
               <td><%= logradouro.bairro.nome_cidade_uf %></td>
               <td><%= logradouro.cep %></td>
+              <td align=center><%= logradouro.assinantes.size() %></td>
             </tr>
           <% end %>
         </tbody>

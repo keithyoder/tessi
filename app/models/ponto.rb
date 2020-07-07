@@ -65,7 +65,7 @@ class Ponto < ApplicationRecord
     result = 'markers=color:blue%7Clabel:C'
     conexoes.each do |cnx|
       if cnx.latitude.present?
-        result += cnx.latitude.to_s + ',' + cnx.longitude.to_s
+        result += '|' + cnx.latitude.to_s + ',' + cnx.longitude.to_s
       end 
     end
     return result

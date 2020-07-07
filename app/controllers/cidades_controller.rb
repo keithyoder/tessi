@@ -29,6 +29,7 @@ class CidadesController < ApplicationController
     @q = @cidade.bairros.ransack(params[:q])
     @q.sorts = "nome"
     @bairros = @q.result.page params[:page]
+    @logradouros = @cidade.logradouros.page params[:page]
   end
 
   # GET /cidades/new

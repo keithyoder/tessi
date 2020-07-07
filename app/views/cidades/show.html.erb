@@ -8,5 +8,24 @@
       <%= render 'shared/field_card', {campo: "IBGE", valor: @cidade.ibge} %>
     </div>
   </div>
-  <%= render 'bairros/table', bairros: @bairros %>
+</div>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#bairros">Bairros</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#conexoes">Logradouros</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade show <%= params[:tab] == "bairros" ? "": "show active" %>" id="bairros"
+    role="tabpanel" aria-labelledby="bairros-tab">
+    <div class="card">
+      <%= render 'bairros/table', bairros: @bairros %>
+    </div>
+  </div>
+  <div class="tab-pane fade <%= params[:tab] == "logradouros" ? "show active": "" %>" id="logradouros"
+    role="tabpanel" aria-labelledby="logradouros-tab">
+    <%= render 'logradouros/table' %>
+  </div>
 </div>
