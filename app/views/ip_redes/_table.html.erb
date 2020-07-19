@@ -1,0 +1,25 @@
+<div class="card">
+  <% params = defined?(params) ? params : {} %>
+  <%= render '/shared/table_header', {object: @ip_redes, search_string: :rede, params: params, titulo: "Redes IP"} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Ponto de Acesso</th>
+            <th>Rede</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @ip_redes.each do |rede| %>
+            <tr>
+              <td><%= link_to rede.ponto.nome, rede.ponto %></td>
+              <td><%= link_to rede.cidr, edit_ip_rede_path(rede) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate @ip_redes %>
+  </div>
+</div>

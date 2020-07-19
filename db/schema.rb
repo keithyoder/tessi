@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_07_134734) do
+ActiveRecord::Schema.define(version: 2020_07_19_140359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,14 @@ ActiveRecord::Schema.define(version: 2020_06_07_134734) do
     t.datetime "updated_at", null: false
     t.integer "fibra_cor"
     t.index ["ponto_id"], name: "index_fibra_redes_on_ponto_id"
+  end
+
+  create_table "ip_redes", force: :cascade do |t|
+    t.inet "rede"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "ponto_id"
+    t.index ["ponto_id"], name: "index_ip_redes_on_ponto_id"
   end
 
   create_table "logradouros", force: :cascade do |t|

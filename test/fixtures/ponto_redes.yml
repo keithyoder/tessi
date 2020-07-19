@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ponto: one
+  ip_rede: one
+
+two:
+  ponto: two
+  ip_rede: two

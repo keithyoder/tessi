@@ -3,6 +3,7 @@ require 'snmp'
 class Ponto < ApplicationRecord
   belongs_to :servidor
   has_many :conexoes
+  has_many :ip_redes
   has_many :redes, :class_name => "FibraRede"
   has_many :caixas, :through => :redes, :source => :fibra_caixas
   has_many :autenticacoes, :through => :conexoes, :source => :autenticacoes

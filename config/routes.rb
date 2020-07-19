@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :ip_redes
   resources :nf21_itens
   resources :nf21s
   resources :fibra_caixas
