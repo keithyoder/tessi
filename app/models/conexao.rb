@@ -26,11 +26,11 @@ class Conexao < ApplicationRecord
   scope :ate_34M, -> { joins(:plano).where("planos.download BETWEEN 12.01 AND 34")}
   scope :acima_34M, -> { joins(:plano).where("planos.download > 34")}
   enum tipo: {:Cobranca => 1, :Cortesia => 2, :Outro_3 => 3, :Outro_4 => 4, :Outros => 5}
+  scope :rede_ip, ->(rede) { where("ip::inet << ?::inet", rede)}
 
   validates_format_of :mac, :with =>
     /\A([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}\z/i,
-    :on => :create,
-    :on => :update,
+    :on => [:create,:update],
     :message => "Endereço MAC inválido"
 
   after_touch :save

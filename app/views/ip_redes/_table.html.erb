@@ -8,6 +8,7 @@
           <tr>
             <th>Ponto de Acesso</th>
             <th>Rede</th>
+            <th>IPs Ocupados</th>
           </tr>
         </thead>
         <tbody>
@@ -15,6 +16,7 @@
             <tr>
               <td><%= link_to rede.ponto.nome, rede.ponto %></td>
               <td><%= link_to rede.cidr, edit_ip_rede_path(rede) %></td>
+              <td><%= "#{rede.conexoes.count}/#{rede.ips_disponiveis}" %></td>
             </tr>
           <% end %>
         </tbody>
