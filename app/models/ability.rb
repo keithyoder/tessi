@@ -45,7 +45,7 @@ class Ability
         can [:update], [FibraCaixa]
       elsif user.tecnico_n2?
         can :update, [Cidade, Ponto]
-        can [:create, :update], [FibraRede, FibraCaixa]
+        can [:create, :update], [FibraRede, FibraCaixa, IpRede]
         can [:backup, :backups], Servidor
       elsif user.financeiro_n1?
         can [:update, :liquidacao], Fatura
