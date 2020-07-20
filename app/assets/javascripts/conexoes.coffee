@@ -23,3 +23,20 @@ window.getConexaoLocation = ->
       timeout: 60000,
       maximumAge: 0}
   return
+
+window.carregarIPs = ->
+  ponto = $("#conexao_ponto_id").val()
+  $.ajax
+    url: "/pontos/#{ponto}.json?ips"
+    method: 'GET'
+    dataType: 'json'
+    error: (xhr, status, error) ->
+      console.error 'AJAX Error: ' + status + error
+      return
+    success: (response) ->
+      ips = response
+      $("#conexao_ip").empty()
+      for ip in ips
+        $("#conexao_ip").append("<option>#{ip}</option>")
+      return
+  return

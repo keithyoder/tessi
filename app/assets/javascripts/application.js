@@ -17,7 +17,6 @@
 //= require jquery-ui
 //= require popper
 //= require bootstrap-sprockets
-//= require autocomplete-rails
 //= require chartkick
 //= require Chart.bundle
 //= require bootstrap-datepicker

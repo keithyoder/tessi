@@ -71,4 +71,20 @@ class Ponto < ApplicationRecord
     end
     return result
   end
+
+  def lista_ips
+    ips = []
+    ip_redes.each do |rede|
+      ips += rede.to_a
+    end
+    ips
+  end
+
+  def ips_disponiveis
+    ips = []
+    ip_redes.each do |rede|
+      ips += rede.ips_disponiveis
+    end
+    ips
+  end
 end

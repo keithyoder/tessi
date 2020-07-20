@@ -25,11 +25,21 @@ class PontosController < ApplicationController
   # GET /pontos/1
   # GET /pontos/1.json
   def show
-    @ponto = Ponto.find(params[:id])
     @q = @ponto.conexoes.ransack(params[:q])
     @q.sorts = "ip"
     @conexoes = @q.result.page params[:page]
     @autenticacoes = @ponto.autenticacoes
+    if params.has_key?(:ips)
+      @ips = @ponto.ips_disponiveis
+    end
+    respond_to do |format|
+      format.html # show.html.erb
+      if params.has_key?(:ips)
+        format.json { render json: @ips }
+      else
+        format.json
+      end
+    end
   end
 
   # GET /pontos/new

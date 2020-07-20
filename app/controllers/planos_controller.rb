@@ -1,5 +1,5 @@
 class PlanosController < ApplicationController
-  before_action :set_plano, only: [:show, :edit, :update, :destroy]
+  before_action :set_plano, only: [:show, :edit, :update, :destroy, :ips]
   load_and_authorize_resource
 
   # GET /planos
@@ -12,15 +12,13 @@ class PlanosController < ApplicationController
       format.html
       format.csv { send_data @planos.except(:limit, :offset).to_csv, filename: "planos-#{Date.today}.csv" }
     end
-
  end
 
   # GET /planos/1
   # GET /planos/1.json
   def show
-    @planos = Plano.find(params[:id])
-    @plano_verificar_atributos = @planos.plano_verificar_atributos
-    @plano_enviar_atributos = @planos.plano_enviar_atributos
+    @plano_verificar_atributos = @plano.plano_verificar_atributos
+    @plano_enviar_atributos = @plano.plano_enviar_atributos
   end
 
   # GET /planos/new
