@@ -57,9 +57,9 @@ GEM
     arel (9.0.0)
     autoprefixer-rails (9.8.5)
       execjs
-    bcrypt (3.1.13)
+    bcrypt (3.1.15)
     bindex (0.8.1)
-    bootsnap (1.4.6)
+    bootsnap (1.4.7)
       msgpack (~> 1.0)
     bootstrap (4.5.0)
       autoprefixer-rails (>= 9.1.0)
@@ -99,7 +99,12 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
-    chartkick (3.3.1)
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
+    celluloid-io (0.16.2)
+      celluloid (>= 0.16.0)
+      nio4r (>= 1.1.0)
+    chartkick (3.3.2)
     childprocess (3.0.0)
     chromedriver-helper (2.1.1)
       archive-zip (~> 0.10)
@@ -148,7 +153,8 @@ GEM
       activemodel (>= 4.2.1)
       faraday (>= 0.8, < 1.0)
       multi_json (~> 1.7)
-    i18n (1.8.3)
+    hitimes (2.0.0)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     image_processing (1.11.0)
       mini_magick (>= 4.9.5, < 5)
@@ -288,6 +294,9 @@ GEM
     rghost_barcode (0.9)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
+    ruby_ami (3.0.0)
+      celluloid (~> 0.16.0)
+      celluloid-io (~> 0.13)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
     sass (3.7.4)
@@ -312,7 +321,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    sidekiq (6.1.0)
+    sidekiq (6.1.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
@@ -340,6 +349,8 @@ GEM
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    timers (4.0.4)
+      hitimes
     ttfunk (1.6.2.1)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
@@ -406,6 +417,7 @@ DEPENDENCIES
   rails-settings-cached (~> 2.0)
   rails4-autocomplete
   ransack
+  ruby_ami
   sass-rails (~> 5.0)
   selenium-webdriver
   sidekiq
