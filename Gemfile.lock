@@ -299,6 +299,8 @@ GEM
       celluloid-io (~> 0.13)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
+    rufus-scheduler (3.6.0)
+      fugit (~> 1.1, >= 1.1.6)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -418,6 +420,7 @@ DEPENDENCIES
   rails4-autocomplete
   ransack
   ruby_ami
+  rufus-scheduler
   sass-rails (~> 5.0)
   selenium-webdriver
   sidekiq

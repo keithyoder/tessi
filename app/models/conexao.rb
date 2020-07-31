@@ -63,6 +63,14 @@ class Conexao < ApplicationRecord
       atr.save
     end
 
+    ConexaoEnviarAtributo.where(conexao: self, atributo: 'Mikrotik-Rate-Limit').destroy_all
+    if velocidade.present?
+      atr = ConexaoEnviarAtributo.where(conexao: self, atributo: 'Mikrotik-Rate-Limit').first_or_create
+      atr.op = '='
+      atr.valor = velocidade
+      atr.save
+    end
+
   end
 
   after_update do
