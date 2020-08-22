@@ -33,7 +33,7 @@
     </div>
     <div class="row">
       <div class="col-4">
-        <%= f.input :mac %>
+        <%= f.input :mac, input_html: {onkeyup: 'formatMAC()'} %>
       </div>
       <div class="col">
         <%= f.input :velocidade %>

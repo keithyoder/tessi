@@ -37,7 +37,7 @@
       <div class="card col-lg">
         <%= link_to "http://maps.google.com/maps?#{@ponto.google_maps_pins}&z=18", target: "_blank" do %>
           <p align=center>
-          <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=1000x400&#{@ponto.google_maps_pins}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map" %>
+          <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?maptype=hybrid&size=1200x400&#{@ponto.google_maps_pins}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map" %>
           </p>
         <% end %>
       </div>

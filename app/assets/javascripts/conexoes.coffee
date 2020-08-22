@@ -40,3 +40,13 @@ window.carregarIPs = ->
         $("#conexao_ip").append("<option>#{ip}</option>")
       return
   return
+
+window.formatMAC = ->
+  v = $("#conexao_mac").val().toUpperCase()
+  last = v.substring(v.lastIndexOf(':') + 1, v.length)
+  if last.length >= 2
+    v = v + ':'
+  if v.length > 17
+    v = v.substring(0, 17)
+  $("#conexao_mac").val(v)
+  return
