@@ -1,0 +1,171 @@
+nav#sidebar.sidebar-wrapper
+  .sidebar-content
+    /! sidebar-brand
+    .sidebar-item.sidebar-brand
+      a href="#"  Tessi Telecom
+    /! sidebar-header
+    .sidebar-item.sidebar-header.d-flex.flex-nowrap
+      .user-info
+        span.user-name
+          = current_user.present? ? current_user.email : ''
+        span.user-status
+          i.fa.fa-circle
+          span Online
+    /! sidebar-menu
+    .sidebar-item.sidebar-menu
+      ul
+        li.header-menu
+          span Geral
+        li.sidebar-dropdown
+          = link_to 'javascript:;' do
+            i.fa.fa-user
+            span.menu-text Assinantes
+          .sidebar-submenu
+            ul
+              li
+                = link_to('Pessoas', pessoas_path)
+              li
+                a href="#"  Inadimplentes
+              li
+                a href="#"  Suspensos
+        li.sidebar-dropdown
+          = link_to 'javascript:;' do
+            i.fa.fa-dollar-sign
+            span.menu-text Financeiro
+            span.badge.badge-pill.badge-danger 3
+          .sidebar-submenu
+            ul
+              li
+                a href="#" 
+                  | Products
+              li
+                a href="#"  Orders
+              li
+                a href="#"  Credit cart
+        li.sidebar-dropdown
+          = link_to 'javascript:;' do
+            i.fas.fa-ethernet
+            span.menu-text Técnico
+          .sidebar-submenu
+            ul
+              li
+                = link_to('Conexões', conexoes_path)
+              li
+                = link_to('Concentradores', servidores_path)
+              li
+                = link_to('Fibra', fibra_redes_path)
+              li
+                = link_to('IPs', ip_redes_path)
+        li.sidebar-dropdown
+          = link_to 'javascript:;' do
+            i.fa.fa-cogs
+            span.menu-text Configurações
+          .sidebar-submenu
+            ul
+              li
+                = link_to('Estados', estados_path)
+              li
+                = link_to('Planos', planos_path)
+              li
+                a href="#"  Bar chart
+              li
+                a href="#"  Histogram
+    /! sidebar-menu
+  /! sidebar-footer
+  .sidebar-footer
+    .dropdown
+      a aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" 
+        i.fa.fa-bell
+        span.badge.badge-pill.badge-warning.notification 3
+      .dropdown-menu.notifications aria-labelledby="dropdownMenuMessage" 
+        .notifications-header
+          i.fa.fa-bell
+          | Notifications
+        .dropdown-divider
+        a.dropdown-item href="#" 
+        .notification-content
+          .icon
+            i.fas.fa-check.text-success.border.border-success
+          .content
+            .notification-detail
+              | Lorem ipsum dolor sit amet consectetur adipisicing
+              | elit. In totam explicabo
+            .notification-time
+              | 6 minutes ago
+        a.dropdown-item href="#" 
+        .notification-content
+          .icon
+            i.fas.fa-exclamation.text-info.border.border-info
+          .content
+            .notification-detail
+              | Lorem ipsum dolor sit amet consectetur adipisicing
+              | elit. In totam explicabo
+            .notification-time
+              | Today
+        a.dropdown-item href="#" 
+        .notification-content
+          .icon
+            i.fas.fa-exclamation-triangle.text-warning.border.border-warning
+          .content
+            .notification-detail
+              | Lorem ipsum dolor sit amet consectetur adipisicing
+              | elit. In totam explicabo
+            .notification-time
+              | Yesterday
+        .dropdown-divider
+        a.dropdown-item.text-center href="#"  View all notifications
+    .dropdown
+      a aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" 
+        i.fa.fa-envelope
+        span.badge.badge-pill.badge-success.notification 7
+      .dropdown-menu.messages aria-labelledby="dropdownMenuMessage" 
+        .messages-header
+          i.fa.fa-envelope
+          | Messages
+        .dropdown-divider
+        a.dropdown-item href="#" 
+        .message-content
+          .pic
+            img alt="" src="img/user.jpg" /
+          .content
+            .message-title
+              strong Jhon doe
+            .message-detail
+              | Lorem ipsum dolor sit amet consectetur adipisicing
+              | elit. In totam explicabo
+        a.dropdown-item href="#" 
+        .message-content
+          .pic
+            img alt="" src="img/user.jpg" /
+          .content
+            .message-title
+              strong Jhon doe
+            .message-detail
+              | Lorem ipsum dolor sit amet consectetur adipisicing
+              | elit. In totam explicabo
+        a.dropdown-item href="#" 
+        .message-content
+          .pic
+            img alt="" src="img/user.jpg" /
+          .content
+            .message-title
+              strong Jhon doe
+            .message-detail
+              | Lorem ipsum dolor sit amet consectetur adipisicing
+              | elit. In totam explicabo
+        .dropdown-divider
+        a.dropdown-item.text-center href="#"  View all messages
+    .dropdown
+      a aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" 
+        i.fa.fa-cog
+        span.badge-sonar
+      .dropdown-menu aria-labelledby="dropdownMenuMessage" 
+        a.dropdown-item href="#"  My profile
+        a.dropdown-item href="#"  Help
+        a.dropdown-item href="#"  Setting
+    div
+      a href="#" 
+        i.fa.fa-power-off
+    .pinned-footer
+      a href="#" 
+        i.fas.fa-ellipsis-h

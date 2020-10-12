@@ -10,15 +10,9 @@
   </head>
 
   <body>
-    <%= render partial: 'shared/header' %>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="d-print-none col-sm-2 col-md-1 sidebar">
-          <%= render partial: 'shared/navigation' %>
-        </div>
-        <div class="d-print-none col-sm-2 col-md-1 main">
-        </div>
-        <div class="col-sm-9 sm-offset-3 col-md-10 md-offset-2 main">
+    <div class="page-wrapper light-theme sidebar toggled">
+      <%= render partial: 'shared/navigation' %>
+      <main class="page-content pt-2">
           <% if notice %>
             <p class="alert alert-success"><%= notice %></p>
           <% end %>
@@ -26,9 +20,7 @@
             <p class="alert alert-danger"><%= alert %></p>
           <% end %>
           <%= yield %>
-        </div>
-      </div>
+      </main>
     </div>
-    <%= render partial: 'shared/footer' %>
   </body>
 </html>
