@@ -36,10 +36,9 @@ nav#sidebar.sidebar-wrapper
           .sidebar-submenu
             ul
               li
-                a href="#" 
-                  | Products
+                = link_to('Retorno Bancário', retornos_path)
               li
-                a href="#"  Orders
+                = link_to('Liquidações', liquidacoes_path)
               li
                 a href="#"  Credit cart
         li.sidebar-dropdown
@@ -52,6 +51,8 @@ nav#sidebar.sidebar-wrapper
                 = link_to('Conexões', conexoes_path)
               li
                 = link_to('Concentradores', servidores_path)
+              li
+                = link_to('Pontos de Acesso', pontos_path)
               li
                 = link_to('Fibra', fibra_redes_path)
               li
@@ -125,8 +126,6 @@ nav#sidebar.sidebar-wrapper
         .dropdown-divider
         a.dropdown-item href="#" 
         .message-content
-          .pic
-            img alt="" src="img/user.jpg" /
           .content
             .message-title
               strong Jhon doe
@@ -135,8 +134,6 @@ nav#sidebar.sidebar-wrapper
               | elit. In totam explicabo
         a.dropdown-item href="#" 
         .message-content
-          .pic
-            img alt="" src="img/user.jpg" /
           .content
             .message-title
               strong Jhon doe
@@ -145,8 +142,6 @@ nav#sidebar.sidebar-wrapper
               | elit. In totam explicabo
         a.dropdown-item href="#" 
         .message-content
-          .pic
-            img alt="" src="img/user.jpg" /
           .content
             .message-title
               strong Jhon doe

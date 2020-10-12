@@ -14,7 +14,7 @@ class Servidor < ApplicationRecord
       csv << attributes
 
       all.each do |servidor|
-        csv << attributes.map{ |attr| servidor.send(attr) }
+        csv << attributes.map { |attr| servidor.send(attr) }
       end
     end
   end
