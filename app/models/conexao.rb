@@ -72,7 +72,7 @@ class Conexao < ApplicationRecord
     end
   end
 
-  after_update do
+  after_commit do
     if saved_change_to_plano_id? ||
        saved_change_to_bloqueado? ||
        saved_change_to_inadimplente?
@@ -107,7 +107,7 @@ class Conexao < ApplicationRecord
   end
 
   def desconectar_hotspot
-    return unless ponto.tecnologia == :Radio
+    return unless ponto.tecnologia == 'Radio'
 
     servidor.desconectar_hotspot(usuario)
   end

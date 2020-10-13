@@ -6,13 +6,13 @@ class ConexoesController < ApplicationController
   # GET /conexoes.json
   def index
     @q = Conexao.ransack(params[:q])
-    @q.sorts = "pessoa_nome"
+    @q.sorts = 'pessoa_nome'
     @conexoes = @q.result.page params[:page]
   end
 
   def suspenso
     @q = Conexao.bloqueado.ransack(params[:q])
-    @q.sorts = "ponto_id"
+    @q.sorts = 'ponto_id'
     @conexoes = @q.result.page params[:page]
     respond_to do |format|
       format.html
@@ -58,7 +58,7 @@ class ConexoesController < ApplicationController
     get_caixas
     respond_to do |format|
       if @conexao.save
-        format.html { redirect_to @conexao, notice: "Conexao was successfully created." }
+        format.html { redirect_to @conexao, notice: 'Conexão criada com sucesso.' }
         format.json { render :show, status: :created, location: @conexao }
       else
         format.html { render :new }
@@ -73,7 +73,7 @@ class ConexoesController < ApplicationController
     get_caixas
     respond_to do |format|
       if @conexao.update(conexao_params)
-        format.html { redirect_to @conexao, notice: "Conexao was successfully updated." }
+        format.html { redirect_to @conexao, notice: 'Conexão atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @conexao }
       else
         format.html { render :edit }
@@ -100,13 +100,17 @@ class ConexoesController < ApplicationController
   end
 
   def get_caixas
-    @caixas = @conexao.ponto.caixas.joins(:fibra_rede, :ponto).order("pontos.nome, fibra_caixas.nome").all
+    @caixas = @conexao.ponto.caixas
+                      .joins(:fibra_rede, :ponto)
+                      .order('pontos.nome, fibra_caixas.nome').all
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def conexao_params
-    params.require(:conexao).permit(:pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
-                                    :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente,
-                                    :tipo, :mac, :contrato_id, :caixa_id, :porta, :latitude, :longitude)
+    params.require(:conexao).permit(
+      :pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
+      :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente,
+      :tipo, :mac, :contrato_id, :caixa_id, :porta, :latitude, :longitude
+    )
   end
 end
