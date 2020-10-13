@@ -1,6 +1,6 @@
 class Servidor < ApplicationRecord
   require 'csv'
-  require 'open-uri'
+  require 'cgi'
   has_many :pontos
   has_many :conexoes, through: :pontos
   has_many :autenticacoes, through: :pontos
@@ -30,6 +30,11 @@ class Servidor < ApplicationRecord
       unencrypted_plaintext: true,
       command: command
     )
+  end
+
+  def desconectar_hotspot(usuario)
+    id = mk_command(['/ip/hotspot/active/print', "?user=#{usuario}"])[0][0]['.id']
+    mk_command(['/ip/hotspot/active/remove', "=.id=#{id}"])
   end
 
   def ppp_users
@@ -69,9 +74,9 @@ class Servidor < ApplicationRecord
   end
 
   def copiar_backup
-    login = URI.escape(usuario) + ':' + URI.escape(senha)
-    filename = URI.escape(nome)
-    fi = open("ftp://#{login}@#{ip.to_s}/#{filename}-backup.rsc")
+    login = CGI.escape(usuario) + ':' + CGI.escape(senha)
+    filename = CGI.escape(nome)
+    fi = open("ftp://#{login}@#{ip}/#{filename}-backup.rsc")
     backup.attach(io: fi, filename: "#{nome}-backup.rsc")
   end
 

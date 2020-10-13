@@ -1,6 +1,7 @@
-require 'digest'
+# frozen_string_literal: true
 
 class Fatura < ApplicationRecord
+  require 'digest'
   include ActionView::Helpers::NumberHelper
   belongs_to :contrato
   belongs_to :pagamento_perfil
@@ -16,19 +17,32 @@ class Fatura < ApplicationRecord
   has_many :nf21
   has_one_attached :nf_pdf
   paginates_per 18
-  scope :inadimplentes, -> { where("liquidacao is null and vencimento < ?", 5.days.ago) }
-  scope :suspensos, -> { where("liquidacao is null and vencimento < ?", 15.days.ago) }
-  enum meio_liquidacao: { :RetornoBancario => 1, :Dinheiro => 2, :Cheque => 3, :CartaoCredito => 4, :Outros => 5 }
+  scope :inadimplentes, lambda {
+    where('liquidacao is null and vencimento < ?', 5.days.ago)
+  }
+  scope :suspensos, lambda {
+    where('liquidacao is null and vencimento < ?', 15.days.ago)
+  }
+  enum meio_liquidacao: {
+    RetornoBancario: 1,
+    Dinheiro: 2,
+    Cheque: 3, 
+    CartaoCredito: 4,
+    Outros: 5
+  }
 
   after_update do
     if saved_change_to_liquidacao?
-      contrato.conexoes.update_all inadimplente: contrato.faturas_em_atraso(5) > 0
-      contrato.conexoes.update_all bloqueado: contrato.faturas_em_atraso(15) > 0
+      contrato.conexoes.update_all(
+        inadimplente: contrato.faturas_em_atraso(5).positive?,
+        bloqueado: contrato.faturas_em_atraso(15).positive?
+      )
     end
   end
 
   def remessa
-    Brcobranca::Remessa::Pagamento.new(valor: valor,
+    Brcobranca::Remessa::Pagamento.new(
+      valor: valor,
       data_vencimento: vencimento,
       nosso_numero: nossonumero,
       documento_sacado: pessoa.cpf_cnpj,
@@ -39,40 +53,39 @@ class Fatura < ApplicationRecord
       cidade_sacado: cidade.nome,
       uf_sacado: estado.sigla,
       valor_desconto: plano.desconto,
-      data_desconto: vencimento)
+      data_desconto: vencimento
+    )
   end
 
   def boleto
     info = {
-      :convenio => pagamento_perfil.cedente,
-      :cedente => Setting.razao_social,
-      :documento_cedente => Setting.cnpj,
-      :sacado => pessoa.nome,
-      :sacado_documento => pessoa.cpf_cnpj,
-      :valor => valor,
-      :agencia => pagamento_perfil.agencia,
-      :conta_corrente => pagamento_perfil.conta,
-      :carteira => pagamento_perfil.carteira,
-      :variacao => 'COB',
-      :especie_documento => 'DS',
-      :nosso_numero => nossonumero,
-      :data_vencimento => vencimento,
-      :instrucao1 => "Desconto de #{number_to_currency(contrato.plano.desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
-      :instrucao2 => "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
-      :instrucao3 => "Período de referência: #{I18n.l(periodo_inicio)} - #{I18n.l(periodo_fim)}",
-      :instrucao4 => "Após o vencimento cobrar multa de #{Setting.multa.to_f*100}% e juros de #{Setting.juros.to_f*100}% ao mês (pro rata die)",
-      :instrucao5 => "S.A.C #{Setting.telefone} - sac.tessi.com.br",
-      :instrucao6 => "Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.",
-      :sacado_endereco => pessoa.endereco + ' - ' + pessoa.bairro.nome_cidade_uf,
-      :cedente_endereco => "Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000"
+      convenio: pagamento_perfil.cedente,
+      cedente: Setting.razao_social,
+      documento_cedente: Setting.cnpj,
+      sacado: pessoa.nome,
+      sacado_documento: pessoa.cpf_cnpj,
+      valor: valor,
+      agencia: pagamento_perfil.agencia,
+      conta_corrente: pagamento_perfil.conta,
+      carteira: pagamento_perfil.carteira,
+      variacao: 'COB',
+      especie_documento: 'DS',
+      nosso_numero: nossonumero,
+      data_vencimento: vencimento,
+      instrucao1: "Desconto de #{number_to_currency(contrato.plano.desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
+      instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
+      instrucao3: "Período de referência: #{I18n.l(periodo_inicio)} - #{I18n.l(periodo_fim)}",
+      instrucao4: "Após o vencimento cobrar multa de #{Setting.multa.to_f*100}% e juros de #{Setting.juros.to_f*100}% ao mês (pro rata die)",
+      instrucao5: "S.A.C #{Setting.telefone} - sac.tessi.com.br",
+      instrucao6: 'Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.',
+      sacado_endereco: pessoa.endereco + ' - ' + pessoa.bairro.nome_cidade_uf,
+      cedente_endereco: 'Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000'
     }
     case pagamento_perfil.banco
     when 33
       Brcobranca::Boleto::Santander.new(info)
     when 1
       Brcobranca::Boleto::BancoBrasil.new(info)
-    else
-      nil
     end
   end
 
@@ -89,25 +102,22 @@ class Fatura < ApplicationRecord
   end
 
   def cfop
-    if pessoa.cidade.estado.sigla == 'PE'
-      if pessoa.ie.present?
-        5303
-      else
-        5307
-      end
+    cfop = if pessoa.cidade.estado.sigla == 'PE'
+             5300
+           else
+             6300
+           end
+    if pessoa.ie.present?
+      cfop + 3
     else
-      if pessoa.ie.present?
-        6303
-      else
-        6307
-      end
+      cfop + 7
     end
   end
 
   def nf_hash
-    cnpj = pessoa.cpf_cnpj.rjust(14, "0")
+    cnpj = pessoa.cpf_cnpj.rjust(14, '0')
     nf = nf21.first.numero.to_s.rjust(9, '0')
-    valor = (base_calculo_icms*100).to_i.to_s.rjust(12, "0")
+    valor = (base_calculo_icms * 100).to_i.to_s.rjust(12, '0')
     icms = valor
     icms_valor = '000000000000'
     md5 = Digest::MD5.new
@@ -115,10 +125,10 @@ class Fatura < ApplicationRecord
   end
 
   def gerar_nota
-    if nf21.count == 0
-      next_nf = (Nf21.maximum(:numero).presence || 0) + 1
-      nf = Nf21.create(fatura_id: id, emissao: liquidacao, numero: next_nf)
-      nf.gerar_registros()
-    end
+    return unless nf21.count.zero?
+
+    next_nf = (Nf21.maximum(:numero).presence || 0) + 1
+    nf = Nf21.create(fatura_id: id, emissao: liquidacao, numero: next_nf)
+    nf.gerar_registros
   end
 end

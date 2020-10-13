@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 class Cidade < ApplicationRecord
@@ -7,18 +9,20 @@ class Cidade < ApplicationRecord
   has_many :pessoas, through: :logradouros
   has_many :conexoes, through: :pessoas
   has_many :pontos, through: :conexoes
-  scope :assinantes, -> { select('cidades.*, pontos.tecnologia').joins(:conexoes, :pontos).distinct }
+  scope :assinantes, lambda {
+    select('cidades.*, pontos.tecnologia').joins(:conexoes, :pontos).distinct
+  }
 
   def titulo
-    "Cidade"
+    'Cidade'
   end
 
   def search
-    "nome_cont"
+    'nome_cont'
   end
 
   def self.to_csv
-    attributes = %w{id nome estado ibge}
+    attributes = %w[id nome estado ibge]
     CSV.generate(headers: true) do |csv|
       csv << attributes
 
@@ -29,12 +33,12 @@ class Cidade < ApplicationRecord
   end
 
   def nome_uf
-    self.nome + " - " + self.estado.sigla
+    nome + ' - ' + estado.sigla
   end
 
   def quantas_conexoes(tipo, velocidade)
-    collection = self.conexoes.ativo
-    case self.tecnologia
+    collection = conexoes.ativo
+    case tecnologia
     when 1
       collection = collection.radio
     when 2
@@ -42,9 +46,9 @@ class Cidade < ApplicationRecord
     end
 
     case tipo
-    when "Pessoa Física"
+    when 'Pessoa Física'
       collection = collection.pessoa_fisica
-    when "Pessoa Jurídica"
+    when 'Pessoa Jurídica'
       collection = collection.pessoa_juridica
     end
     case velocidade
@@ -63,5 +67,4 @@ class Cidade < ApplicationRecord
     end
     collection.count
   end
-
 end
