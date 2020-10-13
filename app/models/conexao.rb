@@ -107,7 +107,7 @@ class Conexao < ApplicationRecord
   end
 
   def desconectar_hotspot
-    return unless tecnologia == :Radio
+    return unless ponto.tecnologia == :Radio
 
     servidor.desconectar_hotspot(usuario)
   end
