@@ -45,15 +45,15 @@ class Conexao < ApplicationRecord
     if usuario.present? && senha.present?
       ConexaoVerificarAtributo
         .where(conexao: self, atributo: RADIUS_SENHA)
-        .first_or_create(op: ':=', valor: senha)
+        .first_or_create!(op: ':=', valor: senha)
     end
 
     if ponto.tecnologia == 'Radio'
       ConexaoVerificarAtributo.where(conexao: self, atributo: 'Calling-Station-Id').destroy_all
       conexao_verificar_atributos.where(atributo: RADIUS_PPPOE_IP).destroy_all
-      ConexaoVerificarAtributo
-        .where(conexao: self, atributo: RADIUS_HOTSPOT_IP)
-        .first_or_create(op: '==', valor: ip.to_s)
+      conexao_verificar_atributos
+        .where(atributo: RADIUS_HOTSPOT_IP)
+        .first_or_create!(op: '==', valor: ip.to_s)
     elsif ponto.tecnologia == 'Fibra'
       conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).destroy_all
       atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Calling-Station-Id').first_or_create
@@ -62,13 +62,13 @@ class Conexao < ApplicationRecord
       atr.save
       ConexaoEnviarAtributo
         .where(conexao: self, atributo: RADIUS_PPPOE_IP)
-        .first_or_create(op: ':=', valor: ip.to_s)
+        .first_or_create!(op: ':=', valor: ip.to_s)
     end
 
     conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).destroy_all
     if velocidade.present?
       conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT)
-                              .first_or_create(op: '=', valor: velocidade)
+                              .first_or_create!(op: '=', valor: velocidade)
     end
   end
 
