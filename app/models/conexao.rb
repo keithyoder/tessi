@@ -43,32 +43,27 @@ class Conexao < ApplicationRecord
   after_touch :save
   after_save do
     if usuario.present? && senha.present?
-      ConexaoVerificarAtributo
-        .where(conexao: self, atributo: RADIUS_SENHA)
-        .first_or_create!(op: ':=', valor: senha)
+      atr = conexao_verificar_atributos.where(atributo: RADIUS_SENHA).first_or_create
+      atr.update!(op: ':=', valor: senha)
     end
 
     if ponto.tecnologia == 'Radio'
-      ConexaoVerificarAtributo.where(conexao: self, atributo: 'Calling-Station-Id').destroy_all
+      conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').destroy_all
       conexao_verificar_atributos.where(atributo: RADIUS_PPPOE_IP).destroy_all
-      conexao_verificar_atributos
-        .where(atributo: RADIUS_HOTSPOT_IP)
-        .first_or_create!(op: '==', valor: ip.to_s)
+      atr = conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).first_or_create
+      atr.update!(op: '==', valor: ip.to_s)
     elsif ponto.tecnologia == 'Fibra'
       conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).destroy_all
-      atr = ConexaoVerificarAtributo.where(conexao: self, atributo: 'Calling-Station-Id').first_or_create
-      atr.op = '=='
-      atr.valor = mac
-      atr.save
-      ConexaoEnviarAtributo
-        .where(conexao: self, atributo: RADIUS_PPPOE_IP)
-        .first_or_create!(op: ':=', valor: ip.to_s)
+      atr = conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').first_or_create
+      atr.update!(op: '==', valor: mac)
+      atr = conexao_enviar_atributos.where(atributo: RADIUS_PPPOE_IP).first_or_create
+      atr.update!(op: ':=', valor: ip.to_s)
     end
 
     conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).destroy_all
     if velocidade.present?
-      conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT)
-                              .first_or_create!(op: '=', valor: velocidade)
+      atr = conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).first_or_create
+      atr.update!(op: '=', valor: velocidade)
     end
   end
 
