@@ -71,7 +71,7 @@ class Conexao < ApplicationRecord
     if saved_change_to_plano_id? ||
        saved_change_to_bloqueado? ||
        saved_change_to_inadimplente?
-      desconectar_hotspot
+      desconectar
     end
   end
 
@@ -101,10 +101,12 @@ class Conexao < ApplicationRecord
     end
   end
 
-  def desconectar_hotspot
-    return unless ponto.tecnologia == 'Radio'
-
-    servidor.desconectar_hotspot(usuario)
+  def desconectar
+    if ponto.tecnologia == 'Radio'
+      servidor.desconectar_hotspot(usuario)
+    else
+      servidor.desconectar_pppoe(usuario)
+    end
   end
 
   def conectado

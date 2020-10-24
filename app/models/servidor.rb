@@ -33,8 +33,24 @@ class Servidor < ApplicationRecord
   end
 
   def desconectar_hotspot(usuario)
-    id = mk_command(['/ip/hotspot/active/print', "?user=#{usuario}"])[0][0]['.id']
+    id = mk_command(
+      [
+        '/ip/hotspot/active/print',
+        "?user=#{usuario}"
+      ]
+    )[0][0]['.id']
     mk_command(['/ip/hotspot/active/remove', "=.id=#{id}"])
+  end
+
+  def desconectar_pppoe(usuario)
+    id = mk_command(
+      [
+        '/ppp/active/print',
+        '=.proplist=.id',
+        "?name=#{usuario}"
+      ]
+    )[0][0]['.id']
+    mk_command(['/ppp/active/remove', "=.id=#{id}"])
   end
 
   def ppp_users
