@@ -11,14 +11,14 @@ class EstadosController < ApplicationController
       format.html
       format.csv { send_data @estados.except(:limit, :offset).to_csv, filename: "estados-#{Date.today}.csv" }
     end
-   end
+  end
 
   # GET /estados/1
   # GET /estados/1.json
   def show
     @estado=Estado.find(params[:id])
     @q = @estado.cidades.ransack(params[:q])
-    @q.sorts = "nome"
+    @q.sorts = 'nome'
     @cidades = @q.result.page params[:page]
   end
 

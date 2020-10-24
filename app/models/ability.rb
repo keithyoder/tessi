@@ -36,7 +36,8 @@ class Ability
         can :suspenso, Conexao
         can :boletos, Contrato
         can :boleto, Fatura
-        can [:create, :update], [Bairro, Logradouro, Conexao, Pessoa]
+        can %i[create update], [Bairro, Logradouro, Conexao, Pessoa]
+        can :create, Excecao
       end
       if user.admin?
         can :manage, :all

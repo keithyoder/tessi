@@ -11,13 +11,7 @@ class AtualizarConcentradoresEPontosJob < ApplicationJob
     #  rescue => exception  
     #  end
     #end
-    Ponto.Ubnt.each do | ponto |
-      begin
-        ponto.touch
-      rescue => exception
-        
-      end
-    end
+    Ponto.Ubnt.each(&:touch)
   end
 end
 

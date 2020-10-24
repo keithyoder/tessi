@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_140359) do
+ActiveRecord::Schema.define(version: 2020_10_24_135336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,16 @@ ActiveRecord::Schema.define(version: 2020_07_19_140359) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["nome"], name: "index_estados_on_nome", unique: true
+  end
+
+  create_table "excecoes", force: :cascade do |t|
+    t.bigint "contrato_id"
+    t.date "valido_ate"
+    t.integer "tipo"
+    t.string "usuario"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contrato_id"], name: "index_excecoes_on_contrato_id"
   end
 
   create_table "faturas", force: :cascade do |t|
@@ -411,6 +421,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_140359) do
 
   add_foreign_key "cidades", "estados"
   add_foreign_key "contratos", "pagamento_perfis"
+  add_foreign_key "excecoes", "contratos"
   add_foreign_key "faturas", "pagamento_perfis"
   add_foreign_key "faturas", "retornos", column: "baixa_id"
   add_foreign_key "faturas", "retornos", column: "registro_id"

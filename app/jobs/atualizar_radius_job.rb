@@ -2,9 +2,7 @@ class AtualizarRadiusJob < ApplicationJob
   queue_as :default
 
   def perform
-    Conexao.all.each do |conexao|
-      conexao.touch
-    end
+    Conexao.all.each(&:touch)
   end
 end
 
