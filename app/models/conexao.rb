@@ -49,7 +49,7 @@ class Conexao < ApplicationRecord
 
     if ponto.tecnologia == 'Radio'
       conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').destroy_all
-      conexao_verificar_atributos.where(atributo: RADIUS_PPPOE_IP).destroy_all
+      conexao_enviar_atributos.where(atributo: RADIUS_PPPOE_IP).destroy_all
       atr = conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).first_or_create
       atr.update!(op: '==', valor: ip.to_s)
     elsif ponto.tecnologia == 'Fibra'
