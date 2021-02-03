@@ -32,8 +32,10 @@ class Fatura < ApplicationRecord
   }
 
   after_update do
-    if saved_change_to_liquidacao?
-      contrato.conexoes.update_all(
+    return unless saved_change_to_liquidacao?
+    contrato.conexoes.each do |conexao|
+      next unless conexao.auto_bloqueio?
+      conexao.update!(
         inadimplente: contrato.faturas_em_atraso(5).positive?,
         bloqueado: contrato.faturas_em_atraso(15).positive?
       )
