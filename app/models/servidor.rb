@@ -22,14 +22,18 @@ class Servidor < ApplicationRecord
   def mk_command(command)
     return unless usuario.present? && senha.present?
 
-    MTik::command(
-      host: ip.to_s,
-      user: usuario,
-      pass: senha,
-      use_ssl: true,
-      unencrypted_plaintext: true,
-      command: command
-    )
+    begin
+      MTik.command(
+        host: ip.to_s,
+        user: usuario,
+        pass: senha,
+        use_ssl: true,
+        unencrypted_plaintext: true,
+        command: command
+      )
+    rescue Errno::ECONNREFUSED => exception
+      Rails.logger.info exception.message
+    end
   end
 
   def desconectar_hotspot(usuario)

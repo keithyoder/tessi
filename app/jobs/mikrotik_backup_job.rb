@@ -5,7 +5,7 @@ class MikrotikBackupJob < ApplicationJob
     Servidor.ativo do |servidor|
       begin
         servidor.copiar_backup
-      rescue Errno::ETIMEDOUT => exception
+      rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED => exception
         Rails.logger.info exception.message
         next
       end
