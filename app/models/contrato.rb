@@ -6,7 +6,7 @@ class Contrato < ApplicationRecord
   has_many :conexoes
   has_many :excecoes
   scope :ativos, lambda {
-    where.not(cancelamento: nil)
+    where(cancelamento: nil)
   }
   scope :suspendiveis, lambda {
           joins(:conexoes)
