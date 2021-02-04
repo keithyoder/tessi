@@ -33,16 +33,20 @@ class Fatura < ApplicationRecord
 
   after_update do
     return unless saved_change_to_liquidacao?
+
     contrato.conexoes.each do |conexao|
-      next unless conexao.auto_bloqueio?
       conexao.update!(
-        inadimplente: contrato.faturas_em_atraso(5).positive?,
-        bloqueado: contrato.faturas_em_atraso(15).positive?
+        inadimplente: contrato.faturas_em_atraso(5).positive?
+      )
+      next unless conexao.auto_bloqueio?
+
+      conexao.update!(
+        bloqueado: contrato.suspender?
       )
     end
   end
 
-  def remessa
+  def remessa # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     Brcobranca::Remessa::Pagamento.new(
       valor: valor,
       data_vencimento: vencimento,
@@ -59,7 +63,7 @@ class Fatura < ApplicationRecord
     )
   end
 
-  def boleto
+  def boleto # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     info = {
       convenio: pagamento_perfil.cedente,
       cedente: Setting.razao_social,

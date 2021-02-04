@@ -1,5 +1,5 @@
 class BairrosController < ApplicationController
-  before_action :set_bairro, only: [:show, :edit, :update, :destroy]
+  before_action :set_bairro, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /bairros
@@ -18,7 +18,7 @@ class BairrosController < ApplicationController
   def show
     @bairro=Bairro.find(params[:id])
     @q = @bairro.logradouros.ransack(params[:q])
-    @q.sorts = "nome"
+    @q.sorts = 'nome'
     @logradouros = @q.result.page params[:page]
   end
 
@@ -38,7 +38,7 @@ class BairrosController < ApplicationController
 
     respond_to do |format|
       if @bairro.save
-        format.html { redirect_to @bairro, notice: 'Bairro was successfully created.' }
+        format.html { redirect_to @bairro, notice: 'Bairro criado com sucesso.' }
         format.json { render :show, status: :created, location: @bairro }
       else
         format.html { render :new }
@@ -52,7 +52,7 @@ class BairrosController < ApplicationController
   def update
     respond_to do |format|
       if @bairro.update(bairro_params)
-        format.html { redirect_to @bairro, notice: 'Bairro was successfully updated.' }
+        format.html { redirect_to @bairro, notice: 'Bairro atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @bairro }
       else
         format.html { render :edit }
@@ -72,13 +72,14 @@ class BairrosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bairro
-      @bairro = Bairro.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bairro_params
-      params.require(:bairro).permit(:nome, :cidade_id, :latitude, :longitude)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bairro
+    @bairro = Bairro.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bairro_params
+    params.require(:bairro).permit(:nome, :cidade_id, :latitude, :longitude)
+  end
 end

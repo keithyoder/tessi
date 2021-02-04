@@ -1,12 +1,12 @@
 class ServidoresController < ApplicationController
-  before_action :set_servidor, only: [:show, :edit, :update, :destroy]
+  before_action :set_servidor, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /servidores
   # GET /servidores.json
   def index
     @q = Servidor.ransack(params[:q])
-    @q.sorts = "nome"
+    @q.sorts = 'nome'
     @servidores = @q.result.page params[:page]
     respond_to do |format|
       format.html
@@ -19,7 +19,7 @@ class ServidoresController < ApplicationController
   def show
     @servidor = Servidor.find(params[:id])
     @q = @servidor.pontos.ransack(params[:q])
-    @q.sorts = "nome"
+    @q.sorts = 'nome'
     @pontos = @q.result.page params[:page]
     @autenticacoes = @servidor.autenticacoes.order(authdate: :desc).page params[:page]
   end
@@ -28,7 +28,7 @@ class ServidoresController < ApplicationController
     @servidor = Servidor.find(params[:id])
     @servidor.copiar_backup
     respond_to do |format|
-      format.html { redirect_to @servidor, notice: "Backup iniciado." }
+      format.html { redirect_to @servidor, notice: 'Backup iniciado.' }
       format.json { head :no_content }
     end
   end
@@ -40,7 +40,9 @@ class ServidoresController < ApplicationController
       @servidores = Servidor.ativo.order(:nome)
     end
     respond_to do |format|
-      format.job { redirect_to backups_servidores_path, notice: "Backup iniciado." }
+      format.job do
+        redirect_to backups_servidores_path, notice: 'Backup iniciado.'
+      end
       format.html { render :backups }
       format.json { head :no_content }
     end
@@ -62,7 +64,9 @@ class ServidoresController < ApplicationController
 
     respond_to do |format|
       if @servidor.save
-        format.html { redirect_to @servidor, notice: "Servidor was successfully created." }
+        format.html do
+          redirect_to @servidor, notice: 'Concentrador criado com sucesso.'
+        end
         format.json { render :show, status: :created, location: @servidor }
       else
         format.html { render :new }
@@ -104,7 +108,9 @@ class ServidoresController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def servidor_params
-    params.require(:servidor).permit(:nome, :ip, :usuario, :senha, :api_porta, :ssh_porta, :snmp_porta, :snmp_comunidade,
-                                     :radius_porta, :radius_secret, :ativo)
+    params.require(:servidor).permit(
+      :nome, :ip, :usuario, :senha, :api_porta, :ssh_porta, :snmp_porta,
+      :snmp_comunidade, :radius_porta, :radius_secret, :ativo
+    )
   end
 end

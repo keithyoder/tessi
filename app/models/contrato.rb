@@ -4,11 +4,11 @@ class Contrato < ApplicationRecord
   belongs_to :pagamento_perfil
   has_many :faturas
   has_many :conexoes
-  has_many :execoes
+  has_many :excecoes
   scope :ativos, lambda {
     where.not(cancelamento: nil)
   }
-  scope :suspendivel, lambda {
+  scope :suspendiveis, lambda {
           joins(:conexoes)
             .joins(:faturas)
             .where(bloqueado: false)
@@ -16,7 +16,7 @@ class Contrato < ApplicationRecord
             .where('vencimento < ?', 15.days.ago)
             .distinct
         }
-  scope :liberavel, lambda {
+  scope :liberaveis, lambda {
           joins(:conexoes)
             .joins("LEFT OUTER JOIN faturas ON contratos.id = faturas.contrato_id and liquidacao is null and vencimento < '#{15.days.ago}'")
             .where('bloqueado and cancelamento is null')
@@ -31,5 +31,10 @@ class Contrato < ApplicationRecord
 
   def contrato_e_nome
     "#{id} - #{pessoa.nome}"
+  end
+
+  def suspender?
+    # suspender se tiver faturas em atraso mas não tem regra de exeção para liberar ou se tiver uma regrea para bloquear.
+    (faturas_em_atraso(15).positive? && !excecoes.validas_para_desbloqueio.any?) || excecoes.validas_para_bloqueio.any?
   end
 end

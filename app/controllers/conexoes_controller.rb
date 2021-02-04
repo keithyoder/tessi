@@ -21,9 +21,11 @@ class ConexoesController < ApplicationController
   end
 
   def integrar
-    AtualizarRadiusJob.perform_later()
+    AtualizarRadiusJob.perform_later
     respond_to do |format|
-      format.html { redirect_to conexoes_url, notice: 'Integração Radius inicada.' }
+      format.html {
+        redirect_to conexoes_url, notice: 'Integração Radius inicada.'
+      }
       format.json { head :no_content }
     end
   end
@@ -40,9 +42,7 @@ class ConexoesController < ApplicationController
   # GET /conexoes/new
   def new
     @conexao = Conexao.new
-    if params[:pessoa_id]
-      @conexao.pessoa_id = params[:pessoa_id]
-    end
+    @conexao.pessoa_id = params[:pessoa_id] if params[:pessoa_id]
     @caixas = FibraCaixa.joins(:fibra_rede, :ponto).order("pontos.nome, fibra_caixas.nome").all
   end
 

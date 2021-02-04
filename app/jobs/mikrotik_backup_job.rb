@@ -2,10 +2,12 @@ class MikrotikBackupJob < ApplicationJob
   #include Sidekiq::Worker
 
   def perform
-    Servidor.ativo.each do | servidor |
+    Servidor.ativo do |servidor|
       begin
         servidor.copiar_backup
-      rescue
+      rescue Errno::ETIMEDOUT => exception
+        Rails.logger.info exception.message
+        next
       end
     end
   end
