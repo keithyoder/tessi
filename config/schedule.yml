@@ -2,3 +2,8 @@ mikrotik_backup:
   cron: "23 10 * * *"
   class: "MikrotikBackupJob"
   queue: default
+
+ping_concentradores:
+  cron: "/5 * * * *"
+  class: "PingServidoresJob"
+  queue: default
