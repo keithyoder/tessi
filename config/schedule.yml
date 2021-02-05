@@ -1,4 +1,4 @@
 mikrotik_backup:
-  cron: "20 10 * * *"
+  cron: "23 10 * * *"
   class: "MikrotikBackupJob"
   queue: default
