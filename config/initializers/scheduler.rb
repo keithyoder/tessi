@@ -1,3 +1,3 @@
-require 'rufus-scheduler'
+#require 'rufus-scheduler'
 
-scheduler = Rufus::Scheduler.singleton
+#scheduler = Rufus::Scheduler.singleton

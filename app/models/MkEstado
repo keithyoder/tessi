@@ -1,3 +1,0 @@
-class MkEstado
-  include Her::Model
-end
