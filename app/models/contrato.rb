@@ -44,7 +44,7 @@ class Contrato < ApplicationRecord
       conexao.update!(
         inadimplente: faturas_em_atraso(5).positive?
       )
-      next unless auto_bloqueio?
+      next unless conexao.auto_bloqueio?
 
       conexao.update!(
         bloqueado: suspender?
