@@ -42,29 +42,9 @@ class Conexao < ApplicationRecord
 
   after_touch :save
   after_save do
-    if usuario.present? && senha.present?
-      atr = conexao_verificar_atributos.where(atributo: RADIUS_SENHA).first_or_create
-      atr.update!(op: ':=', valor: senha)
-    end
-
-    if ponto.tecnologia == 'Radio'
-      conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').destroy_all
-      conexao_enviar_atributos.where(atributo: RADIUS_PPPOE_IP).destroy_all
-      atr = conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).first_or_create
-      atr.update!(op: '==', valor: ip.to_s)
-    elsif ponto.tecnologia == 'Fibra'
-      conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).destroy_all
-      atr = conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').first_or_create
-      atr.update!(op: '==', valor: mac)
-      atr = conexao_enviar_atributos.where(atributo: RADIUS_PPPOE_IP).first_or_create
-      atr.update!(op: ':=', valor: ip.to_s)
-    end
-
-    conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).destroy_all
-    if velocidade.present?
-      atr = conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).first_or_create
-      atr.update!(op: '=', valor: velocidade)
-    end
+    atualizar_senha
+    atualizar_ip_e_mac
+    atualizar_velocidade
   end
 
   after_commit do
@@ -102,6 +82,7 @@ class Conexao < ApplicationRecord
   end
 
   def desconectar
+    Rails.logger.info "Desconectando usuario #{usuario}"
     if ponto.tecnologia == 'Radio'
       servidor.desconectar_hotspot(usuario)
     else
@@ -112,5 +93,41 @@ class Conexao < ApplicationRecord
   def conectado
     rad_accts.where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago)
              .count.positive?
+  end
+
+  private
+
+  def atualizar_senha
+    return unless usuario.present? && senha.present? && saved_change_to_senha?
+
+    atr = conexao_verificar_atributos.where(atributo: RADIUS_SENHA).first_or_create
+    atr.update!(op: ':=', valor: senha)
+  end
+
+  def atualizar_ip_e_mac
+    return unless saved_change_to_ip? || saved_change_to_ponto? || saved_change_to_mac?
+
+    if ponto.tecnologia == 'Radio'
+      conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').destroy_all
+      conexao_enviar_atributos.where(atributo: RADIUS_PPPOE_IP).destroy_all
+      atr = conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).first_or_create
+      atr.update!(op: '==', valor: ip.to_s)
+    elsif ponto.tecnologia == 'Fibra'
+      conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).destroy_all
+      atr = conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').first_or_create
+      atr.update!(op: '==', valor: mac)
+      atr = conexao_enviar_atributos.where(atributo: RADIUS_PPPOE_IP).first_or_create
+      atr.update!(op: ':=', valor: ip.to_s)
+    end
+  end
+
+  def atualizar_velocidade
+    return unless saved_change_to_velocidade?
+
+    conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).destroy_all
+    return unless velocidade.present?
+
+    atr = conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).first_or_create
+    atr.update!(op: '=', valor: velocidade)
   end
 end

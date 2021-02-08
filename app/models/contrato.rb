@@ -34,7 +34,20 @@ class Contrato < ApplicationRecord
   end
 
   def suspender?
-    # suspender se tiver faturas em atraso mas não tem regra de exeção para liberar ou se tiver uma regrea para bloquear.
-    (faturas_em_atraso(15).positive? && !excecoes.validas_para_desbloqueio.any?) || excecoes.validas_para_bloqueio.any?
+    # suspender se tiver faturas em atraso mas não tem regra de exeção para
+    # liberar ou se tiver uma regra para bloquear.
+    (faturas_em_atraso(15).positive? && excecoes.validas_para_desbloqueio.none?) || excecoes.validas_para_bloqueio.any?
   end
+
+  def atualizar_conexoes
+    conexoes.each do |conexao|
+      conexao.update!(
+        inadimplente: faturas_em_atraso(5).positive?
+      )
+      next unless auto_bloqueio?
+
+      conexao.update!(
+        bloqueado: suspender?
+      )
+    end
 end

@@ -34,16 +34,7 @@ class Fatura < ApplicationRecord
   after_update do
     return unless saved_change_to_liquidacao?
 
-    contrato.conexoes.each do |conexao|
-      conexao.update!(
-        inadimplente: contrato.faturas_em_atraso(5).positive?
-      )
-      next unless conexao.auto_bloqueio?
-
-      conexao.update!(
-        bloqueado: contrato.suspender?
-      )
-    end
+    contrato.atualizar_conexoes
   end
 
   def remessa # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
