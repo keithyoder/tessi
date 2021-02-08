@@ -105,7 +105,7 @@ class Conexao < ApplicationRecord
   end
 
   def atualizar_ip_e_mac
-    return unless saved_change_to_ip? || saved_change_to_ponto? || saved_change_to_mac?
+    return unless saved_change_to_ip? || saved_change_to_ponto_id? || saved_change_to_mac?
 
     if ponto.tecnologia == 'Radio'
       conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').destroy_all

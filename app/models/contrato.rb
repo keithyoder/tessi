@@ -50,4 +50,5 @@ class Contrato < ApplicationRecord
         bloqueado: suspender?
       )
     end
+  end
 end
