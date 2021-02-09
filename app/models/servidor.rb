@@ -41,7 +41,7 @@ class Servidor < ApplicationRecord
         ]
       )[0][0]['.id']
       mk_command(['/ip/hotspot/active/remove', "=.id=#{id}"])
-    rescue Errno::ECONNREFUSED => exception
+    rescue MTik::Error, Errno::ECONNREFUSED => exception
       Rails.logger.info exception.message
     end
   end
@@ -56,7 +56,7 @@ class Servidor < ApplicationRecord
         ]
       )[0][0]['.id']
       mk_command(['/ppp/active/remove', "=.id=#{id}"])
-    rescue Errno::ECONNREFUSED => exception
+    rescue MTik::Error, Errno::ECONNREFUSED => exception
       Rails.logger.info exception.message
     end
   end
