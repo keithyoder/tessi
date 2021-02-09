@@ -40,14 +40,17 @@ class Contrato < ApplicationRecord
   end
 
   def atualizar_conexoes
+    suspenso = suspender?
+    atraso = faturas_em_atraso(5).positive?
+    puts atraso
     conexoes.each do |conexao|
       conexao.update!(
-        inadimplente: faturas_em_atraso(5).positive?
+        inadimplente: atraso
       )
       next unless conexao.auto_bloqueio?
 
       conexao.update!(
-        bloqueado: suspender?
+        bloqueado: suspenso
       )
     end
   end

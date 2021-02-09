@@ -22,39 +22,43 @@ class Servidor < ApplicationRecord
   def mk_command(command)
     return unless usuario.present? && senha.present?
 
+    MTik.command(
+      host: ip.to_s,
+      user: usuario,
+      pass: senha,
+      use_ssl: true,
+      unencrypted_plaintext: true,
+      command: command
+    )
+  end
+
+  def desconectar_hotspot(usuario)
     begin
-      MTik.command(
-        host: ip.to_s,
-        user: usuario,
-        pass: senha,
-        use_ssl: true,
-        unencrypted_plaintext: true,
-        command: command
-      )
+      id = mk_command(
+        [
+          '/ip/hotspot/active/print',
+          "?user=#{usuario}"
+        ]
+      )[0][0]['.id']
+      mk_command(['/ip/hotspot/active/remove', "=.id=#{id}"])
     rescue Errno::ECONNREFUSED => exception
       Rails.logger.info exception.message
     end
   end
 
-  def desconectar_hotspot(usuario)
-    id = mk_command(
-      [
-        '/ip/hotspot/active/print',
-        "?user=#{usuario}"
-      ]
-    )[0][0]['.id']
-    mk_command(['/ip/hotspot/active/remove', "=.id=#{id}"])
-  end
-
   def desconectar_pppoe(usuario)
-    id = mk_command(
-      [
-        '/ppp/active/print',
-        '=.proplist=.id',
-        "?name=#{usuario}"
-      ]
-    )[0][0]['.id']
-    mk_command(['/ppp/active/remove', "=.id=#{id}"])
+    begin
+      id = mk_command(
+        [
+          '/ppp/active/print',
+          '=.proplist=.id',
+          "?name=#{usuario}"
+        ]
+      )[0][0]['.id']
+      mk_command(['/ppp/active/remove', "=.id=#{id}"])
+    rescue Errno::ECONNREFUSED => exception
+      Rails.logger.info exception.message
+    end
   end
 
   def ppp_users
