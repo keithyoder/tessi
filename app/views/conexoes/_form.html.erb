@@ -22,7 +22,7 @@
         <%= f.association :ponto, collection: Ponto.ativo.order(:nome), label_method: :nome, input_html: {onchange: 'carregarIPs()'} %>
       </div>
       <div class="col-2">
-        <%= f.input :ip.to_s, collection: [@conexao.ip.to_s] + @conexao.ponto.ips_disponiveis %>
+        <%= f.input :ip.to_s, collection: [@conexao.ip.to_s] + (@conexao.ponto&.ips_disponiveis).to_a %>
       </div>
       <div class="col">
         <%= f.input :usuario %>

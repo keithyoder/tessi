@@ -40,7 +40,7 @@ class Contrato < ApplicationRecord
                         .where(pagamento_perfil_id: pagamento_perfil_id)
                         .to_a[0][:nossonumero].to_i
     vencimento = faturas.maximum(:vencimento) || primeiro_vencimento - 1.month
-    inicio = faturas.maximum(:vencimento) || adesao - 1.day
+    inicio = faturas.maximum(:vencimento) || adesao
     parcela = faturas.maximum(:parcela) || 0
     (1..prazo_meses).each do
       nossonumero += 1

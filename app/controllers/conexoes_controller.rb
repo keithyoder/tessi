@@ -42,8 +42,9 @@ class ConexoesController < ApplicationController
   # GET /conexoes/new
   def new
     @conexao = Conexao.new
+    @conexao.tipo = :Cobranca
     @conexao.pessoa_id = params[:pessoa_id] if params[:pessoa_id]
-    @caixas = FibraCaixa.joins(:fibra_rede, :ponto).order("pontos.nome, fibra_caixas.nome").all
+    @caixas = FibraCaixa.joins(:fibra_rede, :ponto).order('pontos.nome, fibra_caixas.nome').all
   end
 
   # GET /conexoes/1/edit
