@@ -46,8 +46,11 @@ class Retorno < ApplicationRecord
   end
 
   def processar
+    Rails.logger.info "Processando--------------"
     verificar_header
+    Rails.logger.info "Verificando--------------"
     carregar_arquivo.each do |linha|
+      Rails.logger.info "Linha--------------"+linha
       next unless linha.data_ocorrencia.to_i.positive?
 
       fatura = Fatura.where(
@@ -89,9 +92,13 @@ class Retorno < ApplicationRecord
     arquivo.open do |temp_file|
       case pagamento_perfil.banco
       when 33
-        Brcobranca::Retorno::Cnab240::Santander.load_lines(temp_file)
+        Brcobranca::Retorno::Cnab240::Santander.load_lines(
+          ActiveStorage::Blob.service.send(:path_for, arquivo.key)
+        )
       when 1
-        Brcobranca::Retorno::Cnab400::BB.load_lines(temp_file)
+        Brcobranca::Retorno::Cnab400::BB.load_lines(
+          ActiveStorage::Blob.service.send(:path_for, arquivo.key)
+        )
       end
     end
   end
