@@ -1,26 +1,56 @@
-
 <%= simple_form_for(@contrato) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :pessoa, collection: Pessoa.order(:nome), label_method: :nome %>
-    <%= f.association :plano, label_method: :nome %>
-    <%= f.association :pagamento_perfil, label_method: :nome %>
-    <%= f.input :status %>
-    <%= f.input :dia_vencimento %>
-    <%= f.input :adesao %>
-    <%= f.input :valor_instalacao %>
-    <%= f.input :parcelas_instalacao %>
-    <%= f.input :numero_conexoes %>
-    <%= f.input :cancelamento, include_blank: true %>
-    <%= f.input :emite_nf %>
-    <%= f.input :primeiro_vencimento %>
-    <%= f.input :prazo_meses %>
+    <div class="row">
+      <div class="col">
+        <%= f.association :pessoa, collection: Pessoa.order(:nome), label_method: :nome %>
+      </div>
+      <div class="col-3">
+        <%= f.association :plano, label_method: :nome %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <%= f.association :pagamento_perfil, label_method: :nome %>
+      </div>
+      <div class="col-4">
+        <%= f.input :adesao %>
+      </div>
+      <div class="col-2">
+        <%= f.input :dia_vencimento %>
+      </div>
+      <div class="col-2">
+        <%= f.input :prazo_meses %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <%= f.input :valor_instalacao %>
+      </div>
+      <div class="col-2">
+        <%= f.input :parcelas_instalacao %>
+      </div>
+      <div class="col-2">
+        <%= f.input :emite_nf %>
+      </div>
+      <div class="col-2">
+        <%= f.input :numero_conexoes %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <%= f.input :primeiro_vencimento %>
+      </div>
+      <div class="col-4">
+        <%= f.input :cancelamento, include_blank: true%>
+      </div>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= button_tag( :class => "btn btn-primary") do %>
+  <div class="form-actions">
+    <%= button_tag(:class => "btn btn-primary") do %>
       <i class="fas fa-save" aria-hidden="true"></i> Salvar
     <% end %>
   </div>

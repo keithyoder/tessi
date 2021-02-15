@@ -74,6 +74,7 @@ class ContratosController < ApplicationController
   # GET /contratos/new
   def new
     @contrato = Contrato.new
+    @contrato.pessoa_id = params[:pessoa_id] if params.key?(:pessoa_id)
   end
 
   # GET /contratos/1/edit
