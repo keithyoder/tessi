@@ -14,31 +14,32 @@ class Retorno < ApplicationRecord
   def verificar_header
     case pagamento_perfil.tipo
     when 'Boleto'
-      data_file = arquivo.download
-      case pagamento_perfil.banco
-      when 33
-        header = Retorno240Header.load_line data_file.first
-        unless header.convenio.to_i == pagamento_perfil.cedente
-          raise StandardError.new, ARQUIVO_COMPATIVEL
-        end
+      arquivo.open do |data_file|
+        case pagamento_perfil.banco
+        when 33
+          header = Retorno240Header.load_line data_file.first
+          unless header.convenio.to_i == pagamento_perfil.cedente
+            raise StandardError.new, ARQUIVO_COMPATIVEL
+          end
 
-        self.attributes = {
-          sequencia: header.sequencia,
-          data: cnab_to_date(header.data),
-        }
-        save
-      when 1
-        header = Retorno400Header.load_line data_file.first
-        unless header.retorno.to_i == 2 && header.tipo.to_i == 1 && header.convenio.to_i == pagamento_perfil.cedente
-          raise StandardError.new, ARQUIVO_COMPATIVEL
-        end
+          self.attributes = {
+            sequencia: header.sequencia,
+            data: cnab_to_date(header.data),
+          }
+          save
+        when 1
+          header = Retorno400Header.load_line data_file.first
+          unless header.retorno.to_i == 2 && header.tipo.to_i == 1 && header.convenio.to_i == pagamento_perfil.cedente
+            raise StandardError.new, ARQUIVO_COMPATIVEL
+          end
 
-        self.attributes = {
-          sequencia: header.sequencia,
-          data: cnab_to_date(header.data),
-        }
-        save
-      when 104
+          self.attributes = {
+            sequencia: header.sequencia,
+            data: cnab_to_date(header.data),
+          }
+          save
+        when 104
+        end
       end
     when 'Débito Automático'
     end
@@ -85,11 +86,13 @@ class Retorno < ApplicationRecord
   end
 
   def carregar_arquivo
-    case pagamento_perfil.banco
-    when 33
-      Brcobranca::Retorno::Cnab240::Santander.load_lines(arquivo.download)
-    when 1
-      Brcobranca::Retorno::Cnab400::BB.load_lines(arquivo.download)
+    arquivo.open do |temp_file|
+      case pagamento_perfil.banco
+      when 33
+        Brcobranca::Retorno::Cnab240::Santander.load_lines(temp_file)
+      when 1
+        Brcobranca::Retorno::Cnab400::BB.load_lines(temp_file)
+      end
     end
   end
 
