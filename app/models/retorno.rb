@@ -89,17 +89,15 @@ class Retorno < ApplicationRecord
   end
 
   def carregar_arquivo
-    arquivo.open do |temp_file|
-      case pagamento_perfil.banco
-      when 33
-        Brcobranca::Retorno::Cnab240::Santander.load_lines(
-          ActiveStorage::Blob.service.send(:path_for, arquivo.key)
-        )
-      when 1
-        Brcobranca::Retorno::Cnab400::BB.load_lines(
-          ActiveStorage::Blob.service.send(:path_for, arquivo.key)
-        )
-      end
+    case pagamento_perfil.banco
+    when 33
+      Brcobranca::Retorno::Cnab240::Santander.load_lines(
+        ActiveStorage::Blob.service.send(:path_for, arquivo.key)
+      )
+    when 1
+      Brcobranca::Retorno::Cnab400::BB.load_lines(
+        ActiveStorage::Blob.service.send(:path_for, arquivo.key)
+      )
     end
   end
 
