@@ -87,7 +87,7 @@ class ContratosController < ApplicationController
 
     respond_to do |format|
       if @contrato.save
-        format.html { redirect_to @contrato, notice: 'Contrato was successfully created.' }
+        format.html { redirect_to @contrato, notice: 'Contrato criado com sucesso.' }
         format.json { render :show, status: :created, location: @contrato }
       else
         format.html { render :new }
@@ -101,7 +101,7 @@ class ContratosController < ApplicationController
   def update
     respond_to do |format|
       if @contrato.update(contrato_params)
-        format.html { redirect_to @contrato, notice: 'Contrato was successfully updated.' }
+        format.html { redirect_to @contrato, notice: 'Contrato atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @contrato }
       else
         format.html { render :edit }
@@ -121,14 +121,18 @@ class ContratosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contrato
-      @contrato = Contrato.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def contrato_params
-      params.require(:contrato).permit(:pessoa_id, :plano_id, :status, :dia_vencimento, :adesao,
-        :valor_instalacao, :numero_conexoes, :cancelamento, :emite_nf, :primeiro_vencimento, :prazo_meses)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_contrato
+    @contrato = Contrato.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def contrato_params
+    params.require(:contrato).permit(
+      :pessoa_id, :plano_id, :pagamento_perfil_id, :status, :dia_vencimento,
+      :adesao, :valor_instalacao, :numero_conexoes, :cancelamento, :emite_nf,
+      :primeiro_vencimento, :prazo_meses, :parcelas_instalacao
+    )
+  end
 end

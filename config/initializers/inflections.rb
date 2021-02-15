@@ -56,7 +56,7 @@ ActiveSupport::Inflector.inflections do |inflect|
     inflect.singular(/(japon|escoc|ingl|dinamarqu|fregu|portugu)eses$/i, '\1ês')
     inflect.singular(/^(g|)ases$/i,  '\1ás')
     # Incontáveis
-    inflect.uncountable %w( tórax tênis ônibus lápis fênix )
+    inflect.uncountable %w( tórax tênis ônibus lápis fênix os)
     # Irregulares
     inflect.irregular "país", "países"
     inflect.irregular "user", "users"

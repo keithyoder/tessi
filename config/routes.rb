@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :os
+  resources :classificacoes
+  resources :clasificacoes
   resources :excecoes
   resources :ip_redes
   resources :nf21_itens

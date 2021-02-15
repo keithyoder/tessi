@@ -25,12 +25,44 @@ class Contrato < ApplicationRecord
             .distinct
         }
 
+  after_create :gerar_faturas
+
   def faturas_em_atraso(dias)
     faturas.where('liquidacao is null and vencimento < ?', dias.days.ago).count
   end
 
   def contrato_e_nome
     "#{id} - #{pessoa.nome}"
+  end
+
+  def gerar_faturas
+    nossonumero = Fatura.where(pagamento_perfil_id: pagamento_perfil_id).maximum(:nossonumero).to_i
+    vencimento = faturas.maximum(:vencimento) || primeiro_vencimento - 1.month
+    inicio = faturas.maximum(:vencimento) || adesao - 1.day
+    parcela = faturas.maximum(:parcela) || 0
+    (1..prazo_meses).each do
+      nossonumero += 1
+      vencimento += 1.month
+      parcela += 1
+      instalacao = if parcela <= parcelas_instalacao
+                     (valor_instalacao / parcelas_instalacao).round(2)
+                   else
+                     0
+                   end
+      valor = (plano.mensalidade * fracao_de_mes(inicio, vencimento)).round(2) + instalacao
+      faturas.create!(
+        pagamento_perfil_id: pagamento_perfil_id,
+        valor: valor,
+        valor_original: valor,
+        parcela: parcela,
+        vencimento: vencimento,
+        vencimento_original: vencimento,
+        nossonumero: nossonumero,
+        periodo_inicio: inicio + 1.day,
+        periodo_fim: vencimento
+      )
+      inicio = vencimento
+    end
   end
 
   def suspender?
@@ -53,5 +85,11 @@ class Contrato < ApplicationRecord
         bloqueado: suspenso
       )
     end
+  end
+
+  private
+
+  def fracao_de_mes(inicio, fim)
+    (fim - inicio).to_f / (fim - (fim - 1.month)).to_f
   end
 end

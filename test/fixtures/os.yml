@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tipo: 1
+  classificao: one
+  pessoa: one
+  conexao: one
+  aberto_por: one
+  responsavel: one
+  tecnico_1: one
+  tecnico_2: one
+  fechamento: 2021-02-14 11:08:21
+  descricao: MyText
+  encerramento: MyText
+
+two:
+  tipo: 1
+  classificao: two
+  pessoa: two
+  conexao: two
+  aberto_por: two
+  responsavel: two
+  tecnico_1: two
+  tecnico_2: two
+  fechamento: 2021-02-14 11:08:21
+  descricao: MyText
+  encerramento: MyText

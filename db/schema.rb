@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_24_135336) do
+ActiveRecord::Schema.define(version: 2021_02_15_010952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(version: 2020_10_24_135336) do
     t.datetime "updated_at", null: false
     t.index ["estado_id", "nome"], name: "index_cidades_on_estado_id_and_nome", unique: true
     t.index ["estado_id"], name: "index_cidades_on_estado_id"
+  end
+
+  create_table "classificacoes", force: :cascade do |t|
+    t.integer "tipo"
+    t.string "nome"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "conexao_enviar_atributos", force: :cascade do |t|
@@ -121,6 +128,7 @@ ActiveRecord::Schema.define(version: 2020_10_24_135336) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "pagamento_perfil_id"
+    t.integer "parcelas_instalacao"
     t.index ["pagamento_perfil_id"], name: "index_contratos_on_pagamento_perfil_id"
     t.index ["pessoa_id"], name: "index_contratos_on_pessoa_id"
     t.index ["plano_id"], name: "index_contratos_on_plano_id"
@@ -241,6 +249,29 @@ ActiveRecord::Schema.define(version: 2020_10_24_135336) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fatura_id"], name: "index_nf21s_on_fatura_id"
+  end
+
+  create_table "os", force: :cascade do |t|
+    t.integer "tipo"
+    t.bigint "classificacao_id"
+    t.bigint "pessoa_id"
+    t.bigint "conexao_id"
+    t.bigint "aberto_por_id"
+    t.bigint "responsavel_id"
+    t.bigint "tecnico_1_id"
+    t.bigint "tecnico_2_id"
+    t.datetime "fechamento"
+    t.text "descricao"
+    t.text "encerramento"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aberto_por_id"], name: "index_os_on_aberto_por_id"
+    t.index ["classificacao_id"], name: "index_os_on_classificacao_id"
+    t.index ["conexao_id"], name: "index_os_on_conexao_id"
+    t.index ["pessoa_id"], name: "index_os_on_pessoa_id"
+    t.index ["responsavel_id"], name: "index_os_on_responsavel_id"
+    t.index ["tecnico_1_id"], name: "index_os_on_tecnico_1_id"
+    t.index ["tecnico_2_id"], name: "index_os_on_tecnico_2_id"
   end
 
   create_table "pagamento_perfis", force: :cascade do |t|
@@ -427,4 +458,11 @@ ActiveRecord::Schema.define(version: 2020_10_24_135336) do
   add_foreign_key "faturas", "retornos", column: "registro_id"
   add_foreign_key "fibra_caixas", "fibra_redes"
   add_foreign_key "fibra_redes", "pontos"
+  add_foreign_key "os", "classificacoes"
+  add_foreign_key "os", "conexoes"
+  add_foreign_key "os", "pessoas"
+  add_foreign_key "os", "users", column: "aberto_por_id"
+  add_foreign_key "os", "users", column: "responsavel_id"
+  add_foreign_key "os", "users", column: "tecnico_1_id"
+  add_foreign_key "os", "users", column: "tecnico_2_id"
 end

@@ -15,7 +15,7 @@ class Retorno < ApplicationRecord
     case pagamento_perfil.tipo
     when 'Boleto'
       data_file = File.readlines(
-        ActiveStorage::Blob.service.path_for(arquivo.key)
+        ActiveStorage::Blob.service.send(:path_for, arquivo.key)
       )
       case pagamento_perfil.banco
       when 33

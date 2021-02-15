@@ -1,0 +1,50 @@
+<%= simple_form_for(@os) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col">
+        <%= f.input :tipo, collection: Os.tipos.keys %>
+      </div>
+      <div class="col">
+        <%= f.association :classificacao, label_method: :nome %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.association :pessoa, collection: Pessoa.all, label_method: :nome, input_html: {onchange: 'carregarContratos()'} %>
+      </div>
+      <div class="col-2">
+        <%= f.association :conexao, collection: Conexao.all, label_method: :id %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <%= f.association :responsavel, label_method: :primeiro_nome %>
+      </div>
+      <div class="col-4">
+        <%= f.association :tecnico_1, label_method: :primeiro_nome %>
+      </div>
+      <div class="col-4">
+        <%= f.association :tecnico_2, label_method: :primeiro_nome %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :descricao %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.input :encerramento %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= button_tag(:class => "btn btn-primary") do %>
+      <i class="fas fa-save" aria-hidden="true"></i> Salvar
+    <% end %>
+  </div>
+<% end %>
