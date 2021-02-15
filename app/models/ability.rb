@@ -36,7 +36,7 @@ class Ability
         can :suspenso, Conexao
         can :boletos, Contrato
         can :boleto, Fatura
-        can %i[create update], [Bairro, Logradouro, Conexao, Pessoa]
+        can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os]
         can :create, Excecao
       end
       if user.admin?
@@ -44,16 +44,17 @@ class Ability
         cannot :destroy, Estado
       elsif user.tecnico_n1?
         can [:update], [FibraCaixa]
+        can [:create, :update], Conexao
       elsif user.tecnico_n2?
         can :update, [Cidade, Ponto]
-        can [:create, :update], [FibraRede, FibraCaixa, IpRede]
+        can [:create, :update], [FibraRede, FibraCaixa, IpRede, Conexao]
         can [:backup, :backups], Servidor
       elsif user.financeiro_n1?
         can [:update, :liquidacao], Fatura
       elsif user.financeiro_n2?
         can :update, Cidade
         can [:update, :liquidacao], Fatura
-        can [:create, :update], Retorno
+        can [:create, :update], [Retorno, Contrato]
       end
     end
   end
