@@ -23,6 +23,12 @@ class Fatura < ApplicationRecord
   scope :suspensos, lambda {
     where('liquidacao is null and vencimento < ?', 15.days.ago)
   }
+  scope :pagas, lambda {
+    where.not(liquidacao: nil)
+  }
+  scope :registradas, lambda {
+    where.not(registro: nil)
+  }
   enum meio_liquidacao: {
     RetornoBancario: 1,
     Dinheiro: 2,

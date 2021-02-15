@@ -27,6 +27,8 @@ class Contrato < ApplicationRecord
 
   after_create :gerar_faturas
 
+  before_destroy :verificar_exclusao, prepend: true
+
   def faturas_em_atraso(dias)
     faturas.where('liquidacao is null and vencimento < ?', dias.days.ago).count
   end
@@ -90,6 +92,13 @@ class Contrato < ApplicationRecord
   end
 
   private
+
+  def verificar_exclusao
+    return if faturas.registradas.none? && faturas.pagas.none?
+
+    errors[:base] << 'Não pode excluir um contrato que tem faturas pagas ou boletos registrados'
+    throw :abort
+  end
 
   def fracao_de_mes(inicio, fim)
     (fim - inicio).to_f / (fim - (fim - 1.month)).to_f

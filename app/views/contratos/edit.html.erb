@@ -1,6 +1,6 @@
-<h1>Editing Contrato</h1>
-
-<%= render 'form', contrato: @contrato %>
-
-<%= link_to 'Show', @contrato %> |
-<%= link_to 'Back', contratos_path %>
+<div class="card">
+  <%= render 'shared/edit_header', {object: @contrato, titulo: "Contrato"} %>
+  <div class="card-body">
+    <%= render 'form', contrato: @contrato %>
+  </div>
+</div>

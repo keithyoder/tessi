@@ -114,10 +114,14 @@ class ContratosController < ApplicationController
   # DELETE /contratos/1
   # DELETE /contratos/1.json
   def destroy
-    @contrato.destroy
     respond_to do |format|
-      format.html { redirect_to contratos_url, notice: 'Contrato was successfully destroyed.' }
+    if @contrato.destroy
+      format.html { redirect_to contratos_url, notice: 'Contrato excluido com sucesso.' }
       format.json { head :no_content }
+      end
+    else
+      format.html { render :edit }
+      format.json { render json: @contrato.errors, status: :unprocessable_entity }
     end
   end
 

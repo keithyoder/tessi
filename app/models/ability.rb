@@ -55,6 +55,7 @@ class Ability
         can :update, Cidade
         can [:update, :liquidacao], Fatura
         can [:create, :update], [Retorno, Contrato]
+        can :destroy, Contrato
       end
     end
   end
