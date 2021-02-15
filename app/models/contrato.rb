@@ -2,9 +2,9 @@ class Contrato < ApplicationRecord
   belongs_to :pessoa
   belongs_to :plano
   belongs_to :pagamento_perfil
-  has_many :faturas
+  has_many :faturas, dependent: :delete_all
   has_many :conexoes
-  has_many :excecoes
+  has_many :excecoes, dependent: :delete_all
   scope :ativos, lambda {
     where(cancelamento: nil)
   }
