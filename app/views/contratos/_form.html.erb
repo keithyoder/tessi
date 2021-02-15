@@ -4,7 +4,7 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :pessoa, label_method: :nome %>
+    <%= f.association :pessoa, collection: Pessoa.order(:nome), label_method: :nome %>
     <%= f.association :plano, label_method: :nome %>
     <%= f.association :pagamento_perfil, label_method: :nome %>
     <%= f.input :status %>
