@@ -14,9 +14,9 @@ class Retorno < ApplicationRecord
   def verificar_header
     case pagamento_perfil.tipo
     when 'Boleto'
-      data_file = ActiveStorage::Blob.service.send(:path_for, arquivo.key)
-      puts data_file
-      data_file = File.open(data_file)
+      data_file = File.open(
+        ActiveStorage::Blob.service.send(:path_for, arquivo.key)
+      )
       case pagamento_perfil.banco
       when 33
         header = Retorno240Header.load_line data_file.first
@@ -46,20 +46,15 @@ class Retorno < ApplicationRecord
   end
 
   def processar
-    Rails.logger.info "Processando--------------"
     verificar_header
-    Rails.logger.info "Verificando--------------"
     carregar_arquivo.each do |linha|
-      Rails.logger.info "Linha--------------"
       next unless linha.data_ocorrencia.to_i.positive?
-      Rails.logger.info "Data--------------"
-      Rails.logger.info linha.nosso_numero
+
       fatura = Fatura.where(
         pagamento_perfil: pagamento_perfil,
         nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
       ).first
       next unless fatura.present?
-      Rails.logger.info "Fatura--------------"
 
       case linha.codigo_ocorrencia.to_i
       when 6
@@ -86,7 +81,6 @@ class Retorno < ApplicationRecord
           baixa: self
         }
       end
-      Rails.logger.info "Salvar--------------"
       fatura.save
     end
   end
