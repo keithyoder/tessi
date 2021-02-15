@@ -32,9 +32,8 @@ class Fatura < ApplicationRecord
   }
 
   after_update do
-    return unless saved_change_to_liquidacao?
-
-    contrato.atualizar_conexoes
+    if saved_change_to_liquidacao?
+      contrato.atualizar_conexoes
   end
 
   def remessa # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

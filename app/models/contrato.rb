@@ -36,7 +36,7 @@ class Contrato < ApplicationRecord
   end
 
   def gerar_faturas
-    nossonumero = Fatura.where(pagamento_perfil_id: pagamento_perfil_id).maximum(:nossonumero).to_i
+    nossonumero = Fatura.select('MAX(nossonumero::int)').where(pagamento_perfil_id: pagamento_perfil_id).to_a[0][:nossonumero].to_i
     vencimento = faturas.maximum(:vencimento) || primeiro_vencimento - 1.month
     inicio = faturas.maximum(:vencimento) || adesao - 1.day
     parcela = faturas.maximum(:parcela) || 0
