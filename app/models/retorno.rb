@@ -122,7 +122,7 @@ class Retorno < ApplicationRecord
       # remove leading zeros and trailing digit
       valor.sub!(/^[0]+/, '')[0...-1]
     when 1
-      s[7..-1].sub(/^[0]+/, '')
+      valor[7..-1].sub(/^[0]+/, '')
     end
   end
 end
