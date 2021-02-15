@@ -52,7 +52,8 @@ class Retorno < ApplicationRecord
     carregar_arquivo.each do |linha|
       Rails.logger.info "Linha--------------"
       next unless linha.data_ocorrencia.to_i.positive?
-
+      Rails.logger.info "Data--------------"
+      Rails.logger.info linha.nosso_numero
       fatura = Fatura.where(
         pagamento_perfil: pagamento_perfil,
         nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
