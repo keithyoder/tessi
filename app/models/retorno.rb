@@ -14,7 +14,9 @@ class Retorno < ApplicationRecord
   def verificar_header
     case pagamento_perfil.tipo
     when 'Boleto'
-      data_file = arquivo.download
+      data_file = ActiveStorage::Blob.service.send(:path_for, arquivo.key)
+      puts data_file
+      data_file = File.open(data_file)
       case pagamento_perfil.banco
       when 33
         header = Retorno240Header.load_line data_file.first

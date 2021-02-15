@@ -81,7 +81,6 @@ gem 'mtik'
 gem 'net-ssh'
 gem 'ransack'
 gem 'simple_form'
-# gem "mtik", path: "../mtik/"
 gem 'cancancan'
 gem 'image_processing'
 gem 'net-ping'
