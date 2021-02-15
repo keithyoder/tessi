@@ -19,6 +19,7 @@ class OsController < ApplicationController
   # GET /os/new
   def new
     @os = Os.new
+    @os.pessoa_id = params[:pessoa_id] if params.key?(:pessoa_id)
     @os.aberto_por = @current_user
     @os.responsavel = @current_user
   end

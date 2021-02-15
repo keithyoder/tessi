@@ -5,6 +5,7 @@ class Pessoa < ApplicationRecord
   has_one :estado, through: :logradouro
   has_many :conexoes
   has_many :contratos
+  has_many :os
   has_one_attached :rg_imagem
   usar_como_cnpj :cnpj
   usar_como_cpf :cpf

@@ -8,6 +8,9 @@
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#conexoes">Conexões</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#os">OS</a>
+  </li>
 </ul>
 <div class="tab-content">
   <div class="tab-pane fade show active" id="pessoa" role="tabpanel" aria-labelledby="pessoa-tab">
@@ -37,6 +40,10 @@
   </div>
   <div class="tab-pane fade" id="conexoes" role="tabpanel" aria-labelledby="conexoes-tab">
     <h3><%= @pessoa.nome %></h3>
-    <%= render 'conexoes/table', {exclude: "pessoa"} %>
+    <%= render 'conexoes/table', {exclude: "pessoa", params: {pessoa_id: @pessoa}} %>
+  </div>
+  <div class="tab-pane fade" id="os" role="tabpanel" aria-labelledby="os-tab">
+    <h3><%= @pessoa.nome %></h3>
+    <%= render 'os/table', {exclude: "pessoa", params: {pessoa_id: @pessoa}} %>
   </div>
 </div>

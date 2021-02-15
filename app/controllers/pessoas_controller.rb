@@ -18,6 +18,7 @@ class PessoasController < ApplicationController
     @params = {:pessoa_id => @pessoa}
     @conexoes = @pessoa.conexoes.order(:ip).page params[:page]
     @contratos = @pessoa.contratos.order(:adesao).page params[:page]
+    @os = @pessoa.os.order(created_at: :desc).page params[:page]
     respond_to do |format|
       format.html # show.html.erb
       if params.has_key?(:conexoes)
