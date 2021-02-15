@@ -50,7 +50,7 @@ class Retorno < ApplicationRecord
     verificar_header
     Rails.logger.info "Verificando--------------"
     carregar_arquivo.each do |linha|
-      Rails.logger.info "Linha--------------"+linha
+      Rails.logger.info "Linha--------------"
       next unless linha.data_ocorrencia.to_i.positive?
 
       fatura = Fatura.where(
@@ -58,6 +58,7 @@ class Retorno < ApplicationRecord
         nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
       ).first
       next unless fatura.present?
+      Rails.logger.info "Fatura--------------"
 
       case linha.codigo_ocorrencia.to_i
       when 6
@@ -84,6 +85,7 @@ class Retorno < ApplicationRecord
           baixa: self
         }
       end
+      Rails.logger.info "Salvar--------------"
       fatura.save
     end
   end
