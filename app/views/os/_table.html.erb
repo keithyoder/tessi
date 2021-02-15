@@ -1,0 +1,33 @@
+<div class="card">
+  <% params = defined?(params) ? params : {} %>
+  <%= render '/shared/table_header', {object: @os, search_string: :id, params: params, titulo: "OS"} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Assinante</th>
+            <th>Tipo</th>
+            <th>Classificação</th>
+            <th>Responsável</th>
+            <th>Aberta</th>
+            <th>Fechada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @os.each do |os| %>
+            <tr>
+              <td><%= link_to os.pessoa.nome, os.pessoa %></td>
+              <td><%= link_to os.tipo, os %></td>
+              <td><%= link_to os.classificacao.nome, os %></td>
+              <td><%= os.responsavel.primeiro_nome %></td>
+              <td><%= l(os.created_at, format: :short) %></td>
+              <td><%= l(os.fechamento, format: :short, default: '') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate @os %>
+  </div>
+</div>

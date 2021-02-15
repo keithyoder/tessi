@@ -1,6 +1,7 @@
 <%= simple_form_for(@os) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.hidden_field :aberto_por_id %>
 
   <div class="form-inputs">
     <div class="row">
@@ -13,10 +14,10 @@
     </div>
     <div class="row">
       <div class="col">
-        <%= f.association :pessoa, collection: Pessoa.all, label_method: :nome, input_html: {onchange: 'carregarContratos()'} %>
+        <%= f.association :pessoa, collection: Pessoa.all, label_method: :nome, input_html: {onchange: 'carregarConexoes()'} %>
       </div>
-      <div class="col-2">
-        <%= f.association :conexao, collection: Conexao.all, label_method: :id %>
+      <div class="col-3">
+        <%= f.association :conexao, label_method: :id %>
       </div>
     </div>
     <div class="row">
@@ -48,3 +49,8 @@
     <% end %>
   </div>
 <% end %>
+<script>
+    $(function () {
+        carregarConexoes()
+    });
+</script>

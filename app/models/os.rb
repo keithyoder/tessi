@@ -6,5 +6,5 @@ class Os < ApplicationRecord
   belongs_to :responsavel, class_name: 'User'
   belongs_to :tecnico_1, class_name: 'User', optional: true
   belongs_to :tecnico_2, class_name: 'User', optional: true
-  enum tipo: { Instalação: 1, Reparo: 2, Transferência: 3 }
+  enum tipo: { Instalação: 1, Reparo: 2, Transferência: 3, Retirada: 4 }
 end
