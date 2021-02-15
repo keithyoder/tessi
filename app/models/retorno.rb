@@ -14,9 +14,7 @@ class Retorno < ApplicationRecord
   def verificar_header
     case pagamento_perfil.tipo
     when 'Boleto'
-      data_file = File.readlines(
-        ActiveStorage::Blob.service.send(:path_for, arquivo.key)
-      )
+      data_file = arquivo.download
       case pagamento_perfil.banco
       when 33
         header = Retorno240Header.load_line data_file.first
@@ -89,13 +87,9 @@ class Retorno < ApplicationRecord
   def carregar_arquivo
     case pagamento_perfil.banco
     when 33
-      Brcobranca::Retorno::Cnab240::Santander.load_lines(
-        ActiveStorage::Blob.service.path_for(arquivo.key)
-      )
+      Brcobranca::Retorno::Cnab240::Santander.load_lines(arquivo.download)
     when 1
-      Brcobranca::Retorno::Cnab400::BB.load_lines(
-        ActiveStorage::Blob.service.path_for(arquivo.key)
-      )
+      Brcobranca::Retorno::Cnab400::BB.load_lines(arquivo.download)
     end
   end
 
