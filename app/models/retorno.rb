@@ -38,9 +38,7 @@ class Retorno < ApplicationRecord
           data: cnab_to_date(header.data),
         }
         save
-      when 104
       end
-    end
     when 'Débito Automático'
     end
   end
