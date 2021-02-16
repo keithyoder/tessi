@@ -4,8 +4,12 @@ class OsController < ApplicationController
 
   # GET /os or /os.json
   def index
-    @os = Os.all
-    @q = Os.ransack(params[:q])
+    @os = if params.key?(:abertas)
+            Os.abertas
+          else
+            Os.all
+          end
+    @q = @os.ransack(params[:q])
     @os = @q.result(order: :created_at).page params[:page]
     respond_to do |format|
       format.html
@@ -45,9 +49,13 @@ class OsController < ApplicationController
 
   # PATCH/PUT /os/1 or /os/1.json
   def update
+    if params[:commit].present? && params[:commit] == 'Encerrar'
+      @os.fechamento = Time.now
+    end
+    puts os_params
     respond_to do |format|
-      if @os.update(os_params)
-        format.html { redirect_to @os, notice: "Os was successfully updated." }
+      if @os.update(os_params.except(:fechamento))
+        format.html { redirect_to @os, notice: 'OS atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @os }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -74,6 +82,10 @@ class OsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def os_params
-    params.require(:os).permit(:tipo, :classificacao_id, :pessoa_id, :conexao_id, :aberto_por_id, :responsavel_id, :tecnico_1_id, :tecnico_2_id, :fechamento, :descricao, :encerramento)
+    params.require(:os).permit(
+      :tipo, :classificacao_id, :pessoa_id, :conexao_id, :aberto_por_id,
+      :responsavel_id, :tecnico_1_id, :tecnico_2_id, :fechamento,
+      :descricao, :encerramento
+    )
   end
 end

@@ -19,7 +19,14 @@ class PagamentoPerfil < ApplicationRecord
         info.merge(codigo_transmissao: codigo_transmissao)
       )
     when 1
-      Brcobranca::Remessa::Cnab400::BancoBrasil.new(info)
+      Brcobranca::Remessa::Cnab400::BancoBrasil.new(
+        info.merge(
+          {
+            variacao_carteira: carteira.to_s,
+            convenio: convenio.to_s
+          }
+        )
+      )
     end
   end
 end
