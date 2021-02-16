@@ -12,11 +12,12 @@ class PagamentoPerfil < ApplicationRecord
       sequencial_remessa: '1',
       documento_cedente: Setting.cnpj,
       pagamentos: pagamentos,
-      codigo_transmissao: codigo_transmissao
     }
     case banco
     when 33
-      Brcobranca::Remessa::Cnab400::Santander.new(info)
+      Brcobranca::Remessa::Cnab400::Santander.new(
+        info.merge(codigo_transmissao: codigo_transmissao)
+      )
     when 1
       Brcobranca::Remessa::Cnab400::BancoBrasil.new(info)
     end
