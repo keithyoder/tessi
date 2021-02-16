@@ -22,7 +22,7 @@ class PagamentoPerfil < ApplicationRecord
       Brcobranca::Remessa::Cnab400::BancoBrasil.new(
         info.merge(
           {
-            variacao_carteira: carteira.to_s,
+            variacao_carteira: 'COB',
             convenio: cedente.to_s
           }
         )
