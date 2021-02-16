@@ -8,7 +8,7 @@ class PagamentoPerfil < ApplicationRecord
       agencia: agencia.to_s,
       conta_corrente: conta.to_s,
       digito_conta: '1',
-      empresa_mae: 'asd',
+      empresa_mae: 'TESSI Tec. em Seg. e Sistemas',
       sequencial_remessa: '1',
       documento_cedente: Setting.cnpj,
       pagamentos: pagamentos,
@@ -22,8 +22,9 @@ class PagamentoPerfil < ApplicationRecord
       Brcobranca::Remessa::Cnab400::BancoBrasil.new(
         info.merge(
           {
-            variacao_carteira: 'COB',
-            convenio: cedente.to_s
+            variacao_carteira: '019',
+            convenio: cedente.to_s,
+            convenio_lider: cendente.to_s
           }
         )
       )
