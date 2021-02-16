@@ -24,7 +24,7 @@ class PagamentoPerfil < ApplicationRecord
           {
             variacao_carteira: '019',
             convenio: cedente.to_s,
-            convenio_lider: cendente.to_s
+            convenio_lider: cedente.to_s
           }
         )
       )
