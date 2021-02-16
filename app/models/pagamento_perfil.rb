@@ -23,7 +23,7 @@ class PagamentoPerfil < ApplicationRecord
         info.merge(
           {
             variacao_carteira: carteira.to_s,
-            convenio: convenio.to_s
+            convenio: cedente.to_s
           }
         )
       )
