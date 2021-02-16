@@ -42,7 +42,7 @@ class Fatura < ApplicationRecord
   end
 
   def remessa # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    ocorrencia = if liquidacao.present? && retorno.empty? && baixa.empty?
+    ocorrencia = if liquidacao.present? && retorno.blank? && baixa.blank?
                    '02'
                  else
                    '01'
