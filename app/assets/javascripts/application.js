@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require jquery3
 //= require jquery-ui
+//= require cleave
+//= require phone-type-formatter.br
 //= require popper
 //= require bootstrap-sprockets
 //= require chartkick

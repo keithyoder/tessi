@@ -31,6 +31,14 @@ class Pessoa < ApplicationRecord
     end
   end
 
+  def cpf_cnpj_formatado
+    if cpf.numero.present?
+      cpf.to_s
+    else
+      cnpj.to_s
+    end
+  end
+
   def tipo_documento
     if tipo == "Pessoa Física"
       "CPF"

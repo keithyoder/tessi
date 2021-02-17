@@ -15,7 +15,7 @@
           <% @pessoas.each do |pessoa| %>
             <tr>
               <td><%= link_to pessoa.nome, pessoa %></td>
-              <td><%= pessoa.cpf_cnpj %></td>
+              <td><%= pessoa.cpf_cnpj_formatado %></td>
               <td><%= pessoa.logradouro.bairro.nome_cidade_uf %></td>
            </tr>
           <% end %>

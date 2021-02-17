@@ -19,7 +19,7 @@
       <div class="card-body">
         <div class="card-columns" style="column-count: 4">
           <%= render 'shared/field_card', {campo: "Tipo", valor: @pessoa.tipo} %>
-          <%= render 'shared/field_card', {campo: "CPF / CNPJ", valor: @pessoa.cpf_cnpj } %>
+          <%= render 'shared/field_card', {campo: "CPF / CNPJ", valor: @pessoa.cpf_cnpj_formatado } %>
           <%= render 'shared/field_card', {campo: "RG / IE", valor: @pessoa.rg_ie } %>
           <% if @pessoa.nascimento.present? %>
             <%= render 'shared/field_card', {campo: "Nascimento", valor: @pessoa.nascimento.strftime("%d/%m/%Y") + " ("+ @pessoa.idade.to_s + " anos)"} %>
