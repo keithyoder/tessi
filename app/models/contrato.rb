@@ -27,6 +27,8 @@ class Contrato < ApplicationRecord
 
   after_create :gerar_faturas
 
+  after_save :verificar_cancelamento, if: :saved_change_to_cancelamento?
+
   before_destroy :verificar_exclusao, prepend: true
 
   def faturas_em_atraso(dias)
@@ -37,14 +39,14 @@ class Contrato < ApplicationRecord
     "#{id} - #{pessoa.nome}"
   end
 
-  def gerar_faturas
+  def gerar_faturas(quantas = prazo_meses)
     nossonumero = Fatura.select('MAX(nossonumero::int) as nossonumero')
                         .where(pagamento_perfil_id: pagamento_perfil_id)
                         .to_a[0][:nossonumero].to_i
     vencimento = faturas.maximum(:vencimento) || primeiro_vencimento - 1.month
     inicio = faturas.maximum(:vencimento) || adesao
     parcela = faturas.maximum(:parcela) || 0
-    (1..prazo_meses).each do
+    (1..quantas).each do
       nossonumero += 1
       vencimento += 1.month
       parcela += 1
@@ -98,6 +100,17 @@ class Contrato < ApplicationRecord
 
     errors[:base] << 'Não pode excluir um contrato que tem faturas pagas ou boletos registrados'
     throw :abort
+  end
+
+  def verificar_cancelamento
+    # apagar todas as faturas que nao foram pagas ou registradas
+    # e que sao referentes a periodos após o cancelamento
+    faturas.where(liquidacao: nil, registro: nil)
+           .where('periodo_inicio >= ?', cancelamento)
+           .each(&:destroy)
+    parcial = faturas.where(liquidacao: nil, registro: nil)
+           .where('? between periodo_inicio and periodo_fim', cancelamento)
+    parcial.each { |fatura| fatura.update!(valor: fatura.valor * fracao_de_mes(fatura.periodo_inicio, cancelamento))}
   end
 
   def fracao_de_mes(inicio, fim)

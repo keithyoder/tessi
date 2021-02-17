@@ -1,6 +1,6 @@
-<h1>Editing Fatura</h1>
-
-<%= render 'form', fatura: @fatura %>
-
-<%= link_to 'Show', @fatura %> |
-<%= link_to 'Back', faturas_path %>
+<div class="card">
+  <%= render 'shared/edit_header', {object: @fatura, titulo: "Fatura"} %>
+  <div class="card-body">
+    <%= render 'form', fatura: @fatura %>
+  </div>
+</div>

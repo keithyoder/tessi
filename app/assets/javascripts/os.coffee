@@ -2,6 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+num2dot = (num) ->
+  d = num % 256
+  i = 3
+  while i > 0
+    num = Math.floor(num / 256)
+    d = num % 256 + '.' + d
+    i--
+  d
+
 window.carregarConexoes = ->
   pessoa = $("#os_pessoa_id").val()
   $.ajax
@@ -16,6 +25,7 @@ window.carregarConexoes = ->
       $("#os_conexao_id").empty()
       $("#os_conexao_id").append("<option value=''>--Escolher Conexão--</option>")
       for conexao in conexoes
-        $("#os_conexao_id").append("<option value=#{conexao.id}>#{conexao.ip} - #{conexao.usuario}</option>")
+        ip = num2dot(conexao.ip.addr)
+        $("#os_conexao_id").append("<option value=#{conexao.id}>#{ip} - #{conexao.usuario}</option>")
       return
   return

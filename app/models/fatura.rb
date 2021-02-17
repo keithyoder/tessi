@@ -61,7 +61,7 @@ class Fatura < ApplicationRecord
       cidade_sacado: cidade.nome,
       uf_sacado: estado.sigla,
       valor_desconto: plano.desconto,
-      data_desconto: vencimento,
+      data_desconto: plano.desconto > 0 ? vencimento : nil,
       cod_primeira_instrucao: cod_primeira_instrucao,
       identificacao_ocorrencia: ocorrencia
     )
