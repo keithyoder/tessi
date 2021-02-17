@@ -6,8 +6,8 @@ $(document).ready ->
   new Cleave('#pessoa_telefone1', {
     phone: true,
     phoneRegionCode: 'br'
-  });
+  })
   new Cleave('#pessoa_telefone2', {
     phone: true,
     phoneRegionCode: 'br'
-  });
+  })
