@@ -28,7 +28,7 @@
               <td><%= I18n.l(fatura.liquidacao, default: '') %></td>
               <td><%= number_to_currency(fatura.valor) %></td>
               <td><%= fatura.nossonumero %></td>
-              <td><p><small>
+              <td><small>
               <% if fatura.registro.present? %>
                 <span class="badge badge-success">Registrada</span>
               <% end %>
@@ -38,7 +38,7 @@
               <% if fatura.baixa.present? %>
                 <span class="badge badge-warning">Baixada</span>
               <% end %>              
-              </p></small></td>
+              </small></td>
             </tr>
           <% end %>
         </tbody>
