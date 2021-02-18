@@ -25,22 +25,22 @@ class PagamentoPerfisController < ApplicationController
   def remessa
     boletos = []
     faturas = @pagamento_perfil.faturas
-      .eager_load([:pessoa, :logradouro, :bairro, :cidade, :estado, :plano])
-      .where.not(nossonumero: '')
-    if params[:baixas].present?
+                               .eager_load(%i[pessoa logradouro bairro cidade estado plano])
+                               .where.not(nossonumero: '')
+    if params.key?(:baixas)
       faturas = faturas.where()
         .where(vencimento: 10.days.ago..30.days.from_now)
         .where.not(liquidacao: nil)
         .where.not(registro_id: nil)
         .where(retorno_id: nil, baixa_id: nil)
     else
-      faturas = faturas.where(vencimento: 1.day.from_now..30.days.from_now)
-        .where(liquidacao: nil)
-        .where(registro_id: nil)
+      faturas = faturas.where(
+        vencimento: Date.today..30.days.from_now,
+        liquidacao: nil,
+        registro_id: nil
+      )
     end
-    faturas.each do |fatura|
-      boletos << fatura.remessa
-    end
+    boletos << faturas.map(&:remessa)
     send_data @pagamento_perfil.remessa(boletos).gera_arquivo, :content_type => "text/plain", :filename => "remessa.txt"
   end
 
