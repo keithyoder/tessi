@@ -6,11 +6,11 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th><%= sort_link(@q, :pessoa_nome, 'Assinante') %></th>
-            <th><%= sort_link(@q, :tipo) %></th>
+            <th><%= sort_link(@os_q, :pessoa_nome, 'Assinante') %></th>
+            <th><%= sort_link(@os_q, :tipo) %></th>
             <th>Classificação</th>
-            <th><%= sort_link(@q, :responsavel, 'Responsável') %></th>
-            <th><%= sort_link(@q, :created_at, 'Aberta', default_order: :desc) %></th>
+            <th><%= sort_link(@os_q, :responsavel, 'Responsável') %></th>
+            <th><%= sort_link(@os_q, :created_at, 'Aberta', default_order: :desc) %></th>
             <th>Fechada</th>
           </tr>
         </thead>

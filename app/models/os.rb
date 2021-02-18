@@ -10,4 +10,10 @@ class Os < ApplicationRecord
   scope :abertas, -> { where(fechamento: nil) }
   scope :fechadas, -> { where.not(fechamento: nil) }
   scope :por_responsavel, ->(responsavel) { where(responsavel: responsavel) }
+  validates :tipo, presence: true
+  validates_associated :conexao, if: :reparo?
+
+  def reparo?
+    tipo == 'Reparo'
+  end
 end
