@@ -9,4 +9,5 @@ class Os < ApplicationRecord
   enum tipo: { Instalação: 1, Reparo: 2, Transferência: 3, Retirada: 4 }
   scope :abertas, -> { where(fechamento: nil) }
   scope :fechadas, -> { where.not(fechamento: nil) }
+  scope :por_responsavel, ->(responsavel) { where(responsavel: responsavel) }
 end

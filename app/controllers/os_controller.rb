@@ -4,13 +4,14 @@ class OsController < ApplicationController
 
   # GET /os or /os.json
   def index
-    @os = if params.key?(:abertas)
-            Os.abertas
-          else
-            Os.all
-          end
-    @q = @os.ransack(params[:q])
-    @os = @q.result(order: :created_at).page params[:page]
+    puts params[:q]
+    @os = Os
+    @os = @os.abertas if params.key?(:abertas)
+    @os = @os.fechadas if params.key?(:fechadas)
+    @os = @os.por_responsavel(current_user) if params.key?(:minhas)
+    @os = @os.por_responsavel(params[:responsavel]) if params.key?(:responsavel)
+    @q = @os.includes(:pessoa, :classificacao).ransack(params[:q])
+    @os = @q.result.page params[:page]
     respond_to do |format|
       format.html
     end
