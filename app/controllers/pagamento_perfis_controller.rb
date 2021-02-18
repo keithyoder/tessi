@@ -39,7 +39,8 @@ class PagamentoPerfisController < ApplicationController
         registro_id: nil
       )
     end
-    send_data @pagamento_perfil.remessa(faturas.map(&:remessa)).gera_arquivo(
+    send_data(
+      @pagamento_perfil.remessa(faturas.map(&:remessa)).gera_arquivo,
       content_type: 'text/plain',
       filename: 'remessa.txt'
     )
