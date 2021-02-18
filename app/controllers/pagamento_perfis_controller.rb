@@ -23,7 +23,6 @@ class PagamentoPerfisController < ApplicationController
   end
 
   def remessa
-    boletos = []
     faturas = @pagamento_perfil.faturas
                                .eager_load(%i[pessoa logradouro bairro cidade estado plano])
                                .where.not(nossonumero: '')
@@ -40,8 +39,10 @@ class PagamentoPerfisController < ApplicationController
         registro_id: nil
       )
     end
-    boletos << faturas.map(&:remessa)
-    send_data @pagamento_perfil.remessa(boletos).gera_arquivo, :content_type => "text/plain", :filename => "remessa.txt"
+    send_data @pagamento_perfil.remessa(faturas.map(&:remessa)).gera_arquivo(
+      content_type: 'text/plain',
+      filename: 'remessa.txt'
+    )
   end
 
   # POST /pagamento_perfis
