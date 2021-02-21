@@ -24,6 +24,12 @@ class Contrato < ApplicationRecord
             .having('count(faturas.*) = 0')
             .distinct
         }
+  scope :cancelaveis, lambda {
+    joins(:faturas)
+      .where('faturas.liquidacao is null and faturas.vencimento < ?', 1.day.ago)
+      .group('contratos.id')
+      .having('COUNT(faturas.*) > 4')
+  }
 
   after_create :gerar_faturas
 

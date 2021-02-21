@@ -17,22 +17,18 @@ class Fatura < ApplicationRecord
   has_many :nf21
   has_one_attached :nf_pdf
   paginates_per 18
-  scope :inadimplentes, lambda {
-    where('liquidacao is null and vencimento < ?', 5.days.ago)
-  }
-  scope :suspensos, lambda {
-    where('liquidacao is null and vencimento < ?', 15.days.ago)
-  }
-  scope :pagas, lambda {
-    where.not(liquidacao: nil)
-  }
-  scope :registradas, lambda {
-    where.not(registro: nil)
-  }
+  scope :pagas, -> { where.not(liquidacao: nil) }
+  scope :em_aberto, -> { where(liquidacao: nil) }
+  scope :inadimplentes, -> { where('vencimento < ?', 5.days.ago).em_aberto }
+  scope :suspensos, -> { where('vencimento < ?', 15.days.ago).em_aberto }
+  scope :registradas, -> { where.not(registro: nil) }
+  scope :vencidas, -> { where('vencimento < ?', 1.day.ago).em_aberto }
+  scope :a_vencer, -> { where('vencimento > ?', Date.today).em_aberto }
+
   enum meio_liquidacao: {
     RetornoBancario: 1,
     Dinheiro: 2,
-    Cheque: 3, 
+    Cheque: 3,
     CartaoCredito: 4,
     Outros: 5
   }
