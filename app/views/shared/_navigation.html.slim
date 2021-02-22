@@ -40,7 +40,7 @@ nav#sidebar.sidebar-wrapper
               li
                 = link_to('Liquidações', liquidacoes_path)
               li
-                a href="#"  Credit cart
+                = link_to('Contratos para Cancelar', contratos_path(cancelaveis: 1))
         li.sidebar-dropdown
           = link_to 'javascript:;' do
             i.fas.fa-ethernet
