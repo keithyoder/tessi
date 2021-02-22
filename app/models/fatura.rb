@@ -58,7 +58,7 @@ class Fatura < ApplicationRecord
       uf_sacado: estado.sigla,
       valor_desconto: plano.desconto,
       data_desconto: plano.desconto.positive? ? vencimento : nil,
-      cod_primeira_instrucao: cod_primeira_instrucao,
+      cod_primeira_instrucao: cod_primeira_instrucao.to_s,
       identificacao_ocorrencia: ocorrencia,
       codigo_multa: '4',
       percentual_multa: Setting.multa.to_f * 100,
