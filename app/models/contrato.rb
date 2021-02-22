@@ -28,7 +28,13 @@ class Contrato < ApplicationRecord
     joins(:faturas)
       .where('faturas.liquidacao is null and faturas.vencimento < ?', 1.day.ago)
       .group('contratos.id')
-      .having('COUNT(faturas.*) > 4')
+      .having('COUNT(faturas.*) > 4').ativos
+  }
+  scope :renovaveis, lambda {
+    left_outer_joins(:faturas)
+      .where('faturas.periodo_fim > ?', 30.days.from_now)
+      .group('contratos.id')
+      .having('COUNT(faturas.*) = 0').ativos
   }
 
   after_create :gerar_faturas
