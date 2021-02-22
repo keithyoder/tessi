@@ -6,7 +6,12 @@ class ContratosController < ApplicationController
   # GET /contratos
   # GET /contratos.json
   def index
-    @q = Contrato.ransack(params[:q])
+    contrato = Contrato
+    contrato = contrato.ativos if params.key?(:ativos)
+    contrato = contrato.renovaveis if params.key?(:renovaveis)
+    contrato = contrato.suspendiveis if params.key?(:suspendiveis)
+    contrato = contrato.cancelaveis if params.key?(:cancelaveis)
+    @q = contrato.ransack(params[:q])
     @q.sorts = "pessoa_nome"
     @contratos = @q.result.page params[:page]
   end

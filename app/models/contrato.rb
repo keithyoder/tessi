@@ -9,11 +9,11 @@ class Contrato < ApplicationRecord
     where(cancelamento: nil)
   }
   scope :suspendiveis, lambda {
-          joins(:conexoes)
-            .joins(:faturas)
-            .where(bloqueado: false)
-            .where(liquidacao: nil)
-            .where('vencimento < ?', 15.days.ago)
+          includes(:pessoa)
+            .joins(:conexoes, :faturas)
+            .where('not conexoes.bloqueado')
+            .where('faturas.liquidacao is null')
+            .where('faturas.vencimento < ?', 15.days.ago)
             .distinct
         }
   scope :liberaveis, lambda {
@@ -25,14 +25,15 @@ class Contrato < ApplicationRecord
             .distinct
         }
   scope :cancelaveis, lambda {
-    joins(:faturas)
+    joins(:pessoa, :faturas)
       .where('faturas.liquidacao is null and faturas.vencimento < ?', 1.day.ago)
-      .group('contratos.id')
+      .group('contratos.id, pessoas.id')
       .having('COUNT(faturas.*) > 4').ativos
   }
   scope :renovaveis, lambda {
-    joins("LEFT JOIN faturas ON contratos.id = faturas.contrato_id AND faturas.periodo_fim > '#{30.days.from_now}'")
-      .group('contratos.id')
+    joins(:pessoa)
+      .joins("LEFT JOIN faturas ON contratos.id = faturas.contrato_id AND faturas.periodo_fim > '#{30.days.from_now}'")
+      .group('contratos.id', 'pessoas.id')
       .having('COUNT(faturas.*) = 0').ativos
   }
 
