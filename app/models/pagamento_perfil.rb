@@ -19,7 +19,7 @@ class PagamentoPerfil < ApplicationRecord
       Brcobranca::Remessa::Cnab400::Santander.new(
         info.merge(
           {
-            codigo_transmissao: agencia.to_s + convenio.to_s,
+            codigo_transmissao: agencia.to_s + cedente.to_s,
             codigo_multa: '4',
             multa: Setting.multa * 100,
             codigo_carteira: '5',
