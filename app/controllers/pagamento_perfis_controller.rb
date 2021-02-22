@@ -11,7 +11,7 @@ class PagamentoPerfisController < ApplicationController
   # GET /pagamento_perfis/1
   # GET /pagamento_perfis/1.json
   def show
-    @retornos = @pagamento_perfil.retornos.page params[:page]
+    @retornos = @pagamento_perfil.retornos.order(data: :desc).page params[:page]
   end
 
   # GET /pagamento_perfis/new
