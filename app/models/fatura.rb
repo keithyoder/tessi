@@ -44,7 +44,6 @@ class Fatura < ApplicationRecord
     else
       ocorrencia = '01'
       cod_primeira_instrucao = '22' if pagamento_perfil.banco == 1
-      end
     end
     Brcobranca::Remessa::Pagamento.new(
       valor: valor,
