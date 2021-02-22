@@ -107,7 +107,11 @@ class Retorno < ApplicationRecord
   end
 
   def cnab_to_date(valor)
-    Date.strptime(valor, '%d%m%y')
+    if valor.length == 8
+      Date.strptime(valor, '%d%m%Y')
+    else
+      Date.strptime(valor, '%d%m%y')
+    end
   end
 
   def cnab_to_nosso_numero(valor)

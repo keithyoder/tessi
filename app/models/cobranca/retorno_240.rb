@@ -1,4 +1,4 @@
-require "parseline"
+require 'parseline'
 
 class Retorno240Header
   attr_accessor :sequencia
@@ -11,7 +11,7 @@ class Retorno240Header
   fixed_width_layout do |parse|
     parse.field :banco, 0..2
     parse.field :convenio, 52..62
-    parse.field :data, 143..150
+    parse.field :data, 143..152
     parse.field :sequencia, 157..162
   end
 end
