@@ -65,7 +65,7 @@ class Fatura < ApplicationRecord
       cod_primeira_instrucao: cod_primeira_instrucao,
       identificacao_ocorrencia: ocorrencia,
       codigo_multa: '4',
-      multa: Setting.multa * 100,
+      percentual_multa: Setting.multa * 100,
     )
   end
 
