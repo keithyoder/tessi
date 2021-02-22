@@ -1,5 +1,6 @@
 class PagamentoPerfil < ApplicationRecord
   has_many :faturas
+  has_many :retornos
   enum tipo: { "Boleto" => 3, "Débito Automático" => 2 }
 
   def remessa(pagamentos, codigo_transmissao: '1')
