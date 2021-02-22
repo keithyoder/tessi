@@ -31,8 +31,7 @@ class Contrato < ApplicationRecord
       .having('COUNT(faturas.*) > 4').ativos
   }
   scope :renovaveis, lambda {
-    left_outer_joins(:faturas)
-      .where('faturas.periodo_fim > ?', 30.days.from_now)
+    joins("LEFT JOIN faturas ON contratos.id = faturas.contrato_id AND faturas.periodo_fim > '#{30.days.from_now}'")
       .group('contratos.id')
       .having('COUNT(faturas.*) = 0').ativos
   }
