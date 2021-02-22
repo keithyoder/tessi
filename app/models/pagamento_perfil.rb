@@ -3,7 +3,7 @@ class PagamentoPerfil < ApplicationRecord
   has_many :retornos
   enum tipo: { "Boleto" => 3, "Débito Automático" => 2 }
 
-  def remessa(pagamentos, codigo_transmissao: '1')
+  def remessa(pagamentos)
     info = {
       carteira: carteira.to_s,
       agencia: agencia.to_s,
@@ -17,7 +17,14 @@ class PagamentoPerfil < ApplicationRecord
     case banco
     when 33
       Brcobranca::Remessa::Cnab400::Santander.new(
-        info.merge(codigo_transmissao: codigo_transmissao)
+        info.merge(
+          {
+            codigo_transmissao: agencia.to_s + convenio.to_s,
+            codigo_multa: '4',
+            multa: Setting.multa * 100,
+            codigo_carteira: '5',
+          }
+        )
       )
     when 1
       Brcobranca::Remessa::Cnab400::BancoBrasil.new(
