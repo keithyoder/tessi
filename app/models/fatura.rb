@@ -40,10 +40,14 @@ class Fatura < ApplicationRecord
   def remessa # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     if liquidacao.present? && retorno.blank? && baixa.blank?
       ocorrencia = '02'
-      cod_primeira_instrucao = '44'
+      if pagamento_perfil.banco == 1
+        cod_primeira_instrucao = '44'
+      end
     else
       ocorrencia = '01'
-      cod_primeira_instrucao = '22'
+      if pagamento_perfil.banco == 1
+        cod_primeira_instrucao = '22'
+      end
     end
     Brcobranca::Remessa::Pagamento.new(
       valor: valor,
@@ -57,9 +61,11 @@ class Fatura < ApplicationRecord
       cidade_sacado: cidade.nome,
       uf_sacado: estado.sigla,
       valor_desconto: plano.desconto,
-      data_desconto: plano.desconto > 0 ? vencimento : nil,
+      data_desconto: plano.desconto.positive? ? vencimento : nil,
       cod_primeira_instrucao: cod_primeira_instrucao,
-      identificacao_ocorrencia: ocorrencia
+      identificacao_ocorrencia: ocorrencia,
+      codigo_multa: '4',
+      multa: Setting.multa * 100,
     )
   end
 
