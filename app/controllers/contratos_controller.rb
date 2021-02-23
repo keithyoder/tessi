@@ -82,6 +82,10 @@ class ContratosController < ApplicationController
   def new
     @contrato = Contrato.new
     @contrato.pessoa_id = params[:pessoa_id] if params.key?(:pessoa_id)
+    @contrato.valor_instalacao = 0
+    @contrato.parcelas_instalacao = 0
+    @contrato.primeiro_vencimento = 1.month.from_now
+    @contrato.dia_vencimento = Date.today.day
   end
 
   # GET /contratos/1/edit
