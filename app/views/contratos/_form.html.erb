@@ -8,7 +8,7 @@
         <%= f.association :pessoa, collection: Pessoa.order(:nome), label_method: :nome %>
       </div>
       <div class="col-3">
-        <%= f.association :plano, label_method: :nome %>
+        <%= f.association :plano, collection: Plano.order(:nome), label_method: :nome %>
       </div>
     </div>
     <div class="row">

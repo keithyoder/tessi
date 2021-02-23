@@ -38,6 +38,7 @@ class Fatura < ApplicationRecord
   end
 
   def remessa # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    cod_primeira_instrucao = '00'
     if liquidacao.present? && retorno.blank? && baixa.blank?
       ocorrencia = '02'
       cod_primeira_instrucao = '44' if pagamento_perfil.banco == 1
