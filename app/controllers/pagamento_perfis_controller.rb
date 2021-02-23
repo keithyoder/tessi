@@ -5,7 +5,7 @@ class PagamentoPerfisController < ApplicationController
   # GET /pagamento_perfis
   # GET /pagamento_perfis.json
   def index
-    @pagamento_perfis = PagamentoPerfil.order("nome").all
+    @pagamento_perfis = PagamentoPerfil.order('nome').all
   end
 
   # GET /pagamento_perfis/1
@@ -43,7 +43,7 @@ class PagamentoPerfisController < ApplicationController
     send_data(
       @pagamento_perfil.remessa(faturas.map(&:remessa)).gera_arquivo,
       content_type: 'text/plain',
-      filename: 'remessa.txt'
+      filename: "#{banco}.rem"
     )
   end
 
@@ -96,6 +96,8 @@ class PagamentoPerfisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def pagamento_perfil_params
-    params.require(:pagamento_perfil).permit(:nome, :tipo, :cedente, :agencia, :conta, :carteira, :banco)
+    params.require(:pagamento_perfil).permit(
+      :nome, :tipo, :cedente, :agencia, :conta, :carteira, :banco, :conta, :variacao
+    )
   end
 end

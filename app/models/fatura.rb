@@ -48,6 +48,7 @@ class Fatura < ApplicationRecord
     Brcobranca::Remessa::Pagamento.new(
       valor: valor,
       data_vencimento: vencimento,
+      numero: nossonumero,
       nosso_numero: nossonumero,
       documento_sacado: pessoa.cpf_cnpj,
       nome_sacado: pessoa.nome,

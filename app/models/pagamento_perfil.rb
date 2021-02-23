@@ -19,8 +19,8 @@ class PagamentoPerfil < ApplicationRecord
       Brcobranca::Remessa::Cnab400::Santander.new(
         info.merge(
           {
-            codigo_transmissao: agencia.to_s + cedente.to_s,
-            codigo_carteira: '5',
+            codigo_transmissao: agencia.to_s + '0' + cedente.to_s + conta.to_s,
+            codigo_carteira: variacao.to_s,
           }
         )
       )
@@ -28,7 +28,7 @@ class PagamentoPerfil < ApplicationRecord
       Brcobranca::Remessa::Cnab400::BancoBrasil.new(
         info.merge(
           {
-            variacao_carteira: '019',
+            variacao_carteira: variacao.to_s,
             convenio: cedente.to_s,
             convenio_lider: cedente.to_s
           }
