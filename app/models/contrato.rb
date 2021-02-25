@@ -52,9 +52,7 @@ class Contrato < ApplicationRecord
   end
 
   def gerar_faturas(quantas = prazo_meses)
-    nossonumero = Fatura.select('MAX(nossonumero::int) as nossonumero')
-                        .where(pagamento_perfil_id: pagamento_perfil_id)
-                        .to_a[0][:nossonumero].to_i
+    nossonumero = pagamento_perfil.proximo_nosso_numero
     vencimento = faturas.maximum(:vencimento) || primeiro_vencimento - 1.month
     inicio = faturas.maximum(:vencimento) || adesao
     parcela = faturas.maximum(:parcela) || 0
@@ -92,17 +90,18 @@ class Contrato < ApplicationRecord
   def atualizar_conexoes
     suspenso = suspender?
     atraso = faturas_em_atraso(5).positive?
-    puts atraso
     conexoes.each do |conexao|
-      conexao.update!(
-        inadimplente: atraso
-      )
       next unless conexao.auto_bloqueio?
 
       conexao.update!(
-        bloqueado: suspenso
+        bloqueado: suspenso,
+        inadimplente: atraso
       )
     end
+  end
+
+  def renovar
+    gerar_faturas(quantas = prazo - [faturas.a_vencer.count - 1, 0].min)
   end
 
   private

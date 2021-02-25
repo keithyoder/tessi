@@ -12,6 +12,12 @@ class PagamentoPerfil < ApplicationRecord
     end
   end
 
+  def proximo_nosso_numero
+    faturas.select('MAX(nossonumero::int) as nossonumero')
+           .to_a[0][:nossonumero]
+           .to_i
+  end
+
   private
 
   def remessa_banco_brasil(pagamentos)
