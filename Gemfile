@@ -66,7 +66,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootstrap'
 gem 'brcobranca'
-gem 'brcpfcnpj'
+gem 'cpf_cnpj'
 gem 'cancancan'
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-passenger', '~> 0.2.0'
