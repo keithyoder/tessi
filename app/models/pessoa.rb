@@ -60,11 +60,11 @@ class Pessoa < ApplicationRecord
     CNPJ.valid?(cnpj) if cnpj.present?
   end
 
-  def pessoa_fisica
+  def pessoa_fisica?
     tipo == 'Pessoa Física'
   end
 
-  def pessoa_juridica
+  def pessoa_juridica?
     tipo == 'Pessoa Jurídica'
   end
 end
