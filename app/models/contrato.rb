@@ -101,7 +101,7 @@ class Contrato < ApplicationRecord
   end
 
   def renovar
-    gerar_faturas(quantas: prazo - [faturas.a_vencer.count - 1, 0].min)
+    gerar_faturas(quantas: prazo_mezes - [faturas.a_vencer.count - 1, 0].min)
   end
 
   private
