@@ -37,34 +37,8 @@ class Fatura < ApplicationRecord
     contrato.atualizar_conexoes if saved_change_to_liquidacao?
   end
 
-  def remessa # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    cod_primeira_instrucao = '00'
-    if liquidacao.present? && retorno.blank? && baixa.blank?
-      ocorrencia = '02'
-      cod_primeira_instrucao = '44' if pagamento_perfil.banco == 1
-    else
-      ocorrencia = '01'
-      cod_primeira_instrucao = '22' if pagamento_perfil.banco == 1
-    end
-    Brcobranca::Remessa::Pagamento.new(
-      valor: valor,
-      data_vencimento: vencimento,
-      numero: nossonumero,
-      nosso_numero: nossonumero,
-      documento_sacado: pessoa.cpf_cnpj,
-      nome_sacado: pessoa.nome,
-      endereco_sacado: logradouro.nome + ', ' + pessoa.numero + ' ' + pessoa.complemento,
-      bairro_sacado: bairro.nome,
-      cep_sacado: logradouro.cep,
-      cidade_sacado: cidade.nome,
-      uf_sacado: estado.sigla,
-      valor_desconto: plano.desconto,
-      data_desconto: plano.desconto.positive? ? vencimento : nil,
-      cod_primeira_instrucao: cod_primeira_instrucao.to_s,
-      identificacao_ocorrencia: ocorrencia,
-      codigo_multa: '4',
-      percentual_multa: Setting.multa.to_f * 100,
-    )
+  def remessa
+    Brcobranca::Remessa::Pagamento.new remessa_attr
   end
 
   def boleto # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -140,5 +114,57 @@ class Fatura < ApplicationRecord
     next_nf = (Nf21.maximum(:numero).presence || 0) + 1
     nf = Nf21.create(fatura_id: id, emissao: liquidacao, numero: next_nf)
     nf.gerar_registros
+  end
+
+  def baixar?
+    liquidacao.present? && retorno.blank? && baixa.blank?
+  end
+
+  private
+
+  def remessa_attr # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    {
+      valor: valor,
+      data_vencimento: vencimento,
+      numero: nossonumero,
+      nosso_numero: nosso_numero_remessa,
+      documento_sacado: pessoa.cpf_cnpj,
+      nome_sacado: pessoa.nome,
+      endereco_sacado: pessoa.endereco,
+      bairro_sacado: bairro.nome,
+      cep_sacado: logradouro.cep,
+      cidade_sacado: cidade.nome,
+      uf_sacado: estado.sigla,
+      valor_desconto: plano.desconto,
+      data_desconto: plano.desconto.positive? ? vencimento : nil,
+      codigo_multa: '4',
+      percentual_multa: Setting.multa.to_f * 100,
+      valor_mora: (Setting.juros.to_f * valor / 30).round(2)
+    }.merge ocorrencia_attr
+  end
+
+  def ocorrencia_attr # rubocop:disable Metrics/MethodLength
+    if baixar?
+      {
+        cod_primeira_instrucao: pagamento_perfil.banco == 1 ? '44' : '00',
+        identificacao_ocorrencia: '02',
+      }
+    else
+      {
+        cod_primeira_instrucao: pagamento_perfil.banco == 1 ? '22' : '00',
+        identificacao_ocorrencia: '01',
+      }
+    end
+  end
+
+  def nosso_numero_remessa
+    nossonumero + (dv_santander.to_s if pagamento_perfil.banco == 33).to_s
+  end
+
+  def dv_santander
+    nossonumero.modulo11(
+      multiplicador: (2..9).to_a,
+      mapeamento: { 10 => 0, 11 => 0 }
+    ) { |total| 11 - (total % 11) }
   end
 end

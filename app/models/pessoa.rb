@@ -9,11 +9,16 @@ class Pessoa < ApplicationRecord
   has_one_attached :rg_imagem
   usar_como_cnpj :cnpj
   usar_como_cpf :cpf
-  scope :assinantes, -> { select("pessoas.id").joins(:conexoes).group("pessoas.id").having("count(*) > 0") }
+  scope :assinantes, -> { select('pessoas.id').joins(:conexoes).group("pessoas.id").having("count(*) > 0") }
 
   delegate :endereco, to: :logradouro, prefix: :logradouro
 
-  enum tipo: {"Pessoa Física" => 1, "Pessoa Jurídica" => 2}
+  enum tipo: { 'Pessoa Física' => 1, 'Pessoa Jurídica' => 2 }
+
+  validates :tipo, presence: true
+  validates :telefone1, presence: true
+  #validates :cpf, uniqueness: true, allow_blank: true
+  #validates :cnpj, uniqueness: true, allow_blank: true
 
   def endereco
     logradouro.nome + ', ' + numero + ' ' + complemento
@@ -24,35 +29,22 @@ class Pessoa < ApplicationRecord
   end
 
   def cpf_cnpj
-    if cpf.numero.present?
-      cpf.to_s.gsub(/[^0-9 ]/, '')
-    else
-      cnpj.to_s.gsub(/[^0-9 ]/, '')
-    end
+    (cpf.present? ? cpf : cnpj).gsub(/[^0-9 ]/, '')
   end
 
   def cpf_cnpj_formatado
-    if cpf.numero.present?
-      cpf.to_s
-    else
-      cnpj.to_s
-    end
+    cpf.present? ? cpf.to_s : cnpj.to_s
   end
 
   def tipo_documento
-    if tipo == "Pessoa Física"
-      "CPF"
-    else
-      "CNPJ"
-    end
+    tipo == 'Pessoa Física' ? 'CPF' : 'CNPJ'
   end
 
   def rg_ie
-    rg.present? ? self.rg : self.ie
+    rg.present? ? rg : ie
   end
 
   def assinante?
-    conexoes.count > 0
+    conexoes.count.positive?
   end
-
 end

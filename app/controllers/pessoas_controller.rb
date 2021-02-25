@@ -1,5 +1,5 @@
 class PessoasController < ApplicationController
-  before_action :set_pessoa, only: [:show, :edit, :update, :destroy]
+  before_action :set_pessoa, only: %i[show edit update destroy]
   load_and_authorize_resource
   autocomplete :logradouro, :nome, :full => true, :display_value => :endereco
 
@@ -7,7 +7,7 @@ class PessoasController < ApplicationController
   # GET /pessoas.json
   def index
     @q = Pessoa.includes(:logradouro, :bairro, :cidade, :estado).ransack(params[:q])
-    @q.sorts = "nome"
+    @q.sorts = 'nome'
     @pessoas = @q.result.page params[:page]
   end
 
@@ -15,14 +15,14 @@ class PessoasController < ApplicationController
   # GET /pessoas/1.json
   def show
     @pessoa = Pessoa.find(params[:id])
-    @params = {:pessoa_id => @pessoa}
+    @params = { pessoa_id: @pessoa }
     @conexoes = @pessoa.conexoes.order(:ip).page params[:page]
     @contratos = @pessoa.contratos.order(:adesao).page params[:page]
     @os_q = @pessoa.os.includes(:pessoa, :classificacao).ransack(params[:os_q])
     @os = @os_q.result.page(params[:page])
     respond_to do |format|
       format.html # show.html.erb
-      if params.has_key?(:conexoes)
+      if params.key?(:conexoes)
         format.json { render json: @conexoes }
       else
         format.json
@@ -46,7 +46,7 @@ class PessoasController < ApplicationController
 
     respond_to do |format|
       if @pessoa.save
-        format.html { redirect_to @pessoa, notice: 'Pessoa was successfully created.' }
+        format.html { redirect_to @pessoa, notice: 'Pessoa criada com sucesso.' }
         format.json { render :show, status: :created, location: @pessoa }
       else
         format.html { render :new }
@@ -80,14 +80,17 @@ class PessoasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pessoa
-      @pessoa = Pessoa.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pessoa_params
-      params.require(:pessoa).permit(:nome, :tipo, :cpf, :cnpj, :rg, :ie, :nascimento,
-        :logradouro_id, :numero, :complemento, :nomemae, :email, :telefone1, :telefone2, :rg_imagem)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pessoa
+    @pessoa = Pessoa.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pessoa_params
+    params.require(:pessoa).permit(
+      :nome, :tipo, :cpf, :cnpj, :rg, :ie, :nascimento, :logradouro_id, :numero,
+      :complemento, :nomemae, :email, :telefone1, :telefone2, :rg_imagem
+    )
+  end
 end
