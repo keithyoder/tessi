@@ -19,6 +19,8 @@ class Pessoa < ApplicationRecord
   validates :telefone1, presence: true
   validates :cpf, presence: true, if: :pessoa_fisica?
   validates :cnpj, presence: true, if: :pessoa_juridica?
+  validates :cpf, absence: true, if: :pessoa_juridica?
+  validates :cnpj, absence: true, if: :pessoa_fisica?
   validate :cpf_valido
   validate :cnpj_valido
   validates :cpf, uniqueness: true, allow_blank: true
