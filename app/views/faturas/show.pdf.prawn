@@ -41,7 +41,7 @@ prawn_document(page_size: 'A5', margin: [12,12,12,12]) do |pdf|
   pdf.close_and_stroke
   pdf.draw_text 'Prestadora', size: 8, style: :bold, at: [esquerda, 202]
   pdf.draw_text Setting.razao_social, size: 10, at: [esquerda, 190]
-  pdf.draw_text "CNPJ: #{Cnpj.new(Setting.cnpj)}", size: 10, at: [esquerda, 178]
+  pdf.draw_text "CNPJ: #{CNPJ.new(Setting.cnpj)}", size: 10, at: [esquerda, 178]
   pdf.draw_text 'Rua Treze de Maio, 5B - Centro - Pesqueira - PE', size: 10, at: [esquerda, 166]
   pdf.draw_text 'Assinante', size: 8, style: :bold, at: [esquerda, 147]
   pdf.draw_text @fatura.pessoa.nome, size: 10, at: [esquerda, 136]
