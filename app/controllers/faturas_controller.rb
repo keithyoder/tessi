@@ -46,6 +46,17 @@ class FaturasController < ApplicationController
     send_data @fatura.boleto.to_pdf, :filename => "boleto.pdf", :type => :pdf, :disposition => "inline"
   end
 
+  def estornar
+    if @fatura.estornar?
+      @fatura.update!(liquidacao: nil)
+      respond_to do |format|
+        format.html { redirect_to @fatura.contrato, notice: 'Fatura estornada com sucesso.' }
+      end
+    else
+      format.html { render :edit }
+    end
+  end
+
   # POST /faturas
   # POST /faturas.json
   def create

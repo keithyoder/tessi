@@ -54,7 +54,7 @@ class Ability
         can [:update, :liquidacao], Fatura
       elsif user.financeiro_n2?
         can :update, Cidade
-        can [:update, :liquidacao], Fatura
+        can %i[update liquidacao estornar], Fatura
         can %i[create update], [Retorno, Contrato]
         can :destroy, Contrato
       end

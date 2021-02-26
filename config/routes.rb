@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get :liquidacao, on: :member
     get :boleto, on: :member
     get :nf, on: :member
+    get :estornar, on: :member
   end
   resources :contratos do
     get :boletos, on: :member

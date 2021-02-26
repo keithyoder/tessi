@@ -72,7 +72,14 @@
               <%= render 'shared/field_card', {campo: "Baixa", valor: @fatura.baixa.sequencia} %>
             <% end %>
           <% end %>
-        </div>
+          </div>
+          <% if can?(:estornar, @fatura) && @fatura.estornar? %>
+            <%= link_to estornar_fatura_path do %>
+              <%= button_tag(:class => "btn btn-warning") do %>
+                <i class="fas fa-save" aria-hidden="true"></i> Estornar
+              <% end %>
+            <% end %>
+          <% end %>
       </div>
     </div>
   </div>

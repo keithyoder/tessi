@@ -120,6 +120,10 @@ class Fatura < ApplicationRecord
     liquidacao.present? && retorno.blank? && baixa.blank?
   end
 
+  def estornar?
+    liquidacao.present? && retorno.blank?
+  end
+
   private
 
   def remessa_attr # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
