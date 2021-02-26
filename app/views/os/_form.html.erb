@@ -10,7 +10,7 @@
         <%= f.input :tipo, collection: Os.tipos.keys %>
       </div>
       <div class="col">
-        <%= f.association :classificacao, label_method: :nome %>
+        <%= f.association :classificacao, collection: Classificacao.os, label_method: :nome %>
       </div>
     </div>
     <div class="row">

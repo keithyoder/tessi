@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_090357) do
+ActiveRecord::Schema.define(version: 2021_02_26_113441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,35 @@ ActiveRecord::Schema.define(version: 2021_02_23_090357) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "atendimento_detalhes", force: :cascade do |t|
+    t.bigint "atendimento_id"
+    t.integer "tipo"
+    t.bigint "atendente_id"
+    t.text "descricao"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["atendente_id"], name: "index_atendimento_detalhes_on_atendente_id"
+    t.index ["atendimento_id"], name: "index_atendimento_detalhes_on_atendimento_id"
+  end
+
+  create_table "atendimentos", force: :cascade do |t|
+    t.bigint "pessoa_id"
+    t.bigint "classificacao_id"
+    t.bigint "responsavel_id"
+    t.datetime "fechamento"
+    t.bigint "contrato_id"
+    t.bigint "conexao_id"
+    t.bigint "fatura_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classificacao_id"], name: "index_atendimentos_on_classificacao_id"
+    t.index ["conexao_id"], name: "index_atendimentos_on_conexao_id"
+    t.index ["contrato_id"], name: "index_atendimentos_on_contrato_id"
+    t.index ["fatura_id"], name: "index_atendimentos_on_fatura_id"
+    t.index ["pessoa_id"], name: "index_atendimentos_on_pessoa_id"
+    t.index ["responsavel_id"], name: "index_atendimentos_on_responsavel_id"
   end
 
   create_table "bairros", force: :cascade do |t|
@@ -451,6 +480,14 @@ ActiveRecord::Schema.define(version: 2021_02_23_090357) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "atendimento_detalhes", "atendimentos"
+  add_foreign_key "atendimento_detalhes", "users", column: "atendente_id"
+  add_foreign_key "atendimentos", "classificacoes"
+  add_foreign_key "atendimentos", "conexoes"
+  add_foreign_key "atendimentos", "contratos"
+  add_foreign_key "atendimentos", "faturas"
+  add_foreign_key "atendimentos", "pessoas"
+  add_foreign_key "atendimentos", "users", column: "responsavel_id"
   add_foreign_key "cidades", "estados"
   add_foreign_key "contratos", "pagamento_perfis"
   add_foreign_key "excecoes", "contratos"

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pessoa:</strong>
+  <%= @atendimento.pessoa %>
+</p>
+
+<p>
+  <strong>Classificaco:</strong>
+  <%= @atendimento.classificaco %>
+</p>
+
+<p>
+  <strong>Responsavel:</strong>
+  <%= @atendimento.responsavel %>
+</p>
+
+<p>
+  <strong>Fechamento:</strong>
+  <%= @atendimento.fechamento %>
+</p>
+
+<p>
+  <strong>Contrato:</strong>
+  <%= @atendimento.contrato %>
+</p>
+
+<p>
+  <strong>Conexao:</strong>
+  <%= @atendimento.conexao %>
+</p>
+
+<p>
+  <strong>Fatura:</strong>
+  <%= @atendimento.fatura %>
+</p>
+
+<%= link_to 'Edit', edit_atendimento_path(@atendimento) %> |
+<%= link_to 'Back', atendimentos_path %>

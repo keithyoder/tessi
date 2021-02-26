@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :atendimento_detalhes
+  resources :atendimentos
   resources :os
   resources :classificacoes
   resources :clasificacoes

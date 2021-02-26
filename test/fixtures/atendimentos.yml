@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pessoa: one
+  classificaco: one
+  responsavel: one
+  fechamento: 2021-02-26 08:33:08
+  contrato: one
+  conexao: one
+  fatura: one
+
+two:
+  pessoa: two
+  classificaco: two
+  responsavel: two
+  fechamento: 2021-02-26 08:33:08
+  contrato: two
+  conexao: two
+  fatura: two

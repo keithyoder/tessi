@@ -6,9 +6,8 @@ class Pessoa < ApplicationRecord
   has_many :conexoes
   has_many :contratos
   has_many :os
+  has_many :atendimentos
   has_one_attached :rg_imagem
-  #usar_como_cnpj :cnpj
-  #usar_como_cpf :cpf
   scope :assinantes, -> { select('pessoas.id').joins(:conexoes).group("pessoas.id").having("count(*) > 0") }
 
   delegate :endereco, to: :logradouro, prefix: :logradouro

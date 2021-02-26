@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  atendimento: one
+  tipo: 1
+  atendente: one
+  descricao: MyText
+
+two:
+  atendimento: two
+  tipo: 1
+  atendente: two
+  descricao: MyText

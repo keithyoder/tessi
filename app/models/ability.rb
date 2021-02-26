@@ -36,7 +36,7 @@ class Ability
         can :suspenso, Conexao
         can :boletos, Contrato
         can :boleto, Fatura
-        can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os]
+        can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
         cannot :update, Os.fechadas
         can :create, [Excecao]
       end
