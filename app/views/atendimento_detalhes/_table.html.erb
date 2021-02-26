@@ -1,0 +1,28 @@
+<div class="card">
+  <%= render '/shared/table_header', {object: @atendimento.detalhes, titulo: 'Detalhe'} %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Atendente</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @atendimento.detalhes.each do |detalhe| %>
+            <tr>
+              <td><%= detalhe.created_at %></td>
+              <td><%= detalhe.atendente.primeiro_nome %></td>
+              <td><%= detalhe.tipo %></td>
+              <td><%= detalhe.descricao %></td>
+           </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

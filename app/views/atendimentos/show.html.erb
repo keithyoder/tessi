@@ -1,39 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Pessoa:</strong>
-  <%= @atendimento.pessoa %>
-</p>
-
-<p>
-  <strong>Classificaco:</strong>
-  <%= @atendimento.classificaco %>
-</p>
-
-<p>
-  <strong>Responsavel:</strong>
-  <%= @atendimento.responsavel %>
-</p>
-
-<p>
-  <strong>Fechamento:</strong>
-  <%= @atendimento.fechamento %>
-</p>
-
-<p>
-  <strong>Contrato:</strong>
-  <%= @atendimento.contrato %>
-</p>
-
-<p>
-  <strong>Conexao:</strong>
-  <%= @atendimento.conexao %>
-</p>
-
-<p>
-  <strong>Fatura:</strong>
-  <%= @atendimento.fatura %>
-</p>
-
-<%= link_to 'Edit', edit_atendimento_path(@atendimento) %> |
-<%= link_to 'Back', atendimentos_path %>
+<div class="row">
+  <div class="card col-sm">
+    <%= render 'shared/show_header', {object: @atendimento, titulo: 'Atendimento'} %>
+    <div class="card-body">
+      <div class="card-columns" style="column-count: 3">
+        <%= link_to @atendimento.pessoa do %>
+          <%= render 'shared/field_card', {campo: "Pessoa", valor: @atendimento.pessoa.nome} %>
+        <% end %>
+        <%= render 'shared/field_card', {campo: "Classificação", valor: @atendimento.classificacao.nome} %>
+        <%= render 'shared/field_card', {campo: "Responsável", valor: @atendimento.responsavel.primeiro_nome} %>
+        <%= render 'shared/field_card', {campo: "Aberto Em", valor: @atendimento.created_at} %>
+        <%= render 'shared/field_card', {campo: "Fechado Em", valor: @atendimento.fechamento} %>
+        <%= render 'shared/field_card', {campo: "Contrato", valor: @atendimento.contrato&.id} %>
+        <%= render 'shared/field_card', {campo: "Conexão", valor: @atendimento.conexao&.ip.to_s} %>
+        <%= render 'shared/field_card', {campo: "Fatura", valor: @atendimento.fatura&.id} %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'atendimento_detalhes/table' %>

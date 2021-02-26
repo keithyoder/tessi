@@ -4,7 +4,11 @@ class AtendimentosController < ApplicationController
 
   # GET /atendimentos or /atendimentos.json
   def index
-    @atendimentos = Atendimento.all
+    @q = Atendimento.ransack(params[:q])
+    @atendimentos = @q.result(order: :created_at).page params[:page]
+    respond_to do |format|
+      format.html
+    end
   end
 
   # GET /atendimentos/1 or /atendimentos/1.json
@@ -14,6 +18,7 @@ class AtendimentosController < ApplicationController
   # GET /atendimentos/new
   def new
     @atendimento = Atendimento.new
+    @detalhe = AtendimentoDetalhe.new atendimento: @atendimento
   end
 
   # GET /atendimentos/1/edit
@@ -22,11 +27,19 @@ class AtendimentosController < ApplicationController
 
   # POST /atendimentos or /atendimentos.json
   def create
+    puts detalhe_params
     @atendimento = Atendimento.new(atendimento_params)
-
+    @detalhe = AtendimentoDetalhe.new(
+      {
+        atendimento: @atendimento,
+        atendente: current_user,
+        tipo: AtendimentoDetalhe.tipos.key(atendimento_params[:detalhe_tipo].to_i),
+        descricao: atendimento_params[:detalhe_descricao]
+      }
+    )
     respond_to do |format|
-      if @atendimento.save
-        format.html { redirect_to @atendimento, notice: "Atendimento was successfully created." }
+      if @atendimento.save && @detalhe.save
+        format.html { redirect_to @atendimento, notice: 'Atendimento criado com sucesso.' }
         format.json { render :show, status: :created, location: @atendimento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -58,13 +71,21 @@ class AtendimentosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_atendimento
-      @atendimento = Atendimento.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def atendimento_params
-      params.require(:atendimento).permit(:pessoa_id, :classificaco_id, :responsavel_id, :fechamento, :contrato_id, :conexao_id, :fatura_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_atendimento
+    @atendimento = Atendimento.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def atendimento_params
+    params.require(:atendimento).permit(
+      :pessoa_id, :classificacao_id, :responsavel_id, :fechamento, :contrato_id,
+      :conexao_id, :fatura_id, :detalhe_tipo, :detalhe_descricao
+    )
+  end
+
+  def detalhe_params
+    params.permit(:detalhe_tipo, :detalhe_descricao)
+  end
 end
