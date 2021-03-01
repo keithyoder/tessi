@@ -6,8 +6,8 @@ class AtendimentosController < ApplicationController
   # GET /atendimentos or /atendimentos.json
   def index
     atendimento = Atendimento
-    atendimento = atendimento.abertas if params.key?(:abertos)
-    atendimento = atendimento.fechadas if params.key?(:fechados)
+    atendimento = atendimento.abertos if params.key?(:abertos)
+    atendimento = atendimento.fechados if params.key?(:fechados)
     atendimento = atendimento.por_responsavel(current_user) if params.key?(:meus)
     atendimento = atendimento.por_responsavel(params[:responsavel]) if params.key?(:responsavel)
     @q = atendimento.ransack(params[:os_q])

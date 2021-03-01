@@ -32,7 +32,6 @@ nav#sidebar.sidebar-wrapper
           = link_to 'javascript:;' do
             i.fa.fa-dollar-sign
             span.menu-text Financeiro
-            span.badge.badge-pill.badge-danger 3
           .sidebar-submenu
             ul
               li
@@ -74,9 +73,15 @@ nav#sidebar.sidebar-wrapper
               li
                 = link_to('Perfis de Pagamento', pagamento_perfis_path)
         li
-          = link_to 'Meus Atendimentos', atendimentos_path(meus: 1, abertos: 1)
+          = link_to atendimentos_path(meus: 1, abertos: 1) do
+            i.fa.fa-phone
+            span.menu-text Meus Atendimentos
+            span.badge.badge-pill.badge-danger = Atendimento.por_responsavel(current_user).abertos.count
         li
-          = link_to 'Minhas OS', os_index_path(minhas: 1, abertas: 1)
+          = link_to os_index_path(minhas: 1, abertas: 1) do
+            i.fa.fa-truck
+            span.menu-text Minhas OS
+            span.badge.badge-pill.badge-danger = Os.por_responsavel(current_user).abertas.count
     /! sidebar-menu
   /! sidebar-footer
   .sidebar-footer
