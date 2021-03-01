@@ -1,25 +1,32 @@
 class PessoasController < ApplicationController
   before_action :set_pessoa, only: %i[show edit update destroy]
+  before_action :set_scope, only: %i[index show new]
   load_and_authorize_resource
   autocomplete :logradouro, :nome, :full => true, :display_value => :endereco
 
   # GET /pessoas
   # GET /pessoas.json
   def index
-    @q = Pessoa.includes(:logradouro, :bairro, :cidade, :estado).ransack(params[:q])
+    @q = Pessoa.includes(:logradouro, :bairro, :cidade, :estado)
+               .ransack(params[:q])
     @q.sorts = 'nome'
     @pessoas = @q.result.page params[:page]
+    puts('---------------')
+    puts(@params)
   end
 
   # GET /pessoas/1
   # GET /pessoas/1.json
   def show
     @pessoa = Pessoa.find(params[:id])
-    @params = { pessoa_id: @pessoa }
+    @params = @params.merge( pessoa_id: @pessoa )
     @conexoes = @pessoa.conexoes.order(:ip).page params[:page]
     @contratos = @pessoa.contratos.order(:adesao).page params[:page]
     @os_q = @pessoa.os.includes(:pessoa, :classificacao).ransack(params[:os_q])
     @os = @os_q.result.page(params[:page])
+    @atendimentos_q = @pessoa.atendimentos.includes(:pessoa, :classificacao).ransack(params[:atendimentos_q])
+    @atendimentos = @atendimentos_q.result.page(params[:page])
+
     respond_to do |format|
       format.html # show.html.erb
       if params.key?(:conexoes)
@@ -80,6 +87,10 @@ class PessoasController < ApplicationController
   end
 
   private
+
+  def set_scope
+    @params = params.permit(:page, q: [:nome_cont])
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_pessoa

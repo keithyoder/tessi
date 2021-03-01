@@ -14,7 +14,7 @@
         <tbody>
           <% @pessoas.each do |pessoa| %>
             <tr>
-              <td><%= link_to pessoa.nome, pessoa %></td>
+              <td><%= link_to pessoa.nome, pessoa_path(id: pessoa.id, params: @params) %></td>
               <td><%= pessoa.cpf_cnpj_formatado %></td>
               <td><%= pessoa.logradouro.bairro.nome_cidade_uf %></td>
            </tr>

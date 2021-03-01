@@ -1,10 +1,16 @@
 class AtendimentosController < ApplicationController
   before_action :set_atendimento, only: %i[ show edit update destroy ]
+  before_action :set_scope, only: %i[ index show new ]
   load_and_authorize_resource
 
   # GET /atendimentos or /atendimentos.json
   def index
-    @q = Atendimento.ransack(params[:q])
+    atendimento = Atendimento
+    atendimento = atendimento.abertas if params.key?(:abertos)
+    atendimento = atendimento.fechadas if params.key?(:fechados)
+    atendimento = atendimento.por_responsavel(current_user) if params.key?(:meus)
+    atendimento = atendimento.por_responsavel(params[:responsavel]) if params.key?(:responsavel)
+    @q = atendimento.ransack(params[:os_q])
     @atendimentos = @q.result(order: :created_at).page params[:page]
     respond_to do |format|
       format.html
@@ -18,6 +24,8 @@ class AtendimentosController < ApplicationController
   # GET /atendimentos/new
   def new
     @atendimento = Atendimento.new
+    @atendimento.pessoa_id = params[:pessoa_id] if params.key?(:pessoa_id)
+    @atendimento.responsavel = current_user
     @detalhe = AtendimentoDetalhe.new atendimento: @atendimento
   end
 
@@ -30,12 +38,10 @@ class AtendimentosController < ApplicationController
     puts detalhe_params
     @atendimento = Atendimento.new(atendimento_params)
     @detalhe = AtendimentoDetalhe.new(
-      {
-        atendimento: @atendimento,
-        atendente: current_user,
-        tipo: AtendimentoDetalhe.tipos.key(atendimento_params[:detalhe_tipo].to_i),
-        descricao: atendimento_params[:detalhe_descricao]
-      }
+      atendimento: @atendimento,
+      atendente: current_user,
+      tipo: AtendimentoDetalhe.tipos.key(atendimento_params[:detalhe_tipo].to_i),
+      descricao: atendimento_params[:detalhe_descricao]
     )
     respond_to do |format|
       if @atendimento.save && @detalhe.save
@@ -75,6 +81,10 @@ class AtendimentosController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_atendimento
     @atendimento = Atendimento.find(params[:id])
+  end
+
+  def set_scope
+    @params = params.permit(:abertos, :fechados, :meus, :responsavel)
   end
 
   # Only allow a list of trusted parameters through.

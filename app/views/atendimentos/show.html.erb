@@ -1,6 +1,6 @@
 <div class="row">
   <div class="card col-sm">
-    <%= render 'shared/show_header', {object: @atendimento, titulo: 'Atendimento'} %>
+    <%= render 'shared/show_header', {object: @atendimento, titulo: 'Atendimento', params: @params} %>
     <div class="card-body">
       <div class="card-columns" style="column-count: 3">
         <%= link_to @atendimento.pessoa do %>

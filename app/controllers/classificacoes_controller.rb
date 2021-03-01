@@ -4,7 +4,9 @@ class ClassificacoesController < ApplicationController
 
   # GET /classificacoes or /classificacoes.json
   def index
-    @q = Classificacao.ransack(params[:q])
+    classificacao = Classificacao
+    classificacao = classificacao.where(tipo: params[:tipo]) if params.key?(:tipo)
+    @q = classificacao.ransack(params[:q])
     @q.sorts = 'tipo_nome'
     @classificacoes = @q.result.page params[:page]
   end

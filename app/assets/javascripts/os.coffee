@@ -22,10 +22,12 @@ window.carregarConexoes = ->
       return
     success: (response) ->
       conexoes = response
+      conexao_salvo = $("#os_conexao_id").val()
       $("#os_conexao_id").empty()
       $("#os_conexao_id").append("<option value=''>--Escolher Conexão--</option>")
       for conexao in conexoes
         ip = num2dot(conexao.ip.addr)
         $("#os_conexao_id").append("<option value=#{conexao.id}>#{ip} - #{conexao.usuario}</option>")
+      $("#os_conexao_id").val(conexao_salvo)
       return
   return

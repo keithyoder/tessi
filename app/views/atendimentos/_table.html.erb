@@ -15,7 +15,7 @@
         <tbody>
           <% @atendimentos.each do |atendimento| %>
             <tr>
-              <td><%= link_to atendimento.created_at, atendimento %></td>
+              <td><%= link_to atendimento.created_at, atendimento_path(id: atendimento.id, params: @params) %></td>
               <td><%= link_to atendimento.pessoa.nome, atendimento.pessoa %></td>
               <td><%= atendimento.classificacao.nome %></td>
               <td><%= atendimento.responsavel.primeiro_nome %></td>

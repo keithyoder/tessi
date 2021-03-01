@@ -1,5 +1,6 @@
 class OsController < ApplicationController
-  before_action :set_os, only: %i[ show edit update destroy ]
+  before_action :set_os, only: %i[show edit update destroy]
+  before_action :set_scope, only: %i[index show new]
   load_and_authorize_resource
 
   # GET /os or /os.json
@@ -78,6 +79,10 @@ class OsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_os
     @os = Os.find(params[:id])
+  end
+
+  def set_scope
+    @params = params.permit(:abertas, :fechadas, :minhas, :responsavel)
   end
 
   # Only allow a list of trusted parameters through.

@@ -70,9 +70,13 @@ nav#sidebar.sidebar-wrapper
               li
                 = link_to('Planos', planos_path)
               li
-                a href="#"  Bar chart
+                = link_to('Classificações', classificacoes_path)
               li
-                a href="#"  Histogram
+                = link_to('Perfis de Pagamento', pagamento_perfis_path)
+        li
+          = link_to 'Meus Atendimentos', atendimentos_path(meus: 1, abertos: 1)
+        li
+          = link_to 'Minhas OS', os_index_path(minhas: 1, abertas: 1)
     /! sidebar-menu
   /! sidebar-footer
   .sidebar-footer

@@ -18,8 +18,8 @@
           <% @os.each do |os| %>
             <tr>
               <td><%= link_to os.pessoa.nome, os.pessoa %></td>
-              <td><%= link_to os.tipo, os %></td>
-              <td><%= link_to os.classificacao&.nome, os %></td>
+              <td><%= link_to os.tipo, os_path(id: os.id, params: @params) %></td>
+              <td><%= link_to os.classificacao&.nome, os_path(id: os.id, params: @params) %></td>
               <td><%= os.responsavel.primeiro_nome %></td>
               <td><%= l(os.created_at, format: :short) %></td>
               <td><%= l(os.fechamento, format: :short, default: '') %></td>
