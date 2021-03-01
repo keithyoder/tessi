@@ -14,6 +14,11 @@
         <%= render 'shared/field_card', {campo: "Conexão", valor: @atendimento.conexao&.ip.to_s} %>
         <%= render 'shared/field_card', {campo: "Fatura", valor: @atendimento.fatura&.id} %>
       </div>
+  <%= link_to encerrar_atendimento_path do %>
+    <%= button_tag("Encerrar", {:class => "btn btn-warning"}) do %>
+      <i class="fas fa-door-closed" aria-hidden="true"></i> Encerrar
+    <% end %>
+  <% end %>
     </div>
   </div>
 </div>

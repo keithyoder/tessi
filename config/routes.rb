@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  resources :atendimento_detalhes
-  resources :atendimentos
+  resources :atendimento_detalhes, only: [:show, :new, :edit]
+  resources :atendimentos do
+    get :encerrar, on: :member
+  end
   resources :os
   resources :classificacoes
   resources :clasificacoes

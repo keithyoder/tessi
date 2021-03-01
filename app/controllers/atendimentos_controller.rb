@@ -1,6 +1,6 @@
 class AtendimentosController < ApplicationController
-  before_action :set_atendimento, only: %i[ show edit update destroy ]
-  before_action :set_scope, only: %i[ index show new ]
+  before_action :set_atendimento, only: %i[show edit update destroy encerrar]
+  before_action :set_scope, only: %i[index show new encerrar]
   load_and_authorize_resource
 
   # GET /atendimentos or /atendimentos.json
@@ -31,6 +31,18 @@ class AtendimentosController < ApplicationController
 
   # GET /atendimentos/1/edit
   def edit
+  end
+
+  def encerrar
+    respond_to do |format|
+      if @atendimento.update!(fechamento: DateTime.now)
+        format.html { redirect_to @atendimento, notice: 'Atendimento encerrado com sucesso.' }
+        format.json { render :show, status: :created, location: @atendimento }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @atendimento.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /atendimentos or /atendimentos.json

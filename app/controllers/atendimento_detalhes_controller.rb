@@ -2,11 +2,6 @@ class AtendimentoDetalhesController < ApplicationController
   before_action :set_atendimento_detalhe, only: %i[ show edit update destroy ]
   load_and_authorize_resource
 
-  # GET /atendimento_detalhes or /atendimento_detalhes.json
-  def index
-    @atendimento_detalhes = AtendimentoDetalhe.all
-  end
-
   # GET /atendimento_detalhes/1 or /atendimento_detalhes/1.json
   def show
   end
