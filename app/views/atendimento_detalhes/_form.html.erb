@@ -4,9 +4,9 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :atendimento %>
-    <%= f.input :tipo %>
-    <%= f.association :atendente %>
+    <%= f.hidden_field :atendimento_id %>
+    <%= f.input :tipo, collection: AtendimentoDetalhe.tipos, label_method: :first, value_method: :first %>
+    <%= f.association :atendente, label_method: :primeiro_nome, readonly: true %>
     <%= f.input :descricao %>
   </div>
 

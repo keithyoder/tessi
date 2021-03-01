@@ -11,8 +11,6 @@ class PessoasController < ApplicationController
                .ransack(params[:q])
     @q.sorts = 'nome'
     @pessoas = @q.result.page params[:page]
-    puts('---------------')
-    puts(@params)
   end
 
   # GET /pessoas/1

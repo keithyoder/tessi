@@ -1,5 +1,5 @@
 <div class="card">
-  <%= render '/shared/table_header', {object: @atendimento.detalhes, titulo: 'Detalhe'} %>
+  <%= render '/shared/table_header', {object: @atendimento.detalhes, titulo: 'Detalhe', params: {atendimento_id: @atendimento.id}} %>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-striped">

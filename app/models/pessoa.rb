@@ -34,7 +34,7 @@ class Pessoa < ApplicationRecord
   end
 
   def cpf_cnpj
-    cpf.present? ? cpf : cnpj
+    cpf.present? ? cpf.stripped : cnpj.stripped
   end
 
   def cpf_cnpj_formatado

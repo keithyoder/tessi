@@ -13,7 +13,10 @@ class AtendimentoDetalhesController < ApplicationController
 
   # GET /atendimento_detalhes/new
   def new
-    @atendimento_detalhe = AtendimentoDetalhe.new
+    @atendimento_detalhe = AtendimentoDetalhe.new(
+      atendimento_id: params[:atendimento_id],
+      atendente: current_user
+    )
   end
 
   # GET /atendimento_detalhes/1/edit
@@ -26,7 +29,7 @@ class AtendimentoDetalhesController < ApplicationController
 
     respond_to do |format|
       if @atendimento_detalhe.save
-        format.html { redirect_to @atendimento_detalhe, notice: "Atendimento detalhe was successfully created." }
+        format.html { redirect_to @atendimento_detalhe.atendimento, notice: "Atendimento detalhe criado com sucesso." }
         format.json { render :show, status: :created, location: @atendimento_detalhe }
       else
         format.html { render :new, status: :unprocessable_entity }
