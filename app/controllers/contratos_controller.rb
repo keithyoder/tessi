@@ -1,7 +1,7 @@
 class ContratosController < ApplicationController
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
-  before_action :set_contrato, only: [:show, :edit, :update, :destroy]
+  before_action :set_contrato, only: %i[show edit update destroy renovar]
 
   # GET /contratos
   # GET /contratos.json
@@ -90,6 +90,10 @@ class ContratosController < ApplicationController
 
   # GET /contratos/1/edit
   def edit
+  end
+
+  def renovar
+    @contrato.renovar
   end
 
   # POST /contratos

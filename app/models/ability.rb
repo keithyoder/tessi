@@ -52,12 +52,13 @@ class Ability
         can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao]
         can [:backup, :backups], Servidor
       elsif user.financeiro_n1?
-        can [:update, :liquidacao], Fatura
+        can %i[update liquidacao], Fatura
+        can [:renovar], Contrato
       elsif user.financeiro_n2?
         can :update, Cidade
         can %i[update liquidacao estornar], Fatura
         can %i[create update], [Retorno, Contrato]
-        can :destroy, Contrato
+        can %i[renovar destroy], Contrato
       end
     end
   end

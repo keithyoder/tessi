@@ -101,7 +101,10 @@ class Contrato < ApplicationRecord
   end
 
   def renovar
-    gerar_faturas(quantas: prazo_meses - [faturas.a_vencer.count - 1, 0].min)
+    faturas_a_vencer = faturas.a_vencer.count
+    # se faltar uma fatura, gera mais 12.  Se faltar mais, gera a quantidade para completar 12.
+    faturas_a_vencer = 0 if faturas_a_vencer <= 1
+    gerar_faturas(prazo_meses - faturas_a_vencer)
   end
 
   private

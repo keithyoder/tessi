@@ -54,6 +54,13 @@
           <%= render 'shared/field_card', {campo: "Primeiro Vencimento", valor: l(@contrato.primeiro_vencimento, default: "")} %>
           <%= render 'shared/field_card', {campo: "Prazo (meses)", valor: @contrato.prazo_meses} %>
         </div>
+          <% if can? :renovar, @contrato %>
+            <%= link_to renovar_contrato_path do %>
+              <%= button_tag("Renovar", {:class => "btn btn-success"}) do %>
+                <i class="fas fa-refresh" aria-hidden="true"></i> Renovar
+              <% end %>
+            <% end %>
+          <% end %>
       </div>
     </div>
   </div>

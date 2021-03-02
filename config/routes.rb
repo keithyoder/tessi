@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   end
   resources :contratos do
     get :boletos, on: :member
+    get :renovar, on: :member
   end
   resources :conexao_enviar_atributos
   resources :conexao_verificar_atributos
