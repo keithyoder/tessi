@@ -101,6 +101,9 @@ class ContratosController < ApplicationController
 
   def renovar
     @contrato.renovar
+    respond_to do |format|
+      format.html { redirect_to @contrato, notice: 'Contrato renovado com sucesso.' }
+    end
   end
 
   # POST /contratos
