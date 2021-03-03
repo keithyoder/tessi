@@ -30,36 +30,37 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    if user.present?
-      if user.role?
-        can :read, :all
-        can :suspenso, Conexao
-        can :boletos, Contrato
-        can :boleto, Fatura
-        can :encerrar, Atendimento.por_responsavel(user).abertos
-        can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
-        cannot :update, Os.fechadas
-        can :create, [Excecao]
-      end
-      if user.admin?
-        can :manage, :all
-        cannot :destroy, Estado
-      elsif user.tecnico_n1?
-        can [:update], [FibraCaixa]
-        can %i[create update], Conexao
-      elsif user.tecnico_n2?
-        can :update, [Cidade, Ponto]
-        can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao]
-        can [:backup, :backups], Servidor
-      elsif user.financeiro_n1?
-        can %i[update liquidacao], Fatura
-        can [:renovar], Contrato
-      elsif user.financeiro_n2?
-        can :update, Cidade
-        can %i[update liquidacao estornar], Fatura
-        can %i[create update], [Retorno, Contrato]
-        can %i[renovar destroy], Contrato
-      end
+    return unless user.present?
+
+    if user.role?
+      can :read, :all
+      can :suspenso, Conexao
+      can :boletos, Contrato
+      can :boleto, Fatura
+      can :encerrar, Atendimento.por_responsavel(user).abertos
+      can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
+      cannot :update, Os.fechadas
+      can :create, [Excecao]
+    end
+    if user.admin?
+      can :manage, :all
+      cannot :destroy, Estado
+      cannot :encerrar, Atendimento.fechados
+    elsif user.tecnico_n1?
+      can [:update], [FibraCaixa]
+      can %i[create update], Conexao
+    elsif user.tecnico_n2?
+      can :update, [Cidade, Ponto]
+      can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao]
+      can [:backup, :backups], Servidor
+    elsif user.financeiro_n1?
+      can %i[update liquidacao], Fatura
+      can [:renovar], Contrato
+    elsif user.financeiro_n2?
+      can :update, Cidade
+      can %i[update liquidacao estornar], Fatura
+      can %i[create update], [Retorno, Contrato]
+      can %i[renovar destroy], Contrato
     end
   end
 end

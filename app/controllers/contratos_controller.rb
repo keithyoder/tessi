@@ -74,7 +74,14 @@ class ContratosController < ApplicationController
     end
     respond_to do |format|
       format.html { render :show }
-      format.pdf { send_file(file, file_name: "Termo Adesão "+@contrato.pessoa.nome, type: :pdf, disposition: :inline) }
+      format.pdf {
+        send_file(
+          file,
+          file_name: "Termo Adesão "+@contrato.pessoa.nome,
+          type: :pdf,
+          disposition: :inline
+        )
+      }
     end
   end
 

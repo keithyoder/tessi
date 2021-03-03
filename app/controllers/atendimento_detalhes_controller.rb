@@ -8,6 +8,7 @@ class AtendimentoDetalhesController < ApplicationController
 
   # GET /atendimento_detalhes/new
   def new
+    @atendimento = Atendimento.find(params[:atendimento_id])
     @atendimento_detalhe = AtendimentoDetalhe.new(
       atendimento_id: params[:atendimento_id],
       atendente: current_user
@@ -48,9 +49,10 @@ class AtendimentoDetalhesController < ApplicationController
 
   # DELETE /atendimento_detalhes/1 or /atendimento_detalhes/1.json
   def destroy
+    atendimento = @atendimento_detalhe.atendimento
     @atendimento_detalhe.destroy
     respond_to do |format|
-      format.html { redirect_to atendimento_detalhes_url, notice: "Atendimento detalhe was successfully destroyed." }
+      format.html { redirect_to atendimento, notice: "Atendimento detalhe was successfully destroyed." }
       format.json { head :no_content }
     end
   end

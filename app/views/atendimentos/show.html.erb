@@ -8,17 +8,25 @@
         <% end %>
         <%= render 'shared/field_card', {campo: "Classificação", valor: @atendimento.classificacao.nome} %>
         <%= render 'shared/field_card', {campo: "Responsável", valor: @atendimento.responsavel.primeiro_nome} %>
-        <%= render 'shared/field_card', {campo: "Aberto Em", valor: @atendimento.created_at} %>
+        <%= render 'shared/field_card', {campo: "Aberto Em", valor: l(@atendimento.created_at, format: :short) } %>
         <%= render 'shared/field_card', {campo: "Fechado Em", valor: @atendimento.fechamento} %>
-        <%= render 'shared/field_card', {campo: "Contrato", valor: @atendimento.contrato&.id} %>
+        <% if @atendimento.contrato.present? %>
+          <%= render 'shared/field_card', {campo: "Contrato", valor: @atendimento.contrato&.id} %>
+        <% end %>
+        <% if @atendimento.conexao.present? %>
         <%= render 'shared/field_card', {campo: "Conexão", valor: @atendimento.conexao&.ip.to_s} %>
-        <%= render 'shared/field_card', {campo: "Fatura", valor: @atendimento.fatura&.id} %>
+        <% end %>
+        <% if @atendimento.fatura.present? %>
+          <%= render 'shared/field_card', {campo: "Fatura", valor: @atendimento.fatura&.id} %>
+        <% end %>
       </div>
-  <%= link_to encerrar_atendimento_path do %>
-    <%= button_tag("Encerrar", {:class => "btn btn-warning"}) do %>
-      <i class="fas fa-door-closed" aria-hidden="true"></i> Encerrar
-    <% end %>
-  <% end %>
+      <% if can? :encerrar, @atendimento %>
+        <%= link_to encerrar_atendimento_path do %>
+          <%= button_tag("Encerrar", {:class => "btn btn-warning"}) do %>
+            <i class="fas fa-door-closed" aria-hidden="true"></i> Encerrar
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

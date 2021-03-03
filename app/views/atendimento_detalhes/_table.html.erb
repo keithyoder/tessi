@@ -15,7 +15,7 @@
         <tbody>
           <% @atendimento.detalhes.each do |detalhe| %>
             <tr>
-              <td><%= detalhe.created_at %></td>
+              <td><%= l(detalhe.created_at, format: :short) %></td>
               <td><%= detalhe.atendente.primeiro_nome %></td>
               <td><%= detalhe.tipo %></td>
               <td><%= detalhe.descricao %></td>
