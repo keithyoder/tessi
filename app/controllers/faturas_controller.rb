@@ -81,7 +81,11 @@ class FaturasController < ApplicationController
         format.html { redirect_to @fatura, notice: "Fatura was successfully updated." }
         format.json { render :show, status: :ok, location: @fatura }
       else
-        format.html { render :edit }
+        if @fatura.errors.full_messages_for(:liquidacao).present?
+          format.html { render :liquidacao }
+        else
+          format.html { render :edit }
+        end
         format.json { render json: @fatura.errors, status: :unprocessable_entity }
       end
     end

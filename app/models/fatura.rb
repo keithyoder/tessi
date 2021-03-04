@@ -25,6 +25,8 @@ class Fatura < ApplicationRecord
   scope :vencidas, -> { where('vencimento < ?', 1.day.ago).em_aberto }
   scope :a_vencer, -> { where('vencimento > ?', Date.today).em_aberto }
 
+  validate :validar_liquidacao?, if: :liquidacao_changed?
+
   enum meio_liquidacao: {
     RetornoBancario: 1,
     Dinheiro: 2,
@@ -170,5 +172,11 @@ class Fatura < ApplicationRecord
       multiplicador: (2..9).to_a,
       mapeamento: { 10 => 0, 11 => 0 }
     ) { |total| 11 - (total % 11) }
+  end
+
+  def validar_liquidacao?
+    return if liquidacao.blank? || (1.week.ago..Date.today).cover?(liquidacao)
+
+    errors.add(:liquidacao, "fora da faixa permitida")
   end
 end
