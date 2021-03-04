@@ -13,6 +13,7 @@ class Conexao < ApplicationRecord
   has_many :conexao_verificar_atributos, dependent: :delete_all
   has_many :autenticacoes, primary_key: :usuario, foreign_key: :username
   has_many :rad_accts, primary_key: :usuario, foreign_key: :username
+  has_many :os, dependent: :nullify
   scope :bloqueado, -> { where('bloqueado') }
   scope :ativo, -> { where('not bloqueado') }
   scope :conectada, -> { select('conexoes.*').distinct.joins(:rad_accts).where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago) }
