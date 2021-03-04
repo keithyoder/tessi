@@ -52,6 +52,7 @@ class Ability
     elsif user.tecnico_n2?
       can :update, [Cidade, Ponto, Servidor]
       can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao]
+      can :destroy, Conexao
       can [:backup, :backups], Servidor
     elsif user.financeiro_n1?
       can %i[update liquidacao], Fatura

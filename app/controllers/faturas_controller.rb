@@ -30,6 +30,8 @@ class FaturasController < ApplicationController
   end
 
   def liquidacao
+    #@fatura.liquidacao = Date.today
+    @fatura.meio_liquidacao = :Dinheiro
     respond_to do |format|
       format.html { render :liquidacao }
       format.json { render json: @fatura.errors, status: :unprocessable_entity }
