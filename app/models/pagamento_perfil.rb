@@ -3,9 +3,11 @@ class PagamentoPerfil < ApplicationRecord
   has_many :retornos
   enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2 }
 
-  def remessa(pagamentos)
+  def remessa
+    pagamentos = faturas_para_registrar
     case banco
     when 33
+      pagamentos += faturas_para_baixar
       remessa_santander(pagamentos)
     when 1
       remessa_banco_brasil(pagamentos)
@@ -54,5 +56,30 @@ class PagamentoPerfil < ApplicationRecord
 
   def santander_codigo_transmissao
     (agencia.to_s + '0' + cedente.to_s + conta.to_s.rjust(10, '0'))[0...20]
+  end
+
+  def faturas_com_numero
+    faturas.eager_load(%i[pessoa logradouro bairro cidade estado plano])
+           .where.not(nossonumero: '')
+  end
+
+  def faturas_para_registrar
+    # registrar todos os boletos com vencimento nos proximos 30 dias
+    # e que nao foram liquidados ainda e nao foram registrados anteriormente.
+    faturas_com_numero.where(
+      vencimento: Date.today..30.days.from_now,
+      liquidacao: nil,
+      registro_id: nil
+    ).map(&:remessa)
+  end
+
+  def faturas_para_baixar
+    # baixar todos os boletos que foram liquidados nos ultimos 30 dias
+    # nao por meio bancario ainda e nao foram baixados anteriormente.
+    faturas_com_numero.where(
+      retorno_id: nil,
+      baixa_id: nil,
+      liquidacao: 1.month.ago..Date.today
+    ).where.not(liquidacao: nil, registro_id: nil).map(&:remessa)
   end
 end

@@ -24,26 +24,10 @@ class PagamentoPerfisController < ApplicationController
   end
 
   def remessa
-    faturas = @pagamento_perfil.faturas
-                               .eager_load(%i[pessoa logradouro bairro cidade estado plano])
-                               .where.not(nossonumero: '')
-    if params.key?(:baixas)
-      faturas = faturas.where()
-        .where(vencimento: 10.days.ago..30.days.from_now)
-        .where.not(liquidacao: nil)
-        .where.not(registro_id: nil)
-        .where(retorno_id: nil, baixa_id: nil)
-    else
-      faturas = faturas.where(
-        vencimento: Date.today..30.days.from_now,
-        liquidacao: nil,
-        registro_id: nil
-      )
-    end
     send_data(
-      @pagamento_perfil.remessa(faturas.map(&:remessa)).gera_arquivo,
+      @pagamento_perfil.remessa.gera_arquivo,
       content_type: 'text/plain',
-      filename: "#{@pagamento_perfil.banco}.rem"
+      filename: "#{rjust(@pagamento_perfil.banco, 3, '0')}.rem"
     )
   end
 

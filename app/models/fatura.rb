@@ -72,6 +72,8 @@ class Fatura < ApplicationRecord
       Brcobranca::Boleto::Santander.new(info)
     when 1
       Brcobranca::Boleto::BancoBrasil.new(info)
+    when 104
+      Brcobranca::Boleto::Caixa.new(info)
     end
   end
 
