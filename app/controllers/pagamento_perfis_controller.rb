@@ -27,7 +27,7 @@ class PagamentoPerfisController < ApplicationController
     send_data(
       @pagamento_perfil.remessa.gera_arquivo,
       content_type: 'text/plain',
-      filename: "#{rjust(@pagamento_perfil.banco, 3, '0')}.rem"
+      filename: "#{@pagamento_perfil.banco.rjust(3, '0')}.rem"
     )
   end
 
