@@ -65,8 +65,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootstrap'
-gem 'brcobranca'
-gem 'cpf_cnpj'
+gem 'brcobranca', git: 'https://github.com/kivanio/brcobranca.git'
 gem 'cancancan'
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-passenger', '~> 0.2.0'
@@ -74,6 +73,7 @@ gem 'capistrano-rails', '~> 1.4'
 gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem 'chartkick'
 gem 'cleavejs'
+gem 'cpf_cnpj'
 gem 'devise'
 gem 'extensobr'
 gem 'fixy'
