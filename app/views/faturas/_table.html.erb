@@ -21,7 +21,7 @@
           <% @faturas.each do |fatura| %>
             <tr>
               <% if !defined?(exclude) or exclude != 'pessoa' %>
-                <td><%= fatura.contrato.pessoa.nome %></td>
+                <td><%= fatura.pessoa.nome %></td>
               <% end %>
               <td><%= fatura.parcela %></td>
               <td><%= link_to I18n.l(fatura.vencimento), fatura %></td>

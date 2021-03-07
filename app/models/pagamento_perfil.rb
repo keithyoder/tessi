@@ -4,10 +4,9 @@ class PagamentoPerfil < ApplicationRecord
   enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2 }
 
   def remessa
-    pagamentos = faturas_para_registrar
+    pagamentos = faturas_para_registrar + faturas_para_baixar
     case banco
     when 33
-      pagamentos += faturas_para_baixar
       remessa_santander(pagamentos)
     when 1
       remessa_banco_brasil(pagamentos)

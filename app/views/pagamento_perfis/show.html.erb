@@ -5,6 +5,9 @@
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#retornos">Retornos</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#faturas">Faturas</a>
+  </li>
 </ul>
 <div class="tab-content">
   <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
@@ -27,5 +30,9 @@
   <div class="tab-pane fade" id="retornos" role="tabpanel" aria-labelledby="retornos-tab">
     <h3><%= @pagamento_perfil.nome %></h3>
     <%= render 'retornos/table' %>
+  </div>
+  <div class="tab-pane fade" id="faturas" role="tabpanel" aria-labelledby="faturas-tab">
+    <h3><%= @pagamento_perfil.nome %></h3>
+    <%= render 'faturas/table' %>
   </div>
 </div>

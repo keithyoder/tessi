@@ -12,6 +12,11 @@ class PagamentoPerfisController < ApplicationController
   # GET /pagamento_perfis/1.json
   def show
     @retornos = @pagamento_perfil.retornos.order(data: :desc).page params[:page]
+    @faturas = @pagamento_perfil.faturas
+                                .eager_load(:contrato, :pessoa)
+                                .em_aberto.where('vencimento < ?', 1.week.from_now)
+                                .order(:vencimento)
+                                .ransack.result.page(params[:page])
   end
 
   # GET /pagamento_perfis/new
