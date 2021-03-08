@@ -32,6 +32,7 @@ class PagamentoPerfisController < ApplicationController
     send_data(
       @pagamento_perfil.remessa.gera_arquivo,
       content_type: 'text/plain',
+      disposition: 'attachment',
       filename: "#{@pagamento_perfil.banco.to_s.rjust(3, '0')}-#{Time.now.strftime('%Y-%m-%d')}.rem"
     )
   end

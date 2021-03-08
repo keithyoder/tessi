@@ -24,6 +24,13 @@
           <%= render 'shared/field_card', {campo: "Carteira", valor: @pagamento_perfil.carteira} %>
           <%= render 'shared/field_card', {campo: "Variação", valor: @pagamento_perfil.variacao} %>
         </div>
+          <% if can? :remessa, @pagamento_perfil %>
+            <%= link_to remessa_pagamento_perfil_path, target: "_blank" do %>
+              <%= button_tag("Remessa", {:class => "btn btn-warning"}) do %>
+                <i class="fas fa-file-import" aria-hidden="true"></i> Remessa
+              <% end %>
+            <% end %>
+          <% end %>
       </div>
     </div>
   </div>

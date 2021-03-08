@@ -62,6 +62,7 @@ class Ability
       can %i[update liquidacao estornar], Fatura
       can %i[create update], [Retorno, Contrato]
       can %i[renovar destroy], Contrato
+      can :remessa, PagamentoPerfil
     end
   end
 end
