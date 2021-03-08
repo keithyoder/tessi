@@ -39,7 +39,7 @@ class Contrato < ApplicationRecord
 
   after_create :gerar_faturas
 
-  after_save :verificar_cancelamento, if: :saved_change_to_cancelamento?
+  after_save :after_save
 
   before_destroy :verificar_exclusao, prepend: true
 
@@ -116,6 +116,11 @@ class Contrato < ApplicationRecord
     throw :abort
   end
 
+  def after_save
+    verificar_cancelamento if saved_change_to_cancelamento?
+    alterar_forma_pagamento if saved_change_to_pagamento_perfil_id?
+  end
+
   def verificar_cancelamento
     # apagar todas as faturas que nao foram pagas ou registradas
     # e que sao referentes a periodos após o cancelamento
@@ -125,6 +130,11 @@ class Contrato < ApplicationRecord
     parcial = faturas.where(liquidacao: nil, registro: nil)
            .where('? between periodo_inicio and periodo_fim', cancelamento)
     parcial.each { |fatura| fatura.update!(valor: fatura.valor * fracao_de_mes(fatura.periodo_inicio, cancelamento))}
+  end
+
+  def alterar_forma_pagamento
+    faturas.a_vencer.nao_registradas.each(&:destroy)
+    renovar
   end
 
   def fracao_de_mes(inicio, fim)
