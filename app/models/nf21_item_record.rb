@@ -11,14 +11,13 @@ class Nf21ItemRecord < Fixy::Record
   set_line_ending Fixy::Record::LINE_ENDING_CRLF
   set_record_length 331
 
-
   # Fields Declaration:
   # -----------------------------------------------------------
-  #       name              size  Range             Format        
+  #       name              size  Range             Format
   # ------------------------------------------------------------
 
-  field :cnpj_cpf,              14, '1-14' ,      :numeric
-  field :uf,                     2, '15-16' ,     :alphanumeric
+  field :cnpj_cpf,              14, '1-14',       :numeric
+  field :uf,                     2, '15-16',      :alphanumeric
   field :classe_consumo,         1, '17-17',      :numeric
   field :fase,                   1, '18-18',      :numeric
   field :grupo_tensao,           2, '19-20',      :numeric
@@ -111,7 +110,7 @@ class Nf21ItemRecord < Fixy::Record
     current_position = 1
     current_record = 1
 
-    while current_record <= 37 do
+    while current_record <= 37
 
       field = record_fields[current_position]
       raise StandardError, "Undefined field for position #{current_position}" unless field
@@ -120,13 +119,20 @@ class Nf21ItemRecord < Fixy::Record
       method          = field[:name]
       value           = send(method)
       formatted_value = format_value(value, field[:size], field[:type])
-      formatted_value = decorator.field(formatted_value, current_record, current_position, method, field[:size], field[:type])
+      formatted_value = decorator.field(
+        formatted_value,
+        current_record,
+        current_position,
+        method,
+        field[:size],
+        field[:type]
+      )
 
       output << formatted_value
       current_position = field[:to] + 1
       current_record += 1
     end
-    Digest::MD5.new().hexdigest(output).downcase
+    Digest::MD5.new.hexdigest(output).downcase
   end
 
 end

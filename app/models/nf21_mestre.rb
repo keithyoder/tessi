@@ -13,10 +13,10 @@ class Nf21Mestre < Fixy::Record
 
   # Fields Declaration:
   # -----------------------------------------------------------
-  #       name              size  Range             Format        
+  #       name              size  Range             Format
   # ------------------------------------------------------------
 
-  field :cnpj_cpf,            14, '1-14' ,       :numeric
+  field :cnpj_cpf,            14, '1-14',        :numeric
   field :ie,                  14, '15-28',       :alphanumeric
   field :razao_social,        35, '29-63',       :alphanumeric
   field :uf,                   2, '64-65',       :alphanumeric
@@ -105,7 +105,7 @@ class Nf21Mestre < Fixy::Record
       1
     else
       2
-    end  
+    end
   end
 
   def referencia
@@ -121,7 +121,7 @@ class Nf21Mestre < Fixy::Record
       3
     else
       1
-    end  
+    end
   end
 
   def codigo_autenticacao
@@ -132,7 +132,7 @@ class Nf21Mestre < Fixy::Record
     icms_valor = format_value(@nf.fatura.valor_icms, 12, :amount)
     emissao = format_value(@nf.emissao, 8, :date)
     emitente = format_value(Setting.cnpj, 14, :numeric)
-    md5 = Digest::MD5.new().hexdigest(cnpj + nf + valor + icms + icms_valor + emissao + emitente)
+    Digest::MD5.new.hexdigest(cnpj + nf + valor + icms + icms_valor + emissao + emitente)
   end
 
   def autenticacao_digital
@@ -141,7 +141,7 @@ class Nf21Mestre < Fixy::Record
     current_position = 1
     current_record = 1
 
-    while current_record <= 35 do
+    while current_record <= 35
 
       field = record_fields[current_position]
       raise StandardError, "Undefined field for position #{current_position}" unless field
@@ -150,13 +150,19 @@ class Nf21Mestre < Fixy::Record
       method          = field[:name]
       value           = send(method)
       formatted_value = format_value(value, field[:size], field[:type])
-      formatted_value = decorator.field(formatted_value, current_record, current_position, method, field[:size], field[:type])
+      formatted_value = decorator.field(
+        formatted_value,
+        current_record,
+        current_position,
+        method,
+        field[:size],
+        field[:type]
+      )
 
       output << formatted_value
       current_position = field[:to] + 1
       current_record += 1
     end
-    Digest::MD5.new().hexdigest(output).downcase
+    Digest::MD5.new.hexdigest(output).downcase
   end
-
 end

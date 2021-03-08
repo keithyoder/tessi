@@ -38,9 +38,9 @@ class Nf21Cadastro < Fixy::Record
   field :brancos,              5, '251-255',     :alphanumeric
   field :autenticacao_digital,32, '256-287',     :alphanumeric
 
-    def initialize(nf)
-      @nf = nf
-    end
+  def initialize(nf)
+    @nf = nf
+  end
 
   field_value :cnpj_cpf,             -> { @nf.fatura.pessoa.cpf_cnpj }
   field_value :ie,                   -> { @nf.fatura.pessoa.ie }
@@ -69,7 +69,7 @@ class Nf21Cadastro < Fixy::Record
     current_position = 1
     current_record = 1
 
-    while current_record <= 20 do
+    while current_record <= 20
 
       field = record_fields[current_position]
       raise StandardError, "Undefined field for position #{current_position}" unless field
@@ -78,13 +78,20 @@ class Nf21Cadastro < Fixy::Record
       method          = field[:name]
       value           = send(method)
       formatted_value = format_value(value, field[:size], field[:type])
-      formatted_value = decorator.field(formatted_value, current_record, current_position, method, field[:size], field[:type])
+      formatted_value = decorator.field(
+        formatted_value,
+        current_record,
+        current_position,
+        method,
+        field[:size],
+        field[:type]
+      )
 
       output << formatted_value
       current_position = field[:to] + 1
       current_record += 1
     end
-    Digest::MD5.new().hexdigest(output).downcase
+    Digest::MD5.new.hexdigest(output).downcase
   end
 
 end

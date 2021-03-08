@@ -25,6 +25,8 @@ class Fatura < ApplicationRecord
   scope :nao_registradas, -> { where(registro: nil) }
   scope :vencidas, -> { where('vencimento < ?', 1.day.ago).em_aberto }
   scope :a_vencer, -> { where('vencimento > ?', Date.today).em_aberto }
+  scope :sem_nota, -> { left_joins(:nf21).joins(:contrato).where('contratos.emite_nf').group('faturas.id').having('count(nf21s.*) = 0')}
+  scope :notas_a_emitir, ->(range) { where(liquidacao: range).sem_nota }
 
   validate :validar_liquidacao?, if: :liquidacao_changed?
 
