@@ -50,7 +50,7 @@ class Nf21Cadastro < Fixy::Record
   field_value :complemento,          -> { @nf.fatura.pessoa.complemento.parameterize(separator: ' ').upcase }
   field_value :cep,                  -> { @nf.fatura.pessoa.logradouro.cep }
   field_value :bairro,               -> { @nf.fatura.pessoa.bairro.nome.parameterize(separator: ' ').upcase }
-  field_value :municipio,            -> { @nf.fatura.pessoa.cidade.nome.parameterize(separator: ' ').upcase }
+  field_value :municipio,            -> { @nf.fatura.pessoa.cidade.nome.encode('ISO-8859-14') }
   field_value :uf,                   -> { @nf.fatura.pessoa.cidade.estado.sigla }
   field_value :telefone,             -> { @nf.fatura.pessoa.telefone1 }
   field_value :codigo,               -> { @nf.fatura.pessoa.id }
