@@ -71,7 +71,7 @@ class Nf21ItemRecord < Fixy::Record
   field_value :cfop,                  -> { @nf.fatura.cfop }
   field_value :ordem,                 -> { 1 }
   field_value :codigo,                -> { @nf.fatura.plano.id }
-  field_value :descricao,             -> { @nf.fatura.plano.nome }
+  field_value :descricao,             -> { @nf.fatura.plano.nome.parameterize(separator: ' ').upcase }
   field_value :classificacao,         -> { 102 }
   field_value :unidade,               -> { '' }
   field_value :quantidade_contratada, -> { 0 }
