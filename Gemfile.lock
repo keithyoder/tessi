@@ -420,6 +420,7 @@ DEPENDENCIES
   rails4-autocomplete
   ransack
   ruby_ami
+  rubyzip
   rufus-scheduler
   sass-rails (~> 5.0)
   selenium-webdriver

@@ -1,5 +1,4 @@
 require 'stringio'
-#require 'zip'
 
 class Nf21sController < ApplicationController
   before_action :set_nf21, only: [:show, :edit, :update, :destroy]
@@ -32,17 +31,12 @@ class Nf21sController < ApplicationController
     cadastro.set_encoding('iso-8859-14')
     mestre.set_encoding('iso-8859-14')
     itens.set_encoding('iso-8859-14')
-    i = 0
-    Nf21.competencia(params[:mes]).each do |nf|
+    Nf21.competencia(params[:mes]).order(:numero).each do |nf|
       cadastro << nf.cadastro
       mestre << nf.mestre
-      nf21_itens.each do |item|
+      nf.nf21_itens.each do |item|
         itens << item.item
-        i += 1
       end
-      mestre_record = Nf21Mestre(nf.mestre)
-      mestre_record.referencia_item = i
-      mestre << mestre_record.generate
     end
     cadastro.rewind
     mestre.rewind
