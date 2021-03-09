@@ -19,7 +19,7 @@ class Nf21ItemRecord < Fixy::Record
   field :cnpj_cpf,              14, '1-14',       :numeric
   field :uf,                     2, '15-16',      :alphanumeric
   field :classe_consumo,         1, '17-17',      :numeric
-  field :fase,                   1, '18-18',      :numeric
+  field :tipo_utilizacao,        1, '18-18',      :numeric
   field :grupo_tensao,           2, '19-20',      :numeric
   field :data_emissao,           8, '21-28',      :date
   field :modelo,                 2, '29-30',      :numeric
@@ -62,11 +62,11 @@ class Nf21ItemRecord < Fixy::Record
   field_value :cnpj_cpf,              -> { @nf.fatura.pessoa.cpf_cnpj }
   field_value :uf,                    -> { @nf.fatura.pessoa.cidade.estado.sigla }
   field_value :classe_consumo,        -> { 0 }
-  field_value :fase,                  -> { 0 }
+  field_value :tipo_utilizacao,       -> { @nf.tipo_utilizacao }
   field_value :grupo_tensao,          -> { 0 }
-  field_value :data_emissao,          -> { @nf.fatura.liquidacao }
-  field_value :modelo,                -> { 21 }
-  field_value :serie,                 -> { 'U' }
+  field_value :data_emissao,          -> { @nf.emissao }
+  field_value :modelo,                -> { @nf.modelo }
+  field_value :serie,                 -> { @nf.serie }
   field_value :numero,                -> { @nf.numero }
   field_value :cfop,                  -> { @nf.fatura.cfop }
   field_value :ordem,                 -> { 1 }
@@ -97,11 +97,7 @@ class Nf21ItemRecord < Fixy::Record
   field_value :brancos,               -> { '' }
 
   def referencia_item
-    if @nf.fatura.periodo_fim.present?
-      @nf.fatura.periodo_fim.strftime('%y%m')
-    else
-      @nf.emissao.strftime('%y%m')
-    end
+    @nf.emissao.strftime('%y%m')
   end
 
   def autenticacao_digital

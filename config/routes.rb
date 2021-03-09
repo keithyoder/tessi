@@ -8,8 +8,11 @@ Rails.application.routes.draw do
   resources :clasificacoes
   resources :excecoes
   resources :ip_redes
-  resources :nf21_itens
-  resources :nf21s
+  resources :nf21s do
+    collection do
+      get 'competencia/:mes', :action => 'competencia', :as => 'competencia'
+    end
+  end
   resources :fibra_caixas
   resources :fibra_redes
   resources :retornos

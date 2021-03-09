@@ -68,4 +68,8 @@ class Pessoa < ApplicationRecord
   def pessoa_juridica?
     tipo == 'Pessoa Jurídica'
   end
+
+  def nome_sem_acentos
+    nome.parameterize(separator: ' ').upcase
+  end
 end

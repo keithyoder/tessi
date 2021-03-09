@@ -20,7 +20,7 @@ class Nf21Cadastro < Fixy::Record
   field :ie,                  14, '15-28',       :alphanumeric
   field :razao_social,        35, '29-63',       :alphanumeric
   field :logradouro,          45, '64-108',      :alphanumeric
-  field :numero,               5, '109-113',     :alphanumeric
+  field :numero,               5, '109-113',     :numeric
   field :complemento,         15, '114-128',     :alphanumeric
   field :cep,                  8, '129-136',     :alphanumeric
   field :bairro,              15, '137-151',     :alphanumeric
@@ -43,10 +43,10 @@ class Nf21Cadastro < Fixy::Record
   end
 
   field_value :cnpj_cpf,             -> { @nf.fatura.pessoa.cpf_cnpj }
-  field_value :ie,                   -> { @nf.fatura.pessoa.ie }
-  field_value :razao_social,         -> { @nf.fatura.pessoa.nome.parameterize(separator: ' ').upcase }
+  field_value :ie,                   -> { @nf.fatura.pessoa.ie.empty? ? 'ISENTO' : @nf.fatura.pessoa.ie }
+  field_value :razao_social,         -> { @nf.fatura.pessoa.nome_sem_acentos }
   field_value :logradouro,           -> { @nf.fatura.pessoa.logradouro.nome }
-  field_value :numero,               -> { @nf.fatura.pessoa.numero }
+  field_value :numero,               -> { @nf.fatura.pessoa.numero.to_i }
   field_value :complemento,          -> { @nf.fatura.pessoa.complemento }
   field_value :cep,                  -> { @nf.fatura.pessoa.logradouro.cep }
   field_value :bairro,               -> { @nf.fatura.pessoa.bairro.nome }
@@ -54,11 +54,11 @@ class Nf21Cadastro < Fixy::Record
   field_value :uf,                   -> { @nf.fatura.pessoa.cidade.estado.sigla }
   field_value :telefone,             -> { @nf.fatura.pessoa.telefone1 }
   field_value :codigo,               -> { @nf.fatura.pessoa.id }
-  field_value :terminal,             -> { 0 }
+  field_value :terminal,             -> { @nf.terminal }
   field_value :uf_terminal,          -> { 'PE' }
   field_value :data_emissao,         -> { @nf.emissao }
   field_value :modelo,               -> { 21 }
-  field_value :serie,                -> { 'U' }
+  field_value :serie,                -> { @nf.serie }
   field_value :numero_nf,            -> { @nf.numero }
   field_value :codigo_municipio,     -> { @nf.fatura.pessoa.cidade.ibge }
   field_value :brancos,              -> { ' ' }

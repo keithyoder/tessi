@@ -21,7 +21,7 @@ class Nf21Mestre < Fixy::Record
   field :razao_social,        35, '29-63',       :alphanumeric
   field :uf,                   2, '64-65',       :alphanumeric
   field :classe_consumo,       1, '66-66',       :numeric
-  field :fase,                 1, '67-67',       :numeric
+  field :tipo_utilizacao,      1, '67-67',       :numeric
   field :grupo_tensao,         2, '68-69',       :numeric
   field :codigo_assinante,    12, '70-81',       :alphanumeric
   field :data_emissao,         8, '82-89',       :date
@@ -48,26 +48,26 @@ class Nf21Mestre < Fixy::Record
   field :leitura_anterior,     8, '285-292',     :date
   field :leitura_atual,        8, '293-300',     :date
   field :brancos_1,           50, '301-350',     :alphanumeric
-  field :brancos_2,            8, '351-358',     :alphanumeric
+  field :brancos_2,            8, '351-358',     :numeric
   field :informacoes,         30, '359-388',     :alphanumeric
   field :brancos_3,            5, '389-393',     :alphanumeric
   field :autenticacao_digital,32, '394-425',     :alphanumeric
 
-    def initialize(nf)
-      @nf = nf
-    end
+  def initialize(nf)
+    @nf = nf
+  end
 
   field_value :cnpj_cpf,            -> { @nf.fatura.pessoa.cpf_cnpj }
-  field_value :ie,                  -> { @nf.fatura.pessoa.ie }
-  field_value :razao_social,        -> { @nf.fatura.pessoa.nome }
+  field_value :ie,                  -> { @nf.fatura.pessoa.ie.empty? ? 'ISENTO' : @nf.fatura.pessoa.ie }
+  field_value :razao_social,        -> { @nf.fatura.pessoa.nome_sem_acentos }
   field_value :uf,                  -> { @nf.fatura.pessoa.cidade.estado.sigla }
   field_value :classe_consumo,      -> { 0 }
-  field_value :fase,                -> { 0 }
+  field_value :tipo_utilizacao,     -> { @nf.tipo_utilizacao }
   field_value :grupo_tensao,        -> { 0 }
   field_value :codigo_assinante,    -> { @nf.fatura.pessoa.id }
   field_value :data_emissao,        -> { @nf.emissao }
-  field_value :modelo,              -> { 21 }
-  field_value :serie,               -> { 'U' }
+  field_value :modelo,              -> { @nf.modelo }
+  field_value :serie,               -> { @nf.serie }
   field_value :numero,              -> { @nf.numero }
   field_value :valor_total,         -> { @nf.fatura.base_calculo_icms }
   field_value :bc_icms,             -> { @nf.fatura.base_calculo_icms }
@@ -75,17 +75,17 @@ class Nf21Mestre < Fixy::Record
   field_value :isentas,             -> { 0 }
   field_value :outros_valores,      -> { 0 }
   field_value :situacao,            -> { 'N' }
-  field_value :referencia_item,     -> { 0 }
-  field_value :numero_terminal,     -> { 0 }
+  field_value :referencia_item,     -> { @nf.referencia_item }
+  field_value :numero_terminal,     -> { @nf.terminal }
   field_value :subclasse_consumo,   -> { 0 }
-  field_value :terminal_principal,  -> { 0 }
+  field_value :terminal_principal,  -> { @nf.terminal }
   field_value :cnpj_emitente,       -> { Setting.cnpj }
   field_value :fatura_comercial,    -> { @nf.fatura.id }
   field_value :valor_fatura,        -> { @nf.fatura.base_calculo_icms }
   field_value :leitura_anterior,    -> { nil }
   field_value :leitura_atual,       -> { nil }
   field_value :brancos_1,           -> { '' }
-  field_value :brancos_2,           -> { '' }
+  field_value :brancos_2,           -> { 0 }
   field_value :informacoes,         -> { '' }
   field_value :brancos_3,           -> { '' }
 
@@ -101,23 +101,19 @@ class Nf21Mestre < Fixy::Record
   end
 
   def tipo_campo_1
-    if @nf.fatura.pessoa.tipo == 'Pessoa Física'
-      1
-    else
+    if @nf.fatura.pessoa.pessoa_fisica?
       2
+    else
+      1
     end
   end
 
   def referencia
-    if @nf.fatura.periodo_fim.present?
-      @nf.fatura.periodo_fim.strftime('%y%m')
-    else
-      @nf.emissao.strftime('%y%m')
-    end
+    @nf.emissao.strftime('%y%m')
   end
 
   def tipo_cliente
-    if @nf.fatura.pessoa.tipo == 'Pessoa Física'
+    if @nf.fatura.pessoa.pessoa_fisica?
       3
     else
       1
