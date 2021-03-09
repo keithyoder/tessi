@@ -52,7 +52,7 @@ class Nf21Cadastro < Fixy::Record
   field_value :bairro,               -> { @nf.fatura.pessoa.bairro.nome.parameterize(separator: ' ').upcase }
   field_value :municipio,            -> { @nf.fatura.pessoa.cidade.nome.encode('ISO-8859-14') }
   field_value :uf,                   -> { @nf.fatura.pessoa.cidade.estado.sigla }
-  field_value :telefone,             -> { @nf.fatura.pessoa.telefone1.gsub(/[()-+.]/,'') }
+  field_value :telefone,             -> { @nf.fatura.pessoa.telefone1.gsub(/\D/, '') }
   field_value :codigo,               -> { @nf.fatura.pessoa.id }
   field_value :terminal,             -> { @nf.terminal }
   field_value :uf_terminal,          -> { 'PE' }
