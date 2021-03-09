@@ -13,7 +13,7 @@ class Nf21Cadastro < Fixy::Record
 
   # Fields Declaration:
   # -----------------------------------------------------------
-  #       name              size  Range             Format        
+  #       name              size  Range             Format
   # ------------------------------------------------------------
 
   field :cnpj_cpf,            14, '1-14' ,       :numeric
@@ -45,12 +45,12 @@ class Nf21Cadastro < Fixy::Record
   field_value :cnpj_cpf,             -> { @nf.fatura.pessoa.cpf_cnpj }
   field_value :ie,                   -> { @nf.fatura.pessoa.ie.empty? ? 'ISENTO' : @nf.fatura.pessoa.ie }
   field_value :razao_social,         -> { @nf.fatura.pessoa.nome_sem_acentos }
-  field_value :logradouro,           -> { @nf.fatura.pessoa.logradouro.nome }
+  field_value :logradouro,           -> { @nf.fatura.pessoa.logradouro.nome.parameterize(separator: ' ').upcase }
   field_value :numero,               -> { @nf.fatura.pessoa.numero.to_i }
-  field_value :complemento,          -> { @nf.fatura.pessoa.complemento }
+  field_value :complemento,          -> { @nf.fatura.pessoa.complemento.parameterize(separator: ' ').upcase }
   field_value :cep,                  -> { @nf.fatura.pessoa.logradouro.cep }
-  field_value :bairro,               -> { @nf.fatura.pessoa.bairro.nome }
-  field_value :municipio,            -> { @nf.fatura.pessoa.cidade.nome }
+  field_value :bairro,               -> { @nf.fatura.pessoa.bairro.nome.parameterize(separator: ' ').upcase }
+  field_value :municipio,            -> { @nf.fatura.pessoa.cidade.nome.parameterize(separator: ' ').upcase }
   field_value :uf,                   -> { @nf.fatura.pessoa.cidade.estado.sigla }
   field_value :telefone,             -> { @nf.fatura.pessoa.telefone1 }
   field_value :codigo,               -> { @nf.fatura.pessoa.id }
