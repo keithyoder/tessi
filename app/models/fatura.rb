@@ -14,7 +14,7 @@ class Fatura < ApplicationRecord
   has_one :cidade, through: :bairro
   has_one :estado, through: :cidade
   has_one :plano, through: :contrato
-  has_many :nf21
+  has_one :nf21
   has_one_attached :nf_pdf
   paginates_per 18
   scope :pagas, -> { where.not(liquidacao: nil) }
@@ -105,15 +105,15 @@ class Fatura < ApplicationRecord
     end
   end
 
-  def nf_hash
-    cnpj = pessoa.cpf_cnpj.rjust(14, '0')
-    nf = nf21.first.numero.to_s.rjust(9, '0')
-    valor = (base_calculo_icms * 100).to_i.to_s.rjust(12, '0')
-    icms = valor
-    icms_valor = '000000000000'
-    md5 = Digest::MD5.new
-    md5.hexdigest(cnpj + nf + valor + icms + icms_valor).upcase.gsub(/(.{4})(?=.)/, '\1.\2')
-  end
+  #def nf_hash
+  #  cnpj = pessoa.cpf_cnpj.rjust(14, '0')
+  #  nf = nf21.numero.to_s.rjust(9, '0')
+  #  valor = (base_calculo_icms * 100).to_i.to_s.rjust(12, '0')
+  #  icms = valor
+  #  icms_valor = '000000000000'
+  #  md5 = Digest::MD5.new
+  #  md5.hexdigest(cnpj + nf + valor + icms + icms_valor).upcase.gsub(/(.{4})(?=.)/, '\1.\2')
+  #end
 
   def gerar_nota
     return unless nf21.count.zero?

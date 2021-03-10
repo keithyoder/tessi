@@ -23,6 +23,14 @@ class Nf21 < ApplicationRecord
             .where('nf21s.numero < ?', numero)[0].itens + 1
   end
 
+  def parsed_mestre(field)
+    fixy_field(parse_mestre, field)
+  end
+
+  def parsed_cadastro(field)
+    fixy_field(parse_cadastro, field)
+  end
+
   def mes
     emissao.strftime('%Y-%m')
   end
@@ -41,5 +49,20 @@ class Nf21 < ApplicationRecord
 
   def tipo_utilizacao
     2
+  end
+
+  private
+
+  def parse_mestre
+    @parse_mestre ||= Nf21Mestre.parse(mestre.strip!)[:fields]
+  end
+
+  def parse_cadastro
+    @parse_cadastro ||= Nf21Cadastro.parse(cadastro.strip!)[:fields]
+  end
+
+  def fixy_field(record, field)
+    hash = record.find { |h| h[:name] == field }
+    hash[:value].strip
   end
 end

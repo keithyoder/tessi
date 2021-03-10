@@ -13,6 +13,9 @@ class Nf21sController < ApplicationController
   # GET /nf21s/1
   # GET /nf21s/1.json
   def show
+    respond_to do |format|
+      format.pdf { render :nf }
+    end
   end
 
   # GET /nf21s/new
@@ -113,4 +116,5 @@ class Nf21sController < ApplicationController
   def nome_arquivo(mes, letra)
     "PE#{Setting.cnpj}21U  #{mes[2..3]}#{mes[5..6]}N01#{letra}.011"
   end
+
 end

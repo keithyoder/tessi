@@ -1,6 +1,6 @@
 class FaturasController < ApplicationController
   load_and_authorize_resource
-  before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao, :boleto, :nf]
+  before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao, :boleto]
 
   # GET /faturas
   # GET /faturas.json
@@ -38,14 +38,8 @@ class FaturasController < ApplicationController
     end
   end
 
-  def nf
-    respond_to do |format|
-      format.pdf { render :nf }
-    end
-  end
-
   def boleto
-    send_data @fatura.boleto.to_pdf, :filename => "boleto.pdf", :type => :pdf, :disposition => "inline"
+    send_data @fatura.boleto.to_pdf, filename: 'boleto.pdf', type: :pdf, disposition: 'inline'
   end
 
   def estornar
