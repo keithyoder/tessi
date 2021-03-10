@@ -102,7 +102,7 @@ prawn_document(:page_size => 'A4', :margin => [20.mm,20.mm,20.mm,20.mm]) do |pdf
   pdf.text_box 'VALOR TOTAL', size: 8, style: :bold, at: [85.mm, 163.mm], width:  26.mm, align: :center
   pdf.text_box 'BASE DE CÁLCULO', size: 8, style: :bold, at: [113.mm, 163.mm], width:  26.mm, align: :center
   pdf.text_box 'ALÍQUOTA ICMS', size: 8, style: :bold, at: [141.mm, 163.mm], width:  26.mm, align: :center
-  pdf.text_box "Serviço de comunicação multimédia\n Plano #{@nf21.nf21_itens.first.parsed_item(:descricao)}", size: 12, at: [esquerda,158.mm], :leading => 7, width:  120.mm, height: 100.mm
+  pdf.text_box "Serviço de comunicação multimídia\n Plano #{@nf21.nf21_itens.first.parsed_item(:descricao)}", size: 12, at: [esquerda,158.mm], :leading => 7, width:  120.mm, height: 100.mm
   pdf.text_box "Período de Utilização: #{l(@nf21.fatura.periodo_inicio)} - #{l(@nf21.fatura.periodo_fim)}", size: 10, at: [esquerda, 144.mm], width:  85.mm, height: 8.mm
   pdf.text_box "Fatura de Referência: #{@nf21.fatura.id.to_s.rjust(8, '0')}", size: 10, at: [esquerda, 138.mm], width:  85.mm, height: 8.mm
   pdf.text_box number_to_currency(@nf21.nf21_itens.first.parsed_item(:valor_total).to_i / 100.0), size: 12, at: [85.mm, 158.mm], width: 26.mm, align: :right
