@@ -58,11 +58,11 @@ class Nf21 < ApplicationRecord
   end
 
   def parse_cadastro
-    @parse_cadastro ||= Nf21Cadastro.parse(cadastro.strip!.encode('ISO-8859-14'))[:fields]
+    @parse_cadastro ||= Nf21Cadastro.parse(cadastro.encode('ISO-8859-14').strip!)[:fields]
   end
 
   def fixy_field(record, field)
     hash = record.find { |h| h[:name] == field }
-    hash[:value].strip
+    hash[:value].force_encoding('iso-8859-14').encode('utf-8').strip
   end
 end
