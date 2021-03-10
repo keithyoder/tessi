@@ -73,7 +73,8 @@ prawn_document(:page_size => 'A4', :margin => [20.mm,20.mm,20.mm,20.mm]) do |pdf
   pdf.text_box @nf21.nf21_itens.first.parsed_item(:cfop), size: 12, at: [84.mm, 219.mm], width:  40.mm, height: 8.mm, align: :right
   pdf.text_box l(@nf21.emissao), size: 12, at: [126.mm, 219.mm], width:  40.mm, height: 8.mm, align: :right
 
-  pdf.text_box @nf21.fatura.periodo_fim.strftime("%m/%Y"), size: 12, at: [1.mm, 209.mm], width:  40.mm, height: 8.mm, align: :right
+  referencia = @nf21.parsed_mestre(:referencia)
+  pdf.text_box referencia[2..3] + '/20' + referencia[0..1], size: 12, at: [1.mm, 209.mm], width:  40.mm, height: 8.mm, align: :right
   pdf.text_box "#{l(@nf21.fatura.periodo_inicio)} - #{l(@nf21.fatura.periodo_fim)}", size: 12, at: [44.mm, 209.mm], width:  60.mm, height: 8.mm, align: :right
   pdf.text_box 'Normal', size: 12, at: [106.mm, 209.mm], width:  60.mm, height: 8.mm, align: :right
 
@@ -83,7 +84,7 @@ prawn_document(:page_size => 'A4', :margin => [20.mm,20.mm,20.mm,20.mm]) do |pdf
   cpf_cnpj = if @nf21.parsed_mestre(:tipo_campo_1).to_i == 1
                CNPJ.new(@nf21.parsed_mestre(:cnpj_cpf))
              else
-               CPF.new(@nf21.parsed_mestre(:cnpj_cpf))
+               CPF.new(@nf21.parsed_mestre(:cnpj_cpf).last(11))
              end
   pdf.draw_text 'ASSINANTE', size: 8, style: :bold, at: [esquerda, 195.mm]
   pdf.draw_text @nf21.parsed_cadastro(:razao_social), size: 12, at: [esquerda, 190.mm]
@@ -104,7 +105,7 @@ prawn_document(:page_size => 'A4', :margin => [20.mm,20.mm,20.mm,20.mm]) do |pdf
     Fonte IBPT Chave A5G7R1", size: 10, at: [esquerda, 75.mm], leading: 7, width:  120.mm, height: 50.mm
 
   pdf.text_box number_to_currency(@nf21.parsed_mestre(:bc_icms).to_i / 100.0), size: 12, at: [0.mm,20.mm], width:  40.mm, height: 8.mm, align: :right
-  pdf.text_box number_to_percentage(@nf21.fatura.aliquota, precision: 0), size: 12, at: [42.mm,20.mm], width:  40.mm, height: 8.mm, align: :right
+  pdf.text_box number_to_percentage(@nf21.nf21_itens.first.parsed_item(:aliquota).to_i, precision: 0), size: 12, at: [42.mm,20.mm], width:  40.mm, height: 8.mm, align: :right
   pdf.text_box number_to_currency(@nf21.parsed_mestre(:icms).to_i / 100.0), size: 12, at: [84.mm,20.mm], width:  40.mm, height: 8.mm, align: :right
   pdf.text_box number_to_currency(@nf21.parsed_mestre(:bc_icms).to_i / 100.0), size: 12, at: [126.mm,20.mm], width:  40.mm, height: 8.mm, align: :right
   pdf.text_box @nf21.parsed_mestre(:codigo_autenticacao).upcase.gsub(/(.{4})(?=.)/, '\1.\2'), size: 12, at: [1.mm,10.mm], width:  160.mm, height: 8.mm, align: :center

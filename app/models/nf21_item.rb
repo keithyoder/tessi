@@ -10,7 +10,7 @@ class Nf21Item < ApplicationRecord
   private
 
   def parse_item
-    @parse_item ||= Nf21ItemRecord.parse(item.strip)[:fields]
+    @parse_item ||= Nf21ItemRecord.parse(item.strip!)[:fields]
   end
 
   def fixy_field(record, field)
