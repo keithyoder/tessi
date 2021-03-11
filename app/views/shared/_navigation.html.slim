@@ -39,6 +39,8 @@ nav#sidebar.sidebar-wrapper
               li
                 = link_to('Liquidações', liquidacoes_path)
               li
+                = link_to('Contratos para Renovar', contratos_path(renovaveis: 1))
+              li
                 = link_to('Contratos para Cancelar', contratos_path(cancelaveis: 1))
         li.sidebar-dropdown
           = link_to 'javascript:;' do

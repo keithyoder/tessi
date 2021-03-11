@@ -181,7 +181,7 @@ class Fatura < ApplicationRecord
 
   def validar_liquidacao?
     return if liquidacao.blank? || (1.week.ago..Date.today).cover?(liquidacao)
-    return if meio_liquidacao == 'Outros'
+    return unless meio_liquidacao == 'Dinheiro'
 
     errors.add(:liquidacao, 'fora da faixa permitida')
   end
