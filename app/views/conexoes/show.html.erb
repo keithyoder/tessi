@@ -17,7 +17,11 @@
   <div class="tab-pane fade show active" id="conexao" role="tabpanel" aria-labelledby="conexao-tab">
     <div class="row">
       <div class="card col-lg">
-        <%= render 'shared/show_header', {object: @conexao, titulo: "Conexão "+ @conexao.pessoa.nome} %>
+        <% if @conexao.conectado %>
+          <%= render 'shared/show_header', {object: @conexao, titulo: "Conexão "+ @conexao.pessoa.nome + ' <span class="badge badge-success">Conectada</span>'}%>
+        <% else %>
+          <%= render 'shared/show_header', {object: @conexao, titulo: "Conexão "+ @conexao.pessoa.nome + ' <span class="badge badge-warning">Desconectada</span>'}%>
+        <% end %>
         <div class="card-body">
           <div class="card-columns" style="column-count: 4">
             <%= link_to @conexao.pessoa do %>

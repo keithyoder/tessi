@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title Tessi Telecom
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    = stylesheet_link_tag    "application", media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag "application", 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    .container-fluid.page-wrapper.light-theme.sidebar.toggled
+      .row
+        = render partial: 'shared/navigation'
+        .offset-2.col-lg-10.mt-3
+          = yield

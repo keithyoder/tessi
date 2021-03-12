@@ -14,7 +14,8 @@ class PagamentoPerfil < ApplicationRecord
   end
 
   def proximo_nosso_numero
-    faturas.select('MAX(nossonumero::int) as nossonumero')
+    faturas.select('MAX(nossonumero::bigint) as nossonumero')
+           .where("nossonumero ~ E'^\\\\d+$'")
            .to_a[0][:nossonumero]
            .to_i
   end

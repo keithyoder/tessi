@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <div class="col-2">
-        <%= f.association :contrato, collection: @conexao.pessoa.contratos, label_method: :id %>
+        <%= f.association :contrato, collection: @contratos, label_method: :id %>
       </div>
       <div class="col">
         <%= f.association :ponto, collection: Ponto.ativo.order(:nome), label_method: :nome, input_html: {onchange: 'carregarIPs()'} %>

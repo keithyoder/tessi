@@ -1,5 +1,5 @@
 class ConexoesController < ApplicationController
-  before_action :set_conexao, only: [:show, :edit, :update, :destroy]
+  before_action :set_conexao, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /conexoes
@@ -44,12 +44,15 @@ class ConexoesController < ApplicationController
     @conexao = Conexao.new
     @conexao.tipo = :Cobranca
     @conexao.pessoa_id = params[:pessoa_id] if params[:pessoa_id]
+    set_contratos
+    @conexao.contrato = @contratos.first if @contratos.count == 1
     @caixas = FibraCaixa.joins(:fibra_rede, :ponto).order('pontos.nome, fibra_caixas.nome').all
   end
 
   # GET /conexoes/1/edit
   def edit
     get_caixas
+    set_contratos
   end
 
   # POST /conexoes
@@ -98,6 +101,10 @@ class ConexoesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_conexao
     @conexao = Conexao.find(params[:id])
+  end
+
+  def set_contratos
+    @contratos = @conexao.pessoa.contratos.ativos.disponiveis.or Contrato.where(id: @conexao.contrato_id)
   end
 
   def get_caixas

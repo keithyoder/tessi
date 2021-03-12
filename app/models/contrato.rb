@@ -5,6 +5,15 @@ class Contrato < ApplicationRecord
   has_many :faturas, dependent: :delete_all
   has_many :conexoes
   has_many :excecoes, dependent: :delete_all
+
+  # contratos que tem menos conexoes que permitido.
+  scope :disponiveis, lambda {
+    where(id: Contrato.select('contratos.id')
+      .left_joins(:conexoes)
+      .group('contratos.id')
+      .having('count(conexoes.*) < contratos.numero_conexoes'))
+  }
+
   scope :ativos, lambda {
     where(cancelamento: nil)
   }
