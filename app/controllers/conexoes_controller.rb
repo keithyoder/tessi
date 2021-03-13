@@ -5,11 +5,11 @@ class ConexoesController < ApplicationController
   # GET /conexoes
   # GET /conexoes.json
   def index
-    conexao = Conexao
+    conexao = Conexao.includes(:pessoa)
     conexao = conexao.bloqueado if params.key?(:suspensas)
     conexao = conexao.ativo if params.key?(:ativas)
     conexao = conexao.conectada if params.key?(:conectadas)
-    conexao = contrato.desconectada if params.key?(:desconectadas)
+    conexao = conexao.desconectada if params.key?(:desconectadas)
 
     @q = conexao.ransack(params[:q])
     @q.sorts = 'pessoa_nome'

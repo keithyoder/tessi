@@ -16,12 +16,17 @@ class Conexao < ApplicationRecord
   has_many :os, dependent: :nullify
   scope :bloqueado, -> { where('bloqueado') }
   scope :ativo, -> { where('not bloqueado') }
-  scope :conectada, -> { select('conexoes.*').distinct.joins(:rad_accts).where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago) }
-  scope :desconectada, lambda {
-    where(id: Conexao.select('conexoes.*')
-      .distinct.left_joins(:rad_accts)
+  scope :conectada, lambda {
+    where(id: Conexao.select('conexoes.id')
+      .joins(:rad_accts)
       .where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago)
-      .having('count(rad_accts.*) = 0'))
+      .group('conexoes.id'))
+  }
+  scope :desconectada, lambda {
+    where.not(id: Conexao.select('conexoes.id')
+      .joins(:rad_accts)
+      .where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago)
+      .group('conexoes.id'))
   }
   scope :inadimplente, -> { where('inadimplente') }
   scope :radio, -> { joins(:ponto).where(pontos: { tecnologia: :Radio }) }
