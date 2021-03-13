@@ -6,6 +6,7 @@ class ConexoesController < ApplicationController
   # GET /conexoes.json
   def index
     conexao = Conexao.includes(:pessoa)
+    conexao = conexao.sem_autenticar if params.key?(:sem_autenticar)
     conexao = conexao.bloqueado if params.key?(:suspensas)
     conexao = conexao.ativo if params.key?(:ativas)
     conexao = conexao.conectada if params.key?(:conectadas)

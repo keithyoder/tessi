@@ -28,6 +28,12 @@ class Conexao < ApplicationRecord
       .where('AcctStartTime > ? and AcctStopTime is null', 2.days.ago)
       .group('conexoes.id'))
   }
+  scope :sem_autenticar, lambda {
+    where.not(id: Conexao.select('conexoes.id')
+      .joins(:rad_accts)
+      .where('AcctStartTime > ? and AcctStopTime is null', 1.week.ago)
+      .group('conexoes.id'))
+  }
   scope :inadimplente, -> { where('inadimplente') }
   scope :radio, -> { joins(:ponto).where(pontos: { tecnologia: :Radio }) }
   scope :fibra, -> { joins(:ponto).where(pontos: { tecnologia: :Fibra }) }
@@ -110,7 +116,7 @@ class Conexao < ApplicationRecord
   private
 
   def atualizar_senha
-    return unless usuario.present? && senha.present? && saved_change_to_senha?
+    return unless usuario.present? && senha.present? && (saved_change_to_senha? || saved_changed_to_usuario?)
 
     atr = conexao_verificar_atributos.where(atributo: RADIUS_SENHA).first_or_create
     atr.update!(op: ':=', valor: senha)
