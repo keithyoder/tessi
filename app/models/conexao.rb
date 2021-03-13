@@ -29,10 +29,9 @@ class Conexao < ApplicationRecord
       .group('conexoes.id'))
   }
   scope :sem_autenticar, lambda {
-    where.not(id: Conexao.select('conexoes.id')
+    where.not(id: Conexao.select('DISTINCT conexoes.id')
       .joins(:rad_accts)
-      .where('AcctStartTime > ? and AcctStopTime is null', 1.week.ago)
-      .group('conexoes.id'))
+      .where('AcctStartTime > ?', 3.days.ago))
   }
   scope :inadimplente, -> { where('inadimplente') }
   scope :radio, -> { joins(:ponto).where(pontos: { tecnologia: :Radio }) }
