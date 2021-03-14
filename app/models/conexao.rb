@@ -115,7 +115,7 @@ class Conexao < ApplicationRecord
   private
 
   def atualizar_senha
-    return unless usuario.present? && senha.present? && (saved_change_to_senha? || saved_changed_to_usuario?)
+    return unless usuario.present? && senha.present? && (saved_change_to_senha? || saved_change_to_usuario?)
 
     atr = conexao_verificar_atributos.where(atributo: RADIUS_SENHA).first_or_create
     atr.update!(op: ':=', valor: senha)
