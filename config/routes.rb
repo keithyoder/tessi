@@ -29,8 +29,8 @@ Rails.application.routes.draw do
     get :boletos, on: :member
     get :renovar, on: :member
   end
-  resources :conexao_enviar_atributos
-  resources :conexao_verificar_atributos
+  # resources :conexao_enviar_atributos
+  # resources :conexao_verificar_atributos
   resources :conexoes do
     get :suspenso, on: :collection
     get :integrar, on: :collection
