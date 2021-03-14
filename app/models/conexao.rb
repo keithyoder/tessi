@@ -112,17 +112,23 @@ class Conexao < ApplicationRecord
              .count.positive?
   end
 
+  def integrar
+    atualizar_senha(true)
+    atualizar_ip_e_mac(true)
+    atualizar_velocidade(true)
+  end
+
   private
 
-  def atualizar_senha
-    return unless usuario.present? && senha.present? && (saved_change_to_senha? || saved_change_to_usuario?)
+  def atualizar_senha(forcar = false)
+    return unless forcar || usuario.present? && senha.present? && (saved_change_to_senha? || saved_change_to_usuario?)
 
     atr = conexao_verificar_atributos.where(atributo: RADIUS_SENHA).first_or_create
     atr.update!(op: ':=', valor: senha)
   end
 
-  def atualizar_ip_e_mac
-    return unless saved_change_to_ip? || saved_change_to_ponto_id? || saved_change_to_mac?
+  def atualizar_ip_e_mac(forcar = false)
+    return unless forcar || saved_change_to_ip? || saved_change_to_ponto_id? || saved_change_to_mac?
 
     if ponto.tecnologia == 'Radio'
       conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').destroy_all
@@ -138,8 +144,8 @@ class Conexao < ApplicationRecord
     end
   end
 
-  def atualizar_velocidade
-    return unless saved_change_to_velocidade?
+  def atualizar_velocidade(forcar = false)
+    return unless forcar || saved_change_to_velocidade?
 
     conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).destroy_all
     return unless velocidade.present?
