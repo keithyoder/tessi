@@ -24,7 +24,7 @@ class BairrosController < ApplicationController
 
   # GET /bairros/new
   def new
-    @bairro = Bairro.new
+    @bairro = Bairro.includes(:cidades, :estados).new
   end
 
   # GET /bairros/1/edit

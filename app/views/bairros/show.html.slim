@@ -1,0 +1,13 @@
+.row
+  .card.col-sm
+    = render 'shared/show_header', {object: @bairro}
+    .card-body
+      .card-columns style=("column-count: 3") 
+        = link_to @bairro.cidade do
+          = render 'shared/field_card', {campo: "Cidade", valor: @bairro.cidade.nome_uf}
+        = render 'shared/field_card', {campo: "Latitude", valor: @bairro.latitude}
+        = render 'shared/field_card', {campo: "Longitude", valor: @bairro.longitude}
+  .card.col-sm
+    p align="center" 
+      = image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=400x300&center=#{@bairro.latitude},#{@bairro.longitude}&key=#{Rails.application.credentials.google_maps_api_key}", alt: "Map"
+= render 'logradouros/table', :params => {:bairro_id => @bairro}

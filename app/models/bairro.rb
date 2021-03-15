@@ -4,6 +4,7 @@ require 'csv'
 
 class Bairro < ApplicationRecord
   belongs_to :cidade
+  has_one :estado, through: :cidade
   has_many :logradouros
   has_many :assinantes,
            -> { assinantes },
