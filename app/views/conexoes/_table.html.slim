@@ -1,0 +1,31 @@
+.card
+  = render '/shared/table_header', {object: @conexoes, search_string: :usuario_or_mac_or_pessoa_nome_cont, params: @params}
+  .card-body
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+            - if !defined?(exclude) or exclude != 'pessoa'
+              th= sort_link @q, :pessoa_nome, 'Pessoa', default_order: :desc
+            th= sort_link @q, :plano_nome, 'Plano'
+            - if !defined?(exclude) or exclude != 'ponto'
+              th= sort_link @q, :ponto_nome, 'Ponto'
+            th= sort_link @q, :usuario, 'Usuário'
+            th= sort_link @q, :ip, 'IP'
+            th Bloq.
+            th Inadim.
+            th Conectado?
+        tbody
+          - @conexoes.each do |conexao|
+            tr
+              - if !defined?(exclude) or exclude != 'pessoa'
+                td= link_to conexao.pessoa.nome, conexao.pessoa
+              td= link_to conexao.plano.nome, conexao.plano
+              - if !defined?(exclude) or exclude != 'ponto'
+                td= link_to conexao.ponto.nome, conexao.ponto
+              td= link_to conexao.usuario, conexao
+              td= conexao.ip
+              td= conexao.bloqueado.as_checkbox
+              td= conexao.inadimplente.as_checkbox
+              td= conexao.conectado.as_checkbox
+  = paginate @conexoes, :params => {:tab => "conexoes"}

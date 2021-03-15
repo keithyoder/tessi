@@ -13,7 +13,7 @@ class ConexoesController < ApplicationController
     conexao = conexao.desconectada if params.key?(:desconectadas)
 
     @q = conexao.ransack(params[:q])
-    @q.sorts = 'pessoa_nome'
+    #@q.sorts = 'pessoa_nome'
     @conexoes = @q.result.page params[:page]
   end
 
