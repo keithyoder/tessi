@@ -59,6 +59,7 @@ class Ability
       can [:renovar], Contrato
     elsif user.financeiro_n2?
       can :update, Cidade
+      can :destroy, Conexao
       can %i[update liquidacao estornar], Fatura
       can %i[create update], [Retorno, Contrato]
       can %i[renovar destroy], Contrato
