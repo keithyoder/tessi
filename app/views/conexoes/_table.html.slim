@@ -6,12 +6,12 @@
         thead
           tr
             - if !defined?(exclude) or exclude != 'pessoa'
-              th= sort_link @q, :pessoa_nome, 'Pessoa', default_order: :desc
-            th= sort_link @q, :plano_nome, 'Plano'
+              th Pessoa
+            th Plano
             - if !defined?(exclude) or exclude != 'ponto'
-              th= sort_link @q, :ponto_nome, 'Ponto'
-            th= sort_link @q, :usuario, 'Usuário'
-            th= sort_link @q, :ip, 'IP'
+              th Ponto
+            th Usuário
+            th IP
             th Bloq.
             th Inadim.
             th Conectado?
