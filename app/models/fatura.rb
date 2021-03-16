@@ -18,7 +18,7 @@ class Fatura < ApplicationRecord
   has_one_attached :nf_pdf
   paginates_per 18
   scope :pagas, -> { where.not(liquidacao: nil) }
-  scope :em_aberto, -> { where(liquidacao: nil) }
+  scope :em_aberto, -> { where(liquidacao: nil, cancelamento: nil) }
   scope :inadimplentes, -> { where('vencimento < ?', 5.days.ago).em_aberto }
   scope :suspensos, -> { where('vencimento < ?', 15.days.ago).em_aberto }
   scope :registradas, -> { where.not(registro: nil) }
@@ -129,6 +129,10 @@ class Fatura < ApplicationRecord
 
   def estornar?
     liquidacao.present? && retorno.blank?
+  end
+
+  def cancelar?
+    liquidacao.blank?
   end
 
   private

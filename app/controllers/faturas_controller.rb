@@ -53,6 +53,17 @@ class FaturasController < ApplicationController
     end
   end
 
+  def cancelar
+    if @fatura.cancelar?
+      @fatura.update!(cancelamento: DateTime.now)
+      respond_to do |format|
+        format.html { redirect_to @fatura.contrato, notice: 'Fatura cancelada com sucesso.' }
+      end
+    else
+      format.html { render :edit }
+    end
+  end
+
   # POST /faturas
   # POST /faturas.json
   def create

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_26_113441) do
+ActiveRecord::Schema.define(version: 2021_03_16_111344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_113441) do
     t.bigint "retorno_id"
     t.bigint "registro_id"
     t.bigint "baixa_id"
+    t.datetime "cancelamento"
     t.index ["baixa_id"], name: "index_faturas_on_baixa_id"
     t.index ["contrato_id"], name: "index_faturas_on_contrato_id"
     t.index ["liquidacao"], name: "index_faturas_on_liquidacao"
