@@ -45,6 +45,8 @@ class Contrato < ApplicationRecord
       .group('contratos.id', 'pessoas.id')
       .having('COUNT(faturas.*) = 0').ativos
   }
+  scope :fisica, -> { joins(:pessoa).where('pessoas.tipo = 1') }
+  scope :juridica, -> { joins(:pessoa).where('pessoas.tipo = 2') }
 
   after_create :gerar_faturas
 
