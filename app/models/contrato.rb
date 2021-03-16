@@ -61,7 +61,8 @@ class Contrato < ApplicationRecord
   before_destroy :verificar_exclusao, prepend: true
 
   def faturas_em_atraso(dias)
-    faturas.where('liquidacao is null and vencimento < ?', dias.days.ago).count
+    faturas.where(liquidacao: nil, cancelamento: nil)
+           .where('vencimento < ?', dias.days.ago).count
   end
 
   def contrato_e_nome
