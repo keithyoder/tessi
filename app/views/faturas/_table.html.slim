@@ -28,10 +28,13 @@
                 small
                   - if fatura.registro.present?
                     span.badge.badge-success Registrada
+                    '
                   - if fatura.retorno.present?
                     span.badge.badge-dark Liquidada
+                    '
                   - if fatura.baixa.present?
                     span.badge.badge-warning Baixada
+                    '
                   - if fatura.cancelamento.present?
                     span.badge.badge-danger Cancelada
     = paginate @faturas
