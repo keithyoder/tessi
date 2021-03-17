@@ -135,6 +135,10 @@ class Fatura < ApplicationRecord
     liquidacao.blank?
   end
 
+  def nosso_numero_remessa
+    nossonumero + (dv_santander.to_s if pagamento_perfil.banco == 33).to_s
+  end
+
   private
 
   def remessa_attr # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -170,10 +174,6 @@ class Fatura < ApplicationRecord
         identificacao_ocorrencia: '01',
       }
     end
-  end
-
-  def nosso_numero_remessa
-    nossonumero + (dv_santander.to_s if pagamento_perfil.banco == 33).to_s
   end
 
   def dv_santander
