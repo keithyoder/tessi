@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :fibra_redes
   resources :retornos
   resources :pagamento_perfis do
-    get :remessa, on: :member
+    get 'remessa/:sequencia', action: :remessa, as: :remessa, on: :member
   end
   resources :liquidacoes
   resources :faturas do
@@ -30,8 +30,6 @@ Rails.application.routes.draw do
     get :boletos, on: :member
     get :renovar, on: :member
   end
-  # resources :conexao_enviar_atributos
-  # resources :conexao_verificar_atributos
   resources :conexoes do
     get :suspenso, on: :collection
     get :integrar, on: :collection

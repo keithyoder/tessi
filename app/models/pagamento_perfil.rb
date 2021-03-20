@@ -3,13 +3,13 @@ class PagamentoPerfil < ApplicationRecord
   has_many :retornos
   enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2 }
 
-  def remessa
+  def remessa(sequencia = 1)
     pagamentos = faturas_para_registrar + faturas_para_baixar
     case banco
     when 33
       remessa_santander(pagamentos)
     when 1
-      remessa_banco_brasil(pagamentos)
+      remessa_banco_brasil(pagamentos, sequencia)
     end
   end
 
@@ -22,9 +22,10 @@ class PagamentoPerfil < ApplicationRecord
 
   private
 
-  def remessa_banco_brasil(pagamentos)
+  def remessa_banco_brasil(pagamentos, sequencia)
     Brcobranca::Remessa::Cnab400::BancoBrasil.new(
       remessa_attr(pagamentos).merge(
+        sequencial_remessa: sequencia,
         variacao_carteira: variacao.to_s,
         convenio: cedente.to_s,
         convenio_lider: cedente.to_s
@@ -48,7 +49,6 @@ class PagamentoPerfil < ApplicationRecord
       conta_corrente: conta.to_s,
       digito_conta: '1',
       empresa_mae: 'TESSI Tec. em Seg. e Sistemas',
-      sequencial_remessa: '1',
       documento_cedente: Setting.cnpj,
       pagamentos: pagamentos,
     }
