@@ -1,4 +1,4 @@
-class PingServidoresJob
+class PingServidoresJob < ApplicationJob
   #include Sidekiq::Worker
 
   def perform
