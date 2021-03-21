@@ -1,5 +1,5 @@
 class PingServidoresJob < ApplicationJob
-  #include Sidekiq::Worker
+  include Sidekiq::Worker
 
   def perform
     Servidor.ativo.each do |servidor|
