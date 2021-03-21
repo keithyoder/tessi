@@ -3,12 +3,10 @@ class MikrotikBackupJob < ApplicationJob
 
   def perform
     Servidor.ativo.each do |servidor|
-      begin
-        servidor.copiar_backup
-      rescue NoMethodError, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Net::FTPPermError, Errno::EHOSTUNREACH => exception
-        Rails.logger.info exception.message
-        next
-      end
+      servidor.copiar_backup
+    rescue NoMethodError, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Net::FTPPermError, Errno::EHOSTUNREACH => exception
+      Rails.logger.info exception.message
+      next
     end
   end
 end
