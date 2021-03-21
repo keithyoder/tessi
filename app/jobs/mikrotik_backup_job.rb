@@ -2,7 +2,7 @@ class MikrotikBackupJob < ApplicationJob
   #include Sidekiq::Worker
 
   def perform
-    Servidor.ativo do |servidor|
+    Servidor.ativo.each do |servidor|
       begin
         servidor.copiar_backup
       rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED => exception
