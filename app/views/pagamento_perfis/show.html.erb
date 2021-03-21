@@ -14,7 +14,7 @@
     <div class="card">
       <%= render 'shared/show_header', {object: @pagamento_perfil, titulo: "Perfil de Pagamento "} %>
       <div class="card-body">
-        <div class="card-columns" style="column-count: 4">
+        <div class="card-columns">
           <%= render 'shared/field_card', {campo: "Nome", valor: @pagamento_perfil.nome} %>
           <%= render 'shared/field_card', {campo: "Tipo", valor: @pagamento_perfil.tipo} %>
           <%= render 'shared/field_card', {campo: "Banco", valor: @pagamento_perfil.banco} %>
