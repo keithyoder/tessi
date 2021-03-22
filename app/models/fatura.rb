@@ -105,18 +105,8 @@ class Fatura < ApplicationRecord
     end
   end
 
-  #def nf_hash
-  #  cnpj = pessoa.cpf_cnpj.rjust(14, '0')
-  #  nf = nf21.numero.to_s.rjust(9, '0')
-  #  valor = (base_calculo_icms * 100).to_i.to_s.rjust(12, '0')
-  #  icms = valor
-  #  icms_valor = '000000000000'
-  #  md5 = Digest::MD5.new
-  #  md5.hexdigest(cnpj + nf + valor + icms + icms_valor).upcase.gsub(/(.{4})(?=.)/, '\1.\2')
-  #end
-
   def gerar_nota
-    return unless nf21.count.zero?
+    return unless nf21.blank?
 
     next_nf = (Nf21.maximum(:numero).presence || 0) + 1
     nf = Nf21.create(fatura_id: id, emissao: liquidacao, numero: next_nf)
@@ -128,11 +118,15 @@ class Fatura < ApplicationRecord
   end
 
   def estornar?
-    liquidacao.present? && retorno.blank?
+    liquidacao.present? && retorno.blank? && nf21.blank?
   end
 
   def cancelar?
     liquidacao.blank?
+  end
+
+  def gerar_nota?
+    nf21.blank? && liquidacao.present? && liquidacao.strftime('%Y-%m') == DateTime.now.strftime('%Y-%m')
   end
 
   def nosso_numero_remessa

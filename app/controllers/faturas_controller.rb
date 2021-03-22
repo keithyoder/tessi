@@ -1,6 +1,6 @@
 class FaturasController < ApplicationController
   load_and_authorize_resource
-  before_action :set_fatura, only: [:show, :edit, :update, :destroy, :liquidacao, :boleto]
+  before_action :set_fatura, only: %i[show edit update destroy liquidacao boleto gerar_nf]
 
   # GET /faturas
   # GET /faturas.json
@@ -61,6 +61,17 @@ class FaturasController < ApplicationController
       end
     else
       format.html { render :edit }
+    end
+  end
+
+  def gerar_nf
+    respond_to do |format|
+      if @fatura.nf21.blank?
+        @fatura.gerar_nota
+        format.html { redirect_to @fatura, notice: 'Nota Fiscal criada com sucesso.' }
+      else
+        format.html { redirect_to @fatura, error: 'Nota Fiscal já existe' }
+      end
     end
   end
 

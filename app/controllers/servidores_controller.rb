@@ -1,5 +1,5 @@
 class ServidoresController < ApplicationController
-  before_action :set_servidor, only: %i[show edit update destroy]
+  before_action :set_servidor, only: %i[show edit update destroy backup]
   load_and_authorize_resource
 
   # GET /servidores
@@ -25,7 +25,6 @@ class ServidoresController < ApplicationController
   end
 
   def backup
-    @servidor = Servidor.find(params[:id])
     @servidor.copiar_backup
     respond_to do |format|
       format.html { redirect_to @servidor, notice: 'Backup iniciado.' }

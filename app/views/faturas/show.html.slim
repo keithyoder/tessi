@@ -58,9 +58,16 @@
       = link_to estornar_fatura_path do
         = button_tag(:class => "btn btn-warning") do
           i.fas.fa-redo aria-hidden="true" 
-          | &nbspEstornar
+          | &nbsp Estornar
+    '
     - if can?(:cancelar, @fatura) && @fatura.cancelar?
       = link_to cancelar_fatura_path do
         = button_tag(:class => "btn btn-danger") do
           i.fas.fa-window-close aria-hidden="true" 
-          | &nbspCancelar
+          | &nbsp Cancelar
+    '
+    - if can?(:gerar_nf, @fatura) && @fatura.gerar_nota?
+      = link_to gerar_nf_fatura_path do
+        = button_tag(:class => "btn btn-success") do
+          i.fas.fa-file-invoice aria-hidden="true" 
+          | &nbsp Gerar NF

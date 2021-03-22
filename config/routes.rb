@@ -9,9 +9,7 @@ Rails.application.routes.draw do
   resources :excecoes
   resources :ip_redes
   resources :nf21s do
-    collection do
-      get 'competencia/:mes', action: 'competencia', as: 'competencia'
-    end
+    get 'competencia/:mes', action: :competencia, as: :competencia, on: :collection    
   end
   resources :fibra_caixas
   resources :fibra_redes
@@ -25,6 +23,7 @@ Rails.application.routes.draw do
     get :boleto, on: :member
     get :estornar, on: :member
     get :cancelar, on: :member
+    get :gerar_nf, on: :member
   end
   resources :contratos do
     get :boletos, on: :member

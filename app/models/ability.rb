@@ -60,7 +60,7 @@ class Ability
     elsif user.financeiro_n2?
       can :update, Cidade
       can :destroy, Conexao
-      can %i[update liquidacao estornar, cancelar], Fatura
+      can %i[update liquidacao estornar cancelar gerar_nf], Fatura
       can %i[create update], [Retorno, Contrato]
       can %i[renovar destroy], Contrato
       can :remessa, PagamentoPerfil
