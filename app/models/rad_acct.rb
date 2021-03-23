@@ -7,6 +7,6 @@ class RadAcct < ApplicationRecord
       .where('not acctstoptime is null and acctstoptime > ?', 180.days.ago)
       .group('date(acctstoptime)')
       .order('date(acctstoptime) desc')
-      .limit(30)
+      .limit(90)
   }
 end
