@@ -81,7 +81,9 @@ class Fatura < ApplicationRecord
   end
 
   def base_calculo_icms
-    valor_liquidacao - (juros_recebidos.nil? ? 0 : juros_recebidos)
+    (valor_liquidacao.presence || valor) - juros_recebidos.to_f
+    #base - juros_recebidos.to_f
+    #valor_liquidacao - (juros_recebidos.nil? ? 0 : juros_recebidos)
   end
 
   def aliquota
@@ -109,7 +111,8 @@ class Fatura < ApplicationRecord
     return unless nf21.blank?
 
     next_nf = (Nf21.maximum(:numero).presence || 0) + 1
-    nf = Nf21.create(fatura_id: id, emissao: liquidacao, numero: next_nf)
+    emissao = liquidacao.presence || vencimento
+    nf = Nf21.create(fatura_id: id, emissao: emissao, numero: next_nf)
     nf.gerar_registros
   end
 
@@ -126,7 +129,10 @@ class Fatura < ApplicationRecord
   end
 
   def gerar_nota?
-    nf21.blank? && liquidacao.present? && liquidacao.strftime('%Y-%m') == DateTime.now.strftime('%Y-%m')
+    return false unless nf21.blank?
+    return mes_referencia(liquidacao) == mes_referencia(Date.today) if liquidacao.present?
+
+    mes_referencia(vencimento) == mes_referencia(Date.today)
   end
 
   def nosso_numero_remessa
@@ -182,5 +188,9 @@ class Fatura < ApplicationRecord
     return unless meio_liquidacao == 'Dinheiro'
 
     errors.add(:liquidacao, 'fora da faixa permitida')
+  end
+
+  def mes_referencia(date)
+    date.strftime('%Y-%m')
   end
 end
