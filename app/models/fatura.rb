@@ -82,8 +82,6 @@ class Fatura < ApplicationRecord
 
   def base_calculo_icms
     (valor_liquidacao.presence || valor) - juros_recebidos.to_f
-    #base - juros_recebidos.to_f
-    #valor_liquidacao - (juros_recebidos.nil? ? 0 : juros_recebidos)
   end
 
   def aliquota
@@ -117,7 +115,9 @@ class Fatura < ApplicationRecord
   end
 
   def baixar?
-    liquidacao.present? && retorno.blank? && baixa.blank?
+    return false unless liquidacao.present? || cancelamento.present?
+
+    retorno.blank? && baixa.blank?
   end
 
   def estornar?

@@ -4,7 +4,7 @@ class PagamentoPerfil < ApplicationRecord
   enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2 }
 
   def remessa(sequencia = 1)
-    pagamentos = faturas_para_registrar + faturas_para_baixar
+    pagamentos = faturas_para_registrar + faturas_para_baixar + faturas_canceladas
     case banco
     when 33
       remessa_santander(pagamentos)
@@ -81,5 +81,13 @@ class PagamentoPerfil < ApplicationRecord
       baixa_id: nil,
       liquidacao: 1.month.ago..Date.today
     ).where.not(liquidacao: nil, registro_id: nil).map(&:remessa)
+  end
+
+  def faturas_canceladas
+    # baixar todos os boletos que foram canceladas e nao foram baixados anteriormente.
+    faturas_com_numero.where(
+      retorno_id: nil,
+      baixa_id: nil,
+    ).where.not(cancelamento: nil, registro_id: nil).map(&:remessa)
   end
 end
