@@ -36,7 +36,7 @@ class Ability
       can :read, :all
       can :suspenso, Conexao
       can :boletos, Contrato
-      can :boleto, Fatura
+      can %i[udate liquidacao boleto], Fatura
       can :encerrar, Atendimento.por_responsavel(user).abertos
       can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
       cannot :update, Os.fechadas
