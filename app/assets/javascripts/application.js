@@ -25,4 +25,3 @@
 //= require bootstrap-datepicker.pt-BR
 //= require sidebar
 //= require jquery.mCustomScrollbar
-//= require_tree .

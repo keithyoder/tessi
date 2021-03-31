@@ -76,7 +76,7 @@ class Contrato < ApplicationRecord
     parcela = faturas.maximum(:parcela) || 0
     (1..quantas).each do
       nossonumero += 1
-      vencimento += 1.month
+      vencimento = proximo_mes(vencimento)
       parcela += 1
       instalacao = if parcela <= parcelas_instalacao
                      (valor_instalacao / parcelas_instalacao).round(2)
@@ -156,6 +156,16 @@ class Contrato < ApplicationRecord
   end
 
   def fracao_de_mes(inicio, fim)
-    (fim - inicio).to_f / (fim - (fim - 1.month)).to_f
+    if fim.end_of_month == fim
+      dias_no_mes = [fim - inicio, 31].min
+    else
+      dias_no_mes = fim - (fim - 1.month)
+    end
+    (fim - inicio).to_f / dias_no_mes.to_f
+  end
+
+  def proximo_mes(data)
+    data += 1.month
+    data.change(day: [dia_vencimento, data.end_of_month.day].min)
   end
 end

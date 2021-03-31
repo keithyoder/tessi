@@ -128,7 +128,9 @@ class FaturasController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def fatura_params
-    params.require(:fatura).permit(:contrato_id, :valor, :vencimento, :nossonumero, :parcela,
-                                   :arquivo_remessa, :data_remessa, :data_cancelamento, :meio_liquidacao, :valor_liquidacao, :liquidacao)
+    params.require(:fatura).permit(
+      :valor, :vencimento, :nossonumero, :parcela, :juros_recebidos,
+      :data_cancelamento, :meio_liquidacao, :valor_liquidacao, :liquidacao
+    )
   end
 end
