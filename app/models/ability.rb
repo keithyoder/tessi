@@ -32,7 +32,7 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     return unless user.present?
 
-    todos if user.role?
+    todos(user) if user.role?
     if user.admin?
       admin
     elsif user.tecnico_n1?
@@ -48,7 +48,7 @@ class Ability
 
   private
 
-  def todos
+  def todos(user)
     can :read, :all
     can :suspenso, Conexao
     can :boletos, Contrato
