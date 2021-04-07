@@ -112,9 +112,10 @@ class FaturasController < ApplicationController
   # DELETE /faturas/1
   # DELETE /faturas/1.json
   def destroy
+    contrato = @fatura.contrato
     @fatura.destroy
     respond_to do |format|
-      format.html { redirect_to faturas_url, notice: "Fatura was successfully destroyed." }
+      format.html { redirect_to contrato, notice: 'Fatura excluída com sucesso.' }
       format.json { head :no_content }
     end
   end

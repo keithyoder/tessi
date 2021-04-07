@@ -32,38 +32,62 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     return unless user.present?
 
-    if user.role?
-      can :read, :all
-      can :suspenso, Conexao
-      can :boletos, Contrato
-      can %i[udate liquidacao boleto], Fatura
-      can :encerrar, Atendimento.por_responsavel(user).abertos
-      can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
-      cannot :update, Os.fechadas
-      can :create, [Excecao]
-    end
+    todos if user.role?
     if user.admin?
-      can :manage, :all
-      cannot :destroy, Estado
-      cannot :encerrar, Atendimento.fechados
+      admin
     elsif user.tecnico_n1?
-      can [:update], [FibraCaixa]
-      can %i[create update], Conexao
+      tecnico_n1
     elsif user.tecnico_n2?
-      can :update, [Cidade, Ponto, Servidor]
-      can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao]
-      can :destroy, Conexao
-      can [:backup, :backups], Servidor
+      tecnico_n2
     elsif user.financeiro_n1?
-      can %i[update liquidacao], Fatura
-      can [:renovar], Contrato
+      financeiro_n1
     elsif user.financeiro_n2?
-      can :update, Cidade
-      can :destroy, Conexao
-      can %i[update liquidacao estornar cancelar gerar_nf], Fatura
-      can %i[create update], [Retorno, Contrato]
-      can %i[renovar destroy], Contrato
-      can :remessa, PagamentoPerfil
+      financeiro_n2
     end
+  end
+
+  private
+
+  def todos
+    can :read, :all
+    can :suspenso, Conexao
+    can :boletos, Contrato
+    can %i[udate liquidacao boleto], Fatura
+    can :encerrar, Atendimento.por_responsavel(user).abertos
+    can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
+    cannot :update, Os.fechadas
+    can :create, [Excecao]
+  end
+
+  def admin
+    can :manage, :all
+    cannot :destroy, Estado
+    cannot :encerrar, Atendimento.fechados
+  end
+
+  def tecnico_n1
+    can [:update], [FibraCaixa]
+    can %i[create update], Conexao
+  end
+
+  def tecnico_n2
+    can :update, [Cidade, Ponto, Servidor]
+    can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao]
+    can :destroy, Conexao
+    can [:backup, :backups], Servidor
+  end
+
+  def financeiro_n1
+    can %i[update liquidacao], Fatura
+    can [:renovar], Contrato
+  end
+
+  def financeiro_n2
+    can :update, Cidade
+    can :destroy, Conexao
+    can %i[update liquidacao estornar cancelar gerar_nf], Fatura
+    can %i[create update], [Retorno, Contrato]
+    can %i[renovar destroy], Contrato
+    can :remessa, PagamentoPerfil
   end
 end
