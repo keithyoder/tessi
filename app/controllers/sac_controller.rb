@@ -11,7 +11,8 @@ class SacController < ApplicationController
   private
 
   def set_conexao
-    @conexao = Conexao.find_by(ip: request.remote_ip)
+    ip = request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip
+    @conexao = Conexao.find_by(ip: ip)
     # @conexao = Conexao.find_by(ip: '10.36.1.107')
   end
 end
