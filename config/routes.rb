@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'sac/inadimplencia'
+  get 'sac/suspensao'
   resources :atendimento_detalhes, only: [:new, :create, :index]
   resources :atendimentos do
     get :encerrar, on: :member

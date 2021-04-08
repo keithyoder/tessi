@@ -8,6 +8,10 @@ class SacController < ApplicationController
     @suspensao = @vencimento + 15.days if @vencimento
   end
 
+  def suspensao
+    @vencimento = @conexao&.contrato&.faturas&.vencidas&.first&.vencimento
+  end
+
   private
 
   def set_conexao
