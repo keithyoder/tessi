@@ -7,8 +7,11 @@ html
     = javascript_include_tag "application", 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-    .container-fluid.page-wrapper.light-theme.sidebar.toggled
-      .row
-        = render partial: 'shared/navigation'
-        .offset-2.col-lg-10.mt-3
-          = yield
+    - if controller.controller_name == 'sac'
+      = yield
+    - else
+      .container-fluid.page-wrapper.light-theme.sidebar.toggled
+        .row
+          = render partial: 'shared/navigation'
+          .offset-2.col-lg-10.mt-3
+            = yield
