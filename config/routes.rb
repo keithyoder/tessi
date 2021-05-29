@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :equipamentos
   get 'sac/inadimplencia'
   get 'sac/suspensao'
   resources :atendimento_detalhes, only: [:new, :create, :index]

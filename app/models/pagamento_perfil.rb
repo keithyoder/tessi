@@ -68,6 +68,7 @@ class PagamentoPerfil < ApplicationRecord
     # e que nao foram liquidados ainda e nao foram registrados anteriormente.
     faturas_com_numero.where(
       vencimento: Date.today..30.days.from_now,
+      cancelamento: nil,
       liquidacao: nil,
       registro_id: nil
     ).map(&:remessa)

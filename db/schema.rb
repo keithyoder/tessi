@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_20_093811) do
+ActiveRecord::Schema.define(version: 2021_05_29_140604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,14 @@ ActiveRecord::Schema.define(version: 2021_03_20_093811) do
     t.index ["pagamento_perfil_id"], name: "index_contratos_on_pagamento_perfil_id"
     t.index ["pessoa_id"], name: "index_contratos_on_pessoa_id"
     t.index ["plano_id"], name: "index_contratos_on_plano_id"
+  end
+
+  create_table "equipamentos", force: :cascade do |t|
+    t.string "fabricante"
+    t.string "modelo"
+    t.integer "tipo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "estados", force: :cascade do |t|

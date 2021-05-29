@@ -72,9 +72,9 @@ class Ability
 
   def tecnico_n2
     can :update, [Cidade, Ponto, Servidor]
-    can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao]
+    can %i[create update], [FibraRede, FibraCaixa, IpRede, Conexao, Equipamento]
     can :destroy, Conexao
-    can [:backup, :backups], Servidor
+    can %i[backup backups], Servidor
   end
 
   def financeiro_n1
