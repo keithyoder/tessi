@@ -8,4 +8,5 @@ class Equipamento < ApplicationRecord
     Switch: 6
   }
 
+  has_one_attached :imagem
 end

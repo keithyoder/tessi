@@ -6,5 +6,8 @@
       <%= render 'shared/field_card', {campo: "Modelo", valor: @equipamento.modelo} %>
       <%= render 'shared/field_card', {campo: "Tipo", valor: @equipamento.tipo} %>
     </div>
+    <div class="card-columns" style="column-count: 2">
+      <%= render 'shared/field_card', {campo: "Imagem", valor: @equipamento.imagem.attached? ? image_tag(@equipamento.imagem) : ''} %>
+    </div>
   </div>
 </div>

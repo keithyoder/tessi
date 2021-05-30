@@ -7,8 +7,11 @@
         = f.input :fabricante
       .col
         = f.input :modelo
-      .col-4
+    .row
+      .col
         = f.input :tipo, collection: Equipamento.tipos.keys
+      .col
+        = f.file_field :imagem
   .form-actions
     = button_tag(:class => "btn btn-primary") do
       i.fas.fa-save aria-hidden="true" 

@@ -70,6 +70,6 @@ class EquipamentosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def equipamento_params
-      params.require(:equipamento).permit(:fabricante, :modelo, :tipo)
+      params.require(:equipamento).permit(:fabricante, :modelo, :tipo, :imagem)
     end
 end
