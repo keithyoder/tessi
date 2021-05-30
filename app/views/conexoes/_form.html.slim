@@ -38,11 +38,11 @@
         = f.input :latitude
       .col-3
         = f.input :longitude
+      .col-3 
+        = f.association :equipamento, colletion: Equipamento.all, label_method: :modelo
       .col
         = f.input :bloqueado
-      .col
         = f.input :inadimplente
-      .col
         = f.input :auto_bloqueio
   .form-actions
     = button_tag( type: 'button', onclick: "getConexaoLocation()", class: 'btn btn-primary') do

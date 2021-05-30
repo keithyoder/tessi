@@ -82,6 +82,7 @@ class ConexoesController < ApplicationController
   # PATCH/PUT /conexoes/1.json
   def update
     get_caixas
+    set_contratos
     respond_to do |format|
       if @conexao.update(conexao_params)
         format.html { redirect_to @conexao, notice: 'Conexão atualizada com sucesso.' }
@@ -125,7 +126,8 @@ class ConexoesController < ApplicationController
     params.require(:conexao).permit(
       :pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
       :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente,
-      :tipo, :mac, :contrato_id, :caixa_id, :porta, :latitude, :longitude
+      :tipo, :mac, :contrato_id, :caixa_id, :porta, :latitude, :longitude,
+      :equipamento_id
     )
   end
 end

@@ -14,6 +14,7 @@ class Conexao < ApplicationRecord
   has_many :autenticacoes, primary_key: :usuario, foreign_key: :username
   has_many :rad_accts, primary_key: :usuario, foreign_key: :username
   has_many :os, dependent: :nullify
+  belongs_to :equipamento, optional: true
   scope :bloqueado, -> { where('bloqueado') }
   scope :ativo, -> { where('not bloqueado') }
   scope :conectada, lambda {
@@ -52,6 +53,7 @@ class Conexao < ApplicationRecord
   RADIUS_PPPOE_IP = 'Framed-IP-Address'
   RADIUS_RATE_LIMIT = 'Mikrotik-Rate-Limit'
 
+  validates_presence_of :usuario, :senha
   validates_format_of :mac,
                       with: /\A([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}\z/i,
                       on: %i[create update],

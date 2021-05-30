@@ -1,4 +1,5 @@
 class Equipamento < ApplicationRecord
+  has_many :conexoes
   enum tipo: {
     ONU: 1,
     Radio: 2,
