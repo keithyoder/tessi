@@ -52,6 +52,11 @@
         <o><i class="fas fa-save fa-lg" aria-hidden="true"></i> Criar Backup
       </button>
     <% end %>
+    <%= link_to mapa_servidor_path do %>
+      <button class="btn btn-sm btn-primary">
+        <o><i class="fas fa-map fa-lg" aria-hidden="true"></i> Mapa
+      </button>
+    <% end %>
     <% if @servidor.backup.attached? %>
       <%= link_to rails_blob_path(@servidor.backup, disposition: 'attachment') do %>
         <button class="btn btn-sm btn-primary">
