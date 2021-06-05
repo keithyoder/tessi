@@ -1,5 +1,5 @@
 class ServidoresController < ApplicationController
-  before_action :set_servidor, only: %i[show edit update destroy backup]
+  before_action :set_servidor, only: %i[show edit update destroy backup mapa]
   load_and_authorize_resource
 
   # GET /servidores
@@ -54,6 +54,10 @@ class ServidoresController < ApplicationController
 
   # GET /servidores/1/edit
   def edit
+  end
+
+  def mapa
+    @conexoes = @servidor.conexoes.where.not(latitude: nil).to_json
   end
 
   # POST /servidores

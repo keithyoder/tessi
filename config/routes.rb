@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   resources :servidores do
     get :backup, on: :member
     get :backups, on: :collection
+    get :mapa, on: :member
   end
   resources :logradouros
   resources :bairros
