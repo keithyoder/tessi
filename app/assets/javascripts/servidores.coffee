@@ -12,21 +12,28 @@ getBounds = (conexoes) ->
     bounds.extend(position)
   return bounds
 
+infoWindow = (conexao) ->
+  infowindow = new google.maps.InfoWindow({
+    content: "<h4>#{conexao.pessoa.nome}</h4>" +
+    "<div id='bodyContent'>#{conexao.logradouro.nome}, #{conexao.pessoa.numero} - #{conexao.bairro.nome}<br>"+
+    "#{conexao.ip}</div>"
+  })
+
+criarMarker = (map, conexao) ->
+  position =
+    lat: parseFloat(conexao.latitude)
+    lng: parseFloat(conexao.longitude)
+  marker = new (google.maps.Marker)(
+    position: position
+    map: map
+  )
+  marker.addListener 'click', () =>
+    infoWindow(conexao).open(map, marker)
+
 window.initMap = ->
-  # The location of Uluru
-  alagoinha = 
-    lat: -8.580522
-    lng: -36.761072
-  # The map, centered at Uluru
   conexoes = $('#map').data 'conexoes'
   map = new (google.maps.Map)(document.getElementById('map'))
   map.fitBounds(getBounds(conexoes))
-  # The marker, positioned at Uluru
   for conexao in conexoes
-    position =
-      lat: parseFloat(conexao.latitude)
-      lng: parseFloat(conexao.longitude)
-    marker = new (google.maps.Marker)(
-      position: position
-      map: map)
+    criarMarker(map, conexao)
   return
