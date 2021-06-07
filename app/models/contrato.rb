@@ -53,6 +53,7 @@ class Contrato < ApplicationRecord
   }
   scope :fisica, -> { joins(:pessoa).where('pessoas.tipo = 1') }
   scope :juridica, -> { joins(:pessoa).where('pessoas.tipo = 2') }
+  scope :novos_por_mes, ->(mes) { where("date_trunc('month', adesao) = ?", mes) }
 
   after_create :gerar_faturas
 

@@ -13,7 +13,10 @@ class ContratosController < ApplicationController
     contrato = contrato.cancelaveis if params.key?(:cancelaveis)
     contrato = contrato.fisica if params.key?(:fisica)
     contrato = contrato.juridica if params.key?(:juridica)
-    @params = params.permit(:ativos, :renovaveis, :suspendiveis, :cancelaveis, :fisica, :juridica)
+    contrato = contrato.novos_por_mes(params[:adesao]) if params.key?(:adesao)
+    @params = params.permit(
+      :ativos, :renovaveis, :suspendiveis, :cancelaveis, :fisica, :juridica, :adesao
+    )
     @q = contrato.ransack(params[:q])
     @q.sorts = 'pessoa_nome'
     @contratos = @q.result.page params[:page]
