@@ -54,6 +54,7 @@ class Ability
     can :boletos, Contrato
     can %i[udate liquidacao boleto], Fatura
     can :encerrar, Atendimento.por_responsavel(user).abertos
+    can :mapa, Servidor
     can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
     cannot :update, Os.fechadas
     can :create, [Excecao]
