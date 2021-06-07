@@ -126,6 +126,23 @@ class Contrato < ApplicationRecord
     gerar_faturas(prazo_meses - faturas_a_vencer)
   end
 
+  def self.to_csv
+    headers = %i[ID Assinante Plano Adesão Cancelamento]
+    CSV.generate(headers: true) do |csv|
+      csv << headers
+
+      all.each do |contrato|
+        csv << [
+          contrato.id,
+          contrato.pessoa.nome,
+          contrato.plano.nome,
+          contrato.adesao,
+          contrato.cancelamento
+        ]
+      end
+    end
+  end
+
   private
 
   def verificar_exclusao

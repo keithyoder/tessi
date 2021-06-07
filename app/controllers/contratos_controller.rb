@@ -6,7 +6,7 @@ class ContratosController < ApplicationController
   # GET /contratos
   # GET /contratos.json
   def index
-    contrato = Contrato
+    contrato = Contrato.includes(:pessoa, :plano)
     contrato = contrato.ativos if params.key?(:ativos)
     contrato = contrato.renovaveis if params.key?(:renovaveis)
     contrato = contrato.suspendiveis if params.key?(:suspendiveis)
@@ -20,6 +20,16 @@ class ContratosController < ApplicationController
     @q = contrato.ransack(params[:q])
     @q.sorts = 'pessoa_nome'
     @contratos = @q.result.page params[:page]
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data(
+          @contratos.except(:limit, :offset).to_csv,
+          filename: "contratos-#{Date.today}.csv"
+        )
+      end
+    end
+
   end
 
   def boletos
