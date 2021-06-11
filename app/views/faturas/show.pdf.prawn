@@ -48,7 +48,7 @@ prawn_document(page_size: 'A5', margin: [12,12,12,12]) do |pdf|
   pdf.draw_text 'CPF: ' + @fatura.pessoa.cpf.to_s, size: 10, at: [esquerda, 124]
   pdf.draw_text (@fatura.pessoa.endereco + ' - ' + @fatura.pessoa.bairro.nome_cidade_uf), size: 10, at: [esquerda,112]
   extenso = <<-STRING
-    Recebemos de #{@fatura.pessoa.nome} a importância de #{number_to_currency(@fatura.valor_liquidacao)} (#{Extenso.moeda((@fatura.valor_liquidacao*100).to_i).downcase}) como quitação da parcela #{@fatura.parcela} do contrato #{@fatura.contrato.id}, vencida no dia #{l(@fatura.vencimento)} referente ao serviço de conexão à internet no plano #{@fatura.contrato.plano.nome} durante o período de #{l(@fatura.periodo_inicio)} a #{l(@fatura.periodo_fim)}.
+    Recebemos de #{@fatura.pessoa.nome} a importância de #{number_to_currency(@fatura.valor_liquidacao)} (#{Extenso.moeda(@fatura.valor_liquidacao).downcase}) como quitação da parcela #{@fatura.parcela} do contrato #{@fatura.contrato.id}, vencida no dia #{l(@fatura.vencimento)} referente ao serviço de conexão à internet no plano #{@fatura.contrato.plano.nome} durante o período de #{l(@fatura.periodo_inicio)} a #{l(@fatura.periodo_fim)}.
   STRING
 
   pdf.text_box extenso, size: 10, at: [esquerda, 96], width: 365
