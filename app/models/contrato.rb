@@ -42,13 +42,13 @@ class Contrato < ApplicationRecord
     joins(:pessoa, :faturas)
       .where(faturas: { liquidacao: nil, cancelamento: nil })
       .where('faturas.vencimento < ?', 1.day.ago)
-      .group('contratos.id, pessoas.id')
+      .group('contratos.id, pessoas.id, planos.id')
       .having('COUNT(faturas.*) > 4').ativos
   }
   scope :renovaveis, lambda {
     joins(:pessoa)
       .joins("LEFT JOIN faturas ON contratos.id = faturas.contrato_id AND faturas.periodo_fim > '#{30.days.from_now}'")
-      .group('contratos.id', 'pessoas.id')
+      .group('contratos.id', 'pessoas.id', 'planos.id')
       .having('COUNT(faturas.*) = 0').ativos
   }
   scope :fisica, -> { joins(:pessoa).where('pessoas.tipo = 1') }
