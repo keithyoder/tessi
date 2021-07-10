@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :excecoes
   resources :ip_redes
   resources :nf21s do
-    get 'competencia/:mes', action: :competencia, as: :competencia, on: :collection    
+    get 'competencia/:mes', action: :competencia, as: :competencia, on: :collection
   end
   resources :fibra_caixas
   resources :fibra_redes
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   resources :contratos do
     get :boletos, on: :member
     get :renovar, on: :member
+    get :churn, on: :collection
   end
   resources :conexoes do
     get :suspenso, on: :collection
@@ -56,13 +57,12 @@ Rails.application.routes.draw do
     get :sici, on: :collection
   end
   devise_for :users, controllers: {
-                       sessions: "users/sessions",
-                       registrations: "users/registrations",
-                     }
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+  }
   resources :estados
   resources :token
   resources :settings
-  get "welcome/index"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root "welcome#index"
+  get 'welcome/index'
+  root 'welcome#index'
 end

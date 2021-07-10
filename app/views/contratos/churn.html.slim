@@ -1,0 +1,15 @@
+.card
+  = render '/shared/table_header', {object: @meses, params: @params, titulo: 'Churn'}
+  .card-body
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+            th Mês
+            th Adesões
+        tbody
+          - @meses.each do |mes|
+            tr
+              td= mes.mes.strftime("%m/%Y")
+              td= mes.adesoes
+  = paginate @meses

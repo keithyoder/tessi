@@ -29,7 +29,15 @@ class ContratosController < ApplicationController
         )
       end
     end
+  end
 
+  def churn
+    meses = Contrato
+            .select("date_trunc('month', adesao) as mes, count(*) as adesoes")
+            .group("date_trunc('month', adesao)")
+            .order("date_trunc('month', adesao) DESC")
+    @q = meses.ransack
+    @meses = @q.result.page params[:page]
   end
 
   def boletos
