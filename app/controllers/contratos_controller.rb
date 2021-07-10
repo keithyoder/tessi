@@ -34,8 +34,9 @@ class ContratosController < ApplicationController
   def churn
     meses = Contrato
             .select("date_trunc('month', adesao) as mes, count(*) as adesoes, min(cancelamentos.quantos) as cancelamentos")
-            .joins("LEFT JOIN (SELECT count(*) AS quantos, date_trunc('month', cancelamento) as mes FROM contratos GROUP BY date_trunc('month', cancelamento)) cancelamentos ON date_trunc('month', adesao) = cancelamentos.mes")
+            .joins("LEFT JOIN (SELECT count(*) AS quantos, date_trunc('month', cancelamento) as mes FROM contratos WHERE cancelamento - adesao > 15 GROUP BY date_trunc('month', cancelamento)) cancelamentos ON date_trunc('month', adesao) = cancelamentos.mes")
             .group("date_trunc('month', adesao)")
+            .where('adesao - cancelamento > 15 or cancelamento is null')
             .order("date_trunc('month', adesao) DESC")
     @q = meses.ransack
     @meses = @q.result.page params[:page]
