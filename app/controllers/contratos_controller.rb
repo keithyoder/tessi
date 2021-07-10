@@ -33,7 +33,8 @@ class ContratosController < ApplicationController
 
   def churn
     meses = Contrato
-            .select("date_trunc('month', adesao) as mes, count(*) as adesoes")
+            .select("date_trunc('month', adesao) as mes, count(*) as adesoes, min(cancelamentos.quantos) as cancelamentos")
+            .joins("LEFT JOIN (SELECT count(*) AS quantos, date_trunc('month', cancelamento) as mes FROM contratos GROUP BY date_trunc('month', cancelamento)) cancelamentos ON date_trunc('month', adesao) = cancelamentos.mes")
             .group("date_trunc('month', adesao)")
             .order("date_trunc('month', adesao) DESC")
     @q = meses.ransack
@@ -100,7 +101,7 @@ class ContratosController < ApplicationController
       format.pdf {
         send_file(
           file,
-          file_name: "Termo Adesão "+@contrato.pessoa.nome,
+          file_name: 'Termo Adesão ' + @contrato.pessoa.nome,
           type: :pdf,
           disposition: :inline
         )
