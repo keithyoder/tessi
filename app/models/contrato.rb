@@ -55,6 +55,13 @@ class Contrato < ApplicationRecord
   scope :juridica, -> { joins(:pessoa).where('pessoas.tipo = 2') }
   scope :novos_por_mes, ->(mes) { where("date_trunc('month', adesao) = ?", mes) }
 
+  scope :sem_conexao, lambda {
+    joins(:pessoa, :plano)
+      .left_outer_joins(:conexoes)
+      .group('contratos.id', 'pessoas.id', 'planos.id')
+      .having('COUNT(conexoes.*) = 0').ativos
+  }
+
   after_create :gerar_faturas
 
   after_save :after_save
