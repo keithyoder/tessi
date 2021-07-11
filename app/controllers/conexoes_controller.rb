@@ -51,6 +51,7 @@ class ConexoesController < ApplicationController
     @conexao = Conexao.new
     @conexao.tipo = :Cobranca
     @conexao.pessoa_id = params[:pessoa_id] if params[:pessoa_id]
+    @conexao.auto_bloqueio = true
     set_contratos
     @conexao.contrato = @contratos.first if @contratos.count == 1
     @caixas = FibraCaixa.joins(:fibra_rede, :ponto).order('pontos.nome, fibra_caixas.nome').all

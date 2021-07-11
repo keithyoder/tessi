@@ -42,6 +42,8 @@
                 = link_to('Contratos para Renovar', contratos_path(renovaveis: 1))
               li
                 = link_to('Contratos para Cancelar', contratos_path(cancelaveis: 1))
+              li
+                = link_to('Contratos sem Conexão', contratos_path(sem_conexao: 1))
         li.sidebar-dropdown
           = link_to 'javascript:;' do
             i.fas.fa-ethernet
