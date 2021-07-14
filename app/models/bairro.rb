@@ -11,6 +11,7 @@ class Bairro < ApplicationRecord
            source: :pessoas,
            through: :logradouros
 
+  has_many :conexoes, through: :assinantes
   geocoded_by :nome_cidade_uf
   after_validation :geocode
 

@@ -93,6 +93,10 @@ class Conexao < ApplicationRecord
     end
   end
 
+  def self.ransackable_scopes(auth_object = nil)
+    [:inadimplente, :radio, :fibra, :conectada, :bloqueado]
+  end
+
   def status_hotspot
     result = servidor.mk_command(['/ip/hotspot/active/print', "?user=#{usuario}"])
     if result.present?
