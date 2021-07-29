@@ -28,4 +28,4 @@
               td= conexao.bloqueado.as_checkbox
               td= conexao.inadimplente.as_checkbox
               td= conexao.conectado.as_checkbox
-  = paginate @conexoes, :params => {:tab => "conexoes"}
+  = paginate @conexoes, params: @params.merge({tab: "conexoes"})
