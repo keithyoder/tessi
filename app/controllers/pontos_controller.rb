@@ -32,6 +32,10 @@ class PontosController < ApplicationController
     if params.has_key?(:ips)
       @ips = @ponto.ips_disponiveis
     end
+    @params = params.permit(
+      :tab, :sem_autenticar, :suspensas, :ativas, :conectadas, :desconectadas,
+      :sem_contrato
+    )
     respond_to do |format|
       format.html # show.html.erb
       if params.has_key?(:ips)
@@ -91,14 +95,15 @@ class PontosController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ponto
-      @ponto = Ponto.find(params[:id])
-    end
+private
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ponto_params
-      params.require(:ponto).permit(:nome, :sistema, :tecnologia, :servidor_id, :ip, :usuario, :senha, :equipamento)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ponto
+    @ponto = Ponto.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def ponto_params
+    params.require(:ponto).permit(:nome, :sistema, :tecnologia, :servidor_id, :ip, :usuario, :senha, :equipamento)
+  end
 end

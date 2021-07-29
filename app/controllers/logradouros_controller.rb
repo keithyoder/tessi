@@ -18,6 +18,7 @@ class LogradourosController < ApplicationController
   def show
     @logradouro = Logradouro.find(params[:id])
     @conexoes = @logradouro.conexoes.page params[:page]
+    @params = params.permit(:tab)
   end
 
   # GET /logradouros/new
