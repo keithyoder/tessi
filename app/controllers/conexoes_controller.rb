@@ -1,4 +1,6 @@
 class ConexoesController < ApplicationController
+  include ConexoesHelper
+
   before_action :set_conexao, only: %i[show edit update destroy]
   load_and_authorize_resource
 
@@ -13,10 +15,7 @@ class ConexoesController < ApplicationController
     conexao = conexao.desconectada if params.key?(:desconectadas)
     conexao = conexao.sem_contrato if params.key?(:sem_contrato)
 
-    @params = params.permit(
-      :tab, :sem_autenticar, :suspensas, :ativas, :conectadas, :desconectadas,
-      :sem_contrato
-    )
+    @params = conexoes_params(params)
 
     @q = conexao.ransack(params[:q])
     #@q.sorts = 'pessoa_nome'

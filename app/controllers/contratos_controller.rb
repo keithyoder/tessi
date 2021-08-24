@@ -1,7 +1,7 @@
 class ContratosController < ApplicationController
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
-  before_action :set_contrato, only: %i[show edit update destroy renovar]
+  before_action :set_contrato, only: %i[show edit update destroy renovar termo]
 
   # GET /contratos
   # GET /contratos.json
@@ -64,52 +64,16 @@ class ContratosController < ApplicationController
     @contrato = Contrato.find(params[:id])
     if request.format != :pdf
       @faturas = @contrato.faturas.order(parcela: :desc).page params[:page]
-    else
-      pdf = FillablePDF.new('public/termo.pdf')
-      pdf.set_fields(
-        assinante_nome: @contrato.pessoa.nome,
-        assinante_cpf_cnpj: @contrato.pessoa.cpf,
-        assinante_rg_ie: @contrato.pessoa.rg,
-        contrato_numero: @contrato.id,
-        assinante_nascimento: I18n.localize(@contrato.pessoa.nascimento),
-        assinante_telefone1: helpers.num_to_phone(@contrato.pessoa.telefone1),
-        assinante_telefone2: helpers.num_to_phone(@contrato.pessoa.telefone2),
-        assinante_logradouro: @contrato.pessoa.logradouro.nome,
-        assinante_endereco_numero: @contrato.pessoa.numero,
-        assinante_endereco_complemento: @contrato.pessoa.complemento,
-        assinante_bairro: @contrato.pessoa.logradouro.bairro.nome,
-        assinante_cidade: @contrato.pessoa.logradouro.bairro.cidade.nome,
-        assinante_estado: @contrato.pessoa.logradouro.bairro.cidade.estado.sigla,
-        assinante_cep: @contrato.pessoa.logradouro.cep,
-        plano: @contrato.plano.nome,
-        upload: @contrato.plano.upload,
-        download: @contrato.plano.download,
-        instalacao: number_to_currency(@contrato.valor_instalacao),
-        parcelas_instalacao: '-x-',
-        vencimento_parcelas: '-x-',
-        valor_parcela: '-x-',
-        mensalidade: number_to_currency(@contrato.plano.mensalidade),
-        dia_vencimento: @contrato.dia_vencimento,
-        forma_pagamento: 'Boleto',
-        contrato_data: I18n.localize(@contrato.adesao, format: :long)
-      )
-      puts "create temp file"
-      file = Tempfile.new('contrato')
-      puts "save pdf"
-      pdf.save_as(file, flatten: true)
-      puts "close"
-      pdf.close 
     end
     respond_to do |format|
       format.html { render :show }
-      format.pdf {
-        send_file(
-          file,
-          file_name: 'Termo Adesão ' + @contrato.pessoa.nome,
-          type: :pdf,
-          disposition: :inline
-        )
-      }
+      format.htm { render :termo }
+    end
+  end
+
+  def termo
+    respond_to do |format|
+      format.html { render :termo }
     end
   end
 

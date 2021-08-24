@@ -1,16 +1,20 @@
 class PontosController < ApplicationController
-  before_action :set_ponto, only: [:show, :edit, :update, :destroy]
+  include ConexoesHelper
+
+  before_action :set_ponto, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /pontos
   # GET /pontos.json
   def index
     @q = Ponto.ransack(params[:q])
-    @q.sorts = "nome"
+    @q.sorts = 'nome'
     @pontos = @q.result.page params[:page]
     respond_to do |format|
       format.html
-      format.csv { send_data @pontos.except(:limit, :offset).to_csv, filename: "pontos-#{Date.today}.csv" }
+      format.csv {
+        send_data @pontos.except(:limit, :offset).to_csv, filename: "pontos-#{Date.today}.csv"
+      }
     end
   end
 
@@ -26,19 +30,14 @@ class PontosController < ApplicationController
   # GET /pontos/1.json
   def show
     @q = @ponto.conexoes.ransack(params[:q])
-    @q.sorts = "ip"
+    @q.sorts = 'ip'
     @conexoes = @q.result.page params[:page]
     @autenticacoes = @ponto.autenticacoes
-    if params.has_key?(:ips)
-      @ips = @ponto.ips_disponiveis
-    end
-    @params = params.permit(
-      :tab, :sem_autenticar, :suspensas, :ativas, :conectadas, :desconectadas,
-      :sem_contrato
-    )
+    @ips = @ponto.ips_disponiveis if params.key?(:ips)
+    @params = conexoes_params(params)
     respond_to do |format|
       format.html # show.html.erb
-      if params.has_key?(:ips)
+      if params.key?(:ips)
         format.json { render json: @ips }
       else
         format.json
@@ -104,6 +103,8 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def ponto_params
-    params.require(:ponto).permit(:nome, :sistema, :tecnologia, :servidor_id, :ip, :usuario, :senha, :equipamento)
+    params.require(:ponto).permit(
+      :nome, :sistema, :tecnologia, :servidor_id, :ip, :usuario, :senha, :equipamento
+    )
   end
 end

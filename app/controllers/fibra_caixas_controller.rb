@@ -1,4 +1,6 @@
 class FibraCaixasController < ApplicationController
+  include ConexoesHelper
+
   load_and_authorize_resource
   before_action :set_fibra_caixa, only: [:show, :edit, :update, :destroy]
 
@@ -11,7 +13,10 @@ class FibraCaixasController < ApplicationController
   # GET /fibra_caixas/1
   # GET /fibra_caixas/1.json
   def show
-    @conexoes = @fibra_caixa.conexoes.page params[:page]
+    @q = @fibra_caixa.conexoes.ransack(params[:q])
+    @q.sorts = 'ip'
+    @params = conexoes_params(params)
+    @conexoes = @q.result.page params[:page]
   end
 
   # GET /fibra_caixas/new

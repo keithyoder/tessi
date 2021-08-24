@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   resources :contratos do
     get :boletos, on: :member
     get :renovar, on: :member
+    get :termo, on: :member
     get :churn, on: :collection
   end
   resources :conexoes do
