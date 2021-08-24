@@ -67,7 +67,6 @@ class ContratosController < ApplicationController
     end
     respond_to do |format|
       format.html { render :show }
-      format.htm { render :termo }
     end
   end
 
