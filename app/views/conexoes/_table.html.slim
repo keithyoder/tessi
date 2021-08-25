@@ -1,5 +1,5 @@
 .card
-  = render '/shared/table_header', {object: @conexoes, search_string: :usuario_or_mac_or_pessoa_nome_cont, params: @params}
+  = render '/shared/table_header', {object: @conexoes, search_string: :usuario_or_mac_or_pessoa_nome_cont, params: @params, custom_q: custom_q ||= nil}
   .card-body
     .table-responsive
       table.table.table-striped

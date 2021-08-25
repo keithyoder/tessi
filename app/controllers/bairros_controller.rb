@@ -1,4 +1,6 @@
 class BairrosController < ApplicationController
+  include ConexoesHelper
+
   before_action :set_bairro, only: %i[show edit update destroy]
   load_and_authorize_resource
 
@@ -22,6 +24,7 @@ class BairrosController < ApplicationController
     @logradouros = @q.result.page params[:page]
     @conexoes_q = @bairro.conexoes.ransack(params[:conexoes_q])
     @conexoes_q.sorts = 'ip'
+    @params = conexoes_params(params)
     @conexoes = @conexoes_q.result.page params[:page]
   end
 
