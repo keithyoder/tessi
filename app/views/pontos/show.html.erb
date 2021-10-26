@@ -49,6 +49,6 @@
   </div>
   <div class="tab-pane fade <%= params[:tab] == "conexoes" ? "show active": "" %>" id="conexoes" role="tabpanel" aria-labelledby="conexoes-tab">
     <h3><%= @ponto.nome %></h3>
-    <%= render 'conexoes/table', {exclude: "ponto"} %>
+    <%= render 'conexoes/table', {exclude: ['ponto', 'equipamento']} %>
   </div>
 </div>

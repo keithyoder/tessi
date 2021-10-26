@@ -43,7 +43,7 @@
   </div>
   <div class="tab-pane fade" id="conexoes" role="tabpanel" aria-labelledby="conexoes-tab">
     <h3><%= @pessoa.nome %></h3>
-    <%= render 'conexoes/table', {exclude: "pessoa", params: {pessoa_id: @pessoa}} %>
+    <%= render 'conexoes/table', {exclude: ["pessoa", "equipamento"], params: {pessoa_id: @pessoa}} %>
   </div>
   <div class="tab-pane fade" id="atendimentos" role="tabpanel" aria-labelledby="atendimentos-tab">
     <h3><%= @pessoa.nome %></h3>

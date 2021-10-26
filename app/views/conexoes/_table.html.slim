@@ -5,11 +5,13 @@
       table.table.table-striped
         thead
           tr
-            - if !defined?(exclude) or exclude != 'pessoa'
+            - if !defined?(exclude) or exclude.exclude? 'pessoa'
               th Pessoa
             th Plano
-            - if !defined?(exclude) or exclude != 'ponto'
+            - if !defined?(exclude) or exclude.exclude? 'ponto'
               th Ponto
+            - if !defined?(exclude) or exclude.exclude? 'equipamento'
+              th Equipamento
             th Usuário
             th IP
             th Bloq.
@@ -18,11 +20,13 @@
         tbody
           - @conexoes.each do |conexao|
             tr
-              - if !defined?(exclude) or exclude != 'pessoa'
+              - if !defined?(exclude) or exclude.exclude? 'pessoa'
                 td= link_to conexao.pessoa.nome, conexao.pessoa
               td= link_to conexao.plano.nome, conexao.plano
-              - if !defined?(exclude) or exclude != 'ponto'
+              - if !defined?(exclude) or exclude.exclude? 'ponto'
                 td= link_to conexao.ponto.nome, conexao.ponto
+              - if !defined?(exclude) or exclude.exclude? 'equipamento'
+                td= link_to(conexao.equipamento&.modelo, conexao.equipamento) if conexao.equipamento.present?
               td= link_to conexao.usuario, conexao
               td= conexao.ip
               td= conexao.bloqueado.as_checkbox

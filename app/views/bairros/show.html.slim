@@ -20,4 +20,4 @@ ul.nav.nav-pills
     = render 'logradouros/table', :params => {:bairro_id => @bairro}
   #conexoes aria-labelledby="conexoes-tab" class=("tab-pane fade #{params[:tab] == "conexoes" ? "show active": ""}") role="tabpanel" 
     h3= @bairro.nome
-    = render 'conexoes/table', {custom_q: @conexoes_q}
+    = render 'conexoes/table', {exclude: ['equipamento'], custom_q: @conexoes_q}
