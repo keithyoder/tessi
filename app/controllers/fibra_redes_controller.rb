@@ -14,7 +14,7 @@ class FibraRedesController < ApplicationController
   # GET /fibra_redes/1.json
   def show
     @fibra_rede = FibraRede.find(params[:id])
-    @params = {:rede_id => @fibra_rede}
+    @params = { rede_id: @fibra_rede }
     @fibra_caixas = @fibra_rede.fibra_caixas.order(:nome)
   end
 
@@ -68,13 +68,14 @@ class FibraRedesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_fibra_rede
-      @fibra_rede = FibraRede.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def fibra_rede_params
-      params.require(:fibra_rede).permit(:nome, :ponto_id, :fibra_cor)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_fibra_rede
+    @fibra_rede = FibraRede.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def fibra_rede_params
+    params.require(:fibra_rede).permit(:nome, :ponto_id, :fibra_cor)
+  end
 end
