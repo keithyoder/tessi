@@ -36,7 +36,7 @@ class Cidade < ApplicationRecord
     nome + ' - ' + estado.sigla
   end
 
-  def quantas_conexoes(tipo, velocidade)
+  def quantas_conexoes(tipo)
     collection = conexoes.ativo
     case tecnologia
     when 1
@@ -50,20 +50,6 @@ class Cidade < ApplicationRecord
       collection = collection.pessoa_fisica
     when 'Pessoa Jurídica'
       collection = collection.pessoa_juridica
-    end
-    case velocidade
-    when 1
-      collection = collection.ate_1M
-    when 2
-      collection = collection.ate_2M
-    when 8
-      collection = collection.ate_8M
-    when 12
-      collection = collection.ate_12M
-    when 34
-      collection = collection.ate_34M
-    when 100
-      collection = collection.acima_34M
     end
     collection.count
   end
