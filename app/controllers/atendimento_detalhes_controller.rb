@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class AtendimentoDetalhesController < ApplicationController
-  before_action :set_atendimento_detalhe, only: %i[ show edit update destroy ]
+  before_action :set_atendimento_detalhe, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /atendimento_detalhes/1 or /atendimento_detalhes/1.json
-  def show
-  end
+  def show; end
 
   # GET /atendimento_detalhes/new
   def new
@@ -16,8 +17,7 @@ class AtendimentoDetalhesController < ApplicationController
   end
 
   # GET /atendimento_detalhes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /atendimento_detalhes or /atendimento_detalhes.json
   def create
@@ -25,7 +25,7 @@ class AtendimentoDetalhesController < ApplicationController
 
     respond_to do |format|
       if @atendimento_detalhe.save
-        format.html { redirect_to @atendimento_detalhe.atendimento, notice: "Atendimento detalhe criado com sucesso." }
+        format.html { redirect_to @atendimento_detalhe.atendimento, notice: 'Atendimento detalhe criado com sucesso.' }
         format.json { render :show, status: :created, location: @atendimento_detalhe }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class AtendimentoDetalhesController < ApplicationController
   def update
     respond_to do |format|
       if @atendimento_detalhe.update(atendimento_detalhe_params)
-        format.html { redirect_to @atendimento_detalhe, notice: "Atendimento detalhe was successfully updated." }
+        format.html { redirect_to @atendimento_detalhe, notice: 'Atendimento detalhe was successfully updated.' }
         format.json { render :show, status: :ok, location: @atendimento_detalhe }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class AtendimentoDetalhesController < ApplicationController
     atendimento = @atendimento_detalhe.atendimento
     @atendimento_detalhe.destroy
     respond_to do |format|
-      format.html { redirect_to atendimento, notice: "Atendimento detalhe was successfully destroyed." }
+      format.html { redirect_to atendimento, notice: 'Atendimento detalhe was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_atendimento_detalhe
-      @atendimento_detalhe = AtendimentoDetalhe.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def atendimento_detalhe_params
-      params.require(:atendimento_detalhe).permit(:atendimento_id, :tipo, :atendente_id, :descricao)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_atendimento_detalhe
+    @atendimento_detalhe = AtendimentoDetalhe.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def atendimento_detalhe_params
+    params.require(:atendimento_detalhe).permit(:atendimento_id, :tipo, :atendente_id, :descricao)
+  end
 end

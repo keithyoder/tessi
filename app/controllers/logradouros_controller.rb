@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class LogradourosController < ApplicationController
-  before_action :set_logradouro, only: [:show, :edit, :update, :destroy]
+  before_action :set_logradouro, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /logradouros
@@ -28,8 +30,7 @@ class LogradourosController < ApplicationController
   end
 
   # GET /logradouros/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /logradouros
   # POST /logradouros.json
@@ -72,13 +73,14 @@ class LogradourosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_logradouro
-      @logradouro = Logradouro.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def logradouro_params
-      params.require(:logradouro).permit(:nome, :bairro_id, :cep)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_logradouro
+    @logradouro = Logradouro.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def logradouro_params
+    params.require(:logradouro).permit(:nome, :bairro_id, :cep)
+  end
 end

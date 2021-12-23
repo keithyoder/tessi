@@ -27,13 +27,13 @@ class Cidade < ApplicationRecord
       csv << attributes
 
       all.each do |cidade|
-        csv << attributes.map{ |attr| cidade.send(attr) }
+        csv << attributes.map { |attr| cidade.send(attr) }
       end
     end
   end
 
   def nome_uf
-    nome + ' - ' + estado.sigla
+    "#{nome} - #{estado.sigla}"
   end
 
   def quantas_conexoes(tipo)

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class ExcecoesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_excecao, only: [:show, :edit, :update, :destroy]
-  before_action :set_contratos, only: [:new, :edit]
+  before_action :set_excecao, only: %i[show edit update destroy]
+  before_action :set_contratos, only: %i[new edit]
 
   # GET /excecoes
   # GET /excecoes.json
@@ -10,16 +12,15 @@ class ExcecoesController < ApplicationController
     @excecoes = @q.result(order: :valido_ate).page params[:page]
     respond_to do |format|
       format.html
-      format.csv {
+      format.csv do
         send_data @excecoes.except(:limit, :offset).to_csv, filename: "excecoes-#{Date.today}.csv"
-      }
+      end
     end
   end
 
   # GET /excecoes/1
   # GET /excecoes/1.json
-  def show
-  end
+  def show; end
 
   # GET /excecoes/new
   def new
@@ -27,8 +28,7 @@ class ExcecoesController < ApplicationController
   end
 
   # GET /excecoes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /excecoes
   # POST /excecoes.json

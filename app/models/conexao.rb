@@ -46,7 +46,7 @@ class Conexao < ApplicationRecord
   scope :ate_8M, -> { joins(:plano).where('planos.download BETWEEN 2.01 AND 8') }
   scope :ate_12M, -> { joins(:plano).where('planos.download BETWEEN 8.01 AND 12') }
   scope :ate_34M, -> { joins(:plano).where('planos.download BETWEEN 12.01 AND 34') }
-  scope :acima_34M, -> { joins(:plano).where('planos.download > 34')}
+  scope :acima_34M, -> { joins(:plano).where('planos.download > 34') }
   enum tipo: { Cobranca: 1, Cortesia: 2, Outro_3: 3, Outro_4: 4, Outros: 5 }
   scope :rede_ip, ->(rede) { where('ip::inet << ?::inet', rede) }
   scope :sem_contrato, lambda {
@@ -96,8 +96,8 @@ class Conexao < ApplicationRecord
     end
   end
 
-  def self.ransackable_scopes(auth_object = nil)
-    [:inadimplente, :radio, :fibra, :conectada, :bloqueado]
+  def self.ransackable_scopes(_auth_object = nil)
+    %i[inadimplente radio fibra conectada bloqueado]
   end
 
   def status_hotspot
@@ -141,12 +141,13 @@ class Conexao < ApplicationRecord
   def atualizar_ip_e_mac(forcar = false)
     return unless forcar || saved_change_to_ip? || saved_change_to_ponto_id? || saved_change_to_mac?
 
-    if ponto.tecnologia == 'Radio'
+    case ponto.tecnologia
+    when 'Radio'
       conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').destroy_all
       conexao_enviar_atributos.where(atributo: RADIUS_PPPOE_IP).destroy_all
       atr = conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).first_or_create
       atr.update!(op: '==', valor: ip.to_s)
-    elsif ponto.tecnologia == 'Fibra'
+    when 'Fibra'
       conexao_verificar_atributos.where(atributo: RADIUS_HOTSPOT_IP).destroy_all
       atr = conexao_verificar_atributos.where(atributo: 'Calling-Station-Id').first_or_create
       atr.update!(op: '==', valor: mac)

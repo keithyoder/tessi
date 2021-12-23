@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PlanoEnviarAtributosController < ApplicationController
-  before_action :set_plano_enviar_atributo, only: [:show, :edit, :update, :destroy]
+  before_action :set_plano_enviar_atributo, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /plano_enviar_atributos
@@ -9,14 +11,16 @@ class PlanoEnviarAtributosController < ApplicationController
     @plano_enviar_atributos = @q.result(order: :atributo).page params[:page]
     respond_to do |format|
       format.html
-      format.csv { send_data @plano_enviar_atributos.except(:limit, :offset).to_csv, filename: "plano_enviar_atributos-#{Date.today}.csv" }
+      format.csv do
+        send_data @plano_enviar_atributos.except(:limit, :offset).to_csv,
+                  filename: "plano_enviar_atributos-#{Date.today}.csv"
+      end
     end
   end
 
   # GET /plano_enviar_atributos/1
   # GET /plano_enviar_atributos/1.json
-  def show
-  end
+  def show; end
 
   # GET /plano_enviar_atributos/new
   def new
@@ -24,8 +28,7 @@ class PlanoEnviarAtributosController < ApplicationController
   end
 
   # GET /plano_enviar_atributos/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /plano_enviar_atributos
   # POST /plano_enviar_atributos.json
@@ -62,19 +65,22 @@ class PlanoEnviarAtributosController < ApplicationController
   def destroy
     @plano_enviar_atributo.destroy
     respond_to do |format|
-      format.html { redirect_to plano_enviar_atributos_url, notice: 'Plano enviar atributo was successfully destroyed.' }
+      format.html do
+        redirect_to plano_enviar_atributos_url, notice: 'Plano enviar atributo was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_plano_enviar_atributo
-      @plano_enviar_atributo = PlanoEnviarAtributo.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def plano_enviar_atributo_params
-      params.require(:plano_enviar_atributo).permit(:plano_id, :atributo, :op, :valor)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_plano_enviar_atributo
+    @plano_enviar_atributo = PlanoEnviarAtributo.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def plano_enviar_atributo_params
+    params.require(:plano_enviar_atributo).permit(:plano_id, :atributo, :op, :valor)
+  end
 end

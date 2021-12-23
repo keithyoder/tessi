@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class RetornosController < ApplicationController
   load_and_authorize_resource
-  before_action :set_retorno, only: [:show, :edit, :update, :destroy]
+  before_action :set_retorno, only: %i[show edit update destroy]
 
   # GET /retornos
   # GET /retornos.json
   def index
     @q = Retorno.ransack(params[:q])
-    @q.sorts = "data desc"
+    @q.sorts = 'data desc'
     @retornos = @q.result.page params[:page]
   end
 
@@ -23,8 +25,7 @@ class RetornosController < ApplicationController
   end
 
   # GET /retornos/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /retornos
   # POST /retornos.json
@@ -33,7 +34,7 @@ class RetornosController < ApplicationController
 
     respond_to do |format|
       if @retorno.save
-        format.html { redirect_to @retorno, notice: "Retorno was successfully created." }
+        format.html { redirect_to @retorno, notice: 'Retorno was successfully created.' }
         format.json { render :show, status: :created, location: @retorno }
       else
         format.html { render :new }
@@ -45,17 +46,15 @@ class RetornosController < ApplicationController
   # PATCH/PUT /retornos/1
   # PATCH/PUT /retornos/1.json
   def update
-    begin
-      @retorno.processar
-      respond_to do |format|
-        format.html { redirect_to @retorno, notice: "Retorno was successfully updated." }
-        format.json { render :show, status: :ok, location: @retorno }
-      end
-    rescue StandardError => e
-      respond_to do |format|
-        format.html { redirect_to @retorno, notice: e.message }
-        format.json { render :show, status: :ok, location: @retorno }
-      end
+    @retorno.processar
+    respond_to do |format|
+      format.html { redirect_to @retorno, notice: 'Retorno was successfully updated.' }
+      format.json { render :show, status: :ok, location: @retorno }
+    end
+  rescue StandardError => e
+    respond_to do |format|
+      format.html { redirect_to @retorno, notice: e.message }
+      format.json { render :show, status: :ok, location: @retorno }
     end
   end
 
@@ -64,7 +63,7 @@ class RetornosController < ApplicationController
   def destroy
     @retorno.destroy
     respond_to do |format|
-      format.html { redirect_to retornos_url, notice: "Retorno was successfully destroyed." }
+      format.html { redirect_to retornos_url, notice: 'Retorno was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

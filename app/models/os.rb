@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Os < ApplicationRecord
   belongs_to :classificacao, optional: true
   belongs_to :pessoa

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePlanoEnviarAtributos < ActiveRecord::Migration[5.2]
   def change
     create_table :plano_enviar_atributos do |t|

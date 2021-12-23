@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class EquipamentosController < ApplicationController
   load_and_authorize_resource
-  before_action :set_equipamento, only: %i[ show edit update destroy ]
+  before_action :set_equipamento, only: %i[show edit update destroy]
 
   # GET /equipamentos or /equipamentos.json
   def index
@@ -9,12 +11,10 @@ class EquipamentosController < ApplicationController
     respond_to do |format|
       format.html
     end
-
   end
 
   # GET /equipamentos/1 or /equipamentos/1.json
-  def show
-  end
+  def show; end
 
   # GET /equipamentos/new
   def new
@@ -22,8 +22,7 @@ class EquipamentosController < ApplicationController
   end
 
   # GET /equipamentos/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /equipamentos or /equipamentos.json
   def create
@@ -31,7 +30,7 @@ class EquipamentosController < ApplicationController
 
     respond_to do |format|
       if @equipamento.save
-        format.html { redirect_to @equipamento, notice: "Equipamento was successfully created." }
+        format.html { redirect_to @equipamento, notice: 'Equipamento was successfully created.' }
         format.json { render :show, status: :created, location: @equipamento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +43,7 @@ class EquipamentosController < ApplicationController
   def update
     respond_to do |format|
       if @equipamento.update(equipamento_params)
-        format.html { redirect_to @equipamento, notice: "Equipamento was successfully updated." }
+        format.html { redirect_to @equipamento, notice: 'Equipamento was successfully updated.' }
         format.json { render :show, status: :ok, location: @equipamento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,19 +56,20 @@ class EquipamentosController < ApplicationController
   def destroy
     @equipamento.destroy
     respond_to do |format|
-      format.html { redirect_to equipamentos_url, notice: "Equipamento was successfully destroyed." }
+      format.html { redirect_to equipamentos_url, notice: 'Equipamento was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_equipamento
-      @equipamento = Equipamento.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def equipamento_params
-      params.require(:equipamento).permit(:fabricante, :modelo, :tipo, :imagem)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_equipamento
+    @equipamento = Equipamento.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def equipamento_params
+    params.require(:equipamento).permit(:fabricante, :modelo, :tipo, :imagem)
+  end
 end

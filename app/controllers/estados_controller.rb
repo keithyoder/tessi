@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class EstadosController < ApplicationController
   load_and_authorize_resource
-  before_action :set_estado, only: [:show, :edit, :update, :destroy]
+  before_action :set_estado, only: %i[show edit update destroy]
 
   # GET /estados
   # GET /estados.json
@@ -16,7 +18,7 @@ class EstadosController < ApplicationController
   # GET /estados/1
   # GET /estados/1.json
   def show
-    @estado=Estado.find(params[:id])
+    @estado = Estado.find(params[:id])
     @q = @estado.cidades.ransack(params[:q])
     @q.sorts = 'nome'
     @cidades = @q.result.page params[:page]
@@ -28,8 +30,7 @@ class EstadosController < ApplicationController
   end
 
   # GET /estados/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /estados
   # POST /estados.json
@@ -72,13 +73,14 @@ class EstadosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_estado
-      @estado = Estado.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def estado_params
-      params.require(:estado).permit(:sigla, :nome, :ibge)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_estado
+    @estado = Estado.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def estado_params
+    params.require(:estado).permit(:sigla, :nome, :ibge)
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 class Logradouro < ApplicationRecord
@@ -10,6 +12,6 @@ class Logradouro < ApplicationRecord
   has_many :fibra_caixas
 
   def endereco
-    nome + ' - ' + bairro.nome_cidade_uf
+    "#{nome} - #{bairro.nome_cidade_uf}"
   end
 end

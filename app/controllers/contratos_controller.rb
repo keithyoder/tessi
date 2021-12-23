@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ContratosController < ApplicationController
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
@@ -54,7 +56,8 @@ class ContratosController < ApplicationController
              .order(:vencimento).each do |fatura|
       result << fatura.boleto
     end
-    send_data Brcobranca::Boleto::Template::RghostCarne.lote_carne(result), :filename => 'boletos.pdf', :type => :pdf, :disposition => 'inline'
+    send_data Brcobranca::Boleto::Template::RghostCarne.lote_carne(result), filename: 'boletos.pdf', type: :pdf,
+                                                                            disposition: 'inline'
   end
 
   # GET /contratos/1
@@ -62,9 +65,7 @@ class ContratosController < ApplicationController
   # GET /contratos/1.pdf
   def show
     @contrato = Contrato.find(params[:id])
-    if request.format != :pdf
-      @faturas = @contrato.faturas.order(parcela: :desc).page params[:page]
-    end
+    @faturas = @contrato.faturas.order(parcela: :desc).page params[:page] if request.format != :pdf
     respond_to do |format|
       format.html { render :show }
     end
@@ -87,8 +88,7 @@ class ContratosController < ApplicationController
   end
 
   # GET /contratos/1/edit
-  def edit
-  end
+  def edit; end
 
   def renovar
     @contrato.renovar

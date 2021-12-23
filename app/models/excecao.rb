@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Excecao < ApplicationRecord
   belongs_to :contrato
   enum tipo: { Bloqueio: 1, Desbloqueio: 2 }

@@ -1,10 +1,9 @@
+# frozen_string_literal: true
+
 require 'parseline'
 
 class Retorno240Header
-  attr_accessor :sequencia
-  attr_accessor :data
-  attr_accessor :convenio
-  attr_accessor :banco
+  attr_accessor :sequencia, :data, :convenio, :banco
 
   extend ParseLine::FixedWidth
 

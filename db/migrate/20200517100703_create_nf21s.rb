@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateNf21s < ActiveRecord::Migration[5.2]
   def change
     create_table :nf21s do |t|

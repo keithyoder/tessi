@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 class PlanosController < ApplicationController
-  before_action :set_plano, only: [:show, :edit, :update, :destroy, :ips]
+  before_action :set_plano, only: %i[show edit update destroy ips]
   load_and_authorize_resource
 
   # GET /planos
   # GET /planos.json
   def index
     @q = Plano.ransack(params[:q])
-    @q.sorts = "nome"
+    @q.sorts = 'nome'
     @planos = @q.result.page params[:page]
     respond_to do |format|
       format.html
       format.csv { send_data @planos.except(:limit, :offset).to_csv, filename: "planos-#{Date.today}.csv" }
     end
- end
+  end
 
   # GET /planos/1
   # GET /planos/1.json
@@ -27,8 +29,7 @@ class PlanosController < ApplicationController
   end
 
   # GET /planos/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /planos
   # POST /planos.json
@@ -71,13 +72,14 @@ class PlanosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_plano
-      @plano = Plano.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def plano_params
-      params.require(:plano).permit(:nome, :mensalidade, :upload, :download, :burst, :page, :desconto)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_plano
+    @plano = Plano.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def plano_params
+    params.require(:plano).permit(:nome, :mensalidade, :upload, :download, :burst, :page, :desconto)
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAtendimentoDetalhes < ActiveRecord::Migration[5.2]
   def change
     create_table :atendimento_detalhes do |t|

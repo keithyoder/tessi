@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Equipamento < ApplicationRecord
   has_many :conexoes
   enum tipo: {

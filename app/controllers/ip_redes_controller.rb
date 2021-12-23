@@ -1,19 +1,20 @@
+# frozen_string_literal: true
+
 class IpRedesController < ApplicationController
-  before_action :set_ip_rede, only: [:show, :edit, :update, :destroy]
+  before_action :set_ip_rede, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /ip_redes
   # GET /ip_redes.json
   def index
     @q = IpRede.ransack(params[:q])
-    @q.sorts = ["rede"]
+    @q.sorts = ['rede']
     @ip_redes = @q.result.page params[:page]
   end
 
   # GET /ip_redes/1
   # GET /ip_redes/1.json
-  def show
-  end
+  def show; end
 
   # GET /ip_redes/new
   def new
@@ -21,8 +22,7 @@ class IpRedesController < ApplicationController
   end
 
   # GET /ip_redes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /ip_redes
   # POST /ip_redes.json
@@ -65,13 +65,14 @@ class IpRedesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ip_rede
-      @ip_rede = IpRede.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def ip_rede_params
-      params.require(:ip_rede).permit(:rede, :ponto_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ip_rede
+    @ip_rede = IpRede.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def ip_rede_params
+    params.require(:ip_rede).permit(:rede, :ponto_id)
+  end
 end

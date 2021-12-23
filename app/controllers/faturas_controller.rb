@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FaturasController < ApplicationController
   load_and_authorize_resource
   before_action :set_fatura, only: %i[show edit update destroy liquidacao boleto gerar_nf]
@@ -17,8 +19,7 @@ class FaturasController < ApplicationController
 
   # GET /faturas/1
   # GET /faturas/1.json
-  def show
-  end
+  def show; end
 
   # GET /faturas/new
   def new
@@ -26,11 +27,10 @@ class FaturasController < ApplicationController
   end
 
   # GET /faturas/1/edit
-  def edit
-  end
+  def edit; end
 
   def liquidacao
-    #@fatura.liquidacao = Date.today
+    # @fatura.liquidacao = Date.today
     @fatura.meio_liquidacao = :Dinheiro
     respond_to do |format|
       format.html { render :liquidacao }
@@ -82,7 +82,7 @@ class FaturasController < ApplicationController
 
     respond_to do |format|
       if @fatura.save
-        format.html { redirect_to @fatura, notice: "Fatura was successfully created." }
+        format.html { redirect_to @fatura, notice: 'Fatura was successfully created.' }
         format.json { render :show, status: :created, location: @fatura }
       else
         format.html { render :new }
@@ -96,7 +96,7 @@ class FaturasController < ApplicationController
   def update
     respond_to do |format|
       if @fatura.update(fatura_params)
-        format.html { redirect_to @fatura, notice: "Fatura was successfully updated." }
+        format.html { redirect_to @fatura, notice: 'Fatura was successfully updated.' }
         format.json { render :show, status: :ok, location: @fatura }
       else
         if @fatura.errors.full_messages_for(:liquidacao).present?

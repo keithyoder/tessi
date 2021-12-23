@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BairrosController < ApplicationController
   include ConexoesHelper
 
@@ -18,7 +20,7 @@ class BairrosController < ApplicationController
   # GET /bairros/1
   # GET /bairros/1.json
   def show
-    @bairro=Bairro.find(params[:id])
+    @bairro = Bairro.find(params[:id])
     @q = @bairro.logradouros.ransack(params[:q])
     @q.sorts = 'nome'
     @logradouros = @q.result.page params[:page]
@@ -34,8 +36,7 @@ class BairrosController < ApplicationController
   end
 
   # GET /bairros/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /bairros
   # POST /bairros.json

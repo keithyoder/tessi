@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PontosController < ApplicationController
   include ConexoesHelper
 
@@ -12,14 +14,14 @@ class PontosController < ApplicationController
     @pontos = @q.result.page params[:page]
     respond_to do |format|
       format.html
-      format.csv {
+      format.csv do
         send_data @pontos.except(:limit, :offset).to_csv, filename: "pontos-#{Date.today}.csv"
-      }
+      end
     end
   end
 
   def snmp
-    AtualizarConcentradoresEPontosJob.perform_later()
+    AtualizarConcentradoresEPontosJob.perform_later
     respond_to do |format|
       format.html { redirect_to pontos_url, notice: 'Varredura SNMP inicada.' }
       format.json { head :no_content }
@@ -51,8 +53,7 @@ class PontosController < ApplicationController
   end
 
   # GET /pontos/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pontos
   # POST /pontos.json
@@ -94,7 +95,7 @@ class PontosController < ApplicationController
     end
   end
 
-private
+  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_ponto

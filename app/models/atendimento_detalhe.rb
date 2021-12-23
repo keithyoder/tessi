@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AtendimentoDetalhe < ApplicationRecord
   belongs_to :atendimento
   belongs_to :atendente, class_name: 'User'
@@ -7,7 +9,7 @@ class AtendimentoDetalhe < ApplicationRecord
     Telefone: 2,
     WhatsApp: 3,
     Facebook: 4,
-    Email: 5,
+    Email: 5
   }
 
   validate :nao_contem_dados_de_cartao?

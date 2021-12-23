@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class FibraRedesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_fibra_rede, only: [:show, :edit, :update, :destroy]
+  before_action :set_fibra_rede, only: %i[show edit update destroy]
 
   # GET /fibra_redes
   # GET /fibra_redes.json
   def index
     @q = FibraRede.ransack(params[:q])
-    @q.sorts = ["ponto_nome", "nome"]
+    @q.sorts = %w[ponto_nome nome]
     @fibra_redes = @q.result.page params[:page]
   end
 
@@ -24,8 +26,7 @@ class FibraRedesController < ApplicationController
   end
 
   # GET /fibra_redes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /fibra_redes
   # POST /fibra_redes.json

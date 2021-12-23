@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOs < ActiveRecord::Migration[5.2]
   def change
     create_table :os do |t|

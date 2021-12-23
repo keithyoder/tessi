@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'snmp'
 
 class Ponto < ApplicationRecord
@@ -30,13 +32,11 @@ class Ponto < ApplicationRecord
 
   after_touch :save
   before_save do
-    begin
-      info = snmp
-      self.frequencia = info[:frequencia]
-      self.ssid = info[:ssid]
-      self.canal_tamanho = info[:canal_tamanho]
-    rescue
-    end
+    info = snmp
+    self.frequencia = info[:frequencia]
+    self.ssid = info[:ssid]
+    self.canal_tamanho = info[:canal_tamanho]
+  rescue StandardError
   end
 
   def to_csv
@@ -51,7 +51,7 @@ class Ponto < ApplicationRecord
   end
 
   def frequencia_text
-    frequencia.to_s + ' MHz' + (canal_tamanho.present? ? ' (' + canal_tamanho.to_s + ')' : '')
+    "#{frequencia} MHz#{canal_tamanho.present? ? " (#{canal_tamanho})" : ''}"
   end
 
   def snmp
@@ -77,9 +77,7 @@ class Ponto < ApplicationRecord
   def google_maps_pins
     result = 'markers=color:blue%7Clabel:C'
     conexoes.each do |cnx|
-      if cnx.latitude.present?
-        result += '|' + cnx.latitude.to_s + ',' + cnx.longitude.to_s
-      end
+      result += "|#{cnx.latitude},#{cnx.longitude}" if cnx.latitude.present?
     end
     result
   end

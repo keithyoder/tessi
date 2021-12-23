@@ -1,6 +1,8 @@
-require 'fixy/numeric.rb'
-require 'fixy/amount.rb'
-require 'fixy/date.rb'
+# frozen_string_literal: true
+
+require 'fixy/numeric'
+require 'fixy/amount'
+require 'fixy/date'
 require 'digest'
 
 class Nf21ItemRecord < Fixy::Record
@@ -16,7 +18,7 @@ class Nf21ItemRecord < Fixy::Record
   #       name              size  Range             Format
   # ------------------------------------------------------------
 
-  field :cnpj_cpf,              14, '1-14',       :numeric
+  field :cnpj_cpf, 14, '1-14', :numeric
   field :uf,                     2, '15-16',      :alphanumeric
   field :classe_consumo,         1, '17-17',      :numeric
   field :tipo_utilizacao,        1, '18-18',      :numeric
@@ -46,14 +48,14 @@ class Nf21ItemRecord < Fixy::Record
   field :contrato,              15, '220-234',    :alphanumeric
   field :quantidade_faturada,   12, '235-246',    :numeric
   field :tarifa,                11, '247-257',    :numeric
-  field :aliquota_pis_pasep,     6, '258-263',    :numeric
-  field :valor_pis_pasep,       11, '264-274',    :amount
-  field :aliquota_cofins,        6, '275-280',    :numeric
-  field :valor_cofins,          11, '281-291',    :amount
+  field :aliquota_pis_pasep, 6, '258-263', :numeric
+  field :valor_pis_pasep, 11, '264-274', :amount
+  field :aliquota_cofins, 6, '275-280', :numeric
+  field :valor_cofins, 11, '281-291', :amount
   field :desconto_judicial,      1, '292-292',    :alphanumeric
   field :tipo_isencao,           2, '293-294',    :numeric
   field :brancos,                5, '295-299',    :alphanumeric
-  field :autenticacao_digital,  32, '300-331',    :alphanumeric
+  field :autenticacao_digital, 32, '300-331', :alphanumeric
 
   def initialize(nf)
     @nf = nf
@@ -130,5 +132,4 @@ class Nf21ItemRecord < Fixy::Record
     end
     Digest::MD5.new.hexdigest(output).downcase
   end
-
 end

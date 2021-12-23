@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class FibraCaixasController < ApplicationController
   include ConexoesHelper
 
   load_and_authorize_resource
-  before_action :set_fibra_caixa, only: [:show, :edit, :update, :destroy]
+  before_action :set_fibra_caixa, only: %i[show edit update destroy]
 
   # GET /fibra_caixas
   # GET /fibra_caixas.json
@@ -25,8 +27,7 @@ class FibraCaixasController < ApplicationController
   end
 
   # GET /fibra_caixas/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /fibra_caixas
   # POST /fibra_caixas.json
@@ -69,14 +70,15 @@ class FibraCaixasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_fibra_caixa
-      @fibra_caixa = FibraCaixa.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def fibra_caixa_params
-      params.require(:fibra_caixa).permit(:nome, :fibra_rede_id, :capacidade, :poste, :logradouro_id,
-        :latitude, :longitude, :fibra_cor)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_fibra_caixa
+    @fibra_caixa = FibraCaixa.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def fibra_caixa_params
+    params.require(:fibra_caixa).permit(:nome, :fibra_rede_id, :capacidade, :poste, :logradouro_id,
+                                        :latitude, :longitude, :fibra_cor)
+  end
 end

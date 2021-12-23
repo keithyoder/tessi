@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 class Plano < ApplicationRecord
@@ -8,7 +10,7 @@ class Plano < ApplicationRecord
   after_save do
     atr = PlanoEnviarAtributo.where(plano: self, atributo: 'Mikrotik-Rate-Limit').first_or_create
     atr.op = '='
-    atr.valor = self.mikrotik_rate_limit
+    atr.valor = mikrotik_rate_limit
     atr.save
   end
 
@@ -25,36 +27,36 @@ class Plano < ApplicationRecord
   end
 
   def self.to_csv
-    attributes = %w{id nome mensalidade download upload burst}
+    attributes = %w[id nome mensalidade download upload burst]
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |plano|
-        csv << attributes.map{ |attr| plano.send(attr) }
+        csv << attributes.map { |attr| plano.send(attr) }
       end
     end
   end
 
   def velocidade
-    self.download.to_s + 'M ▼ / ' + self.upload.to_s + 'M ▲'
+    "#{download}M ▼ / #{upload}M ▲"
   end
 
   def mikrotik_rate_limit
-    if self.burst
-      burstup = (self.upload*1024*1.1).to_i
-      burstdown = (self.download*1024*1.1).to_i
+    if burst
+      burstup = (upload * 1024 * 1.1).to_i
+      burstdown = (download * 1024 * 1.1).to_i
     else
-      burstup = self.upload * 1024
-      burstdown = self.download * 1024
+      burstup = upload * 1024
+      burstdown = download * 1024
     end
-    '%{upload}M/%{download}M %{burstup}K/%{burstdown}K %{upload}M/%{download}M 60/60 8 %{upload}M/%{download}M' %
-      {upload: self.upload, download: self.download, burstup: burstup, burstdown: burstdown}
+    format('%{upload}M/%{download}M %{burstup}K/%{burstdown}K %{upload}M/%{download}M 60/60 8 %{upload}M/%{download}M',
+           upload: upload, download: download, burstup: burstup, burstdown: burstdown)
   end
 
   def burst_as_string
-    if self.burst?
-      "Ativiado"
+    if burst?
+      'Ativiado'
     else
-      "Desativado"
+      'Desativado'
     end
   end
 end

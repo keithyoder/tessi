@@ -25,7 +25,9 @@ class Fatura < ApplicationRecord
   scope :nao_registradas, -> { where(registro: nil) }
   scope :vencidas, -> { where('vencimento < ?', 1.day.ago).em_aberto }
   scope :a_vencer, -> { where('vencimento > ?', Date.today).em_aberto }
-  scope :sem_nota, -> { left_joins(:nf21).joins(:contrato).where('contratos.emite_nf').group('faturas.id').having('count(nf21s.*) = 0')}
+  scope :sem_nota, lambda {
+                     left_joins(:nf21).joins(:contrato).where('contratos.emite_nf').group('faturas.id').having('count(nf21s.*) = 0')
+                   }
   scope :notas_a_emitir, ->(range) { where(liquidacao: range).where('vencimento > ?', 3.months.ago).sem_nota }
 
   validate :validar_liquidacao?, if: :liquidacao_changed?
@@ -64,10 +66,10 @@ class Fatura < ApplicationRecord
       instrucao1: "Desconto de #{number_to_currency(contrato.plano.desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
       instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
       instrucao3: "Período de referência: #{I18n.l(periodo_inicio)} - #{I18n.l(periodo_fim)}",
-      instrucao4: "Após o vencimento cobrar multa de #{Setting.multa.to_f*100}% e juros de #{Setting.juros.to_f*100}% ao mês (pro rata die)",
+      instrucao4: "Após o vencimento cobrar multa de #{Setting.multa.to_f * 100}% e juros de #{Setting.juros.to_f * 100}% ao mês (pro rata die)",
       instrucao5: "S.A.C #{Setting.telefone} - sac.tessi.com.br",
       instrucao6: 'Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.',
-      sacado_endereco: pessoa.endereco + ' - ' + pessoa.bairro.nome_cidade_uf,
+      sacado_endereco: "#{pessoa.endereco} - #{pessoa.bairro.nome_cidade_uf}",
       cedente_endereco: 'Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000'
     }
     case pagamento_perfil.banco
@@ -166,12 +168,12 @@ class Fatura < ApplicationRecord
     if baixar?
       {
         cod_primeira_instrucao: pagamento_perfil.banco == 1 ? '44' : '00',
-        identificacao_ocorrencia: '02',
+        identificacao_ocorrencia: '02'
       }
     else
       {
         cod_primeira_instrucao: pagamento_perfil.banco == 1 ? '22' : '00',
-        identificacao_ocorrencia: '01',
+        identificacao_ocorrencia: '01'
       }
     end
   end

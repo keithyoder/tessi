@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Pessoa < ApplicationRecord
   belongs_to :logradouro
   has_one :bairro, through: :logradouro
@@ -8,7 +10,7 @@ class Pessoa < ApplicationRecord
   has_many :os
   has_many :atendimentos
   has_one_attached :rg_imagem
-  scope :assinantes, -> { select('pessoas.id').joins(:conexoes).group("pessoas.id").having("count(*) > 0") }
+  scope :assinantes, -> { select('pessoas.id').joins(:conexoes).group('pessoas.id').having('count(*) > 0') }
 
   delegate :endereco, to: :logradouro, prefix: :logradouro
 
@@ -26,7 +28,7 @@ class Pessoa < ApplicationRecord
   validates :cnpj, uniqueness: true, allow_blank: true
 
   def endereco
-    logradouro.nome + ', ' + numero + ' ' + complemento
+    "#{logradouro.nome}, #{numero} #{complemento}"
   end
 
   def idade

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Atendimento < ApplicationRecord
   belongs_to :pessoa
   belongs_to :classificacao

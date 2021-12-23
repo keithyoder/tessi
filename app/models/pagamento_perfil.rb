@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PagamentoPerfil < ApplicationRecord
   has_many :faturas
   has_many :retornos
@@ -37,7 +39,7 @@ class PagamentoPerfil < ApplicationRecord
     Brcobranca::Remessa::Cnab400::Santander.new(
       remessa_attr(pagamentos).merge(
         codigo_transmissao: santander_codigo_transmissao,
-        codigo_carteira: variacao.to_s,
+        codigo_carteira: variacao.to_s
       )
     )
   end
@@ -50,12 +52,12 @@ class PagamentoPerfil < ApplicationRecord
       digito_conta: '1',
       empresa_mae: 'TESSI Tec. em Seg. e Sistemas',
       documento_cedente: Setting.cnpj,
-      pagamentos: pagamentos,
+      pagamentos: pagamentos
     }
   end
 
   def santander_codigo_transmissao
-    (agencia.to_s + '0' + cedente.to_s + conta.to_s.rjust(10, '0'))[0...20]
+    ("#{agencia}0#{cedente}#{conta.to_s.rjust(10, '0')}")[0...20]
   end
 
   def faturas_com_numero
@@ -88,7 +90,7 @@ class PagamentoPerfil < ApplicationRecord
     # baixar todos os boletos que foram canceladas e nao foram baixados anteriormente.
     faturas_com_numero.where(
       retorno_id: nil,
-      baixa_id: nil,
+      baixa_id: nil
     ).where.not(cancelamento: nil, registro_id: nil).map(&:remessa)
   end
 end

@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 class Nf21Item < ApplicationRecord
   belongs_to :nf21
 
-  scope :competencia, ->(mes) { joins(:nf21).where("date_trunc('month', nf21s.emissao) = ?", DateTime.parse(mes + '-01'))}
+  scope :competencia, lambda { |mes|
+                        joins(:nf21).where("date_trunc('month', nf21s.emissao) = ?", DateTime.parse("#{mes}-01"))
+                      }
 
   def parsed_item(field)
     fixy_field(parse_item, field)

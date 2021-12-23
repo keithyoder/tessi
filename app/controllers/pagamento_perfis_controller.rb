@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PagamentoPerfisController < ApplicationController
   load_and_authorize_resource
-  before_action :set_pagamento_perfil, only: [:show, :edit, :update, :destroy, :remessa]
+  before_action :set_pagamento_perfil, only: %i[show edit update destroy remessa]
 
   # GET /pagamento_perfis
   # GET /pagamento_perfis.json
@@ -25,8 +27,7 @@ class PagamentoPerfisController < ApplicationController
   end
 
   # GET /pagamento_perfis/1/edit
-  def edit
-  end
+  def edit; end
 
   def remessa
     @pagamento_perfil.update!(sequencia: params[:sequencia])
@@ -45,7 +46,7 @@ class PagamentoPerfisController < ApplicationController
 
     respond_to do |format|
       if @pagamento_perfil.save
-        format.html { redirect_to @pagamento_perfil, notice: "Pagamento perfil was successfully created." }
+        format.html { redirect_to @pagamento_perfil, notice: 'Pagamento perfil was successfully created.' }
         format.json { render :show, status: :created, location: @pagamento_perfil }
       else
         format.html { render :new }
@@ -59,7 +60,7 @@ class PagamentoPerfisController < ApplicationController
   def update
     respond_to do |format|
       if @pagamento_perfil.update(pagamento_perfil_params)
-        format.html { redirect_to @pagamento_perfil, notice: "Pagamento perfil was successfully updated." }
+        format.html { redirect_to @pagamento_perfil, notice: 'Pagamento perfil was successfully updated.' }
         format.json { render :show, status: :ok, location: @pagamento_perfil }
       else
         format.html { render :edit }
@@ -73,7 +74,7 @@ class PagamentoPerfisController < ApplicationController
   def destroy
     @pagamento_perfil.destroy
     respond_to do |format|
-      format.html { redirect_to pagamento_perfis_url, notice: "Pagamento perfil was successfully destroyed." }
+      format.html { redirect_to pagamento_perfis_url, notice: 'Pagamento perfil was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

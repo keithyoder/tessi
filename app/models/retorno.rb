@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cobranca/retorno_240'
 require 'cobranca/retorno_400'
 require 'cobranca/bb_400'
@@ -9,7 +11,7 @@ class Retorno < ApplicationRecord
   has_many :baixas, class_name: :Fatura, foreign_key: :baixa_id
   has_one_attached :arquivo
 
-  ARQUIVO_COMPATIVEL = 'Arquivo não é compatível com o convênio selecionado'.freeze
+  ARQUIVO_COMPATIVEL = 'Arquivo não é compatível com o convênio selecionado'
 
   def verificar_header
     case pagamento_perfil.tipo
@@ -20,13 +22,11 @@ class Retorno < ApplicationRecord
       case pagamento_perfil.banco
       when 33
         header = Retorno240Header.load_line data_file.first
-        unless header.convenio.to_i == pagamento_perfil.cedente
-          raise StandardError.new, ARQUIVO_COMPATIVEL
-        end
+        raise StandardError.new, ARQUIVO_COMPATIVEL unless header.convenio.to_i == pagamento_perfil.cedente
 
         self.attributes = {
           sequencia: header.sequencia,
-          data: cnab_to_date(header.data),
+          data: cnab_to_date(header.data)
         }
         save
       when 1
@@ -37,7 +37,7 @@ class Retorno < ApplicationRecord
 
         self.attributes = {
           sequencia: header.sequencia,
-          data: cnab_to_date(header.data),
+          data: cnab_to_date(header.data)
         }
         save
       end
@@ -52,7 +52,7 @@ class Retorno < ApplicationRecord
 
       fatura = Fatura.where(
         pagamento_perfil: pagamento_perfil,
-        nossonumero: cnab_to_nosso_numero(linha.nosso_numero),
+        nossonumero: cnab_to_nosso_numero(linha.nosso_numero)
       ).first
       next unless fatura.present?
 
@@ -68,7 +68,7 @@ class Retorno < ApplicationRecord
           agencia: linha.agencia_recebedora_com_dv[0...-1],
           valor_liquidacao: cnab_to_float(linha.valor_recebido),
           meio_liquidacao: :RetornoBancario,
-          retorno: self,
+          retorno: self
         }
       when 2
         # titulo registrado
@@ -118,9 +118,9 @@ class Retorno < ApplicationRecord
     case pagamento_perfil.banco
     when 33
       # remove leading zeros and trailing digit
-      valor.sub!(/^[0]+/, '')[0...-1]
+      valor.sub!(/^0+/, '')[0...-1]
     when 1
-      valor[7..-1].sub(/^[0]+/, '')
+      valor[7..-1].sub(/^0+/, '')
     end
   end
 end

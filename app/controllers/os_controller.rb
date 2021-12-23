@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OsController < ApplicationController
   before_action :set_os, only: %i[show edit update destroy]
   before_action :set_scope, only: %i[index show new]
@@ -18,8 +20,7 @@ class OsController < ApplicationController
   end
 
   # GET /os/1 or /os/1.json
-  def show
-  end
+  def show; end
 
   # GET /os/new
   def new
@@ -30,8 +31,7 @@ class OsController < ApplicationController
   end
 
   # GET /os/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /os or /os.json
   def create
@@ -39,7 +39,7 @@ class OsController < ApplicationController
 
     respond_to do |format|
       if @os.save
-        format.html { redirect_to @os, notice: "OS criado com sucesso." }
+        format.html { redirect_to @os, notice: 'OS criado com sucesso.' }
         format.json { render :show, status: :created, location: @os }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -50,9 +50,7 @@ class OsController < ApplicationController
 
   # PATCH/PUT /os/1 or /os/1.json
   def update
-    if params[:commit].present? && params[:commit] == 'Encerrar'
-      @os.fechamento = Time.now
-    end
+    @os.fechamento = Time.now if params[:commit].present? && params[:commit] == 'Encerrar'
     puts os_params
     respond_to do |format|
       if @os.update(os_params.except(:fechamento))
@@ -69,7 +67,7 @@ class OsController < ApplicationController
   def destroy
     @os.destroy
     respond_to do |format|
-      format.html { redirect_to os_index_url, notice: "Os was successfully destroyed." }
+      format.html { redirect_to os_index_url, notice: 'Os was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

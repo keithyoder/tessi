@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AtendimentosController < ApplicationController
   before_action :set_atendimento, only: %i[show edit update destroy encerrar]
   before_action :set_scope, only: %i[index show new encerrar]
@@ -18,8 +20,7 @@ class AtendimentosController < ApplicationController
   end
 
   # GET /atendimentos/1 or /atendimentos/1.json
-  def show
-  end
+  def show; end
 
   # GET /atendimentos/new
   def new
@@ -30,8 +31,7 @@ class AtendimentosController < ApplicationController
   end
 
   # GET /atendimentos/1/edit
-  def edit
-  end
+  def edit; end
 
   def encerrar
     respond_to do |format|
@@ -70,7 +70,7 @@ class AtendimentosController < ApplicationController
   def update
     respond_to do |format|
       if @atendimento.update(atendimento_params)
-        format.html { redirect_to @atendimento, notice: "Atendimento was successfully updated." }
+        format.html { redirect_to @atendimento, notice: 'Atendimento was successfully updated.' }
         format.json { render :show, status: :ok, location: @atendimento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -83,7 +83,7 @@ class AtendimentosController < ApplicationController
   def destroy
     @atendimento.destroy
     respond_to do |format|
-      format.html { redirect_to atendimentos_url, notice: "Atendimento was successfully destroyed." }
+      format.html { redirect_to atendimentos_url, notice: 'Atendimento was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

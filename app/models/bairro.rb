@@ -16,6 +16,6 @@ class Bairro < ApplicationRecord
   after_validation :geocode
 
   def nome_cidade_uf
-    nome + ' - ' + cidade.nome_uf
+    "#{nome} - #{cidade.nome_uf}"
   end
 end

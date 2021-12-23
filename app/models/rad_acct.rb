@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RadAcct < ApplicationRecord
   self.table_name = 'radacct'
   self.primary_key = 'radacctid'

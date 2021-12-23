@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Contrato < ApplicationRecord
   belongs_to :pessoa
   belongs_to :plano
@@ -18,26 +20,26 @@ class Contrato < ApplicationRecord
     where(cancelamento: nil)
   }
   scope :suspendiveis, lambda {
-          includes(:pessoa)
-            .joins(:conexoes, :faturas)
-            .where(
-              conexoes: { bloqueado: false },
-              faturas: { liquidacao: nil, cancelamento: nil }
-            )
-            .where('faturas.vencimento < ?', 15.days.ago)
-            .distinct
-        }
+                         includes(:pessoa)
+                           .joins(:conexoes, :faturas)
+                           .where(
+                             conexoes: { bloqueado: false },
+                             faturas: { liquidacao: nil, cancelamento: nil }
+                           )
+                           .where('faturas.vencimento < ?', 15.days.ago)
+                           .distinct
+                       }
   scope :liberaveis, lambda {
-          joins(:conexoes)
-            .joins("LEFT OUTER JOIN faturas ON contratos.id = faturas.contrato_id and faturas.cancelamento is null and liquidacao is null and vencimento < '#{15.days.ago}'")
-            .where(
-              cancelamento: nil,
-              conexoes: { bloqueado: true }
-            )
-            .group('contratos.id')
-            .having('count(faturas.*) = 0')
-            .distinct
-        }
+                       joins(:conexoes)
+                         .joins("LEFT OUTER JOIN faturas ON contratos.id = faturas.contrato_id and faturas.cancelamento is null and liquidacao is null and vencimento < '#{15.days.ago}'")
+                         .where(
+                           cancelamento: nil,
+                           conexoes: { bloqueado: true }
+                         )
+                         .group('contratos.id')
+                         .having('count(faturas.*) = 0')
+                         .distinct
+                     }
   scope :cancelaveis, lambda {
     joins(:pessoa, :faturas, :plano)
       .where(faturas: { liquidacao: nil, cancelamento: nil })
@@ -171,8 +173,8 @@ class Contrato < ApplicationRecord
            .where('periodo_inicio >= ?', cancelamento)
            .each(&:destroy)
     parcial = faturas.where(liquidacao: nil, registro: nil)
-           .where('? between periodo_inicio and periodo_fim', cancelamento)
-    parcial.each { |fatura| fatura.update!(valor: fatura.valor * fracao_de_mes(fatura.periodo_inicio, cancelamento))}
+                     .where('? between periodo_inicio and periodo_fim', cancelamento)
+    parcial.each { |fatura| fatura.update!(valor: fatura.valor * fracao_de_mes(fatura.periodo_inicio, cancelamento)) }
   end
 
   def alterar_forma_pagamento
@@ -181,12 +183,12 @@ class Contrato < ApplicationRecord
   end
 
   def fracao_de_mes(inicio, fim)
-    if fim.end_of_month == fim
-      dias_no_mes = [fim - inicio, 31].min
-    else
-      dias_no_mes = fim - (fim - 1.month)
-    end
-    (fim - inicio).to_f / dias_no_mes.to_f
+    dias_no_mes = if fim.end_of_month == fim
+                    [fim - inicio, 31].min
+                  else
+                    fim - (fim - 1.month)
+                  end
+    (fim - inicio).to_f / dias_no_mes
   end
 
   def proximo_mes(data)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Servidor < ApplicationRecord
   require 'csv'
   require 'cgi'
@@ -33,59 +35,49 @@ class Servidor < ApplicationRecord
   end
 
   def desconectar_hotspot(usuario)
-    begin
-      id = mk_command(
-        [
-          '/ip/hotspot/active/print',
-          "?user=#{usuario}"
-        ]
-      )[0][0]['.id']
-      mk_command(['/ip/hotspot/active/remove', "=.id=#{id}"])
-    rescue MTik::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => exception
-      Rails.logger.info exception.message
-    end
+    id = mk_command(
+      [
+        '/ip/hotspot/active/print',
+        "?user=#{usuario}"
+      ]
+    )[0][0]['.id']
+    mk_command(['/ip/hotspot/active/remove', "=.id=#{id}"])
+  rescue MTik::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+    Rails.logger.info e.message
   end
 
   def desconectar_pppoe(usuario)
-    begin
-      id = mk_command(
-        [
-          '/ppp/active/print',
-          '=.proplist=.id',
-          "?name=#{usuario}"
-        ]
-      )[0][0]['.id']
-      mk_command(['/ppp/active/remove', "=.id=#{id}"])
-    rescue MTik::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => exception
-      Rails.logger.info exception.message
-    end
+    id = mk_command(
+      [
+        '/ppp/active/print',
+        '=.proplist=.id',
+        "?name=#{usuario}"
+      ]
+    )[0][0]['.id']
+    mk_command(['/ppp/active/remove', "=.id=#{id}"])
+  rescue MTik::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+    Rails.logger.info e.message
   end
 
   def ppp_users
-    begin
-      users = mk_command('/ppp/active/print')
-      (users[0].count - 1).to_s
-    rescue StandardError => e
-      e.message
-    end
+    users = mk_command('/ppp/active/print')
+    (users[0].count - 1).to_s
+  rescue StandardError => e
+    e.message
   end
 
   def hotspot_users
-    begin
-      users = mk_command('/ip/hotspot/active/print')
-      (users[0].count - 1).to_s
-    rescue StandardError => e
-      e.message
-    end
+    users = mk_command('/ip/hotspot/active/print')
+    (users[0].count - 1).to_s
+  rescue StandardError => e
+    e.message
   end
 
   def system_info
-    begin
-      result = mk_command('/system/resource/print')[0][0]
-      result.slice('uptime', 'version', 'cpu-load', 'board-name')
-    rescue StandardError => e
-      e.message
-    end
+    result = mk_command('/system/resource/print')[0][0]
+    result.slice('uptime', 'version', 'cpu-load', 'board-name')
+  rescue StandardError => e
+    e.message
   end
 
   def ping?
@@ -98,7 +90,7 @@ class Servidor < ApplicationRecord
   end
 
   def copiar_backup
-    login = CGI.escape(usuario) + ':' + CGI.escape(senha)
+    login = "#{CGI.escape(usuario)}:#{CGI.escape(senha)}"
     filename = ERB::Util.url_encode(nome)
     fi = open("ftp://#{login}@#{ip}/#{filename}-backup.rsc")
     backup.attach(io: fi, filename: "#{nome}-backup.rsc")

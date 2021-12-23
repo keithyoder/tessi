@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Nf21 < ApplicationRecord
   has_many :nf21_itens
   belongs_to :fatura
-  scope :competencia, ->(mes) { where("date_trunc('month', emissao) = ?", DateTime.parse(mes + '-01'))}
+  scope :competencia, ->(mes) { where("date_trunc('month', emissao) = ?", DateTime.parse("#{mes}-01")) }
 
   after_create :gerar_registros
 
@@ -36,7 +38,7 @@ class Nf21 < ApplicationRecord
   end
 
   def terminal
-    '87' + fatura.contrato.id.to_s.rjust(9, '9')
+    "87#{fatura.contrato.id.to_s.rjust(9, '9')}"
   end
 
   def serie

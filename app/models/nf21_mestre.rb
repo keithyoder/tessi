@@ -1,6 +1,8 @@
-require 'fixy/numeric.rb'
-require 'fixy/amount.rb'
-require 'fixy/date.rb'
+# frozen_string_literal: true
+
+require 'fixy/numeric'
+require 'fixy/amount'
+require 'fixy/date'
 require 'digest'
 
 class Nf21Mestre < Fixy::Record
@@ -23,7 +25,7 @@ class Nf21Mestre < Fixy::Record
   field :classe_consumo,       1, '66-66',       :numeric
   field :tipo_utilizacao,      1, '67-67',       :numeric
   field :grupo_tensao,         2, '68-69',       :numeric
-  field :codigo_assinante,    12, '70-81',       :alphanumeric
+  field :codigo_assinante, 12, '70-81', :alphanumeric
   field :data_emissao,         8, '82-89',       :date
   field :modelo,               2, '90-91',       :numeric
   field :serie,                3, '92-94',       :alphanumeric
@@ -37,7 +39,7 @@ class Nf21Mestre < Fixy::Record
   field :situacao,             1, '196-196',     :alphanumeric
   field :referencia,           4, '197-200',     :numeric
   field :referencia_item,      9, '201-209',     :numeric
-  field :numero_terminal,     12, '210-221',     :alphanumeric
+  field :numero_terminal, 12, '210-221', :alphanumeric
   field :tipo_campo_1,         1, '222-222',     :numeric
   field :tipo_cliente,         2, '223-224',     :numeric
   field :subclasse_consumo,    2, '225-226',     :numeric
@@ -47,11 +49,11 @@ class Nf21Mestre < Fixy::Record
   field :valor_fatura,        12, '273-284',     :amount
   field :leitura_anterior,     8, '285-292',     :date
   field :leitura_atual,        8, '293-300',     :date
-  field :brancos_1,           50, '301-350',     :alphanumeric
-  field :brancos_2,            8, '351-358',     :numeric
-  field :informacoes,         30, '359-388',     :alphanumeric
-  field :brancos_3,            5, '389-393',     :alphanumeric
-  field :autenticacao_digital,32, '394-425',     :alphanumeric
+  field :brancos_1, 50, '301-350', :alphanumeric
+  field :brancos_2, 8, '351-358', :numeric
+  field :informacoes, 30, '359-388', :alphanumeric
+  field :brancos_3, 5, '389-393', :alphanumeric
+  field :autenticacao_digital, 32, '394-425', :alphanumeric
 
   def initialize(nf)
     @nf = nf

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ServidoresController < ApplicationController
   before_action :set_servidor, only: %i[show edit update destroy backup mapa]
   load_and_authorize_resource
@@ -10,7 +12,9 @@ class ServidoresController < ApplicationController
     @servidores = @q.result.page params[:page]
     respond_to do |format|
       format.html
-      format.csv { send_data @servidores.except(:limit, :offset).to_csv, filename: "concentradores  -#{Date.today}.csv" }
+      format.csv do
+        send_data @servidores.except(:limit, :offset).to_csv, filename: "concentradores  -#{Date.today}.csv"
+      end
     end
   end
 
@@ -53,11 +57,10 @@ class ServidoresController < ApplicationController
   end
 
   # GET /servidores/1/edit
-  def edit
-  end
+  def edit; end
 
   def mapa
-    @conexoes = @servidor.conexoes.where.not(latitude: nil).to_json(include: [:pessoa, :logradouro, :bairro])
+    @conexoes = @servidor.conexoes.where.not(latitude: nil).to_json(include: %i[pessoa logradouro bairro])
   end
 
   # POST /servidores
@@ -83,7 +86,7 @@ class ServidoresController < ApplicationController
   def update
     respond_to do |format|
       if @servidor.update(servidor_params)
-        format.html { redirect_to @servidor, notice: "Servidor was successfully updated." }
+        format.html { redirect_to @servidor, notice: 'Servidor was successfully updated.' }
         format.json { render :show, status: :ok, location: @servidor }
       else
         format.html { render :edit }
@@ -97,7 +100,7 @@ class ServidoresController < ApplicationController
   def destroy
     @servidor.destroy
     respond_to do |format|
-      format.html { redirect_to servidores_url, notice: "Servidor was successfully destroyed." }
+      format.html { redirect_to servidores_url, notice: 'Servidor was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

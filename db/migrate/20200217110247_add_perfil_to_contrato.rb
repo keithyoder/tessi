@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPerfilToContrato < ActiveRecord::Migration[5.2]
   def change
     add_reference :contratos, :pagamento_perfil, foreign_key: true

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class PessoasController < ApplicationController
   before_action :set_pessoa, only: %i[show edit update destroy]
   before_action :set_scope, only: %i[index show new]
   load_and_authorize_resource
-  autocomplete :logradouro, :nome, :full => true, :display_value => :endereco
+  autocomplete :logradouro, :nome, full: true, display_value: :endereco
 
   # GET /pessoas
   # GET /pessoas.json
@@ -17,7 +19,7 @@ class PessoasController < ApplicationController
   # GET /pessoas/1.json
   def show
     @pessoa = Pessoa.find(params[:id])
-    @params = @params.merge( pessoa_id: @pessoa )
+    @params = @params.merge(pessoa_id: @pessoa)
     @conexoes = @pessoa.conexoes.order(:ip).page params[:page]
     @contratos = @pessoa.contratos.order(:adesao).page params[:page]
     @os_q = @pessoa.os.includes(:pessoa, :classificacao).ransack(params[:os_q])
@@ -41,8 +43,7 @@ class PessoasController < ApplicationController
   end
 
   # GET /pessoas/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pessoas
   # POST /pessoas.json

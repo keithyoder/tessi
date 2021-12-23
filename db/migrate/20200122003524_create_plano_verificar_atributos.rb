@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePlanoVerificarAtributos < ActiveRecord::Migration[5.2]
   def change
     create_table :plano_verificar_atributos do |t|

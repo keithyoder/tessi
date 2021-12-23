@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 class IpRede < ApplicationRecord
   belongs_to :ponto
-  
+
   def cidr
-    rede.to_string + '/' + rede.prefix().to_s if rede != nil
+    "#{rede.to_string}/#{rede.prefix}" unless rede.nil?
   end
 
   def ips_quantidade
-    rede.to_range().count - 4
+    rede.to_range.count - 4
   end
 
-  def to_a 
-    rede.to_range().map(&:to_s)[3...-1]
+  def to_a
+    rede.to_range.map(&:to_s)[3...-1]
   end
 
   def conexoes

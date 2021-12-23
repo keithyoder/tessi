@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'stringio'
 
 class Nf21sController < ApplicationController
-  before_action :set_nf21, only: [:show, :edit, :update, :destroy]
+  before_action :set_nf21, only: %i[show edit update destroy]
   load_and_authorize_resource
 
   # GET /nf21s
@@ -24,8 +26,7 @@ class Nf21sController < ApplicationController
   end
 
   # GET /nf21s/1/edit
-  def edit
-  end
+  def edit; end
 
   def competencia
     cadastro = StringIO.new
@@ -116,5 +117,4 @@ class Nf21sController < ApplicationController
   def nome_arquivo(mes, letra)
     "PE#{Setting.cnpj}21U  #{mes[2..3]}#{mes[5..6]}N01#{letra}.011"
   end
-
 end

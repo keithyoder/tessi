@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Nf21ItensController < ApplicationController
-  before_action :set_nf21_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_nf21_item, only: %i[show edit update destroy]
 
   # GET /nf21_itens
   # GET /nf21_itens.json
@@ -9,8 +11,7 @@ class Nf21ItensController < ApplicationController
 
   # GET /nf21_itens/1
   # GET /nf21_itens/1.json
-  def show
-  end
+  def show; end
 
   # GET /nf21_itens/new
   def new
@@ -18,8 +19,7 @@ class Nf21ItensController < ApplicationController
   end
 
   # GET /nf21_itens/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /nf21_itens
   # POST /nf21_itens.json
@@ -62,13 +62,14 @@ class Nf21ItensController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_nf21_item
-      @nf21_item = Nf21Item.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def nf21_item_params
-      params.require(:nf21_item).permit(:nf_21, :item)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_nf21_item
+    @nf21_item = Nf21Item.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def nf21_item_params
+    params.require(:nf21_item).permit(:nf_21, :item)
+  end
 end

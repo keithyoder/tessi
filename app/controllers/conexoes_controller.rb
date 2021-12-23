@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ConexoesController < ApplicationController
   include ConexoesHelper
 
@@ -18,7 +20,7 @@ class ConexoesController < ApplicationController
     @params = conexoes_params(params)
 
     @q = conexao.ransack(params[:q])
-    #@q.sorts = 'pessoa_nome'
+    # @q.sorts = 'pessoa_nome'
     @conexoes = @q.result.page params[:page]
   end
 
@@ -35,9 +37,9 @@ class ConexoesController < ApplicationController
   def integrar
     AtualizarRadiusJob.perform_later
     respond_to do |format|
-      format.html {
+      format.html do
         redirect_to conexoes_url, notice: 'Integração Radius inicada.'
-      }
+      end
       format.json { head :no_content }
     end
   end
@@ -105,7 +107,7 @@ class ConexoesController < ApplicationController
   def destroy
     @conexao.destroy
     respond_to do |format|
-      format.html { redirect_to conexoes_url, notice: "Conexao was successfully destroyed." }
+      format.html { redirect_to conexoes_url, notice: 'Conexao was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
