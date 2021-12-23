@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ConexoesHelper
   def conexoes_params(params)
     params.permit(
