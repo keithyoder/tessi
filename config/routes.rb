@@ -1,8 +1,10 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
+
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :equipamentos
   get 'sac/inadimplencia'
   get 'sac/suspensao'
-  resources :atendimento_detalhes, only: [:new, :create, :index]
+  resources :atendimento_detalhes, only: %i[new create index]
   resources :atendimentos do
     get :encerrar, on: :member
   end
@@ -59,7 +61,7 @@ Rails.application.routes.draw do
   end
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations',
+    registrations: 'users/registrations'
   }
   resources :estados
   resources :token
