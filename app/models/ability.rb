@@ -51,7 +51,7 @@ class Ability
   def todos(user)
     can :read, :all
     can :suspenso, Conexao
-    can :boletos, Contrato
+    can %i[boletos renovar], Contrato
     can %i[udate liquidacao boleto], Fatura
     can :encerrar, Atendimento.por_responsavel(user).abertos
     can :mapa, Servidor
@@ -80,7 +80,6 @@ class Ability
 
   def financeiro_n1
     can %i[update liquidacao], Fatura
-    can [:renovar], Contrato
   end
 
   def financeiro_n2
@@ -88,7 +87,7 @@ class Ability
     can :destroy, Conexao
     can %i[update liquidacao estornar cancelar gerar_nf], Fatura
     can %i[create update], [Retorno, Contrato]
-    can %i[renovar destroy], Contrato
+    can %i[destroy], Contrato
     can :remessa, PagamentoPerfil
   end
 end
