@@ -132,7 +132,7 @@ class Contrato < ApplicationRecord
     faturas_a_vencer = faturas.a_vencer.count
     # se faltar uma fatura, gera mais 12.  Se faltar mais, gera a quantidade para completar 12.
     faturas_a_vencer = 0 if faturas_a_vencer <= 1
-    gerar_faturas(prazo_meses - faturas_a_vencer)
+    gerar_faturas(prazo_meses - faturas_a_vencer) if faturas_a_vencer < prazo_meses
   end
 
   def self.to_csv
