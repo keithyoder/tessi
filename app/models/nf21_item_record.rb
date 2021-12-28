@@ -104,7 +104,7 @@ class Nf21ItemRecord < Fixy::Record
 
   def autenticacao_digital
     decorator = Fixy::Decorator::Default
-    output = ''
+    output = String.new
     current_position = 1
     current_record = 1
 

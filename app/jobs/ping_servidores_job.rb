@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PingServidoresJob < ApplicationJob
   # include Sidekiq::Worker
 
@@ -8,4 +10,4 @@ class PingServidoresJob < ApplicationJob
   end
 end
 
-#Sidekiq::Cron::Job.create(name: 'Ping Concentradores - cada 5 min', cron: '*/5 * * * *', class: 'PingServidoresJob')
+# Sidekiq::Cron::Job.create(name: 'Ping Concentradores - cada 5 min', cron: '*/5 * * * *', class: 'PingServidoresJob')

@@ -23,8 +23,8 @@ class Nf21Cadastro < Fixy::Record
   field :razao_social,        35, '29-63',       :alphanumeric
   field :logradouro,          45, '64-108',      :alphanumeric
   field :numero,               5, '109-113',     :numeric
-  field :complemento, 15, '114-128', :alphanumeric
-  field :cep, 8, '129-136', :alphanumeric
+  field :complemento,         15, '114-128',     :alphanumeric
+  field :cep,                  8, '129-136',     :alphanumeric
   field :bairro,              15, '137-151',     :alphanumeric
   field :municipio,           30, '152-181',     :alphanumeric
   field :uf,                   2, '182-183',     :alphanumeric
@@ -38,7 +38,7 @@ class Nf21Cadastro < Fixy::Record
   field :numero_nf,            9, '235-243',     :numeric
   field :codigo_municipio,     7, '244-250',     :numeric
   field :brancos,              5, '251-255',     :alphanumeric
-  field :autenticacao_digital, 32, '256-287', :alphanumeric
+  field :autenticacao_digital, 32, '256-287',    :alphanumeric
 
   def initialize(nf)
     @nf = nf
@@ -67,7 +67,7 @@ class Nf21Cadastro < Fixy::Record
 
   def autenticacao_digital
     decorator = Fixy::Decorator::Default
-    output = ''
+    output = String.new
     current_position = 1
     current_record = 1
 

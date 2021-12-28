@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AtualizarRadiusJob < ApplicationJob
   queue_as :default
 
@@ -6,4 +8,4 @@ class AtualizarRadiusJob < ApplicationJob
   end
 end
 
-#AtualizarRadiusJob.perform_now()
+# AtualizarRadiusJob.perform_now()
