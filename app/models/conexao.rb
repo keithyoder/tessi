@@ -173,12 +173,12 @@ class Conexao < ApplicationRecord
       conexao: self,
       classificacao_id: 22
     ).order(created_at: :desc).first_or_create do |atend|
-      atend.responsavel = User.current_user || User.find(1)
+      atend.responsavel = User.find(1)
     end
     if bloqueado
-      atendimento.detalhes.create(tipo: :Presencial, atendente: User.current_user || User.find(1), descricao: 'Acesso Suspenso')
+      atendimento.detalhes.create(tipo: :Presencial, atendente_id: 1, descricao: 'Acesso Suspenso')
     else
-      atendimento.detalhes.create(tipo: :Presencial, atendente: User.current_user || User.find(1), descricao: 'Acesso Liberado')
+      atendimento.detalhes.create(tipo: :Presencial, atendente_id: 1, descricao: 'Acesso Liberado')
       atendimento.fechamento = DateTime.now
       atendimento.save!
     end
