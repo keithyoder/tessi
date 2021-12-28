@@ -72,9 +72,10 @@ class Conexao < ApplicationRecord
   end
 
   after_commit do
-    if saved_change_to_plano_id? ||
-       saved_change_to_bloqueado? ||
-       saved_change_to_inadimplente?
+    if saved_change_to_bloqueado?
+      criar_atendimento
+      desconectar
+    elsif saved_change_to_plano_id? || saved_change_to_inadimplente?
       desconectar
     end
   end
@@ -164,5 +165,22 @@ class Conexao < ApplicationRecord
 
     atr = conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).first_or_create
     atr.update!(op: '=', valor: velocidade)
+  end
+
+  def criar_atendimento
+    atendimento = pessoa.atendimentos.where(
+      fechamento: nil,
+      conexao: self,
+      classificacao_id: 22
+    ).order(created_at: :desc).first_or_create do |atend|
+      atend.responsavel = User.current_user || User.find(1)
+    end
+    if bloqueado
+      atendimento.detalhes.create(tipo: :Presencial, atendente: User.current_user || User.find(1), descricao: 'Acesso Suspenso')
+    else
+      atendimento.detalhes.create(tipo: :Presencial, atendente: User.current_user || User.find(1), descricao: 'Acesso Liberado')
+      atendimento.fechamento = DateTime.now
+      atendimento.save!
+    end
   end
 end
