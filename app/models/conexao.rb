@@ -53,6 +53,8 @@ class Conexao < ApplicationRecord
     left_joins(:contrato).where('tipo = 1 and contrato_id is null or cancelamento is not null')
   }
 
+  attr_acessor :current_user
+
   RADIUS_SENHA = 'Cleartext-Password'
   RADIUS_HOTSPOT_IP = 'Mikrotik-Host-Ip'
   RADIUS_PPPOE_IP = 'Framed-IP-Address'
@@ -71,14 +73,7 @@ class Conexao < ApplicationRecord
     atualizar_velocidade
   end
 
-  after_commit do
-    if saved_change_to_bloqueado?
-      criar_atendimento
-      desconectar
-    elsif saved_change_to_plano_id? || saved_change_to_inadimplente?
-      desconectar
-    end
-  end
+  after_commit :on_commit, on: :update
 
   def self.to_csv
     attributes = %w[id Pessoa Plano Ponto IP]
@@ -131,6 +126,15 @@ class Conexao < ApplicationRecord
   end
 
   private
+
+  def on_commit
+    if saved_change_to_bloqueado?
+      criar_atendimento
+      desconectar
+    elsif saved_change_to_plano_id? || saved_change_to_inadimplente?
+      desconectar
+    end
+  end
 
   def atualizar_senha(forcar = false)
     return unless forcar || usuario.present? && senha.present? && (saved_change_to_senha? || saved_change_to_usuario?)
