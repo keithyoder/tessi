@@ -1,0 +1,25 @@
+.card
+  - params = defined?(params) ? params : {}
+  = @q = @os_q
+  = render '/shared/table_header', {object: @os, search_string: :id_or_pessoa_nome_cont, params: params, titulo: "OS"}
+  .card-body
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+            th= sort_link(@os_q, :pessoa_nome, 'Assinante')
+            th= sort_link(@os_q, :tipo)
+            th Classificação
+            th= sort_link(@os_q, :responsavel, 'Responsável')
+            th= sort_link(@os_q, :created_at, 'Aberta', default_order: :desc)
+            th Fechada
+        tbody
+          - @os.each do |os|
+            tr
+              td= link_to os.pessoa.nome, os.pessoa
+              td= link_to os.tipo, os_path(id: os.id, params: @params)
+              td= link_to os.classificacao&.nome, os_path(id: os.id, params: @params)
+              td= os.responsavel.primeiro_nome
+              td= l(os.created_at, format: :short)
+              td= l(os.fechamento, format: :short, default: '')
+    = paginate @os
