@@ -53,7 +53,7 @@ class Conexao < ApplicationRecord
     left_joins(:contrato).where('tipo = 1 and contrato_id is null or cancelamento is not null')
   }
 
-  attr_acessor :current_user
+  #attr_acessor :current_user
 
   RADIUS_SENHA = 'Cleartext-Password'
   RADIUS_HOTSPOT_IP = 'Mikrotik-Host-Ip'
