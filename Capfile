@@ -41,4 +41,4 @@ require 'capistrano/passenger'
 require 'capistrano/rbenv'
 
 set :rbenv_type, :user
-set :rbenv_ruby, '2.5.5'
+set :rbenv_ruby, '2.7.4'
