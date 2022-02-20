@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_193312) do
+ActiveRecord::Schema.define(version: 2022_01_13_121110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -495,7 +495,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_193312) do
   add_foreign_key "atendimento_detalhes", "atendimentos"
   add_foreign_key "atendimento_detalhes", "users", column: "atendente_id"
   add_foreign_key "atendimentos", "classificacoes"
-  add_foreign_key "atendimentos", "conexoes"
+  add_foreign_key "atendimentos", "conexoes", on_delete: :nullify
   add_foreign_key "atendimentos", "contratos"
   add_foreign_key "atendimentos", "faturas"
   add_foreign_key "atendimentos", "pessoas"
