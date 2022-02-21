@@ -19,7 +19,7 @@ class ConexoesController < ApplicationController
 
     @params = conexoes_params(params)
 
-    @conexao_q = conexao.ransack(params[:q])
+    @conexao_q = conexao.ransack(params[:conexao_q])
     @conexoes = @conexao_q.result.page params[:conexoes_page]
   end
 
