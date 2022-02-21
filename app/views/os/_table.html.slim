@@ -8,6 +8,8 @@
       .d-print-none.col-sm align="right" 
         -if defined?(@os_q)
           => search_form_for(@os_q, url: request.original_url, as: :os_q) do |f|
+            => f.label :abertas, 'Em aberto'
+            => f.check_box :abertas, {class: 'mr-sm-2 '}, "true", true
             => f.select :tipo_eq, options_for_select(Os.tipos)
             => f.search_field :pessoa_nome_cont
             => button_tag( :class => "btn btn-sm btn-outline-dark") do

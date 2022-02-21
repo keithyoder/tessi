@@ -18,4 +18,8 @@ class Os < ApplicationRecord
   def reparo?
     tipo == 'Reparo'
   end
+
+  def self.ransackable_scopes(_auth_object = nil)
+    %i[abertas]
+  end
 end
