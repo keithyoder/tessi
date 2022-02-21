@@ -12,6 +12,9 @@ class Cidade < ApplicationRecord
   scope :assinantes, lambda {
     select('cidades.*, pontos.tecnologia').joins(:conexoes, :pontos).distinct
   }
+  scope :atendidas, lambda {
+    where(ibge: %w[2600500 2600609 2601201 2601706 2602803 2603207 2608008 2610806 2610905 2616001 2611200 2613008])
+  }
 
   def titulo
     'Cidade'
