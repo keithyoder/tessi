@@ -46,4 +46,4 @@
               td= conexao.bloqueado.as_checkbox
               td= conexao.inadimplente.as_checkbox
               td= conexao.conectado.as_checkbox
-    = paginate @conexoes, params: @params.merge({tab: "conexoes"}), param_name: "conexoes_page"
+    = paginate @conexoes, params: @params.merge({tab: "conexoes"}), param_name: "conexoes_page" if defined?(@conexoes.total_pages)
