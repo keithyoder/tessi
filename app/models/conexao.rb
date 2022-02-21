@@ -93,7 +93,7 @@ class Conexao < ApplicationRecord
   end
 
   def self.ransackable_scopes(_auth_object = nil)
-    %i[inadimplente radio fibra conectada bloqueado]
+    %i[inadimplente radio fibra conectada bloqueado, sem_contrato]
   end
 
   def status_hotspot
