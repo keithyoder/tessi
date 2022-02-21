@@ -3,7 +3,7 @@
     .col-sm
       h3
         -if defined?(object)
-          => novo_botao(object, current_page_params)
+          => novo_botao(object, params || {})
         = defined?(titulo) ? titulo : object.model_name.plural.capitalize
     .d-print-none.col-sm align="right" 
       - if defined?(@q) && defined?(search_string)
