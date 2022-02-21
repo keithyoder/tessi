@@ -12,7 +12,7 @@ class OsController < ApplicationController
     @os = @os.fechadas if params.key?(:fechadas)
     @os = @os.por_responsavel(current_user) if params.key?(:minhas)
     @os = @os.por_responsavel(params[:responsavel]) if params.key?(:responsavel)
-    @os_q = @os.includes(:pessoa, :classificacao).order(created_at: :desc).ransack(params[:os_q])
+    @os_q = @os.includes(:pessoa, :classificacao).order(created_at: :asc).ransack(params[:os_q])
     @os = @os_q.result.page params[:page]
     respond_to do |format|
       format.html
