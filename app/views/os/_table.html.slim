@@ -1,7 +1,17 @@
 .card
-  - params = defined?(params) ? params : {}
-  = @q = @os_q
-  = render '/shared/table_header', {object: @os, search_string: :id_or_pessoa_nome_cont, params: params, titulo: "OS"}
+  .card-header
+    .row
+      .col-sm
+        h3
+          =>novo_botao(@os, current_page_params)
+          | OS
+      .d-print-none.col-sm align="right" 
+        -if defined?(@os_q)
+          => search_form_for(@os_q, url: request.original_url, as: :os_q) do |f|
+            => f.select :tipo_eq, options_for_select(Os.tipos)
+            => f.search_field :pessoa_nome_cont
+            => button_tag( :class => "btn btn-sm btn-outline-dark") do
+              i.fa.fa-search aria-hidden="true"
   .card-body
     .table-responsive
       table.table.table-striped
