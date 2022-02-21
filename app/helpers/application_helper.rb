@@ -23,9 +23,18 @@ module ApplicationHelper
 
   def num_to_phone(num)
     if num.length == 11
-      "(#{num[0..1]}) #{num[2..6]}-#{num[7..-1]}"
+      "(#{num[0..1]}) #{num[2..6]}-#{num[7..]}"
     else
-      "(#{num[0..1]}) #{num[2..5]}-#{num[6..-1]}"
+      "(#{num[0..1]}) #{num[2..5]}-#{num[6..]}"
+    end
+  end
+
+  def novo_botao(resource, params = {})
+    return unless defined?(resource) && can?(:create, resource.model)
+
+    link_to({ controller: resource.model_name.plural, params: params, action: :new },
+            class: 'd-print-none btn btn-sm btn-outline-dark') do
+      '<i class="fas fa-plus" aria-hidden="true"></i>'.html_safe
     end
   end
 end

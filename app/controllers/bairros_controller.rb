@@ -24,10 +24,10 @@ class BairrosController < ApplicationController
     @q = @bairro.logradouros.ransack(params[:q])
     @q.sorts = 'nome'
     @logradouros = @q.result.page params[:page]
-    @conexoes_q = @bairro.conexoes.ransack(params[:conexoes_q])
-    @conexoes_q.sorts = 'ip'
+    @conexao_q = @bairro.conexoes.ransack(params[:conexao_q])
+    @conexao_q.sorts = 'ip'
+    @conexoes = @conexao_q.result.page params[:conexoes_page]
     @params = conexoes_params(params)
-    @conexoes = @conexoes_q.result.page params[:page]
   end
 
   # GET /bairros/new

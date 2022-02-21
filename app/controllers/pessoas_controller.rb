@@ -20,7 +20,7 @@ class PessoasController < ApplicationController
   def show
     @pessoa = Pessoa.find(params[:id])
     @params = @params.merge(pessoa_id: @pessoa)
-    @conexoes = @pessoa.conexoes.order(:ip).page params[:page]
+    @conexoes = @pessoa.conexoes
     @contratos = @pessoa.contratos.order(:adesao).page params[:page]
     @os_q = @pessoa.os.includes(:pessoa, :classificacao).ransack(params[:os_q])
     @os = @os_q.result.page(params[:page])

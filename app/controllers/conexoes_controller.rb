@@ -19,9 +19,8 @@ class ConexoesController < ApplicationController
 
     @params = conexoes_params(params)
 
-    @q = conexao.ransack(params[:q])
-    # @q.sorts = 'pessoa_nome'
-    @conexoes = @q.result.page params[:page]
+    @conexao_q = conexao.ransack(params[:q])
+    @conexoes = @conexao_q.result.page params[:conexoes_page]
   end
 
   def suspenso

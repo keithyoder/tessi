@@ -1,5 +1,5 @@
 .card
-  = render '/shared/table_header', {object: @bairros, search_string: :nome_cont}
+  = render '/shared/table_header', { object: @bairros, search_string: :nome_cont }
   .card-body
     .table-responsive
       table.table.table-striped
@@ -13,9 +13,9 @@
         tbody
           - @bairros.each do |bairro|
             tr
-              td= link_to bairro.nome, bairro
-              td= bairro.cidade.nome_uf
-              td align="center" = bairro.assinantes.size()
+              td = link_to bairro.nome, bairro
+              td = bairro.cidade.nome_uf
+              td align="center" = bairro.assinantes.size
               td align="center" = bairro.latitude
               td align="center" = bairro.longitude
-    = paginate local_assigns[:bairros]
+    = paginate @bairros, params: @params.merge({tab: "bairros"}), param_name: "bairros_page"
