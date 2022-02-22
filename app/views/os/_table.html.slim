@@ -3,7 +3,8 @@
     .row
       .col-sm
         h3
-          =>novo_botao(@os, current_page_params)
+          -params = {} if params.nil?
+          =>novo_botao(@os, params)
           | OS
       .d-print-none.col-sm align="right" 
         -if defined?(@os_q)
