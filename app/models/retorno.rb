@@ -50,10 +50,10 @@ class Retorno < ApplicationRecord
     carregar_arquivo.each do |linha|
       next unless linha.data_ocorrencia.to_i.positive?
 
-      fatura = Fatura.where(
+      fatura = Fatura.find_by(
         pagamento_perfil: pagamento_perfil,
         nossonumero: cnab_to_nosso_numero(linha.nosso_numero)
-      ).first
+      )
       next unless fatura.present?
 
       case linha.codigo_ocorrencia.to_i
@@ -83,6 +83,7 @@ class Retorno < ApplicationRecord
       end
       fatura.save
     end
+    SuspensaoAutomaticaJob.perform_later if pode_supsender?
   end
 
   def carregar_arquivo
@@ -122,5 +123,11 @@ class Retorno < ApplicationRecord
     when 1
       valor[7..-1].sub(/^0+/, '')
     end
+  end
+
+  private
+
+  def pode_suspender?
+    Retorno.where(data: Date.today - 1.day).count >= 2
   end
 end
