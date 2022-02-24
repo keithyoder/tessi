@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  webhook: one
+  processed_at: 2022-02-24 08:39:01
+  headers: 
+  body: 
+
+two:
+  webhook: two
+  processed_at: 2022-02-24 08:39:01
+  headers: 
+  body: 

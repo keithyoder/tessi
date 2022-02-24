@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_13_121110) do
+ActiveRecord::Schema.define(version: 2022_02_24_113901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -492,6 +492,23 @@ ActiveRecord::Schema.define(version: 2022_01_13_121110) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "webhook_eventos", force: :cascade do |t|
+    t.bigint "webhook_id"
+    t.datetime "processed_at"
+    t.jsonb "headers"
+    t.jsonb "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["webhook_id"], name: "index_webhook_eventos_on_webhook_id"
+  end
+
+  create_table "webhooks", force: :cascade do |t|
+    t.integer "tipo"
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "atendimento_detalhes", "atendimentos"
   add_foreign_key "atendimento_detalhes", "users", column: "atendente_id"
   add_foreign_key "atendimentos", "classificacoes"
@@ -515,4 +532,5 @@ ActiveRecord::Schema.define(version: 2022_01_13_121110) do
   add_foreign_key "os", "users", column: "responsavel_id"
   add_foreign_key "os", "users", column: "tecnico_1_id"
   add_foreign_key "os", "users", column: "tecnico_2_id"
+  add_foreign_key "webhook_eventos", "webhooks"
 end
