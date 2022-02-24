@@ -2,7 +2,6 @@
 
 class WebhookEventosController < ApplicationController
   skip_before_action :verify_authenticity_token
-  skip_before_action :authenticate_user!
   before_action :validate_token
 
   def create
