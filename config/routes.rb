@@ -66,7 +66,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :estados
   resources :token
   resources :settings
-  post '/webhooks/:token' => 'webhooks_eventos#create'
+  post '/webhooks/:token' => 'webhook_eventos#create'
   get 'welcome/index'
   root 'welcome#index'
 end
