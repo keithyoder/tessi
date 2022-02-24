@@ -30,7 +30,6 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    can :create, WebhookEvento
     return unless user.present?
 
     todos(user) if user.role?

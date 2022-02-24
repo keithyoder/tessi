@@ -3,6 +3,7 @@
 class WebhookEventosController < ApplicationController
   skip_before_action :verify_authenticity_token
   skip_before_action :authenticate_user!
+  skip_authorization_check
   before_action :validate_token
 
   def create
@@ -18,14 +19,14 @@ class WebhookEventosController < ApplicationController
   private
 
   def validate_token
-    return if (@endpoint = Webhook.find_by(token: params[:token]))
+    return if (@webhook = Webhook.find_by(token: params[:token]))
 
     response = { errors: { token: ['Unknown token'] } }
     render json: response, status: :unprocessable_entity
   end
 
   def payload
-    params.except(:token, :event, :action, :controller)
+    params.except(:token, :webhook_evento, :action, :controller)
   end
 
   def filtered_headers # rubocop:disable Metrics/MethodLength
