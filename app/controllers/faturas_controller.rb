@@ -125,6 +125,7 @@ class FaturasController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_fatura
     @fatura = Fatura.find(params[:id])
+    @fatura.contrato.conexoes.each { |c| c.current_user = current_user }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

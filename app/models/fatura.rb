@@ -82,6 +82,17 @@ class Fatura < ApplicationRecord
     end
   end
 
+  def pix
+    @pix ||= QrcodePixRuby::Payload.new(
+      url: 'https://example.com',
+      merchant_name: Setting.razao_social,
+      merchant_city: 'PESQUEIRA',
+      amount: valor,
+      transaction_id: id,
+      repeatable: false
+    )
+  end
+
   def base_calculo_icms
     (valor_liquidacao.presence || valor) - juros_recebidos.to_f
   end

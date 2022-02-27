@@ -34,14 +34,21 @@
       = render 'shared/field_card', {campo: "Valor", valor: number_to_currency(@fatura.valor)}
       = render 'shared/field_card', {campo: "Nosso Número", valor: @fatura.nossonumero}
       = render 'shared/field_card', {campo: "Período", valor: l(@fatura.periodo_inicio, default: "") +" - "+ l(@fatura.periodo_fim, default: "")}
-      = render 'shared/field_card', {campo: "Liquidação", valor: l(@fatura.liquidacao, default: "")}
-      = render 'shared/field_card', {campo: "Valor Liquidação", valor: number_to_currency(@fatura.valor_liquidacao)}
-      = render 'shared/field_card', {campo: "Meio de Liquidação", valor: @fatura.meio_liquidacao}
+      - if @fatura.liquidacao.present?
+        = render 'shared/field_card', {campo: "Liquidação", valor: l(@fatura.liquidacao, default: "")}
+        = render 'shared/field_card', {campo: "Valor Liquidação", valor: number_to_currency(@fatura.valor_liquidacao)}
+        = render 'shared/field_card', {campo: "Meio de Liquidação", valor: @fatura.meio_liquidacao}
+        = render 'shared/field_card', {campo: "Juros Recebidos", valor: number_to_currency(@fatura.juros_recebidos)}
+        = render 'shared/field_card', {campo: "Desconto Concedido", valor: number_to_currency(@fatura.desconto_concedido)}
+        = render 'shared/field_card', {campo: "Banco / Agência", valor: @fatura.banco.to_s + ' / ' + @fatura.agencia.to_s}
+      - else
+        .card.border-dark
+          .card-header= 'Pix QR Code'
+          .card-text align='right'
+            img src=@fatura.pix.base64 width='50%'
+            = @fatura.pix.payload
       = render 'shared/field_card', {campo: "Vencimento Original", valor: l(@fatura.vencimento_original, default: "")}
       = render 'shared/field_card', {campo: "Valor Original", valor: number_to_currency(@fatura.valor_original)}
-      = render 'shared/field_card', {campo: "Juros Recebidos", valor: number_to_currency(@fatura.juros_recebidos)}
-      = render 'shared/field_card', {campo: "Desconto Concedido", valor: number_to_currency(@fatura.desconto_concedido)}
-      = render 'shared/field_card', {campo: "Banco / Agência", valor: @fatura.banco.to_s + ' / ' + @fatura.agencia.to_s}
       - if @fatura.nf21.present?
         = link_to nf21_path(@fatura.nf21, format: :pdf), target: :blank do
           = render 'shared/field_card', {campo: "Nota Fiscal", valor: @fatura.nf21.numero}
