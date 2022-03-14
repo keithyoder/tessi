@@ -10,11 +10,12 @@ class BairrosController < ApplicationController
   # GET /bairros.json
   def index
     @q = Bairro.ransack(params[:q])
-    @bairros = @q.result(order: :nome).page params[:page]
+    @bairros = @q.result(order: :nome).page params[:bairros_page]
     respond_to do |format|
       format.html
       format.csv { send_data @bairros.except(:limit, :offset).to_csv, filename: "bairros-#{Date.today}.csv" }
     end
+    @params = {}
   end
 
   # GET /bairros/1
@@ -23,7 +24,7 @@ class BairrosController < ApplicationController
     @bairro = Bairro.find(params[:id])
     @q = @bairro.logradouros.ransack(params[:q])
     @q.sorts = 'nome'
-    @logradouros = @q.result.page params[:page]
+    @logradouros = @q.result.page params[:logradouros_page]
     @conexao_q = @bairro.conexoes.ransack(params[:conexao_q])
     @conexao_q.sorts = 'ip'
     @conexoes = @conexao_q.result.page params[:conexoes_page]

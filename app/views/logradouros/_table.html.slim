@@ -17,4 +17,4 @@
               td = logradouro.bairro.nome_cidade_uf
               td = logradouro.cep
               td align="center" = logradouro.assinantes.size()
-    = paginate @conexoes, params: {tab: "logradouros"}, param_name: "logradouros_page"
+    = paginate @logradouros, params: {tab: "logradouros"}, param_name: "logradouros_page"

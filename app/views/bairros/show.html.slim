@@ -18,7 +18,8 @@ ul.nav.nav-pills
         p align='center'
           = image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=400x300&center=#{@bairro.latitude},#{@bairro.longitude}&key=#{Rails.application.credentials.google_maps_api_key}", alt: 'Map'
     .row
-      = render 'logradouros/table', params: { bairro_id: @bairro }
+      .card.col-sm
+        = render 'logradouros/table', params: { bairro_id: @bairro }
   #conexoes.tab-pane.fade aria-labelledby='conexoes-tab' class="#{params.key?(:conexao_q) ? 'show active' : ''}" role='tabpanel'
     .row
       h3 = @bairro.nome

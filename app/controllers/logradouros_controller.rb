@@ -11,8 +11,9 @@ class LogradourosController < ApplicationController
       @logradouros = Logradouro.name_like("%#{params[:search]}%").order('nome')
     else
       @q = Logradouro.ransack(params[:q])
-      @logradouros = @q.result(order: :nome).page params[:page]
+      @logradouros = @q.result(order: :nome).page params[:logradouros_page]
     end
+    @params = {}
   end
 
   # GET /logradouros/1

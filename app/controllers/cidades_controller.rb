@@ -32,6 +32,7 @@ class CidadesController < ApplicationController
     @q.sorts = 'nome'
     @bairros = @q.result.page params[:page]
     @logradouros = @cidade.logradouros.page params[:page]
+    @params = params.permit(:tab)
   end
 
   # GET /cidades/new
