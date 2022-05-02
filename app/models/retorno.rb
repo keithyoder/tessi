@@ -55,6 +55,8 @@ class Retorno < ApplicationRecord
         nossonumero: cnab_to_nosso_numero(linha.nosso_numero)
       )
       next unless fatura.present?
+      # instrucao rejeitada
+      next if linha.codigo_ocorrencia.to_i == 26
 
       case linha.codigo_ocorrencia.to_i
       when 6
