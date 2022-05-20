@@ -33,7 +33,7 @@ class PontosController < ApplicationController
   def show
     @conexao_q = @ponto.conexoes.ransack(params[:conexao_q])
     @conexao_q.sorts = 'ip'
-    @conexoes = @conexao_q.result.page params[:page]
+    @conexoes = @conexao_q.result.page params[:conexoes_page]
     @autenticacoes = @ponto.autenticacoes
     @ips = @ponto.ips_disponiveis if params.key?(:ips)
     @params = conexoes_params(params)
