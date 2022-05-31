@@ -42,3 +42,4 @@ class Gerencianet
 
     cliente.create_charge_onestep(body: body)
   end
+end
