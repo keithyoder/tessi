@@ -2,6 +2,7 @@ class Webhook < ApplicationRecord
   has_secure_token
   has_many :webhook_eventos, as: :eventos
   enum tipo: {
-    banco_do_brasil: 101
+    banco_do_brasil: 101,
+    gerencianet: 102
   }
 end

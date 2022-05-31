@@ -128,6 +128,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
     erubi (1.10.0)
     et-orbi (1.2.7)
       tzinfo
@@ -170,9 +172,20 @@ GEM
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.8.0)
+    gerencianet (1.0.2)
+      http (~> 0.9, >= 0.9.8)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hitimes (2.0.0)
+    http (0.9.9)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.5)
+      domain_name (~> 0.5)
+    http-form_data (1.0.3)
+    http_parser.rb (0.6.0)
     httparty (0.20.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -395,6 +408,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8.2)
     unidecoder (1.1.2)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -433,6 +449,7 @@ DEPENDENCIES
   fixy
   font_awesome5_rails
   geocoder
+  gerencianet
   httparty
   image_processing
   jbuilder (~> 2.5)
