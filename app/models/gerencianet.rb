@@ -1,4 +1,6 @@
-class Gerencianet
+require 'gerencianet'
+
+class GerencianetClient
 
   def criar_boleto(fatura)
     cliente = Gerencianet.new(
