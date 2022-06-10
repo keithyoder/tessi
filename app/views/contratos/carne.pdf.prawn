@@ -107,12 +107,15 @@ prawn_document(page_size: 'A4', margin: [margem, margem, margem, margem]) do |pd
     pdf.draw_text Date.today.strftime("%d/%m/%Y"), at: [canhoto, y + 1.send(:mm) - linha * 4]
     # Número Docuemnto
     pdf.draw_text attrs[:nosso_numero], at: [canhoto + 25.send(:mm), y + 1.send(:mm) - linha * 4]
+    # Carteira
+    pdf.draw_text fatura.pagamento_perfil.carteira, at: [canhoto + 25.send(:mm), y + 1.send(:mm) - linha * 5]
     # Especie Moeda
     pdf.draw_text 'R$', at: [canhoto + 50.send(:mm), y + 1.send(:mm) - linha * 5]
     # Especie Doc
     pdf.draw_text '26', at: [canhoto + 50.send(:mm), y + 1.send(:mm) - linha * 4]
     # Data Processamento
     pdf.draw_text Date.today.strftime("%d/%m/%Y"), at: [canhoto + 98.send(:mm), y + 1.send(:mm) - linha * 4]
+    
 
     pdf.text_box attrs[:data_vencimento].strftime("%d/%m/%Y"), at: [canhoto+instrucoes, y - linha * 1.5], width: 25.send(:mm), height: linha, align: :right
     pdf.text_box "#{attrs[:agencia]}/#{attrs[:conta_corrente]}", at: [canhoto+instrucoes, y - linha * 2.5], width: 25.send(:mm), height: linha, align: :right

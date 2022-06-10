@@ -20,7 +20,7 @@ class GerencianetClient
       ],
       metadata: {
         custom_id: fatura.id.to_s,
-        notification_url: 'https://webhook.site/fd19d9d8-9f2e-46da-8e6a-c6609c073f85'
+        notification_url: 'https://erp.tessi.com.br/webhooks/'+Webhook.find_by(tipo: :gerencianet).token
       },
       payment: {
         banking_billet: {
