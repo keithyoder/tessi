@@ -26,7 +26,7 @@
             </h3>
           </div>
           <div class="d-print-none col-sm-3" align=right>
-            <%= link_to(boletos_contrato_path, class: "btn btn-sm btn-outline-dark", target: "_blank") do %>
+            <%= link_to(boletos_contrato_path(format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do %>
               <i class="fa fa-bank fa-lg" aria-hidden="true"></i> Boletos
             <% end %>
             <%= link_to(current_page_params.merge(format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do %>

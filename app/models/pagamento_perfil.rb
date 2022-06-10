@@ -3,7 +3,7 @@
 class PagamentoPerfil < ApplicationRecord
   has_many :faturas
   has_many :retornos
-  enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2 }
+  enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2, 'API' => 4}
 
   def remessa(sequencia = 1)
     pagamentos = faturas_para_registrar + faturas_para_baixar + faturas_canceladas

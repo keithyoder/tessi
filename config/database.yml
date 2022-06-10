@@ -13,7 +13,7 @@ development:
   encoding: unicode
   database: tessi
   pool: 5
-  username: tessi
+  username: keithyoder
   password: testing123
   <<: *default
 

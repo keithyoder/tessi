@@ -48,16 +48,22 @@ class ContratosController < ApplicationController
   end
 
   def boletos
-    result = []
-    Brcobranca.configuration.gerador = :rghost_carne
-    @contrato.faturas
-             .where(liquidacao: nil)
-             .where(vencimento: 1.day.ago..Date::Infinity.new)
-             .order(:vencimento).each do |fatura|
-      result << fatura.boleto
-    end
-    send_data Brcobranca::Boleto::Template::RghostCarne.lote_carne(result), filename: 'boletos.pdf', type: :pdf,
-                                                                            disposition: 'inline'
+    @faturas = @contrato.faturas
+                        .where(liquidacao: nil)
+                        .where(vencimento: 1.day.ago..Date::Infinity.new)
+                        .order(:vencimento)
+    render :carne
+
+    #result = []
+    #Brcobranca.configuration.gerador = :rghost_carne
+    #@contrato.faturas
+    #         .where(liquidacao: nil)
+    #         .where(vencimento: 1.day.ago..Date::Infinity.new)
+    #         .order(:vencimento).each do |fatura|
+    #  result << fatura.boleto
+    #end
+    #send_data Brcobranca::Boleto::Template::RghostCarne.lote_carne(result), filename: 'boletos.pdf', type: :pdf,
+    #                                                                        disposition: 'inline'
   end
 
   # GET /contratos/1

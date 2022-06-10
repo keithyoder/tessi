@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_113901) do
+ActiveRecord::Schema.define(version: 2022_05_31_134217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
 
   create_table "bairros", force: :cascade do |t|
     t.string "nome"
-    t.integer "cidade_id"
+    t.bigint "cidade_id"
     t.decimal "latitude"
     t.decimal "longitude"
     t.datetime "created_at", null: false
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
 
   create_table "cidades", force: :cascade do |t|
     t.string "nome"
-    t.integer "estado_id"
+    t.bigint "estado_id"
     t.string "ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   end
 
   create_table "conexao_enviar_atributos", force: :cascade do |t|
-    t.integer "conexao_id"
+    t.bigint "conexao_id"
     t.string "atributo"
     t.string "op"
     t.string "valor"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   end
 
   create_table "conexao_verificar_atributos", force: :cascade do |t|
-    t.integer "conexao_id"
+    t.bigint "conexao_id"
     t.string "atributo"
     t.string "op"
     t.string "valor"
@@ -115,10 +115,10 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   end
 
   create_table "conexoes", force: :cascade do |t|
-    t.integer "pessoa_id"
-    t.integer "plano_id"
-    t.integer "ponto_id"
-    t.string "ip"
+    t.bigint "pessoa_id"
+    t.bigint "plano_id"
+    t.bigint "ponto_id"
+    t.inet "ip"
     t.string "velocidade"
     t.boolean "bloqueado"
     t.boolean "auto_bloqueio"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
     t.string "usuario"
     t.string "senha"
     t.boolean "inadimplente", default: false, null: false
-    t.integer "contrato_id"
+    t.bigint "contrato_id"
     t.string "mac"
     t.integer "tipo"
     t.bigint "caixa_id"
@@ -145,8 +145,8 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   end
 
   create_table "contratos", force: :cascade do |t|
-    t.integer "pessoa_id", null: false
-    t.integer "plano_id", null: false
+    t.bigint "pessoa_id", null: false
+    t.bigint "plano_id", null: false
     t.integer "status"
     t.integer "dia_vencimento"
     t.date "adesao"
@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   end
 
   create_table "faturas", force: :cascade do |t|
-    t.integer "contrato_id"
+    t.bigint "contrato_id"
     t.decimal "valor", null: false
     t.date "vencimento", null: false
     t.string "nossonumero", null: false
@@ -219,6 +219,10 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
     t.bigint "registro_id"
     t.bigint "baixa_id"
     t.datetime "cancelamento"
+    t.string "pix"
+    t.integer "id_externo"
+    t.string "link"
+    t.string "codigo_de_barras"
     t.index ["baixa_id"], name: "index_faturas_on_baixa_id"
     t.index ["contrato_id"], name: "index_faturas_on_contrato_id"
     t.index ["liquidacao"], name: "index_faturas_on_liquidacao"
@@ -256,15 +260,15 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
 
   create_table "ip_redes", force: :cascade do |t|
     t.inet "rede"
+    t.bigint "ponto_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "ponto_id"
     t.index ["ponto_id"], name: "index_ip_redes_on_ponto_id"
   end
 
   create_table "logradouros", force: :cascade do |t|
     t.string "nome"
-    t.integer "bairro_id"
+    t.bigint "bairro_id"
     t.string "cep"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -326,6 +330,8 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
     t.integer "banco"
     t.string "variacao"
     t.integer "sequencia"
+    t.string "client_id"
+    t.string "client_secret"
   end
 
   create_table "pessoas", force: :cascade do |t|
@@ -336,7 +342,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
     t.string "rg"
     t.string "ie"
     t.date "nascimento"
-    t.integer "logradouro_id"
+    t.bigint "logradouro_id"
     t.string "numero"
     t.string "complemento"
     t.string "nomemae"
@@ -352,7 +358,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   end
 
   create_table "plano_enviar_atributos", force: :cascade do |t|
-    t.integer "plano_id"
+    t.bigint "plano_id"
     t.string "atributo"
     t.string "op"
     t.string "valor"
@@ -363,7 +369,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   end
 
   create_table "plano_verificar_atributos", force: :cascade do |t|
-    t.integer "plano_id"
+    t.bigint "plano_id"
     t.string "atributo"
     t.string "op"
     t.string "valor"
@@ -389,8 +395,8 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
     t.string "nome"
     t.integer "sistema"
     t.integer "tecnologia"
-    t.integer "servidor_id"
-    t.string "ip"
+    t.bigint "servidor_id"
+    t.inet "ip"
     t.string "usuario"
     t.string "senha"
     t.datetime "created_at", null: false
@@ -402,38 +408,46 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
     t.index ["servidor_id"], name: "index_pontos_on_servidor_id"
   end
 
-  create_table "radacct", primary_key: "radacctid", id: :bigint, default: nil, force: :cascade do |t|
-    t.string "acctsessionid", limit: 64, default: "", null: false
-    t.string "acctuniqueid", limit: 32, default: "", null: false
-    t.string "username", limit: 64, default: "", null: false
-    t.string "groupname", limit: 64, default: "", null: false
-    t.string "realm", limit: 64, default: ""
-    t.string "nasipaddress", limit: 15, default: "", null: false
-    t.string "nasportid", limit: 15
-    t.string "nasporttype", limit: 32
+  create_table "radacct", primary_key: "radacctid", force: :cascade do |t|
+    t.text "acctsessionid", null: false
+    t.text "acctuniqueid", null: false
+    t.text "username"
+    t.text "groupname"
+    t.text "realm"
+    t.inet "nasipaddress", null: false
+    t.text "nasportid"
+    t.text "nasporttype"
     t.datetime "acctstarttime"
     t.datetime "acctupdatetime"
     t.datetime "acctstoptime"
     t.bigint "acctinterval"
     t.bigint "acctsessiontime"
-    t.string "acctauthentic", limit: 32
-    t.string "connectinfo_start", limit: 50
-    t.string "connectinfo_stop", limit: 50
+    t.text "acctauthentic"
+    t.text "connectinfo_start"
+    t.text "connectinfo_stop"
     t.bigint "acctinputoctets"
     t.bigint "acctoutputoctets"
-    t.string "calledstationid", limit: 50, default: "", null: false
-    t.string "callingstationid", limit: 50, default: "", null: false
-    t.string "acctterminatecause", limit: 32, default: "", null: false
-    t.string "servicetype", limit: 32
-    t.string "framedprotocol", limit: 32
-    t.string "framedipaddress", limit: 15, default: "", null: false
+    t.text "calledstationid"
+    t.text "callingstationid"
+    t.text "acctterminatecause"
+    t.text "servicetype"
+    t.text "framedprotocol"
+    t.inet "framedipaddress"
+    t.bigint "pessoa_id"
+    t.index ["acctstarttime", "username"], name: "radacct_start_user_idx"
+    t.index ["acctuniqueid"], name: "radacct_acctuniqueid_key", unique: true
+    t.index ["acctuniqueid"], name: "radacct_active_session_idx", where: "(acctstoptime IS NULL)"
+    t.index ["nasipaddress", "acctstarttime"], name: "radacct_bulk_close", where: "(acctstoptime IS NULL)"
   end
 
   create_table "radpostauth", force: :cascade do |t|
-    t.string "username", limit: 64, default: "", null: false
-    t.string "pass", limit: 64, default: "", null: false
-    t.string "reply", limit: 32, default: "", null: false
-    t.datetime "authdate", null: false
+    t.text "username", null: false
+    t.text "pass"
+    t.text "reply"
+    t.text "calledstationid"
+    t.text "callingstationid"
+    t.datetime "authdate", default: -> { "now()" }, null: false
+    t.index ["username", "authdate"], name: "radpostauth_username_authdate_idx"
   end
 
   create_table "retornos", force: :cascade do |t|
@@ -509,6 +523,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "atendimento_detalhes", "atendimentos"
   add_foreign_key "atendimento_detalhes", "users", column: "atendente_id"
   add_foreign_key "atendimentos", "classificacoes"
@@ -517,14 +532,24 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   add_foreign_key "atendimentos", "faturas"
   add_foreign_key "atendimentos", "pessoas"
   add_foreign_key "atendimentos", "users", column: "responsavel_id"
+  add_foreign_key "bairros", "cidades"
   add_foreign_key "cidades", "estados"
+  add_foreign_key "conexao_enviar_atributos", "conexoes", on_delete: :cascade
+  add_foreign_key "conexao_verificar_atributos", "conexoes", on_delete: :cascade
+  add_foreign_key "conexoes", "pessoas"
+  add_foreign_key "conexoes", "planos"
+  add_foreign_key "conexoes", "pontos"
   add_foreign_key "contratos", "pagamento_perfis"
+  add_foreign_key "contratos", "pessoas"
+  add_foreign_key "contratos", "planos"
   add_foreign_key "excecoes", "contratos"
+  add_foreign_key "faturas", "contratos"
   add_foreign_key "faturas", "pagamento_perfis"
   add_foreign_key "faturas", "retornos", column: "baixa_id"
   add_foreign_key "faturas", "retornos", column: "registro_id"
   add_foreign_key "fibra_caixas", "fibra_redes"
   add_foreign_key "fibra_redes", "pontos"
+  add_foreign_key "logradouros", "bairros"
   add_foreign_key "os", "classificacoes"
   add_foreign_key "os", "conexoes"
   add_foreign_key "os", "pessoas"
@@ -532,5 +557,10 @@ ActiveRecord::Schema.define(version: 2022_02_24_113901) do
   add_foreign_key "os", "users", column: "responsavel_id"
   add_foreign_key "os", "users", column: "tecnico_1_id"
   add_foreign_key "os", "users", column: "tecnico_2_id"
+  add_foreign_key "pessoas", "logradouros"
+  add_foreign_key "plano_enviar_atributos", "planos", on_delete: :cascade
+  add_foreign_key "plano_verificar_atributos", "planos", on_delete: :cascade
+  add_foreign_key "pontos", "servidores"
+  add_foreign_key "radacct", "pessoas", name: "fk_pessoa_id"
   add_foreign_key "webhook_eventos", "webhooks"
 end

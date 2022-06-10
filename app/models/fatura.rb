@@ -2,6 +2,9 @@
 
 class Fatura < ApplicationRecord
   require 'digest'
+  require 'barby'
+  require 'barby/barcode/code_25_interleaved'
+  require 'barby/outputter/svg_outputter'
   include ActionView::Helpers::NumberHelper
   belongs_to :contrato
   belongs_to :pagamento_perfil
@@ -44,52 +47,50 @@ class Fatura < ApplicationRecord
     contrato.atualizar_conexoes if saved_change_to_liquidacao?
   end
 
+  after_create do
+    criar_cobranca if pagamento_perfil.tipo == "API"
+  end
+
   def remessa
     Brcobranca::Remessa::Pagamento.new remessa_attr
   end
 
-  def boleto # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    info = {
-      convenio: pagamento_perfil.cedente,
-      cedente: Setting.razao_social,
-      documento_cedente: Setting.cnpj,
-      sacado: pessoa.nome,
-      sacado_documento: pessoa.cpf_cnpj,
-      valor: valor,
-      agencia: pagamento_perfil.agencia,
-      conta_corrente: pagamento_perfil.conta,
-      carteira: pagamento_perfil.carteira,
-      variacao: 'COB',
-      especie_documento: 'DS',
-      nosso_numero: nossonumero,
-      data_vencimento: vencimento,
-      instrucao1: "Desconto de #{number_to_currency(contrato.plano.desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
-      instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
-      instrucao3: "Período de referência: #{I18n.l(periodo_inicio)} - #{I18n.l(periodo_fim)}",
-      instrucao4: "Após o vencimento cobrar multa de #{Setting.multa.to_f * 100}% e juros de #{Setting.juros.to_f * 100}% ao mês (pro rata die)",
-      instrucao5: "S.A.C #{Setting.telefone} - sac.tessi.com.br",
-      instrucao6: 'Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.',
-      sacado_endereco: "#{pessoa.endereco} - #{pessoa.bairro.nome_cidade_uf}",
-      cedente_endereco: 'Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000'
-    }
+  def boleto
     case pagamento_perfil.banco
     when 33
-      Brcobranca::Boleto::Santander.new(info)
+      Brcobranca::Boleto::Santander.new(boleto_attrs)
     when 1
-      Brcobranca::Boleto::BancoBrasil.new(info)
+      Brcobranca::Boleto::BancoBrasil.new(boleto_attrs)
     when 104
-      Brcobranca::Boleto::Caixa.new(info)
+      Brcobranca::Boleto::Caixa.new(boleto_attrs)
     end
   end
 
-  def pix
-    @pix ||= QrcodePixRuby::Payload.new(
-      url: 'https://example.com',
-      merchant_name: Setting.razao_social,
-      merchant_city: 'PESQUEIRA',
-      amount: valor,
-      transaction_id: id,
-      repeatable: false
+  def pix_base64
+    return unless pix.present?
+
+    ::RQRCode::QRCode.new(pix).as_png(
+      bit_depth: 1,
+      border_modules: 0,
+      color_mode: 0,
+      color: 'black',
+      file: nil,
+      fill: 'white',
+      module_px_size: 6,
+      resize_exactly_to: false,
+      resize_gte_to: false
+    ).to_data_url
+  end
+
+  def pix_imagem
+    return unless pix.present?
+
+    StringIO.new(
+      Base64.decode64(
+        splitBase64(
+          pix_base64
+        )[:data]
+      )
     )
   end
 
@@ -152,7 +153,80 @@ class Fatura < ApplicationRecord
     nossonumero + (dv_santander.to_s if pagamento_perfil.banco == 33).to_s
   end
 
+  def boleto_attrs
+    {
+      convenio: pagamento_perfil.cedente,
+      cedente: Setting.razao_social,
+      documento_cedente: Setting.cnpj,
+      sacado: pessoa.nome.strip,
+      sacado_documento: pessoa.cpf_cnpj,
+      valor: valor,
+      agencia: pagamento_perfil.agencia.to_s.rjust(4, '0'),
+      conta_corrente: pagamento_perfil.conta.to_s.rjust(9, '0'),
+      carteira: pagamento_perfil.carteira,
+      variacao: 'COB',
+      especie_documento: 'DS',
+      nosso_numero: nossonumero.to_s.rjust(11, '0'),
+      data_vencimento: vencimento,
+      instrucao1: "Desconto de #{number_to_currency(contrato.plano.desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
+      instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
+      instrucao3: "Período de referência: #{I18n.l(periodo_inicio)} - #{I18n.l(periodo_fim)}",
+      instrucao4: "S.A.C #{Setting.telefone} - sac.tessi.com.br",
+      instrucao5: 'Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.',
+      instrucao6: "Após o vencimento cobrar multa de #{Setting.multa.to_f * 100}% e juros de #{Setting.juros.to_f * 100}% ao mês (pro rata die)",
+      sacado_endereco: "#{pessoa.endereco} - #{pessoa.bairro.nome_cidade_uf}",
+      cedente_endereco: 'Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000'
+    }
+  end
+
+  def codigo_de_barras
+    @codigo_de_barras ||= begin
+      codigo = pagamento_perfil.banco.to_s.rjust(3, '0') + '9' +
+               (vencimento.to_date - '1997-10-07'.to_date).to_i.to_s +
+               (valor * 100).to_i.to_s.rjust(10, '0') +
+               campo_livre
+      dv = codigo.modulo11
+      dv = 0 if dv > 9
+      codigo[0, 4] + dv.to_s + codigo[4...]
+    end
+  end
+  
+  def codigo_de_barras_imagem
+    puts codigo_de_barras
+    barcode = Barby::Code25Interleaved.new(codigo_de_barras)
+    StringIO.new(
+      Barby::SvgOutputter.new(barcode).to_svg(height: 53, width: 103, margin: 0)
+    )
+  end
+
+  def linha_digitavel
+    bloco1 = "#{codigo_de_barras[0, 4]}#{codigo_de_barras[19, 5]}"
+    bloco2 = codigo_de_barras[24, 10]
+    bloco3 = codigo_de_barras[34, 10]
+    bloco4 = codigo_de_barras[4, 1]
+    bloco5 = codigo_de_barras[5, 14]
+    "#{bloco1[0, 5]}.#{bloco1[5,4]}#{bloco1.modulo10} #{bloco2[0, 5]}.#{bloco2[5,5]}#{bloco2.modulo10} #{bloco3[0, 5]}.#{bloco3[5,5]}#{bloco3.modulo10} #{bloco4} #{bloco5}"
+  end
+
+  def campo_livre
+    @campo_livre ||=
+      case pagamento_perfil.banco
+      when 364
+        '00009' + (pagamento_perfil.conta/10).to_s.rjust(9, '0') + nossonumero.rjust(11, '0')
+      when 1
+        (pagamento_perfil.cedente).to_s.rjust(13, '0') + nossonumero.rjust(10, '0') + pagamento_perfil.carteira.to_s.rjust(2, '0')
+      when 33
+        '9'+(pagamento_perfil.cedente).to_s.rjust(7, '0') + nossonumero.rjust(12, '0') + dv_santander.to_s + pagamento_perfil.carteira.to_s.rjust(4, '0')
+      end
+  end
+
   private
+
+  def criar_cobranca
+    if pagamento_perfil.banco == 364
+      GerencianetBoletoJob.perform_later(self)
+    end
+  end
 
   def remessa_attr # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     {
@@ -205,5 +279,16 @@ class Fatura < ApplicationRecord
 
   def mes_referencia(date)
     date.strftime('%Y-%m')
+  end
+
+  def splitBase64(uri)
+    if uri.match(%r{^data:(.*?);(.*?),(.*)$})
+      return {
+        type:      $1, # "image/png"
+        encoder:   $2, # "base64"
+        data:      $3, # data string
+        extension: $1.split('/')[1] # "png"
+        }
+    end
   end
 end

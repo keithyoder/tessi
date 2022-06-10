@@ -41,12 +41,13 @@
         = render 'shared/field_card', {campo: "Juros Recebidos", valor: number_to_currency(@fatura.juros_recebidos)}
         = render 'shared/field_card', {campo: "Desconto Concedido", valor: number_to_currency(@fatura.desconto_concedido)}
         = render 'shared/field_card', {campo: "Banco / Agência", valor: @fatura.banco.to_s + ' / ' + @fatura.agencia.to_s}
-      - else
+      - elsif @fatura.pix.present?
         .card.border-dark
           .card-header= 'Pix QR Code'
           .card-text align='right'
-            img src=@fatura.pix.base64 width='50%'
-            = @fatura.pix.payload
+            img src=@fatura.pix_base64 width='50%'
+            br
+            = @fatura.pix
       = render 'shared/field_card', {campo: "Vencimento Original", valor: l(@fatura.vencimento_original, default: "")}
       = render 'shared/field_card', {campo: "Valor Original", valor: number_to_currency(@fatura.valor_original)}
       - if @fatura.nf21.present?

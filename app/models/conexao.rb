@@ -174,7 +174,7 @@ class Conexao < ApplicationRecord
   def criar_atendimento
     atendimento = pessoa.atendimentos.where(
       fechamento: nil,
-      conexao: self,
+      conexao_id: id,
       classificacao_id: 22
     ).order(created_at: :desc).first_or_create do |atend|
       atend.responsavel = User.find(1)
