@@ -218,7 +218,8 @@ class Fatura < ApplicationRecord
     @campo_livre ||=
       case pagamento_perfil.banco
       when 364
-        '00009' + (pagamento_perfil.conta/10).to_s.rjust(9, '0') + nossonumero.rjust(11, '0')
+        conta_nosso_numero = (pagamento_perfil.conta/10).to_s.rjust(9, '0') + nossonumero.rjust(11, '0')
+        conta_nosso_numero.modulo11.to_s.rjust(5, '0') + conta_nosso_numero
       when 1
         (pagamento_perfil.cedente).to_s.rjust(13, '0') + nossonumero.rjust(10, '0') + pagamento_perfil.carteira.to_s.rjust(2, '0')
       when 33
