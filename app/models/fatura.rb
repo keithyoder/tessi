@@ -70,13 +70,13 @@ class Fatura < ApplicationRecord
   def pix_base64
     return unless pix.present?
 
-    ::RQRCode::QRCode.new(pix, level: :q, size: 10).as_png(margin: 0).to_data_url
+    ::RQRCode::QRCode.new(pix, level: :q).as_png(margin: 0).to_data_url
   end
 
   def pix_imagem
     return unless pix.present?
 
-    barcode = Barby::QrCode.new(pix, level: :q, size: 10)
+    barcode = Barby::QrCode.new(pix, level: :q)
     StringIO.new(
       Barby::SvgOutputter.new(barcode).to_svg(margin: 0)
     )
