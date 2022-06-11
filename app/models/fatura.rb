@@ -76,7 +76,8 @@ class Fatura < ApplicationRecord
       color: 'black',
       file: nil,
       fill: 'white',
-      module_px_size: 6,
+      #module_px_size: 6,
+      size: 120,
       resize_exactly_to: false,
       resize_gte_to: false
     ).to_data_url
@@ -181,8 +182,13 @@ class Fatura < ApplicationRecord
 
   def codigo_de_barras
     @codigo_de_barras ||= begin
+      fator_vencimento = if pagamento_perfil.banco == 364
+                           '0000'
+                         else
+                           (vencimento.to_date - '1997-10-07'.to_date).to_i.to_s
+                         end           
       codigo = pagamento_perfil.banco.to_s.rjust(3, '0') + '9' +
-               (vencimento.to_date - '1997-10-07'.to_date).to_i.to_s +
+               fator_vencimento +
                (valor * 100).to_i.to_s.rjust(10, '0') +
                campo_livre
       dv = codigo.modulo11
