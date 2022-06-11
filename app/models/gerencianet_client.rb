@@ -27,9 +27,9 @@ class GerencianetClient
           expire_at: fatura.vencimento.strftime,
           customer: {
             name: fatura.pessoa.nome.strip,
-            #email: fatura.pessoa.email,
+            email: fatura.pessoa.email,
             cpf: CPF.new(fatura.pessoa.cpf).stripped.to_s,
-            birth: fatura.pessoa.nascimento.strftime,
+            birth: fatura.pessoa.nascimento&.strftime,
             phone_number: fatura.pessoa.telefone1.gsub(/\s+/, ""),
             address: {
               street: fatura.pessoa.logradouro.nome,
@@ -57,11 +57,13 @@ class GerencianetClient
     response = cliente.create_charge_onestep(body: body)
     return unless response['code'] == 200
     data = response['data']
+    nossonumero = data['barcode'][25, 11].gsub(/\D/, '')
     fatura.update(
       pix: data['pix']['qrcode'],
       id_externo: data['charge_id'],
       link: data['link'],
-      codigo_de_barras: data['barcode']
+      codigo_de_barras: data['barcode'],
+      nossonumero: nossonumero
     )
   end
 
