@@ -4,6 +4,7 @@ class Fatura < ApplicationRecord
   require 'digest'
   require 'barby'
   require 'barby/barcode/code_25_interleaved'
+  require 'barby/barcode/qr_code'
   require 'barby/outputter/svg_outputter'
   include ActionView::Helpers::NumberHelper
   belongs_to :contrato
@@ -69,18 +70,15 @@ class Fatura < ApplicationRecord
   def pix_base64
     return unless pix.present?
 
-    ::RQRCode::QRCode.new(pix).as_png.to_data_url
+    ::RQRCode::QRCode.new(pix, level: :q, size: 10).as_png(margin: 0).to_data_url
   end
 
   def pix_imagem
     return unless pix.present?
 
+    barcode = Barby::QrCode.new(pix, level: :q, size: 10)
     StringIO.new(
-      Base64.decode64(
-        splitBase64(
-          pix_base64
-        )[:data]
-      )
+      Barby::SvgOutputter.new(barcode).to_svg(margin: 0)
     )
   end
 
@@ -187,7 +185,6 @@ class Fatura < ApplicationRecord
   end
   
   def codigo_de_barras_imagem
-    puts codigo_de_barras
     barcode = Barby::Code25Interleaved.new(codigo_de_barras)
     StringIO.new(
       Barby::SvgOutputter.new(barcode).to_svg(height: 53, width: 103, margin: 0)
@@ -277,14 +274,4 @@ class Fatura < ApplicationRecord
     date.strftime('%Y-%m')
   end
 
-  def splitBase64(uri)
-    if uri.match(%r{^data:(.*?);(.*?),(.*)$})
-      return {
-        type:      $1, # "image/png"
-        encoder:   $2, # "base64"
-        data:      $3, # data string
-        extension: $1.split('/')[1] # "png"
-        }
-    end
-  end
 end

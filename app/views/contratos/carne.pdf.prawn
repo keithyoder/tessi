@@ -144,7 +144,7 @@ prawn_document(page_size: 'A4', margin: [margem, margem, margem, margem]) do |pd
     pdf.text_box  attrs[:sacado], at: [margem_texto, y - linha * 10.5], width: canhoto - margem_texto * 2, height: linha * 5
 
     if fatura.pix.present?
-      pdf.image fatura.pix_imagem, at: [canhoto + 103.send(:mm), y - 1.send(:mm) - linha * 5], height: 20.send(:mm), width: 20.send(:mm)
+      pdf.svg fatura.pix_imagem, at: [canhoto + 103.send(:mm), y - 1.send(:mm) - linha * 5], height: 20.send(:mm), width: 20.send(:mm)
     end
 
     pdf.font_size 11
