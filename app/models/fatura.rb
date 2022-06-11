@@ -69,18 +69,7 @@ class Fatura < ApplicationRecord
   def pix_base64
     return unless pix.present?
 
-    ::RQRCode::QRCode.new(pix).as_png(
-      bit_depth: 1,
-      border_modules: 0,
-      color_mode: 0,
-      color: 'black',
-      file: nil,
-      fill: 'white',
-      #module_px_size: 6,
-      size: 120,
-      resize_exactly_to: false,
-      resize_gte_to: false
-    ).to_data_url
+    ::RQRCode::QRCode.new(pix).as_png.to_data_url
   end
 
   def pix_imagem
