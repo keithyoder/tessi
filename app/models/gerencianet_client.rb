@@ -6,7 +6,7 @@ class GerencianetClient
       {
         client_id: fatura.pagamento_perfil.client_id,
         client_secret: fatura.pagamento_perfil.client_secret,
-        sandbox: true
+        sandbox: ENV['RAILS_ENV'] != 'production'
       }
     )
 
@@ -71,7 +71,7 @@ class GerencianetClient
       {
         client_id: perfil.client_id,
         client_secret: perfil.client_secret,
-        sandbox: true
+        sandbox: ENV['RAILS_ENV'] != 'production'
       }
     )
     params = {
