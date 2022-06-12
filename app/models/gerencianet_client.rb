@@ -27,7 +27,7 @@ class GerencianetClient
           expire_at: fatura.vencimento.strftime,
           customer: {
             name: fatura.pessoa.nome.strip,
-            email: fatura.pessoa.email,
+            #email: fatura.pessoa.email,
             cpf: CPF.new(fatura.pessoa.cpf).stripped.to_s,
             birth: fatura.pessoa.nascimento&.strftime,
             phone_number: fatura.pessoa.telefone1.gsub(/\s+/, ""),
@@ -87,6 +87,7 @@ class GerencianetClient
     payload = self.receber_notificacao(notificacao)
     return unless payload['code'] == 200
 
+    puts payload
     pago = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'paid' }
     return unless pago
 
