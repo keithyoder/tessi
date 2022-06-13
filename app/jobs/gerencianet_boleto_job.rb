@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class GerencianetBoletoJob < ApplicationJob
-    queue_as :default
+  include Sidekiq::Worker
   
-    def perform(fatura)
-      GerencianetClient.criar_boleto(fatura)
-    end
+  def perform(fatura)
+    GerencianetClient.criar_boleto(fatura)
   end
+end
   
