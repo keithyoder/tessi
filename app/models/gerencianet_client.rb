@@ -2,6 +2,9 @@ class GerencianetClient
   require 'gerencianet'
 
   def self.criar_boleto(fatura)
+    # não criar um novo boleto se já foi criado anteriormente.
+    return if fatura.pix.present?
+
     cliente = Gerencianet.new(
       {
         client_id: fatura.pagamento_perfil.client_id,
