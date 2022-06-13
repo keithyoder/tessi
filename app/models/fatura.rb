@@ -206,7 +206,7 @@ class Fatura < ApplicationRecord
       when 364
         conta_nosso_numero = (pagamento_perfil.conta/10).to_s.rjust(9, '0') + nossonumero.rjust(11, '0')
         dv = conta_nosso_numero.modulo11
-        dv = 1 if dv == 10
+        dv = 1 if dv == 10 || dv == 0
         dv.to_s.rjust(5, '0') + conta_nosso_numero
       when 1
         (pagamento_perfil.cedente).to_s.rjust(13, '0') + nossonumero.rjust(10, '0') + pagamento_perfil.carteira.to_s.rjust(2, '0')
