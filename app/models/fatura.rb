@@ -219,7 +219,7 @@ class Fatura < ApplicationRecord
 
   def criar_cobranca
     if pagamento_perfil.banco == 364
-      GerencianetBoletoJob.perform_in(20.seconds)
+      GerencianetBoletoJob.set(wait: 20.seconds).perform_later
     end
   end
 
