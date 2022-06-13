@@ -150,7 +150,7 @@ class Fatura < ApplicationRecord
       sacado_documento: pessoa.cpf_cnpj,
       valor: valor,
       agencia: pagamento_perfil.agencia.to_s.rjust(4, '0'),
-      conta_corrente: pagamento_perfil.conta.to_s.rjust(9, '0'),
+      conta_corrente: pagamento_perfil.conta.to_s.rjust(8, '0'),
       carteira: pagamento_perfil.carteira,
       variacao: 'COB',
       especie_documento: 'DS',
