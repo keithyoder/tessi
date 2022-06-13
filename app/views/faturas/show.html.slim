@@ -15,7 +15,7 @@
             i.fa.fa-credit-card.fa-lg aria-hidden="true" 
             | Liquidação
         - if @fatura.liquidacao.blank?
-          = link_to(boleto_fatura_path, class: "btn btn-sm btn-outline-dark", target: "_blank") do
+          = link_to(@fatura.link || boleto_fatura_path, class: "btn btn-sm btn-outline-dark", target: "_blank") do
             i.fa.fa-print.fa-lg aria-hidden="true" 
         - else
           = link_to(current_page_params.merge(format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do
