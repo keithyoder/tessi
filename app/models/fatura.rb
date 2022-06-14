@@ -154,7 +154,7 @@ class Fatura < ApplicationRecord
       carteira: pagamento_perfil.carteira,
       variacao: 'COB',
       especie_documento: 'DS',
-      nosso_numero: nossonumero.to_s.rjust(10, '0'),
+      nosso_numero: nossonumero.to_s.rjust(7, '0'),
       data_vencimento: vencimento,
       instrucao1: "Desconto de #{number_to_currency(contrato.plano.desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
       instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
