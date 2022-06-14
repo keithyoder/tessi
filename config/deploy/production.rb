@@ -56,5 +56,9 @@
 #     # password: "please use keys"
 #   }
 
+require 'sidekiq/capistrano'
+install_plugin Capistrano::Sidekiq  # Default sidekiq tasks
+install_plugin Capistrano::Sidekiq::Systemd
+
 server '201.71.24.5', user: 'deploy', roles: %w[app db web]
 # server '10.200.28.35', user: 'deploy', roles: %w{app db web}
