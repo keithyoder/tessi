@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class PagamentoPerfil < ApplicationRecord
-  has_many :faturas
-  has_many :retornos
-  enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2, 'API' => 4}
+  has_many :faturas, dependent: :restrict_with_exception
+  has_many :retornos, dependent: :restrict_with_exception
+  enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2, 'API' => 4 }
 
   def remessa(sequencia = 1)
     pagamentos = faturas_para_registrar + faturas_para_baixar + faturas_canceladas
@@ -69,7 +69,7 @@ class PagamentoPerfil < ApplicationRecord
     # registrar todos os boletos com vencimento nos proximos 30 dias
     # e que nao foram liquidados ainda e nao foram registrados anteriormente.
     faturas_com_numero.where(
-      vencimento: Date.today..30.days.from_now,
+      vencimento: Time.zone.today..30.days.from_now,
       cancelamento: nil,
       liquidacao: nil,
       registro_id: nil
@@ -82,7 +82,7 @@ class PagamentoPerfil < ApplicationRecord
     faturas_com_numero.where(
       retorno_id: nil,
       baixa_id: nil,
-      liquidacao: 1.month.ago..Date.today
+      liquidacao: 1.month.ago..Time.zone.today
     ).where.not(liquidacao: nil, registro_id: nil).map(&:remessa)
   end
 

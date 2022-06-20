@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GerencianetBoletoJob < ApplicationJob
+class GerencianetCriarBoletoJob < ApplicationJob
   
   def perform(fatura)
     GerencianetClient.criar_boleto(fatura)

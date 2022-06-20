@@ -6,9 +6,17 @@ require 'cobranca/bb_400'
 
 class Retorno < ApplicationRecord
   belongs_to :pagamento_perfil
-  has_many :faturas
-  has_many :registros, class_name: :Fatura, foreign_key: :registro_id
-  has_many :baixas, class_name: :Fatura, foreign_key: :baixa_id
+  has_many :faturas, dependent: :restrict_with_exception
+  has_many :registros,
+           class_name: :Fatura,
+           foreign_key: :registro_id,
+           dependent: :restrict_with_exception,
+           inverse_of: :registro
+  has_many :baixas,
+           class_name: :Fatura,
+           foreign_key: :baixa_id,
+           dependent: :restrict_with_exception,
+           inverse_of: :baixa
   has_one_attached :arquivo
 
   ARQUIVO_COMPATIVEL = 'Arquivo não é compatível com o convênio selecionado'
@@ -54,7 +62,7 @@ class Retorno < ApplicationRecord
         pagamento_perfil: pagamento_perfil,
         nossonumero: cnab_to_nosso_numero(linha.nosso_numero)
       )
-      next unless fatura.present?
+      next if fatura.blank?
       # instrucao rejeitada
       next if linha.codigo_ocorrencia.to_i == 26
 
@@ -123,13 +131,13 @@ class Retorno < ApplicationRecord
       # remove leading zeros and trailing digit
       valor.sub!(/^0+/, '')[0...-1]
     when 1
-      valor[7..-1].sub(/^0+/, '')
+      valor[7..].sub(/^0+/, '')
     end
   end
 
   private
 
   def pode_suspender?
-    Retorno.where(data: Date.today - 1.day).count >= 2
+    Retorno.where(data: Time.zone.today - 1.day).count >= 2
   end
 end

@@ -3,7 +3,7 @@
 class Servidor < ApplicationRecord
   require 'csv'
   require 'cgi'
-  has_many :pontos
+  has_many :pontos, dependent: :restrict_with_exception
   has_many :conexoes, through: :pontos
   has_many :autenticacoes, through: :pontos
   has_one_attached :backup
@@ -15,7 +15,7 @@ class Servidor < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << attributes
 
-      all.each do |servidor|
+      all.find_each do |servidor|
         csv << attributes.map { |attr| servidor.send(attr) }
       end
     end
@@ -101,7 +101,7 @@ class Servidor < ApplicationRecord
 
     if backup.created_at > 1.week.ago
       'primary'
-    elsif backup.created_at > 2.week.ago
+    elsif backup.created_at > 2.weeks.ago
       'warning'
     else
       'danger'

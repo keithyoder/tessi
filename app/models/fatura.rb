@@ -52,6 +52,10 @@ class Fatura < ApplicationRecord
     criar_cobranca if pagamento_perfil.tipo == "API"
   end
 
+  before_destroy do
+    GerencianetCancelarBoletoJob.perform_later(id_externo) if pagamento_perfil.tipo == "API" && id_externo.present?
+  end
+
   def remessa
     Brcobranca::Remessa::Pagamento.new remessa_attr
   end
@@ -219,7 +223,7 @@ class Fatura < ApplicationRecord
 
   def criar_cobranca
     if pagamento_perfil.banco == 364
-      GerencianetBoletoJob.set(wait: 10.seconds).perform_later(self)
+      GerencianetCriarBoletoJob.set(wait: 10.seconds).perform_later(self)
     end
   end
 

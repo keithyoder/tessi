@@ -3,7 +3,7 @@ class GerencianetClient
 
   def self.criar_boleto(fatura)
     # não criar um novo boleto se já foi criado anteriormente.
-    return if fatura.pix.present?
+    return unless fatura.pagamento_perfil.banco == 364 && fatura.pix.blank?
 
     cliente = Gerencianet.new(
       {
@@ -29,10 +29,7 @@ class GerencianetClient
         banking_billet: {
           expire_at: fatura.vencimento.strftime,
           customer: {
-            name: fatura.pessoa.nome.strip,
             #email: fatura.pessoa.email,
-            cpf: CPF.new(fatura.pessoa.cpf).stripped.to_s,
-            birth: fatura.pessoa.nascimento&.strftime,
             phone_number: fatura.pessoa.telefone1.gsub(/\s+/, ""),
             address: {
               street: fatura.pessoa.logradouro.nome,
@@ -57,6 +54,35 @@ class GerencianetClient
       }
     }
 
+    body.deep_merge!(
+      if fatura.pessoa.pessoa_fisica?
+        {
+          payment: {
+            banking_billet: {
+              customer: {
+                name: fatura.pessoa.nome.strip,
+                cpf: CPF.new(fatura.pessoa.cpf).stripped.to_s,
+                birth: fatura.pessoa.nascimento&.strftime,
+              }
+            }
+          }
+        }
+      else
+        {
+          payment: {
+            banking_billet: {
+              customer: {
+                juridical_person: {
+                  corporate_name: fatura.pessoa.nome.strip,
+                  cnpj: CNPJ.new(fatura.pessoa.cnpj).stripped.to_s
+                }
+              }
+            }
+          }
+        }
+      end
+    )
+
     response = cliente.create_charge_onestep(body: body)
     return unless response['code'] == 200
     data = response['data']
@@ -70,7 +96,7 @@ class GerencianetClient
     )
   end
 
-  def self.receber_notificacao(notificacao)
+  def self.cliente
     perfil = PagamentoPerfil.find_by(banco: 364)
     cliente = Gerencianet.new(
       {
@@ -79,11 +105,14 @@ class GerencianetClient
         sandbox: ENV['RAILS_ENV'] != 'production'
       }
     )
+  end
+
+  def self.receber_notificacao(notificacao)
     params = {
       token: notificacao
     }
-     
-    cliente.get_notification(params: params)
+
+    self.cliente.get_notification(params: params)
   end
 
   def self.processar_webhook(notificacao)
@@ -107,5 +136,34 @@ class GerencianetClient
       juros_recebidos: juros,
       meio_liquidacao: :RetornoBancario
     )
+  end
+
+  def pessoa_fisica_attributes
+    {
+      payment: {
+        banking_billet: {
+          customer: {
+            name: @fatura.pessoa.nome.strip,
+            cpf: CPF.new(@fatura.pessoa.cpf).stripped.to_s,
+            birth: @fatura.pessoa.nascimento&.strftime,
+          }
+        }
+      }
+    }
+  end
+
+  def pessoa_juridica_attributes
+    {
+      payment: {
+        banking_billet: {
+          customer: {
+            juridical_person: {
+              corporate_name: @fatura.pessoa.nome.strip,
+              cnpj: CNPJ.new(@fatura.pessoa.cpf).stripped.to_s
+            }
+          }
+        }
+      }
+    }
   end
 end

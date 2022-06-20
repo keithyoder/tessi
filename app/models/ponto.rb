@@ -4,9 +4,9 @@ require 'snmp'
 
 class Ponto < ApplicationRecord
   belongs_to :servidor
-  has_many :conexoes
-  has_many :ip_redes
-  has_many :redes, class_name: 'FibraRede'
+  has_many :conexoes, dependent: :restrict_with_exception
+  has_many :ip_redes, dependent: :restrict_with_exception
+  has_many :redes, class_name: 'FibraRede', dependent: :restrict_with_exception
   has_many :caixas, through: :redes, source: :fibra_caixas
   has_many :autenticacoes, through: :conexoes, source: :autenticacoes
   scope :ativo, -> { joins(:servidor).where('servidores.ativo') }
@@ -39,12 +39,22 @@ class Ponto < ApplicationRecord
   rescue StandardError
   end
 
+  SNMP_CAMPOS = {
+    uptime: 'SNMPv2-MIB::sysUpTime.0',
+    ssid: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.2.1',
+    frequencia: 'SNMPv2-SMI::enterprises.41112.1.4.1.1.4.1',
+    canal_tamanho: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.14.1',
+    conectados: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.15.1',
+    qualidade_airmax: 'SNMPv2-SMI::enterprises.41112.1.4.6.1.3.1',
+    station_ccq: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.7.1'
+  }.freeze
+
   def to_csv
     attributes = %i[id nome ip sistema tecnologia]
     CSV.generate(headers: true) do |csv|
       csv << attributes
 
-      all.each do |estado|
+      all.find_each do |estado|
         csv << attributes.map { |attr| estado.send(attr) }
       end
     end
@@ -55,20 +65,11 @@ class Ponto < ApplicationRecord
   end
 
   def snmp
-    campos = {
-      uptime: 'SNMPv2-MIB::sysUpTime.0',
-      ssid: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.2.1',
-      frequencia: 'SNMPv2-SMI::enterprises.41112.1.4.1.1.4.1',
-      canal_tamanho: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.14.1',
-      conectados: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.15.1',
-      qualidade_airmax: 'SNMPv2-SMI::enterprises.41112.1.4.6.1.3.1',
-      station_ccq: 'SNMPv2-SMI::enterprises.41112.1.4.5.1.7.1'
-    }
     snmp_manager do |manager|
-      response = manager.get(campos.values)
+      response = manager.get(SNMP_CAMPOS.values)
       result = {}
       response.each_varbind do |vb|
-        result.merge!(campos.key(vb.name.to_s) => vb.value)
+        result.merge!(SNMP_CAMPOS.key(vb.name.to_s) => vb.value)
       end
       result
     end
