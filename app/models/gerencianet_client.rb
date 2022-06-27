@@ -140,13 +140,15 @@ class GerencianetClient
         meio_liquidacao: :RetornoBancario
       )
     elsif registro
+      fatura = Fatura.find(registro['custom_id'].to_i)
+      return if fatura.registro.present?
+
       perfil = PagamentoPerfil.find_by(banco: 364)
       retorno = Retorno.create(
         pagamento_perfil: perfil,
         data: evento.created_at.to_date,
         sequencia: evento.id
       )
-      fatura = Fatura.find(registro['custom_id'].to_i)
       if fatura.registro_webhook.blank?
         fatura.update(registro_id: retorno.id)
       end
