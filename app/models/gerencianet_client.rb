@@ -115,27 +115,33 @@ class GerencianetClient
     self.cliente.get_notification(params: params)
   end
 
-  def self.processar_webhook(notificacao)
-    payload = self.receber_notificacao(notificacao)
+  def self.processar_webhook(evento)
+    payload = self.receber_notificacao(evento.notificacao)
     return unless payload['code'] == 200
 
     puts payload
     pago = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'paid' }
-    return unless pago
+    registro = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'waiting' }
+    return unless pago || registro
 
     fatura = Fatura.find(pago['custom_id'].to_i)
-    valor_pago = pago['value']
-    desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor)
-    juros = (fatura.valor - valor_pago if valor_pago > fatura.valor)
+    if pago
+      valor_pago = pago['value']
+      desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor)
+      juros = (fatura.valor - valor_pago if valor_pago > fatura.valor)
 
-    
-    fatura.update(
-      liquidacao: pago['received_by_bank_at'],
-      valor_liquidacao: valor_pago,
-      desconto_concedido: desconto,
-      juros_recebidos: juros,
-      meio_liquidacao: :RetornoBancario
-    )
+      fatura.update(
+        liquidacao: pago['received_by_bank_at'],
+        valor_liquidacao: valor_pago,
+        desconto_concedido: desconto,
+        juros_recebidos: juros,
+        meio_liquidacao: :RetornoBancario
+      )
+    elsif registro
+      if fatura.registro_webhook.blank?
+        fatura.update(registro_id: evento.id)
+      end
+    end
   end
 
   def pessoa_fisica_attributes
