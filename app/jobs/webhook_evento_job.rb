@@ -4,7 +4,7 @@ class WebhookEventoJob < ApplicationJob
     queue_as :default
   
     def perform(evento)
-      case evento.tipo
+      case evento.webhook.tipo
       when :gerencianet
         GerencianetClient.processar_webhook(evento)
       end
