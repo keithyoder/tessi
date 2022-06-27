@@ -117,7 +117,7 @@ class GerencianetClient
 
   def self.processar_webhook(evento)
     return unless evento.processed_at.blank?
-    
+
     payload = self.receber_notificacao(evento.notificacao)
     return unless payload['code'] == 200
 
@@ -151,6 +151,7 @@ class GerencianetClient
         fatura.update(registro_id: retorno.id)
       end
     end
+    evento.update(processed_at: DateTime.now)
   end
 
   def pessoa_fisica_attributes
