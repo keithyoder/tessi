@@ -116,6 +116,8 @@ class GerencianetClient
   end
 
   def self.processar_webhook(evento)
+    return unless evento.processed_at.blank?
+    
     payload = self.receber_notificacao(evento.notificacao)
     return unless payload['code'] == 200
 
@@ -138,9 +140,15 @@ class GerencianetClient
         meio_liquidacao: :RetornoBancario
       )
     elsif registro
+      perfil = PagamentoPerfil.find_by(banco: 364)
+      retorno = Retorno.create(
+        pagamento_perfil: perfil,
+        data: evento.created_at.to_date,
+        sequencia: evento.id
+      )
       fatura = Fatura.find(registro['custom_id'].to_i)
       if fatura.registro_webhook.blank?
-        fatura.update(registro_id: evento.id)
+        fatura.update(registro_id: retorno.id)
       end
     end
   end
