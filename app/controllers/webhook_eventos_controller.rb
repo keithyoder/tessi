@@ -10,7 +10,7 @@ class WebhookEventosController < ApplicationController
     @event = WebhookEvento.new(webhook: @webhook, body: payload, headers: filtered_headers)
 
     if @event.save #&& EventWorker.perform_async(@event.id)
-      head :no_content
+      head :accepted
     else
       render json: { status: 404, error: 'generic error message that makes people mad' }, status: :bad_request
     end
