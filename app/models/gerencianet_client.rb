@@ -124,8 +124,8 @@ class GerencianetClient
     registro = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'waiting' }
     return unless pago || registro
 
-    fatura = Fatura.find(pago['custom_id'].to_i)
     if pago
+      fatura = Fatura.find(pago['custom_id'].to_i)
       valor_pago = pago['value']
       desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor)
       juros = (fatura.valor - valor_pago if valor_pago > fatura.valor)
@@ -138,6 +138,7 @@ class GerencianetClient
         meio_liquidacao: :RetornoBancario
       )
     elsif registro
+      fatura = Fatura.find(registro['custom_id'].to_i)
       if fatura.registro_webhook.blank?
         fatura.update(registro_id: evento.id)
       end
