@@ -7,7 +7,7 @@ class RetornosController < ApplicationController
   # GET /retornos
   # GET /retornos.json
   def index
-    @q = Retorno.ransack(params[:q])
+    @q = Retorno.joins(:pagamento_perfil).where.not(pagamento_perfis: {banco: 364}).ransack(params[:q])
     @q.sorts = 'data desc'
     @retornos = @q.result.page params[:page]
   end

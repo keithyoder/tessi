@@ -6,7 +6,7 @@ class WebhookEventoJob < ApplicationJob
     def perform(evento)
       case evento.tipo
       when :gerencianet
-        
+        GerencianetClient.processar_webhook(evento)
       end
     end
   end
