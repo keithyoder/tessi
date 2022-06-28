@@ -141,9 +141,9 @@ class GerencianetClient
         meio_liquidacao: :RetornoBancario
       )
     elsif cancelado
-      fatura = Fatura.find(cancelado['custom_id'].to_i)
+      fatura = Fatura.find_by_id(cancelado['custom_id'].to_i)
 
-      fatura.update(data_cancelamento: evento.created_at.to_date) if fatura.data_cancelamento.blank?
+      fatura.update(data_cancelamento: evento.created_at.to_date) if fatura&.data_cancelamento.blank?
     elsif registro
       fatura = Fatura.find(registro['custom_id'].to_i)
       return if fatura.registro.present?
