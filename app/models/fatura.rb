@@ -161,7 +161,7 @@ class Fatura < ApplicationRecord
       especie_documento: 'DS',
       nosso_numero: nossonumero.to_s.rjust(7, '0'),
       data_vencimento: vencimento,
-      instrucao1: "Desconto de #{number_to_currency(contrato.plano.desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
+      instrucao1: "Desconto de #{number_to_currency(desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
       instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
       instrucao3: "Período de referência: #{I18n.l(periodo_inicio)} - #{I18n.l(periodo_fim)}",
       instrucao4: "S.A.C #{Setting.telefone} - sac.tessi.com.br",
@@ -220,6 +220,10 @@ class Fatura < ApplicationRecord
       end
   end
 
+  def desconto
+    plano.desconto * fracao_de_mes
+  end
+
   private
 
   def criar_cobranca
@@ -241,8 +245,8 @@ class Fatura < ApplicationRecord
       cep_sacado: logradouro.cep,
       cidade_sacado: cidade.nome,
       uf_sacado: estado.sigla,
-      valor_desconto: plano.desconto,
-      data_desconto: plano.desconto.positive? ? vencimento : nil,
+      valor_desconto: desconto,
+      data_desconto: desconto.positive? ? vencimento : nil,
       codigo_multa: '4',
       percentual_multa: Setting.multa.to_f * 100,
       valor_mora: (Setting.juros.to_f * valor / 30).round(2)
@@ -279,6 +283,16 @@ class Fatura < ApplicationRecord
 
   def mes_referencia(date)
     date.strftime('%Y-%m')
+  end
+
+  def fracao_de_mes
+    fim = periodo_fim + 1.day
+    dias_no_mes = if fim.end_of_month == fim
+                    [fim - periodo_inicio, 31].min
+                  else
+                    fim - (fim - 1.month)
+                  end
+    (fim - periodo_inicio).to_f / dias_no_mes
   end
 
 end
