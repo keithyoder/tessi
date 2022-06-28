@@ -43,7 +43,7 @@ class GerencianetClient
           },
           conditional_discount: {
             type: "currency",
-            value: (fatura.plano.desconto * 100).to_i,
+            value: (fatura.desconto * 100).to_i,
             until_date: fatura.vencimento,
           },
           configurations: {
@@ -124,6 +124,7 @@ class GerencianetClient
     puts payload
     pago = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'paid' }
     registro = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'waiting' }
+    cancelado = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'canceled' }
     return unless pago || registro
 
     if pago
@@ -139,6 +140,10 @@ class GerencianetClient
         juros_recebidos: juros,
         meio_liquidacao: :RetornoBancario
       )
+    elsif cancelado
+      fatura = Fatura.find(cancelado['custom_id'].to_i)
+
+      fatura.update(data_cancelamento: evento.created_at.to_date) if fatura.data_cancelamento.blank?
     elsif registro
       fatura = Fatura.find(registro['custom_id'].to_i)
       return if fatura.registro.present?
@@ -149,7 +154,7 @@ class GerencianetClient
         data: evento.created_at.to_date,
         sequencia: evento.id
       )
-      if fatura.registro_webhook.blank?
+      if fatura.registro_id.blank?
         fatura.update(registro_id: retorno.id)
       end
     end
