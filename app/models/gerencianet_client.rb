@@ -163,6 +163,27 @@ class GerencianetClient
     evento.update(processed_at: DateTime.now)
   end
 
+  def self.alterar_vencimento(fatura)
+    return unless fatura.pagamento_perfil.banco == 364 && fatura.pix.blank?
+
+    cliente = Gerencianet.new(
+      {
+        client_id: fatura.pagamento_perfil.client_id,
+        client_secret: fatura.pagamento_perfil.client_secret,
+        sandbox: ENV['RAILS_ENV'] != 'production'
+      }
+    )
+
+    params = {
+      id: fatura.id_externo
+    }
+    
+    body = {
+      expire_at: fatura.vencimento.to_s
+    }
+    cliente.update_billet(params: params, body: body)
+  end
+
   def pessoa_fisica_attributes
     {
       payment: {
