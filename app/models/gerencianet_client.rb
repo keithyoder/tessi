@@ -145,8 +145,12 @@ class GerencianetClient
     elsif cancelado
       fatura = Fatura.find_by_id(cancelado['custom_id'].to_i)
 
-      if fatura.present? && fatura.data_cancelamento.blank?
-        fatura.update(data_cancelamento: evento.created_at.to_date)
+      if fatura.present?
+        if fatura.cancelamento.blank?
+          fatura.update(data_cancelamento: evento.created_at.to_date)
+        else
+          fatura.destroy
+        end
       end
     elsif registro
       fatura = Fatura.find(registro['custom_id'].to_i)
