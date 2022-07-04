@@ -172,6 +172,9 @@ class Contrato < ApplicationRecord
     faturas.where(liquidacao: nil, registro: nil)
            .where('periodo_inicio >= ?', cancelamento)
            .each(&:destroy)
+    faturas.where(liquidacao: nil).where.not(registro: nil)
+           .where('periodo_inicio >= ?', cancelamento)
+           .each { |f| f.update(cancelamento: DateTime.now) }
     parcial = faturas.where(liquidacao: nil, registro: nil)
                      .where('? between periodo_inicio and periodo_fim', cancelamento)
     parcial.each { |fatura| fatura.update!(valor: fatura.valor * fracao_de_mes(fatura.periodo_inicio, cancelamento)) }
