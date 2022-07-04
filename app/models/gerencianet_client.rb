@@ -116,9 +116,11 @@ class GerencianetClient
   end
 
   def self.processar_webhook(evento)
-    return unless evento.processed_at.blank?
+    Rails.logger.info "Inciando processamento"
+    return if evento.processed_at.present?
 
     payload = self.receber_notificacao(evento.notificacao)
+    Rails.logger.info "Notificacao recebida"
     return unless payload['code'] == 200
 
     puts payload
