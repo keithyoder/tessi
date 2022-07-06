@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GerencianetClient
   require 'gerencianet'
 
@@ -23,14 +25,14 @@ class GerencianetClient
       ],
       metadata: {
         custom_id: fatura.id.to_s,
-        notification_url: 'https://erp.tessi.com.br/webhooks/'+Webhook.find_by(tipo: :gerencianet).token
+        notification_url: "https://erp.tessi.com.br/webhooks/#{Webhook.find_by(tipo: :gerencianet).token}"
       },
       payment: {
         banking_billet: {
           expire_at: fatura.vencimento.strftime,
           customer: {
-            #email: fatura.pessoa.email,
-            phone_number: fatura.pessoa.telefone1.gsub(/\s+/, ""),
+            # email: fatura.pessoa.email,
+            phone_number: fatura.pessoa.telefone1.gsub(/\s+/, ''),
             address: {
               street: fatura.pessoa.logradouro.nome,
               number: fatura.pessoa.numero,
@@ -44,17 +46,17 @@ class GerencianetClient
           configurations: {
             fine: 200,
             interest: 33
-          },
+          }
         }
       }
     }
 
-    if fatura.desconto > 0
+    if fatura.desconto.positive?
       body.deep_merge!(
         conditional_discount: {
-          type: "currency",
+          type: 'currency',
           value: (fatura.desconto * 100).to_i,
-          until_date: fatura.vencimento,
+          until_date: fatura.vencimento
         }
       )
     end
@@ -67,7 +69,7 @@ class GerencianetClient
               customer: {
                 name: fatura.pessoa.nome.strip,
                 cpf: CPF.new(fatura.pessoa.cpf).stripped.to_s,
-                birth: fatura.pessoa.nascimento&.strftime,
+                birth: fatura.pessoa.nascimento&.strftime
               }
             }
           }
@@ -90,6 +92,7 @@ class GerencianetClient
 
     response = cliente.create_charge_onestep(body: body)
     return unless response['code'] == 200
+
     data = response['data']
     nossonumero = data['barcode'][25, 11].gsub(/\D/, '')
     fatura.update(
@@ -117,22 +120,24 @@ class GerencianetClient
       token: notificacao
     }
 
-    self.cliente.get_notification(params: params)
+    cliente.get_notification(params: params)
   end
 
   def self.processar_webhook(evento)
-    Rails.logger.info "Inciando processamento"
+    Rails.logger.info 'Inciando processamento'
     return if evento.processed_at.present?
 
-    payload = self.receber_notificacao(evento.notificacao)
-    Rails.logger.info "Notificacao recebida"
+    payload = receber_notificacao(evento.notificacao)
+    Rails.logger.info 'Notificacao recebida'
     return unless payload['code'] == 200
 
-    puts payload
+    Rails.logger.debug payload
     pago = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'paid' }
     registro = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'waiting' }
-    cancelado = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'canceled' }
-    return unless pago || registro
+    cancelado = payload['data'].find do |evento|
+      evento['type'] == 'charge' && evento['status']['current'] == 'canceled'
+    end
+    return unless pago || registro || cancelado
 
     if pago
       fatura = Fatura.find(pago['custom_id'].to_i)
@@ -142,13 +147,13 @@ class GerencianetClient
 
       fatura.update(
         liquidacao: pago['received_by_bank_at'],
-        valor_liquidacao: valor_pago,
-        desconto_concedido: desconto,
-        juros_recebidos: juros,
+        valor_liquidacao: valor_pago / 100,
+        desconto_concedido: desconto / 100,
+        juros_recebidos: juros / 100,
         meio_liquidacao: :RetornoBancario
       )
     elsif cancelado
-      fatura = Fatura.find_by_id(cancelado['custom_id'].to_i)
+      fatura = Fatura.find_by(id: cancelado['custom_id'].to_i)
 
       if fatura.present?
         if fatura.cancelamento.blank?
@@ -167,9 +172,7 @@ class GerencianetClient
         data: evento.created_at.to_date,
         sequencia: evento.id
       )
-      if fatura.registro_id.blank?
-        fatura.update(registro_id: retorno.id)
-      end
+      fatura.update(registro_id: retorno.id) if fatura.registro_id.blank?
     end
     evento.update(processed_at: DateTime.now)
   end
@@ -188,7 +191,7 @@ class GerencianetClient
     params = {
       id: fatura.id_externo
     }
-    
+
     body = {
       expire_at: fatura.vencimento.to_s
     }
@@ -202,7 +205,7 @@ class GerencianetClient
           customer: {
             name: @fatura.pessoa.nome.strip,
             cpf: CPF.new(@fatura.pessoa.cpf).stripped.to_s,
-            birth: @fatura.pessoa.nascimento&.strftime,
+            birth: @fatura.pessoa.nascimento&.strftime
           }
         }
       }
