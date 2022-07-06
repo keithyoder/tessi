@@ -131,12 +131,10 @@ class GerencianetClient
     Rails.logger.info 'Notificacao recebida'
     return unless payload['code'] == 200
 
-    Rails.logger.debug payload
-    pago = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'paid' }
-    registro = payload['data'].find { |evento| evento['type'] == 'charge' && evento['status']['current'] == 'waiting' }
-    cancelado = payload['data'].find do |evento|
-      evento['type'] == 'charge' && evento['status']['current'] == 'canceled'
-    end
+    Rails.logger.info payload
+    pago = payload['data'].find { |e| e['type'] == 'charge' && e['status']['current'] == 'paid' }
+    registro = payload['data'].find { |e| e['type'] == 'charge' && e['status']['current'] == 'waiting' }
+    cancelado = payload['data'].find { |e| e['type'] == 'charge' && e['status']['current'] == 'canceled' }
     Rails.logger.info 'Processando pagamento' if pago 
     Rails.logger.info 'Processando registro' if registro
     Rails.logger.info 'Processando cancelamento' if cancelado
