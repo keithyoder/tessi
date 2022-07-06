@@ -137,6 +137,10 @@ class GerencianetClient
     cancelado = payload['data'].find do |evento|
       evento['type'] == 'charge' && evento['status']['current'] == 'canceled'
     end
+    Rails.logger.info 'Processando pagamento' if pago? 
+    Rails.logger.info 'Processando registro' if registro? 
+    Rails.logger.info 'Processando cancelamento' if cancelado? 
+
     return unless pago || registro || cancelado
 
     if pago
