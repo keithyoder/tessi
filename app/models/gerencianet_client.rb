@@ -41,11 +41,6 @@ class GerencianetClient
               state: fatura.pessoa.estado.sigla
             }
           },
-          conditional_discount: {
-            type: "currency",
-            value: (fatura.desconto * 100).to_i,
-            until_date: fatura.vencimento,
-          },
           configurations: {
             fine: 200,
             interest: 33
@@ -53,6 +48,16 @@ class GerencianetClient
         }
       }
     }
+
+    if fatura.desconto > 0
+      body.deep_merge!(
+        conditional_discount: {
+          type: "currency",
+          value: (fatura.desconto * 100).to_i,
+          until_date: fatura.vencimento,
+        }
+      )
+    end
 
     body.deep_merge!(
       if fatura.pessoa.pessoa_fisica?
