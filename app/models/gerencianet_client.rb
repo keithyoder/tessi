@@ -91,7 +91,10 @@ class GerencianetClient
     )
 
     response = cliente.create_charge_onestep(body: body)
-    return unless response['code'] == 200
+    unless response['code'] == 200
+      Rails.logger.error "Erro ao criar boleto #{response.to_s}"
+      return
+    end
 
     data = response['data']
     nossonumero = data['barcode'][25, 11].gsub(/\D/, '')
@@ -144,14 +147,14 @@ class GerencianetClient
     if pago
       fatura = Fatura.find(pago['custom_id'].to_i)
       valor_pago = pago['value']
-      desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor)
-      juros = (fatura.valor - valor_pago if valor_pago > fatura.valor)
+      desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor) || 0
+      juros = (fatura.valor - valor_pago if valor_pago > fatura.valor) || 0
 
       fatura.update(
         liquidacao: pago['received_by_bank_at'],
-        valor_liquidacao: valor_pago / 100,
-        desconto_concedido: desconto / 100,
-        juros_recebidos: juros / 100,
+        valor_liquidacao: valor_pago / 100.0,
+        desconto_concedido: desconto / 100.0,
+        juros_recebidos: juros / 100.0,
         meio_liquidacao: :RetornoBancario
       )
     elsif cancelado
