@@ -203,6 +203,24 @@ class GerencianetClient
     cliente.update_billet(params: params, body: body)
   end
 
+  def self.baixar_boleto(fatura)
+    return unless fatura.pagamento_perfil.banco == 364 && fatura.id_externo.present?
+
+    cliente = Gerencianet.new(
+      {
+        client_id: fatura.pagamento_perfil.client_id,
+        client_secret: fatura.pagamento_perfil.client_secret,
+        sandbox: ENV['RAILS_ENV'] != 'production'
+      }
+    )
+
+    params = {
+      id: fatura.id_externo
+    }
+
+    cliente.settle_charge(params: params)
+  end
+
   def pessoa_fisica_attributes
     {
       payment: {
