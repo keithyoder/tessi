@@ -138,11 +138,13 @@ class GerencianetClient
     pago = payload['data'].find { |e| e['type'] == 'charge' && e['status']['current'] == 'paid' }
     registro = payload['data'].find { |e| e['type'] == 'charge' && e['status']['current'] == 'waiting' }
     cancelado = payload['data'].find { |e| e['type'] == 'charge' && e['status']['current'] == 'canceled' }
+    baixado = payload['data'].find { |e| e['type'] == 'charge' && e['status']['current'] == 'settled' }
     Rails.logger.info 'Processando pagamento' if pago 
     Rails.logger.info 'Processando registro' if registro
     Rails.logger.info 'Processando cancelamento' if cancelado
+    Rails.logger.info 'Processando baixa manual' if baixado
 
-    return unless pago || registro || cancelado
+    return unless pago || registro || cancelado || baixado
 
     if pago
       fatura = Fatura.find(pago['custom_id'].to_i)
@@ -157,6 +159,17 @@ class GerencianetClient
         juros_recebidos: juros / 100.0,
         meio_liquidacao: :RetornoBancario
       )
+    elsif baixado
+      fatura = Fatura.find(baixado['custom_id'].to_i)
+      return if fatura.baixa.present?
+
+      perfil = PagamentoPerfil.find_by(banco: 364)
+      retorno = Retorno.create(
+        pagamento_perfil: perfil,
+        data: evento.created_at.to_date,
+        sequencia: evento.id
+      )
+      fatura.update(baixa_id: retorno.id)
     elsif cancelado
       fatura = Fatura.find_by(id: cancelado['custom_id'].to_i)
 
