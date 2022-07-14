@@ -53,10 +53,16 @@ class GerencianetClient
 
     if fatura.desconto.positive?
       body.deep_merge!(
-        conditional_discount: {
-          type: 'currency',
-          value: (fatura.desconto * 100).to_i,
-          until_date: fatura.vencimento
+        {
+          payment: {
+            banking_billet: {
+              conditional_discount: {
+                type: 'currency',
+                value: (fatura.desconto * 100).to_i,
+                until_date: fatura.vencimento
+              }
+            }
+          }
         }
       )
     end
