@@ -7,9 +7,9 @@ class WebhookEventosController < ApplicationController
   before_action :validate_token
 
   def create
-    @event = WebhookEvento.new(webhook: @webhook, body: payload, headers: filtered_headers)
+    @evento = WebhookEvento.new(webhook: @webhook, body: payload, headers: filtered_headers)
 
-    if @event.save && WebhookEventoJob.perform_later(@event)
+    if @evento.save && WebhookEventoJob.perform_later(@evento.id)
       render json: { status: 202 }
     else
       render json: { status: 404, error: 'generic error message that makes people mad' }, status: :bad_request
