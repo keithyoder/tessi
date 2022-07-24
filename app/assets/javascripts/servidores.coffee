@@ -2,6 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+int2ip = (ipInt) ->
+  (ipInt >>> 24) + '.' + (ipInt >> 16 & 255) + '.' + (ipInt >> 8 & 255) + '.' + (ipInt & 255)
+
 getBounds = (conexoes) ->
   bounds = new google.maps.LatLngBounds()
   for conexao in conexoes
@@ -16,7 +19,7 @@ infoWindow = (conexao) ->
   infowindow = new google.maps.InfoWindow({
     content: "<h4>#{conexao.pessoa.nome}</h4>" +
     "<div id='bodyContent'>#{conexao.logradouro.nome}, #{conexao.pessoa.numero} - #{conexao.bairro.nome}<br>"+
-    "#{conexao.ip}</div>"
+    "#{conexao.ponto.nome} - #{int2ip(conexao.ip.addr)}</div>"
   })
 
 criarMarker = (map, conexao) ->

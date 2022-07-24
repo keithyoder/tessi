@@ -60,7 +60,10 @@ class ServidoresController < ApplicationController
   def edit; end
 
   def mapa
-    @conexoes = @servidor.conexoes.where.not(latitude: nil).to_json(include: %i[pessoa logradouro bairro])
+    @conexoes = @servidor.conexoes
+                         .includes(:pessoa, :logradouro, :bairro, :ponto)
+                         .where.not(latitude: nil)
+                         .to_json(include: %i[pessoa logradouro bairro ponto])
   end
 
   # POST /servidores
