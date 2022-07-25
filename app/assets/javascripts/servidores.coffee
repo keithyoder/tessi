@@ -17,7 +17,7 @@ getBounds = (conexoes) ->
 
 infoWindow = (conexao) ->
   infowindow = new google.maps.InfoWindow({
-    content: "<h4>#{conexao.pessoa.nome}</h4>" +
+    content: "<h4><a href=/conexoes/#{conexao.id}>#{conexao.pessoa.nome}</a></h4>" +
     "<div id='bodyContent'>#{conexao.logradouro.nome}, #{conexao.pessoa.numero} - #{conexao.bairro.nome}<br>"+
     "#{conexao.ponto.nome} - #{int2ip(conexao.ip.addr)}</div>"
   })
