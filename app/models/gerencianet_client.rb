@@ -158,12 +158,18 @@ class GerencianetClient
       desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor) || 0
       juros = (fatura.valor - valor_pago if valor_pago > fatura.valor) || 0
 
+      retorno = Retorno.create(
+        pagamento_perfil: perfil,
+        data: evento.created_at.to_date,
+        sequencia: evento.id
+      )
       fatura.update(
         liquidacao: pago['received_by_bank_at'],
         valor_liquidacao: valor_pago / 100.0,
         desconto_concedido: desconto / 100.0,
         juros_recebidos: juros / 100.0,
-        meio_liquidacao: :RetornoBancario
+        meio_liquidacao: :RetornoBancario,
+        retorno_id: retorno.id
       )
     elsif baixado
       fatura = Fatura.find(baixado['custom_id'].to_i)

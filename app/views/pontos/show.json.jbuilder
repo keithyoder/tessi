@@ -1,1 +1,3 @@
-json.partial! "pontos/ponto", ponto: @ponto
+# frozen_string_literal: true
+
+json.partial! 'pontos/ponto', ponto: @ponto

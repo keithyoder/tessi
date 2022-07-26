@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class EquipamentosControllerTest < ActionDispatch::IntegrationTest
@@ -5,40 +7,44 @@ class EquipamentosControllerTest < ActionDispatch::IntegrationTest
     @equipamento = equipamentos(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get equipamentos_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_equipamento_url
     assert_response :success
   end
 
-  test "should create equipamento" do
+  test 'should create equipamento' do
     assert_difference('Equipamento.count') do
-      post equipamentos_url, params: { equipamento: { fabricante: @equipamento.fabricante, modelo: @equipamento.modelo, tipo: @equipamento.tipo } }
+      post equipamentos_url,
+           params: { equipamento: { fabricante: @equipamento.fabricante, modelo: @equipamento.modelo,
+                                    tipo: @equipamento.tipo } }
     end
 
     assert_redirected_to equipamento_url(Equipamento.last)
   end
 
-  test "should show equipamento" do
+  test 'should show equipamento' do
     get equipamento_url(@equipamento)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_equipamento_url(@equipamento)
     assert_response :success
   end
 
-  test "should update equipamento" do
-    patch equipamento_url(@equipamento), params: { equipamento: { fabricante: @equipamento.fabricante, modelo: @equipamento.modelo, tipo: @equipamento.tipo } }
+  test 'should update equipamento' do
+    patch equipamento_url(@equipamento),
+          params: { equipamento: { fabricante: @equipamento.fabricante, modelo: @equipamento.modelo,
+                                   tipo: @equipamento.tipo } }
     assert_redirected_to equipamento_url(@equipamento)
   end
 
-  test "should destroy equipamento" do
+  test 'should destroy equipamento' do
     assert_difference('Equipamento.count', -1) do
       delete equipamento_url(@equipamento)
     end

@@ -1,1 +1,3 @@
-json.partial! "estados/estado", estado: @estado
+# frozen_string_literal: true
+
+json.partial! 'estados/estado', estado: @estado

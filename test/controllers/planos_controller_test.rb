@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PlanosControllerTest < ActionDispatch::IntegrationTest
@@ -5,40 +7,44 @@ class PlanosControllerTest < ActionDispatch::IntegrationTest
     @plano = planos(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get planos_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_plano_url
     assert_response :success
   end
 
-  test "should create plano" do
+  test 'should create plano' do
     assert_difference('Plano.count') do
-      post planos_url, params: { plano: { burst: @plano.burst, download: @plano.download, mensalidade: @plano.mensalidade, nome: @plano.nome, upload: @plano.upload } }
+      post planos_url,
+           params: { plano: { burst: @plano.burst, download: @plano.download, mensalidade: @plano.mensalidade, nome: @plano.nome,
+                              upload: @plano.upload } }
     end
 
     assert_redirected_to plano_url(Plano.last)
   end
 
-  test "should show plano" do
+  test 'should show plano' do
     get plano_url(@plano)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_plano_url(@plano)
     assert_response :success
   end
 
-  test "should update plano" do
-    patch plano_url(@plano), params: { plano: { burst: @plano.burst, download: @plano.download, mensalidade: @plano.mensalidade, nome: @plano.nome, upload: @plano.upload } }
+  test 'should update plano' do
+    patch plano_url(@plano),
+          params: { plano: { burst: @plano.burst, download: @plano.download, mensalidade: @plano.mensalidade, nome: @plano.nome,
+                             upload: @plano.upload } }
     assert_redirected_to plano_url(@plano)
   end
 
-  test "should destroy plano" do
+  test 'should destroy plano' do
     assert_difference('Plano.count', -1) do
       delete plano_url(@plano)
     end

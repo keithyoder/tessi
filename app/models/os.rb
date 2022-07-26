@@ -16,7 +16,7 @@ class Os < ApplicationRecord
   scope :abertas, -> { where(fechamento: nil) }
   scope :fechadas, -> { where.not(fechamento: nil) }
   scope :por_responsavel, ->(responsavel) { where(responsavel: responsavel) }
-  scope :cidade, ->(cidade_id) { joins(:pessoa, :logradouro, :bairro, :cidade).where(cidades: {id: cidade_id}) }
+  scope :cidade, ->(cidade_id) { joins(:pessoa, :logradouro, :bairro, :cidade).where(cidades: { id: cidade_id }) }
   validates :tipo, :descricao, presence: true
   validates :conexao, presence: true, if: :reparo?
 
@@ -27,5 +27,4 @@ class Os < ApplicationRecord
   def self.ransackable_scopes(_auth_object = nil)
     %i[abertas cidade]
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class CidadesControllerTest < ActionDispatch::IntegrationTest
@@ -5,17 +7,17 @@ class CidadesControllerTest < ActionDispatch::IntegrationTest
     @cidade = cidades(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get cidades_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_cidade_url
     assert_response :success
   end
 
-  test "should create cidade" do
+  test 'should create cidade' do
     assert_difference('Cidade.count') do
       post cidades_url, params: { cidade: { estado_id: @cidade.estado_id, ibge: @cidade.ibge, nome: @cidade.nome } }
     end
@@ -23,22 +25,23 @@ class CidadesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to cidade_url(Cidade.last)
   end
 
-  test "should show cidade" do
+  test 'should show cidade' do
     get cidade_url(@cidade)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_cidade_url(@cidade)
     assert_response :success
   end
 
-  test "should update cidade" do
-    patch cidade_url(@cidade), params: { cidade: { estado_id: @cidade.estado_id, ibge: @cidade.ibge, nome: @cidade.nome } }
+  test 'should update cidade' do
+    patch cidade_url(@cidade),
+          params: { cidade: { estado_id: @cidade.estado_id, ibge: @cidade.ibge, nome: @cidade.nome } }
     assert_redirected_to cidade_url(@cidade)
   end
 
-  test "should destroy cidade" do
+  test 'should destroy cidade' do
     assert_difference('Cidade.count', -1) do
       delete cidade_url(@cidade)
     end
