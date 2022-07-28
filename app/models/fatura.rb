@@ -225,7 +225,7 @@ class Fatura < ApplicationRecord
 
   def desconto
     #(plano.desconto * fracao_de_mes).round(2)
-    plano.desonto
+    plano.desconto
   end
 
   private
