@@ -154,11 +154,9 @@ class GerencianetClient
 
     if pago
       fatura = Fatura.find(pago['custom_id'].to_i)
-      valor_pago = pago['value']
+      valor_pago = pago['value'] / 100.0
       desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor) || 0
       juros = (fatura.valor - valor_pago if valor_pago > fatura.valor) || 0
-      Rails.logger.info "Valor pago #{valor_pago}"
-      Rails.logger.info "Valor fatura #{fatura.valor}"
       perfil = PagamentoPerfil.find_by(banco: 364)
 
       retorno = Retorno.create(
@@ -168,9 +166,9 @@ class GerencianetClient
       )
       fatura.update(
         liquidacao: pago['received_by_bank_at'],
-        valor_liquidacao: valor_pago / 100.0,
-        desconto_concedido: desconto / 100.0,
-        juros_recebidos: juros / 100.0,
+        valor_liquidacao: valor_pago,
+        desconto_concedido: desconto,
+        juros_recebidos: juros,
         meio_liquidacao: :RetornoBancario,
         retorno_id: retorno.id
       )
