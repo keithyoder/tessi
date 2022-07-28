@@ -164,7 +164,7 @@ class Contrato < ApplicationRecord
 
   def after_save
     verificar_cancelamento if saved_change_to_cancelamento?
-    alterar_forma_pagamento if saved_change_to_pagamento_perfil_id?
+    alterar_forma_pagamento if saved_change_to_pagamento_perfil_id? || saved_change_to_dia_vencimento?
   end
 
   def verificar_cancelamento
