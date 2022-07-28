@@ -157,6 +157,9 @@ class GerencianetClient
       valor_pago = pago['value']
       desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor) || 0
       juros = (fatura.valor - valor_pago if valor_pago > fatura.valor) || 0
+      Rails.logger.info "Valor pago #{valor_pago}"
+      Rails.logger.info "Valor fatura #{fatura.valor}"
+      perfil = PagamentoPerfil.find_by(banco: 364)
 
       retorno = Retorno.create(
         pagamento_perfil: perfil,
