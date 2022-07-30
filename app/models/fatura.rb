@@ -290,13 +290,18 @@ class Fatura < ApplicationRecord
   end
 
   def fracao_de_mes
-    fim = periodo_fim + 1.day
+    fim = if periodo_fim.end_of_month == periodo_fim
+            periodo_fim + 1.day
+          else
+            periodo_fim
+          end
     dias_no_mes = fim - (fim - 1.month)
-    if periodo_fim.end_of_month == periodo_fim
-      (periodo_fim - periodo_inicio).to_f / dias_no_mes
-    else
-      (fim - periodo_inicio).to_f / dias_no_mes
-    end
+    dias_no_periodo = if periodo_fim.end_of_month == periodo_fim
+                        (periodo_fim - periodo_inicio).to_f
+                      else
+                        (periodo_fim - periodo_inicio).to_f + 1
+                      end
+    dias_no_periodo / dias_no_mes
   end
 
 end
