@@ -46,7 +46,12 @@ class Fatura < ApplicationRecord
   }
 
   after_update do
-    contrato.atualizar_conexoes if saved_change_to_liquidacao?
+    if saved_change_to_liquidacao?
+      contrato.atualizar_conexoes
+      if pagamento_perfil.banco = 364 && baixar?
+        GerencianetBaixarBoletoJob.perform_later(id_externo)
+      end
+    end
     if saved_change_to_cancelamento? && pagamento_perfil.banco = 364
       GerencianetCancelarBoletoJob.perform_later(id_externo)
     end
