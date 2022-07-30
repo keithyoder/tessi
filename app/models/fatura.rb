@@ -224,8 +224,8 @@ class Fatura < ApplicationRecord
   end
 
   def desconto
-    #(plano.desconto * fracao_de_mes).round(2)
-    plano.desconto
+    (plano.desconto * fracao_de_mes).round(2)
+    #plano.desconto
   end
 
   private
@@ -290,13 +290,8 @@ class Fatura < ApplicationRecord
   end
 
   def fracao_de_mes
-    fim = periodo_fim + 1.day
-    dias_no_mes = if fim.end_of_month == fim
-                    [fim - periodo_inicio, 31].min
-                  else
-                    fim - (fim - 1.month)
-                  end
-    (fim - periodo_inicio).to_f / dias_no_mes
+    dias_no_mes = periodo_fim - (periodo_fim - 1.month)
+    (periodo_fim + 1.day - periodo_inicio).to_f / dias_no_mes
   end
 
 end

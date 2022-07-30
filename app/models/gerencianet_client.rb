@@ -155,7 +155,7 @@ class GerencianetClient
     if pago
       fatura = Fatura.find(pago['custom_id'].to_i)
       valor_pago = pago['value'] / 100.0
-      desconto = (fatura.valor - valor_pago if valor_pago < fatura.valor) || 0
+      desconto = (valor_pago - fatura.valor if valor_pago < fatura.valor) || 0
       juros = (fatura.valor - valor_pago if valor_pago > fatura.valor) || 0
       perfil = PagamentoPerfil.find_by(banco: 364)
 
