@@ -5,9 +5,15 @@
 int2ip = (ipInt) ->
   (ipInt >>> 24) + '.' + (ipInt >> 16 & 255) + '.' + (ipInt >> 8 & 255) + '.' + (ipInt & 255)
 
-getBounds = (conexoes) ->
+getBounds = (conectadas, desconectadas) ->
   bounds = new google.maps.LatLngBounds()
-  for conexao in conexoes
+  for conexao in conectadas
+    position = new google.maps.LatLng(
+      parseFloat(conexao.latitude),
+      parseFloat(conexao.longitude)
+    )
+    bounds.extend(position)
+  for conexao in desconectadas
     position = new google.maps.LatLng(
       parseFloat(conexao.latitude),
       parseFloat(conexao.longitude)
@@ -32,19 +38,20 @@ criarMarker = (map, conexao, conectada) ->
     label = 'D'
 
   marker = new (google.maps.Marker)(
-    position: position,
-    map: map,
+    position: position
+    map: map
     label: label
   )
   marker.addListener 'click', () =>
     infoWindow(conexao).open(map, marker)
 
 window.initMap = ->
-  conexoes = $('#map').data 'conexoes'
+  conectadas = $('#map').data 'conectadas'
+  desconectadas = $('#map').data 'desconectadas'
   map = new (google.maps.Map)(document.getElementById('map'))
-  map.fitBounds(getBounds(conexoes))
+  map.fitBounds(getBounds(conectadas, desconectadas))
   for conexao in conectadas
     criarMarker(map, conexao, true)
-  for conexao in deconectadas
+  for conexao in desconectadas
     criarMarker(map, conexao, false)
   return
