@@ -22,13 +22,19 @@ infoWindow = (conexao) ->
     "#{conexao.ponto.nome} - #{int2ip(conexao.ip.addr)}</div>"
   })
 
-criarMarker = (map, conexao) ->
+criarMarker = (map, conexao, conectada) ->
   position =
     lat: parseFloat(conexao.latitude)
     lng: parseFloat(conexao.longitude)
+  if conectada
+    label = ''
+  else
+    label = 'D'
+
   marker = new (google.maps.Marker)(
-    position: position
-    map: map
+    position: position,
+    map: map,
+    label: label
   )
   marker.addListener 'click', () =>
     infoWindow(conexao).open(map, marker)
@@ -37,6 +43,8 @@ window.initMap = ->
   conexoes = $('#map').data 'conexoes'
   map = new (google.maps.Map)(document.getElementById('map'))
   map.fitBounds(getBounds(conexoes))
-  for conexao in conexoes
-    criarMarker(map, conexao)
+  for conexao in conectadas
+    criarMarker(map, conexao, true)
+  for conexao in deconectadas
+    criarMarker(map, conexao, false)
   return
