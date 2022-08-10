@@ -190,13 +190,18 @@ class Contrato < ApplicationRecord
     dias_no_mes = if fim.end_of_month == fim
                     [fim - inicio, 31].min
                   else
-                    fim - (fim - 1.month)
+                    fim + 1.day - (fim + 1.day - 1.month)
                   end
     (fim - inicio).to_f / dias_no_mes
   end
 
   def proximo_mes(data)
-    data += 1.month
-    data.change(day: [dia_vencimento, data.end_of_month.day].min)
+    proximo = data + 1.month
+    proximo = proximo.change(day: [dia_vencimento, proximo.end_of_month.day].min)
+    if proximo - data < 10
+      proximo += 1.month
+      proximo = proximo.change(day: [dia_vencimento, proximo.end_of_month.day].min)
+    end
+    proximo
   end
 end
