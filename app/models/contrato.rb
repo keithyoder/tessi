@@ -186,7 +186,7 @@ class Contrato < ApplicationRecord
     renovar
   end
 
-  def fracao_de_mes(inicio, fim)
+  def fracao_de_mes(periodo_inicio, periodo_fim)
     fim = if periodo_fim.end_of_month == periodo_fim
             periodo_fim + 1.day
           else
