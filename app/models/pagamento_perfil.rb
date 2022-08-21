@@ -2,6 +2,7 @@
 
 class PagamentoPerfil < ApplicationRecord
   has_many :faturas, dependent: :restrict_with_exception
+  has_many :contratos, dependent: :restrict_with_exception
   has_many :retornos, dependent: :restrict_with_exception
   enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2, 'API' => 4 }
 
