@@ -90,7 +90,7 @@ class PagamentoPerfisController < ApplicationController
   def pagamento_perfil_params
     params.require(:pagamento_perfil).permit(
       :nome, :tipo, :cedente, :agencia, :conta, :carteira, :banco, :conta,
-      :variacao, :sequencia
+      :variacao, :sequencia, :ativo
     )
   end
 end

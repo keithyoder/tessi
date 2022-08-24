@@ -18,6 +18,7 @@
       <%= render 'shared/field_card', {campo: "Download", valor: @plano.download.to_s + " Mbps"} %>
       <%= render 'shared/field_card', {campo: "Upload", valor: @plano.upload.to_s + " Mbps"} %>
       <%= render 'shared/field_card', {campo: "Burst", valor: @plano.burst.as_simnao.capitalize} %>
+      <%= render 'shared/field_card', {campo: "Ativo", valor: @plano.ativo.as_simnao.capitalize} %>
     </div>
   </div>
 </div>
