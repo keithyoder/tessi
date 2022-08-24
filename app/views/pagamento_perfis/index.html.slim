@@ -9,6 +9,7 @@
             th Tipo
             th Banco
             th Convênio
+            th Ativo
             th Contratos
         tbody
           - @pagamento_perfis.each do |perfil|
@@ -17,4 +18,5 @@
               td= perfil.tipo
               td= perfil.banco
               td= perfil.cedente
+              td= perfil.ativo.as_checkbox
               td= perfil.contratos.ativos.count

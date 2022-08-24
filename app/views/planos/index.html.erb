@@ -8,6 +8,7 @@
             <th>Plano</th>
             <th>Mensalidade</th>
             <th>Velocidade</th>
+            <th>Ativo</th>
           </tr>
         </thead>
 
@@ -17,6 +18,7 @@
               <td><%= link_to plano.nome, plano %></td>
               <td><%= number_with_precision(plano.mensalidade, :precision => 2) %></td>
               <td><%= plano.velocidade %></td>
+              <td><%= plano.ativo.as_checkbox %></td>
             </tr>
           <% end %>
         </tbody>
