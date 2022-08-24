@@ -11,4 +11,9 @@ class RadAcct < ApplicationRecord
       .order('date(acctstoptime) desc')
       .limit(90)
   }
+
+  def self.codef(mes)
+    RadAcct.where("date_trunc('month', acctstarttime) = ?", mes)
+           .sum('(acctinputoctets + acctoutputoctets) / (1024 * 1024)').to_i
+  end
 end
