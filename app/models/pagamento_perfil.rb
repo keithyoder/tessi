@@ -5,7 +5,8 @@ class PagamentoPerfil < ApplicationRecord
   has_many :contratos, dependent: :restrict_with_exception
   has_many :retornos, dependent: :restrict_with_exception
   enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2, 'API' => 4 }
-  scope :ativos, -> { where('ativo') }
+  scope :ativos, ->(perfil_atual=nil) { where('ativo').or(PagamentoPerfil.where(id: perfil_atual)) }
+
 
   def remessa(sequencia = 1)
     pagamentos = faturas_para_registrar + faturas_para_baixar + faturas_canceladas

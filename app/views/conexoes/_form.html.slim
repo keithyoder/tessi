@@ -7,7 +7,7 @@
       .col
         = f.association :pessoa, label_method: :nome
       .col
-        = f.association :plano, collection: ([@conexao.plano] + Plano.ativos.order(:nome)).uniq, label_method: :nome
+        = f.association :plano, collection: Plano.ativos(@contrato&.plano).order(:nome), label_method: :nome
       .col-4
         = f.input :tipo, collection: Conexao.tipos.keys
     .row

@@ -8,12 +8,12 @@
         <%= f.association :pessoa, collection: Pessoa.order(:nome), label_method: :nome %>
       </div>
       <div class="col-3">
-        <%= f.association :plano, collection: ([@contrato.plano] + Plano.ativos.order(:nome)).uniq, label_method: :nome %>
+        <%= f.association :plano, collection: Plano.ativos(@contrato&.plano).order(:nome), label_method: :nome %>
       </div>
     </div>
     <div class="row">
       <div class="col-3">
-        <%= f.association :pagamento_perfil, collection: ([@contrato.pagamento_perfil] + PagamentoPerfil.ativos.order(:nome)).uniq,  label_method: :nome %>
+        <%= f.association :pagamento_perfil, collection: PagamentoPerfil.ativos(@contrato&.pagamento_perfil).order(:nome),  label_method: :nome %>
       </div>
       <div class="col-4">
         <%= f.input :adesao %>

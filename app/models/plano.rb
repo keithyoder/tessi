@@ -6,7 +6,7 @@ class Plano < ApplicationRecord
   has_many :plano_verificar_atributos
   has_many :plano_enviar_atributos
   has_many :conexoes
-  scope :ativos, -> { where('ativo') }
+  scope :ativos, ->(plano_atual=nil) { where('ativo').or(Plano.where(id: plano_atual)) }
 
   after_save do
     atr = PlanoEnviarAtributo.where(plano: self, atributo: 'Mikrotik-Rate-Limit').first_or_create
