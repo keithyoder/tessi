@@ -23,9 +23,9 @@ ul.nav.nav-pills
           = render 'shared/field_card', {campo: "Ativo", valor: @pagamento_perfil.ativo.as_simnao.capitalize}
         -if can? :remessa, @pagamento_perfil
           = link_to remessa_pagamento_perfil_path(sequencia: @pagamento_perfil.sequencia+1), target: "_blank" do
-          = button_tag("Remessa", {:class => "btn btn-warning"}) do
-            i.fas.fa-file-import aria-hidden="true" 
-            | &nbsp; Remessa
+            = button_tag("Remessa", {:class => "btn btn-warning"}) do
+              i.fas.fa-file-import aria-hidden="true" 
+              | &nbsp; Remessa
   #retornos.tab-pane.fade aria-labelledby="retornos-tab" role="tabpanel" 
     h3 = @pagamento_perfil.nome
     = render 'retornos/table'
