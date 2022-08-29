@@ -18,7 +18,7 @@ class GerencianetClient
     body = {
       items: [
         {
-          name: fatura.plano.nome,
+          name: fatura.contrato.descricao_personalizada || fatura.plano.nome,
           value: (fatura.valor * 100).to_i,
           amount: 1
         }

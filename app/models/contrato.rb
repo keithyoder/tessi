@@ -94,7 +94,7 @@ class Contrato < ApplicationRecord
                    else
                      0
                    end
-      valor = (plano.mensalidade * fracao_de_mes(inicio, vencimento)).round(2) + instalacao
+      valor = (mensalidade * fracao_de_mes(inicio, vencimento)).round(2) + instalacao
       faturas.create!(
         pagamento_perfil_id: pagamento_perfil_id,
         valor: valor,
@@ -134,6 +134,16 @@ class Contrato < ApplicationRecord
     # se faltar uma fatura, gera mais 12.  Se faltar mais, gera a quantidade para completar 12.
     faturas_a_vencer = 0 if faturas_a_vencer <= 1
     gerar_faturas(prazo_meses - faturas_a_vencer) if faturas_a_vencer < prazo_meses
+  end
+
+  def mensalidade
+    valor_personalizado || plano.mensalidade
+  end
+
+  def descricao
+    return descricao_personalizada if descricao_personalizada.present?
+
+    plano.nome
   end
 
   def self.to_csv

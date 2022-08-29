@@ -159,7 +159,8 @@ class ContratosController < ApplicationController
     params.require(:contrato).permit(
       :pessoa_id, :plano_id, :pagamento_perfil_id, :status, :dia_vencimento,
       :adesao, :valor_instalacao, :numero_conexoes, :cancelamento, :emite_nf,
-      :primeiro_vencimento, :prazo_meses, :parcelas_instalacao
+      :primeiro_vencimento, :prazo_meses, :parcelas_instalacao, :descricao_personalizada,
+      :valor_personalizado
     )
   end
 end

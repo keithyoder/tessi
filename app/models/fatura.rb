@@ -170,7 +170,7 @@ class Fatura < ApplicationRecord
       nosso_numero: nossonumero.to_s.rjust(7, '0'),
       data_vencimento: vencimento,
       instrucao1: "Desconto de #{number_to_currency(desconto)} para pagamento até o dia #{I18n.l(vencimento)}",
-      instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.plano.nome}",
+      instrucao2: "Mensalidade de Internet - SCM - Plano: #{contrato.descricao}",
       instrucao3: "Período de referência: #{I18n.l(periodo_inicio)} - #{I18n.l(periodo_fim)}",
       instrucao4: "S.A.C #{Setting.telefone} - sac.tessi.com.br",
       instrucao5: 'Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.',
