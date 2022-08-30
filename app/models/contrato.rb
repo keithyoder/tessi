@@ -141,9 +141,7 @@ class Contrato < ApplicationRecord
   end
 
   def descricao
-    return descricao_personalizada if descricao_personalizada.present?
-
-    plano.nome
+    descricao_personalizada.presence || plano.nome
   end
 
   def self.to_csv
