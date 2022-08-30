@@ -13,7 +13,8 @@ class AtendimentosController < ApplicationController
     atendimento = atendimento.por_responsavel(current_user) if params.key?(:meus)
     atendimento = atendimento.por_responsavel(params[:responsavel]) if params.key?(:responsavel)
     @q = atendimento.ransack(params[:os_q])
-    @atendimentos = @q.result(order: :created_at).page params[:page]
+    @q.sorts = 'created_at'
+    @atendimentos = @q.result.page params[:page]
     respond_to do |format|
       format.html
     end
