@@ -247,6 +247,21 @@ class GerencianetClient
     cliente.settle_charge(params: params)
   end
 
+  def self.criar_plano_assinatura(plano)
+    return unless plano.gerencianet_id.blank?
+
+    resposta = self.cliente.create_plan(
+      body: {
+        name: plano.nome,
+        repeats: nil,
+        interval: 1
+      }
+    )
+    if resposta['code'] == 200
+      plano.update!(gerencianet_id: resposta['data']['plan_id'])
+    end
+  end
+
   def pessoa_fisica_attributes
     {
       payment: {
