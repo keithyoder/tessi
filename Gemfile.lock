@@ -9,12 +9,6 @@ GIT
       rghost_barcode (~> 0.9)
       unidecoder (>= 1.1.2)
 
-PATH
-  remote: ../gn-api-sdk-ruby
-  specs:
-    gerencianet (1.0.2)
-      http (~> 0.9, >= 0.9.8)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -184,6 +178,8 @@ GEM
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.8.0)
+    gerencianet (1.0.2)
+      http (~> 0.9, >= 0.9.8)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hitimes (2.0.0)
@@ -484,7 +480,7 @@ DEPENDENCIES
   fixy
   font_awesome5_rails
   geocoder
-  gerencianet!
+  gerencianet
   httparty
   image_processing
   jbuilder (~> 2.5)
