@@ -77,7 +77,7 @@ class Servidor < ApplicationRecord
     result = mk_command('/system/resource/print')[0][0]
     result.slice('uptime', 'version', 'cpu-load', 'board-name')
   rescue StandardError => e
-    e.message
+    nil
   end
 
   def ping?
