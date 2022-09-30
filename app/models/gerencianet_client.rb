@@ -113,6 +113,78 @@ class GerencianetClient
     )
   end
 
+  def self.criar_assinatura(contrato, token=nil)
+    # não criar um novo boleto se já foi criado anteriormente.
+    return unless contrato.pagamento_perfil.banco == 364 && contrato.plano.gerencianet_id.presence
+
+    cliente = Gerencianet.new(
+      {
+        client_id: contrato.pagamento_perfil.client_id,
+        client_secret: contrato.pagamento_perfil.client_secret,
+        sandbox: ENV['RAILS_ENV'] != 'production'
+      }
+    )
+
+    body = {
+      items: [
+        {
+          name: contrato.descricao_personalizada.presence || contrato.plano.nome,
+          value: (contrato.mensalidade * 100).to_i,
+          amount: 1
+        }
+      ],
+      metadata: {
+        custom_id: contrato.id.to_s,
+        notification_url: "https://erp.tessi.com.br/webhooks/#{Webhook.find_by(tipo: :gerencianet).token}"
+      },
+      payment: {
+        credit_card: {
+          customer: {
+            email: contrato.pessoa.email,
+            phone_number: contrato.pessoa.telefone1.gsub(/\s+/, '')
+          },
+          payment_token: token,
+          trial_days: 10,
+          billing_address: {
+            street: contrato.billing_endereco,
+            number: contrato.billing_endereco_numero.presence || 'S/N',
+            neighborhood: contrato.billing_bairro,
+            zipcode: contrato.billing_cep,
+            city: contrato.billing_cidade,
+            state: contrato.billing_estado
+          }
+        }
+      }
+    }
+
+    body.deep_merge!(
+        {
+          payment: {
+            credit_card: {
+              customer: {
+                name: contrato.billing_nome_completo.strip,
+                cpf: CPF.new(contrato.billing_cpf).stripped.to_s,
+                birth: contrato.pessoa.nascimento&.strftime
+              }
+            }
+          }
+        }
+    )
+    params = {
+      id: contrato.plano.gerencianet_id
+    }
+    puts body.as_json
+    response = cliente.create_subscription_onestep(body: body, params: params)
+    unless response['code'] == 200
+      Rails.logger.error "Erro ao criar assinatura #{response.to_s}"
+      return
+    end
+
+    data = response['data']
+    contrato.update(gerencianet_assinatura_id: data['subscription_id'])
+    puts data.as_json
+  end
+
   def self.cliente
     perfil = PagamentoPerfil.find_by(banco: 364)
     cliente = Gerencianet.new(
@@ -156,7 +228,7 @@ class GerencianetClient
       fatura = Fatura.find(pago['custom_id'].to_i)
       valor_pago = pago['value'] / 100.0
       desconto = (valor_pago - fatura.valor if valor_pago < fatura.valor) || 0
-      juros = (fatura.valor - valor_pago if valor_pago > fatura.valor) || 0
+      juros = (valor_pago - fatura.valor if valor_pago > fatura.valor) || 0
       perfil = PagamentoPerfil.find_by(banco: 364)
 
       retorno = Retorno.create(

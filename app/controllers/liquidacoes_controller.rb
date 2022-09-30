@@ -11,13 +11,17 @@ class LiquidacoesController < ApplicationController
                                  .where('extract(year from liquidacao) = ?', params[:ano])
                                  .group('extract(month from liquidacao)')
                                  .order(:mes)
-      @chart = Fatura.where('extract(year from liquidacao) = ?',
-                            params[:ano]).group('extract(month from liquidacao)').sum(:valor_liquidacao)
+      @chart = Fatura.where('extract(year from liquidacao) = ?', params[:ano])
+                     .group('extract(month from liquidacao)')
+                     .sum(:valor_liquidacao)
     elsif params.key?(:ano)
       @liquidacoes = @liquidacoes.select('extract(year from liquidacao)::int as ano')
                                  .group('extract(year from liquidacao)')
                                  .order(:ano)
-      @chart = Fatura.where('not liquidacao is null').group('extract(year from liquidacao)').sum(:valor_liquidacao)
+      @chart = Fatura.where.not(liquidacao: nil)
+                     .group('extract(year from liquidacao)')
+                     .order('extract(year from liquidacao)')
+                     .sum(:valor_liquidacao)
     else
       @liquidacoes = @liquidacoes.select('liquidacao as data').group(:liquidacao).order(liquidacao: :desc)
     end
@@ -25,7 +29,7 @@ class LiquidacoesController < ApplicationController
   end
 
   def show
-    @liquidacoes = Fatura.where('liquidacao = ?', params[:id])
+    @liquidacoes = Fatura.includes([:contrato, :pessoa]).where('liquidacao = ?', params[:id])
     @liquidacoes = @liquidacoes.where('meio_liquidacao = ?', params[:meio]) if params.key?(:meio)
     @liquidacoes = @liquidacoes.page params[:page]
   end
