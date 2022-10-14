@@ -100,7 +100,12 @@ prawn_document(page_size: 'A4', margin: [margem, margem, margem, margem]) do |pd
     pdf.font_size 8
 
     # Local de Pagamento 
-    pdf.draw_text 'PAGÁVEL EM QUALQUER BANCO OU LOTÉRICA MESMO APÓS O VENCIMENTO', at: [canhoto, y + 1.send(:mm) - linha * 2]
+    if fatura.pix.present?
+      local = 'Pagável via QR Code Pix, bancos, canais digitais e lotéricas mesmo após o vencimento.'
+    else
+      local = 'Pagável em bancos, canais digitais e lotéricas mesmo após o vencimento.'
+    end
+    pdf.draw_text local, at: [canhoto, y + 1.send(:mm) - linha * 2]
     # Cedente
     pdf.draw_text "#{attrs[:cedente]} - CNPJ: #{attrs[:documento_cedente]}", at: [canhoto, y + 1.send(:mm) - linha * 3]
     # Data Documento
@@ -137,7 +142,7 @@ prawn_document(page_size: 'A4', margin: [margem, margem, margem, margem]) do |pd
 
     # Canhoto
     pdf.draw_text "#{fatura.parcela}/#{fatura.contrato.faturas.count}", at: [margem_texto, y + 1.send(:mm) - linha * 2]
-    pdf.text_box attrs[:data_vencimento].strftime("%d/%m/%Y"), at: [margem_texto, y - linha * 1.5], width: canhoto - margem_texto * 2, width: canhoto - margem_texto * 2, height: linha, align: :right
+    pdf.text_box attrs[:data_vencimento].strftime("%d/%m/%Y"), at: [margem_texto, y - linha * 1.5], width: canhoto - margem_texto * 2, height: linha, align: :right
     pdf.text_box "#{attrs[:agencia]}/#{attrs[:conta_corrente]}", at: [margem_texto, y - linha * 2.5], width: canhoto - margem_texto * 2, height: linha, align: :right
     pdf.text_box  attrs[:nosso_numero], at: [margem_texto, y - linha * 3.5], width: canhoto - margem_texto * 2, height: linha, align: :right
     pdf.text_box  number_to_currency(attrs[:valor], unit: 'R$', separator: ',', delimiter: '.'), at: [margem_texto, y - linha * 4.5], width: canhoto - margem_texto * 2, height: linha, align: :right
@@ -145,6 +150,7 @@ prawn_document(page_size: 'A4', margin: [margem, margem, margem, margem]) do |pd
 
     if fatura.pix.present?
       pdf.svg fatura.pix_imagem, at: [canhoto + 103.send(:mm), y - 1.send(:mm) - linha * 5], height: 20.send(:mm), width: 20.send(:mm)
+      pdf.svg IO.read(Rails.root / 'app' / 'assets' / 'images' / 'pix.svg'), at: [canhoto + 80.send(:mm), y + 1.send(:mm) - linha * 7], width: 18.send(:mm)
     end
 
     pdf.font_size 11
