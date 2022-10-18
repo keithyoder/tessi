@@ -9,6 +9,12 @@ GIT
       rghost_barcode (~> 0.9)
       unidecoder (>= 1.1.2)
 
+PATH
+  remote: ../gn-api-sdk-ruby
+  specs:
+    gerencianet (1.0.2)
+      http (~> 0.9, >= 0.9.8)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,8 +59,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     airbrussh (1.4.1)
       sshkit (>= 1.6.1, != 1.7.0)
     archive-zip (0.12.0)
@@ -109,7 +115,7 @@ GEM
       celluloid (>= 0.16.0)
       nio4r (>= 1.1.0)
     chartkick (4.2.1)
-    childprocess (3.0.0)
+    childprocess (4.1.0)
     chromedriver-helper (2.1.1)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
@@ -126,7 +132,7 @@ GEM
     connection_pool (2.3.0)
     cpf_cnpj (0.5.0)
     crass (1.0.6)
-    css_parser (1.11.0)
+    css_parser (1.12.0)
       addressable
     devise (4.8.1)
       bcrypt (~> 3.0)
@@ -141,7 +147,7 @@ GEM
       tzinfo
     execjs (2.8.1)
     extensobr (1.0.0)
-    faraday (1.10.0)
+    faraday (1.10.2)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -174,12 +180,10 @@ GEM
     font_awesome5_rails (1.5.0)
       nokogiri (>= 1.11.3)
       railties (>= 4.2)
-    fugit (1.5.3)
+    fugit (1.7.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
-    geocoder (1.8.0)
-    gerencianet (1.0.2)
-      http (~> 0.9, >= 0.9.8)
+    geocoder (1.8.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hitimes (2.0.0)
@@ -211,7 +215,7 @@ GEM
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     json (2.6.2)
-    jwt (2.4.1)
+    jwt (2.5.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -242,7 +246,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
-    msgpack (1.5.6)
+    msgpack (1.6.0)
     mtik (4.1.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -252,7 +256,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (7.0.1)
     nio4r (2.5.8)
-    nokogiri (1.13.8)
+    nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (1.4.9)
@@ -267,7 +271,7 @@ GEM
     parser (3.1.2.1)
       ast (~> 2.4.1)
     pdf-core (0.9.0)
-    pg (1.4.3)
+    pg (1.4.4)
     popper_js (1.16.0)
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
@@ -282,11 +286,11 @@ GEM
       rexml (~> 3.2)
     prawn-table (0.2.2)
       prawn (>= 1.3.0, < 3.0.0)
-    public_suffix (4.0.7)
+    public_suffix (5.0.0)
     puma (4.3.12)
       nio4r (~> 2.0)
-    qbo_api (2.0.2)
-      faraday
+    qbo_api (2.1.1)
+      faraday (~> 1.10.0)
       faraday-detailed_logger
       faraday_middleware
       nokogiri
@@ -356,7 +360,7 @@ GEM
       rubocop-ast (>= 1.20.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.21.0)
+    rubocop-ast (1.22.0)
       parser (>= 3.1.1.0)
     rubocop-rails (2.16.1)
       activesupport (>= 4.2.0)
@@ -391,14 +395,16 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (3.142.7)
-      childprocess (>= 0.5, < 4.0)
-      rubyzip (>= 1.2.2)
-    sidekiq (6.5.6)
+    selenium-webdriver (4.5.0)
+      childprocess (>= 0.5, < 5.0)
+      rexml (~> 3.2, >= 3.2.5)
+      rubyzip (>= 1.2.2, < 3.0)
+      websocket (~> 1.0)
+    sidekiq (6.5.7)
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (1.7.0)
+    sidekiq-cron (1.8.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     simple_form (5.1.0)
@@ -448,6 +454,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
+    websocket (1.2.9)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -480,7 +487,7 @@ DEPENDENCIES
   fixy
   font_awesome5_rails
   geocoder
-  gerencianet
+  gerencianet!
   httparty
   image_processing
   jbuilder (~> 2.5)
