@@ -4,7 +4,7 @@ ul.nav.nav-pills
   li.nav-item
     a.nav-link data-toggle="tab" href="#retornos"  Retornos
   li.nav-item
-    a.nav-link data-toggle="tab" href="#faturas"  Faturas
+    a.nav-link data-toggle="tab" href="#resumo"  Resumo
 .tab-content
   #perfil.tab-pane.fade.show.active aria-labelledby="perfil-tab" role="tabpanel" 
     .card
@@ -29,6 +29,6 @@ ul.nav.nav-pills
   #retornos.tab-pane.fade aria-labelledby="retornos-tab" role="tabpanel" 
     h3 = @pagamento_perfil.nome
     = render 'retornos/table'
-  #faturas.tab-pane.fade aria-labelledby="faturas-tab" role="tabpanel" 
+  #resumo.tab-pane.fade aria-labelledby="resumo-tab" role="tabpanel" 
     h3 = @pagamento_perfil.nome
-    = render 'faturas/table'
+    = render 'meses'

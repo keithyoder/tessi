@@ -5,8 +5,7 @@ class PagamentoPerfil < ApplicationRecord
   has_many :contratos, dependent: :restrict_with_exception
   has_many :retornos, dependent: :restrict_with_exception
   enum tipo: { 'Boleto' => 3, 'Débito Automático' => 2, 'API' => 4 }
-  scope :ativos, ->(perfil_atual=nil) { where('ativo').or(PagamentoPerfil.where(id: perfil_atual)) }
-
+  scope :ativos, ->(perfil_atual = nil) { where('ativo').or(PagamentoPerfil.where(id: perfil_atual)) }
 
   def remessa(sequencia = 1)
     pagamentos = faturas_para_registrar + faturas_para_baixar + faturas_canceladas
@@ -23,6 +22,21 @@ class PagamentoPerfil < ApplicationRecord
            .where("nossonumero ~ E'^\\\\d+$'")
            .to_a[0][:nossonumero]
            .to_i
+  end
+
+  def liquidacoes(mes, meio_liquidacao)
+    faturas.where("date_trunc('month', liquidacao) = ? and meio_liquidacao = ?", mes, meio_liquidacao)
+  end
+
+  def inadimplentes(mes)
+    faturas.inadimplentes.where("date_trunc('month', vencimento) = ?", mes)
+  end
+
+  def meses
+    faturas.select("date_trunc('month', vencimento) as mes")
+           .where('vencimento < :agora or (liquidacao is null and liquidacao < :agora)', agora: DateTime.now)
+           .group(:mes)
+           .order(mes: :desc)
   end
 
   private
@@ -60,7 +74,7 @@ class PagamentoPerfil < ApplicationRecord
   end
 
   def santander_codigo_transmissao
-    ("#{agencia}0#{cedente}#{conta.to_s.rjust(10, '0')}")[0...20]
+    "#{agencia}0#{cedente}#{conta.to_s.rjust(10, '0')}"[0...20]
   end
 
   def faturas_com_numero
