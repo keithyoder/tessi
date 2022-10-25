@@ -18,7 +18,7 @@ class FibraCaixasController < ApplicationController
     @q = @fibra_caixa.conexoes.ransack(params[:q])
     @q.sorts = 'ip'
     @params = conexoes_params(params)
-    @conexoes = @q.result.page params[:page]
+    @conexoes = @q.result.page params[:conexoes_page]
   end
 
   # GET /fibra_caixas/new
