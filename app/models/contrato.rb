@@ -202,7 +202,7 @@ class Contrato < ApplicationRecord
           end
     dias_no_mes = fim - (fim - 1.month)
     dias_no_periodo = if (periodo_fim.end_of_month == periodo_fim) && (periodo_fim.day != periodo_inicio.day)
-                        (periodo_fim - periodo_inicio).to_f - 1
+                        (periodo_fim - periodo_inicio.end_of_month).to_f
                       else
                         (periodo_fim - periodo_inicio).to_f
                       end

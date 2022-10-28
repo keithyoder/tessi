@@ -7,4 +7,6 @@
     = f.input :latitude
     = f.input :longitude
   .form-actions
-    = f.button :submit
+    = button_tag(:class => "btn btn-primary") do
+      i.fas.fa-save aria-hidden="true" 
+      | &nbsp; Salvar
