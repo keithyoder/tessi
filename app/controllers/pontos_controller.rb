@@ -39,6 +39,7 @@ class PontosController < ApplicationController
     @params = conexoes_params(params)
     respond_to do |format|
       format.html # show.html.erb
+      format.kml
       if params.key?(:ips)
         format.json { render json: @ips }
       else
