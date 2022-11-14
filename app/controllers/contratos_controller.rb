@@ -3,7 +3,7 @@
 class ContratosController < ApplicationController
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
-  before_action :set_contrato, only: %i[show edit update destroy renovar termo]
+  before_action :set_contrato, only: %i[show edit update destroy renovar termo update_assinatura]
 
   # GET /contratos
   # GET /contratos.json
@@ -103,6 +103,17 @@ class ContratosController < ApplicationController
     end
   end
 
+  def update_assinatura
+    respond_to do |format|
+      if @contrato.update(assinatura_params)
+        GerencianetClient.criar_assinatura(@contrato, params[:token])
+        format.html { redirect_to @contrato, notice: 'Assinatura criada com sucesso.' }
+      else
+        format.html { render :assinatura }
+      end
+    end
+  end
+
   # POST /contratos
   # POST /contratos.json
   def create
@@ -124,7 +135,11 @@ class ContratosController < ApplicationController
   def update
     respond_to do |format|
       if @contrato.update(contrato_params)
-        format.html { redirect_to @contrato, notice: 'Contrato atualizado com sucesso.' }
+        if verificar_conexoes_planos?
+          format.html { redirect_to @contrato, notice: 'Contrato atualizado com sucesso.' }
+        else
+          format.html { redirect_to @contrato, flash: {error: 'Plano da conexão é diferente que o plano do contrato.' } }
+        end
         format.json { render :show, status: :ok, location: @contrato }
       else
         format.html { render :edit }
@@ -163,4 +178,16 @@ class ContratosController < ApplicationController
       :valor_personalizado
     )
   end
+
+  def assinatura_params
+    params.require(:contrato).permit(
+      :billing_nome_completo, :billing_cpf, :billing_endereco, :billing_endereco_numero,
+      :billing_bairro, :billing_cidade, :billing_estado, :billing_cep, :cartao_parcial,
+    )
+  end
+
+  def verificar_conexoes_planos?
+    @contrato.conexoes.all? { |c| c.plano == @contrato.plano}
+  end
+
 end
