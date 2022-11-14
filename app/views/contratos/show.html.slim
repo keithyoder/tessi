@@ -42,7 +42,7 @@ ul.nav.nav-pills
         = render 'shared/field_card', {campo: "Emitir NF", valor: @contrato.emite_nf.as_simnao}
         = render 'shared/field_card', {campo: "Primeiro Vencimento", valor: l(@contrato.primeiro_vencimento, default: "")}
         = render 'shared/field_card', {campo: "Prazo (meses)", valor: @contrato.prazo_meses}
-        - if @contrato.cartao_parcial.present?
+        /! - if @contrato.cartao_parcial.present?
           = render 'shared/field_card', {campo: "Cartão", valor: @contrato.cartao_parcial}
       - if can? :renovar, @contrato
         = link_to renovar_contrato_path do
