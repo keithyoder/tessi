@@ -11,7 +11,11 @@ module FibraCaixasHelper
     if @fibra_caixa.latitude && @fibra_caixa.longitude
       markers.append ["markers=color:blue%7Clabel:C|#{@fibra_caixa.latitude},#{@fibra_caixa.longitude}"]
     end
-    "#{calculate_zoom(pontos)}#{markers.join('&')}"
+    if markers.length > 0
+      "#{calculate_zoom(pontos)}#{markers.join('&')}"
+    else
+      "18#{markers.join('&')}"
+    end
   end
 
   def calculate_zoom(pontos)
