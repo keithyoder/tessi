@@ -80,6 +80,7 @@ class Ability
 
   def financeiro_n1
     can %i[update liquidacao], Fatura
+    can %i[termo], [Contrato]
   end
 
   def financeiro_n2
@@ -87,7 +88,7 @@ class Ability
     can :destroy, Conexao
     can %i[update liquidacao estornar cancelar gerar_nf], Fatura
     can %i[create update], [Retorno, Contrato]
-    can %i[destroy], Contrato
+    can %i[destroy termo], Contrato
     can :remessa, PagamentoPerfil
   end
 end

@@ -70,7 +70,7 @@ table.full-width
     tr
       td colspan="4" 
         p.termo.campo RG / IE:
-        span.termo variable =@contrato.pessoa.rg
+        span.termo variable =@contrato.pessoa.rg_ie
       td colspan="4" 
         p.termo.campo CPF / CNPJ:
         span.termo.variable
@@ -91,6 +91,7 @@ table.full-width
         p.termo.campo Endere&ccedil;o Cobran&ccedil;a:
         span.termo.variable
           =@contrato.pessoa.endereco
+          | - 
           =@contrato.pessoa.logradouro.bairro.nome_cidade_uf
     tr
       td colspan="8" 
