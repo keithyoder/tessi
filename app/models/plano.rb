@@ -60,4 +60,12 @@ class Plano < ApplicationRecord
       'Desativado'
     end
   end
+
+  def garantia
+    if upload == download
+      100
+    else
+      30
+    end
+  end
 end

@@ -39,6 +39,19 @@ class PagamentoPerfil < ApplicationRecord
            .order(mes: :desc)
   end
 
+  def forma_pagamento
+    case tipo
+    when 'Boleto', 'API'
+      'Boleto Bancário'
+    when tipo == 'Débito Automático'
+      if nome == 'Cielo'
+        'Cartão de Crédito'
+      else
+        nome
+      end
+    end
+  end
+
   private
 
   def remessa_banco_brasil(pagamentos, sequencia)

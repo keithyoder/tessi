@@ -25,7 +25,7 @@ ul.nav.nav-pills
           = link_to(boletos_contrato_path(format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do
             i.fa.fa-bank.fa-lg[aria-hidden="true"]
             |  Boletos 
-          = link_to(current_page_params.merge(format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do
+          = link_to(termo_contrato_url(@contrato), class: "btn btn-sm btn-outline-dark", target: "_blank") do
             i.fa.fa-print.fa-lg[aria-hidden="true"]
     .card-body
       .card-columns[style="column-count: 3"]

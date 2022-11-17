@@ -4,6 +4,7 @@ class ContratosController < ApplicationController
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
   before_action :set_contrato, only: %i[show edit update destroy renovar termo update_assinatura]
+  layout 'print', only: [:termo]
 
   # GET /contratos
   # GET /contratos.json
