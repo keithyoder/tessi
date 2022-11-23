@@ -96,7 +96,7 @@ class FaturasController < ApplicationController
   def update
     respond_to do |format|
       if @fatura.update(fatura_params)
-        format.html { redirect_to @fatura, notice: 'Fatura was successfully updated.' }
+        format.html { redirect_to @fatura, notice: 'Fatura alterada com sucesso.' }
         format.json { render :show, status: :ok, location: @fatura }
       else
         if @fatura.errors.full_messages_for(:liquidacao).present?
@@ -131,7 +131,7 @@ class FaturasController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def fatura_params
     params.require(:fatura).permit(
-      :valor, :vencimento, :nossonumero, :parcela, :juros_recebidos,
+      :valor, :vencimento, :nossonumero, :parcela, :juros_recebidos, :desconto_concedido,
       :data_cancelamento, :meio_liquidacao, :valor_liquidacao, :liquidacao
     )
   end

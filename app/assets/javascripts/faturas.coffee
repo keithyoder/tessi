@@ -34,3 +34,14 @@ $(document).ready ->
           $(this).datepicker('getDate')
         )
       )
+  $('#fatura_valor_liquidacao').on 'change', (e) ->
+    valor_original = $('#fatura-data').data('valor')
+    valor_liquidacao = calcular_total(
+      $(this).datepicker('getDate')
+    )
+    if $('#fatura_valor_liquidacao').val() > valor_original
+      $('#fatura_juros_recebidos').val $('#fatura_valor_liquidacao').val() - valor_original 
+      $('#fatura_desconto_concedido').val 0
+    if $('#fatura_valor_liquidacao').val() < valor_original
+      $('#fatura_desconto_concedido').val valor_original - $('#fatura_valor_liquidacao').val()
+      $('#fatura_juros_recebidos').val 0

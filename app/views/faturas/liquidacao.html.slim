@@ -25,6 +25,7 @@
           = f.input :meio_liquidacao, :label => "Forma de Pagamento", collection: Fatura.meio_liquidacoes.keys
           = f.input :valor_liquidacao, :label => "Valor a Receber"
           = f.hidden_field :juros_recebidos
+          = f.hidden_field :desconto_concedido
       .actions
         = button_tag( :class => "btn btn-primary") do
           i.fa.fa-money[aria-hidden="true"]
