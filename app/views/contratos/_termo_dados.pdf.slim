@@ -54,7 +54,6 @@ table.full-width
       td colspan="4" 
         p.termo Endere&ccedil;o de E-mail:
         span.termo.variable financeiro@tessi.com.br
-p &nbsp;
 table.full-width
   thead
     tr
@@ -66,7 +65,7 @@ table.full-width
         span.termo.variable =@contrato.pessoa.nome
       td colspan="2" 
         p.termo.campo Data Nascimento:
-        span.termo.variable =@contrato.pessoa.nascimento
+        span.termo.variable =l(@contrato.pessoa.nascimento, format: :short)
     tr
       td colspan="4" 
         p.termo.campo RG / IE:
@@ -100,4 +99,5 @@ table.full-width
         p.termo.campo  Endere&ccedil;o Instala&ccedil;&atilde;o:
         span.termo.variable
           =@contrato.pessoa.endereco
+          | - 
           =@contrato.pessoa.logradouro.bairro.nome_cidade_uf
