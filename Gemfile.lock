@@ -9,6 +9,14 @@ GIT
       rghost_barcode (~> 0.9)
       unidecoder (>= 1.1.2)
 
+PATH
+  remote: ../graphql-client
+  specs:
+    graphql-client (0.18.0)
+      activesupport (>= 3.0)
+      graphql
+      multipart-post
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -183,9 +191,6 @@ GEM
     globalid (1.0.0)
       activesupport (>= 5.0)
     graphql (2.0.15)
-    graphql-client (0.18.0)
-      activesupport (>= 3.0)
-      graphql
     hitimes (2.0.0)
     http (0.9.9)
       addressable (~> 2.3)
@@ -458,6 +463,9 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wicked_pdf (2.6.3)
+      activesupport
+    wkhtmltopdf-binary (0.12.6.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
@@ -488,7 +496,7 @@ DEPENDENCIES
   font_awesome5_rails
   geocoder
   gerencianet
-  graphql-client
+  graphql-client!
   httparty
   image_processing
   jbuilder (~> 2.5)
@@ -498,6 +506,7 @@ DEPENDENCIES
   listen (>= 3.4.1, < 3.7)
   mini_magick (~> 4.8)
   mtik
+  multipart-post
   net-ping
   net-ssh
   oauth2
@@ -529,6 +538,8 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
+  wicked_pdf
+  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 2.7.4p191

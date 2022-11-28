@@ -81,6 +81,9 @@ class ContratosController < ApplicationController
   def termo
     respond_to do |format|
       format.html { render :termo }
+      format.pdf do
+        render pdf: "termo", encoding: "UTF-8", zoom: 1.2, margin: { top: 15, bottom: 15, left: 15, right: 15 }
+      end
     end
   end
 
