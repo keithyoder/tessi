@@ -9,14 +9,6 @@ GIT
       rghost_barcode (~> 0.9)
       unidecoder (>= 1.1.2)
 
-PATH
-  remote: ../graphql-client
-  specs:
-    graphql-client (0.18.0)
-      activesupport (>= 3.0)
-      graphql
-      multipart-post
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -191,6 +183,9 @@ GEM
     globalid (1.0.0)
       activesupport (>= 5.0)
     graphql (2.0.15)
+    graphql-client (0.18.0)
+      activesupport (>= 3.0)
+      graphql
     hitimes (2.0.0)
     http (0.9.9)
       addressable (~> 2.3)
@@ -496,7 +491,7 @@ DEPENDENCIES
   font_awesome5_rails
   geocoder
   gerencianet
-  graphql-client!
+  graphql-client
   httparty
   image_processing
   jbuilder (~> 2.5)
