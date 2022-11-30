@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'autentique'
+
 class Contrato < ApplicationRecord
   belongs_to :pessoa
   belongs_to :plano
@@ -159,6 +161,23 @@ class Contrato < ApplicationRecord
         ]
       end
     end
+  end
+
+  def vincular_documento(id)
+    documento = Autentique::Client.query(
+      Autentique::ResgatarDocumento,
+      variables: {"id": id}
+    ).original_hash['data']['document']
+    documentos = [] if documentos.blank?
+    update(documentos: 
+      documentos += [
+        {
+          'data': documento['created_at'],
+          'nome': documento['name'],
+          'link': documento['files']['signed']
+        }
+      ]
+    )
   end
 
   private

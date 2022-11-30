@@ -44,6 +44,9 @@ ul.nav.nav-pills
         = render 'shared/field_card', {campo: "Prazo (meses)", valor: @contrato.prazo_meses}
         /! - if @contrato.cartao_parcial.present?
           = render 'shared/field_card', {campo: "Cartão", valor: @contrato.cartao_parcial}
+        - if @contrato.documentos.present?
+          = link_to @contrato.documentos.first['link'], target: "_blank" do
+            = render 'shared/field_card', {campo: @contrato.documentos.first['nome'], valor: l(@contrato.documentos.first['data'].to_date)}
       - if can? :renovar, @contrato
         = link_to renovar_contrato_path do
           = button_tag("Renovar", {:class => "btn btn-success"}) do
