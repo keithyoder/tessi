@@ -15,6 +15,16 @@ class GerencianetClient
       }
     )
 
+    if fatura.contrato.conexoes.count == 1 && fatura.contrato.conexoes.first.logradouro.present?
+      logradouro = fatura.conexoes.first.logradouro
+      numero = fatura.conexoes.first.numero
+      complemento = fatura.conexoes.first.complemento
+    else
+      logradouro = fatura.pessoa.logradouro
+      numero = fatura.pessoa.numero
+      complemento = fatura.pessoa.complemento
+    end
+
     body = {
       items: [
         {
@@ -34,13 +44,13 @@ class GerencianetClient
             # email: fatura.pessoa.email,
             phone_number: fatura.pessoa.telefone1.gsub(/\s+/, ''),
             address: {
-              street: fatura.pessoa.logradouro.nome,
-              number: fatura.pessoa.numero,
-              neighborhood: fatura.pessoa.bairro.nome,
-              zipcode: fatura.pessoa.logradouro.cep.to_s,
-              city: fatura.pessoa.cidade.nome,
-              complement: fatura.pessoa.complemento,
-              state: fatura.pessoa.estado.sigla
+              street: logradouro.nome,
+              number: numero,
+              neighborhood: logradouro.bairro.nome,
+              zipcode: logradouro.cep.to_s,
+              city: logradouro.cidade.nome,
+              complement: complemento,
+              state: logradouro.estado.sigla
             }
           },
           configurations: {
