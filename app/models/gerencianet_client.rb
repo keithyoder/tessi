@@ -46,7 +46,7 @@ class GerencianetClient
           configurations: {
             fine: 200,
             interest: 33
-          }
+          },
           message: "Endereço de Instalação: #{fatura.contrato.enderecos.join(', ')}"
         }
       }
