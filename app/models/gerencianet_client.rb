@@ -15,16 +15,6 @@ class GerencianetClient
       }
     )
 
-    if fatura.contrato.conexoes.count == 1 && fatura.contrato.conexoes.first.logradouro.present?
-      logradouro = fatura.contrato.conexoes.first.logradouro
-      numero = fatura.contrato.conexoes.first.numero
-      complemento = fatura.contrato.conexoes.first.complemento
-    else
-      logradouro = fatura.pessoa.logradouro
-      numero = fatura.pessoa.numero
-      complemento = fatura.pessoa.complemento
-    end
-
     body = {
       items: [
         {
@@ -44,19 +34,20 @@ class GerencianetClient
             # email: fatura.pessoa.email,
             phone_number: fatura.pessoa.telefone1.gsub(/\s+/, ''),
             address: {
-              street: logradouro.nome,
-              number: numero,
-              neighborhood: logradouro.bairro.nome,
-              zipcode: logradouro.cep.to_s,
-              city: logradouro.cidade.nome,
-              complement: complemento,
-              state: logradouro.estado.sigla
+              street: fatura.pessoa.logradouro.nome,
+              number: fatura.pessoa.numero,
+              neighborhood: fatura.pessoa.logradouro.bairro.nome,
+              zipcode: fatura.pessoa.logradouro.cep.to_s,
+              city: fatura.pessoa.logradouro.cidade.nome,
+              complement: fatura.pessoa.complemento,
+              state: fatura.pessoa.logradouro.estado.sigla
             }
           },
           configurations: {
             fine: 200,
             interest: 33
           }
+          message: "Endereço de Instalação: #{fatura.contrato.enderecos.join(', ')}"
         }
       }
     }

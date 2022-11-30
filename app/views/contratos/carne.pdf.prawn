@@ -129,7 +129,12 @@ prawn_document(page_size: 'A4', margin: [margem, margem, margem, margem]) do |pd
 
 
     # Sacado
-    pdf.draw_text "#{attrs[:sacado]} - CPF: #{attrs[:sacado_documento]}", at: [canhoto, y + 1.send(:mm) - linha * 11]
+    if attrs[:sacado_documento].length > 14
+      documento = 'CNPJ'
+    else
+      documento = 'CPF'
+    end
+    pdf.draw_text "#{attrs[:sacado]} - #{documento}: #{attrs[:sacado_documento]}", at: [canhoto, y + 1.send(:mm) - linha * 11]
     pdf.draw_text attrs[:sacado_endereco], at: [canhoto, y + 1.send(:mm) - linha * 11.5]
 
     # Instruções
