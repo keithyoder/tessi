@@ -181,7 +181,7 @@ class Contrato < ApplicationRecord
   end
 
   def enderecos
-    return ["#{pessoa.endereco} - #{pessoa.logradouro.bairro.nome_cidade_uf}"] if conexoes.count > 0
+    return ["#{pessoa.endereco} - #{pessoa.logradouro.bairro.nome_cidade_uf}"] unless conexoes.count > 0
 
     enderecos = []
     conexoes.each do |conexao|
