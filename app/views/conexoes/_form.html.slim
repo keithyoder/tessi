@@ -11,6 +11,13 @@
       .col-4
         = f.input :tipo, collection: Conexao.tipos.keys
     .row
+      .col-6
+        = f.association :logradouro, collection: Logradouro.includes([:bairro, :cidade, :estado]).order(:nome), hint: @conexao&.pessoa.logradouro.endereco, label_method: :endereco
+      .col
+        = f.input :numero, hint: @conexao&.pessoa.numero
+      .col
+        = f.input :complemento, hint: @conexao&.pessoa.complemento
+    .row
       .col-2
         = f.association :contrato, collection: @contratos, label_method: :id
       .col

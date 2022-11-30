@@ -27,6 +27,9 @@
             <%= link_to @conexao.pessoa do %>
               <%= render 'shared/field_card', {campo: "Assinante", valor: @conexao.pessoa.nome} %>
             <% end %>
+            <%= link_to @conexao.logradouro || @conexao.pessoa.logradouro do %>
+              <%= render 'shared/field_card', {campo: "Endereço", valor: @conexao.logradouro&.endereco || @conexao.pessoa.logradouro.endereco} %>
+            <% end %>
             <%= render 'shared/field_card', {campo: "Tipo de Conexão", valor: @conexao.tipo} %>
             <% if @conexao.contrato.present? %>
               <%= link_to @conexao.contrato do %>

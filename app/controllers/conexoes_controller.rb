@@ -134,7 +134,7 @@ class ConexoesController < ApplicationController
       :pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
       :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente,
       :tipo, :mac, :contrato_id, :caixa_id, :porta, :latitude, :longitude,
-      :equipamento_id
+      :equipamento_id, :logradouro_id, :numero, :complemento
     )
   end
 end
