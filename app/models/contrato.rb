@@ -180,6 +180,20 @@ class Contrato < ApplicationRecord
     )
   end
 
+  def enderecos
+    return ["#{pessoa.endereco} - #{pessoa.logradouro.bairro.nome_cidade_uf}"] if conexoes.count > 0
+
+    enderecos = []
+    conexoes.each do |conexao|
+      if conexao.logradouro.present?
+        enderecos.append("#{conexao.logradouro.nome} - #{conexao.logradouro.bairro.nome_cidade_uf}")
+      else
+        enderecos.append("#{pessoa.endereco} - #{pessoa.logradouro.bairro.nome_cidade_uf}")
+      end
+    end
+    enderecos
+  end
+
   private
 
   def verificar_exclusao
