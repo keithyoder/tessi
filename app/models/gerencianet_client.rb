@@ -16,9 +16,9 @@ class GerencianetClient
     )
 
     if fatura.contrato.conexoes.count == 1 && fatura.contrato.conexoes.first.logradouro.present?
-      logradouro = fatura.conexoes.first.logradouro
-      numero = fatura.conexoes.first.numero
-      complemento = fatura.conexoes.first.complemento
+      logradouro = fatura.contrato.conexoes.first.logradouro
+      numero = fatura.contrato.conexoes.first.numero
+      complemento = fatura.contrato.conexoes.first.complemento
     else
       logradouro = fatura.pessoa.logradouro
       numero = fatura.pessoa.numero
