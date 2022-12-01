@@ -176,7 +176,8 @@ class Fatura < ApplicationRecord
       instrucao5: 'Central de Atendimento da Anatel 1331 ou 1332 para Deficientes Auditivos.',
       instrucao6: "Após o vencimento cobrar multa de #{Setting.multa.to_f * 100}% e juros de #{Setting.juros.to_f * 100}% ao mês (pro rata die)",
       sacado_endereco: "#{pessoa.endereco} - #{pessoa.bairro.nome_cidade_uf}",
-      cedente_endereco: 'Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000'
+      cedente_endereco: 'Rua Treze de Maio, 5B - Centro - Pesqueira - PE 55200-000',
+      conexao_enderecos: "Instalação: #{contrato.enderecos.join(', ')}"
     }
   end
 

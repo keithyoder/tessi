@@ -151,7 +151,8 @@ prawn_document(page_size: 'A4', margin: [margem, margem, margem, margem]) do |pd
     pdf.text_box "#{attrs[:agencia]}/#{attrs[:conta_corrente]}", at: [margem_texto, y - linha * 2.5], width: canhoto - margem_texto * 2, height: linha, align: :right
     pdf.text_box  attrs[:nosso_numero], at: [margem_texto, y - linha * 3.5], width: canhoto - margem_texto * 2, height: linha, align: :right
     pdf.text_box  number_to_currency(attrs[:valor], unit: 'R$', separator: ',', delimiter: '.'), at: [margem_texto, y - linha * 4.5], width: canhoto - margem_texto * 2, height: linha, align: :right
-    pdf.text_box  attrs[:sacado], at: [margem_texto, y - linha * 10.5], width: canhoto - margem_texto * 2, height: linha * 5
+    pdf.text_box  attrs[:sacado], at: [margem_texto, y - linha * 10.5], width: canhoto - margem_texto * 2, height: linha * 2
+    pdf.text_box  attrs[:conexao_enderecos], at: [margem_texto, y - linha * 12.5], width: canhoto - margem_texto * 2, height: linha * 3
 
     if fatura.pix.present?
       pdf.svg fatura.pix_imagem, at: [canhoto + 103.send(:mm), y - 1.send(:mm) - linha * 5], height: 20.send(:mm), width: 20.send(:mm)
