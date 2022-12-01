@@ -72,11 +72,11 @@ class Fatura < ApplicationRecord
   def boleto
     case pagamento_perfil.banco
     when 33
-      Brcobranca::Boleto::Santander.new(boleto_attrs)
+      Brcobranca::Boleto::Santander.new(boleto_attrs.except(:conexao_enderecos))
     when 1
-      Brcobranca::Boleto::BancoBrasil.new(boleto_attrs)
+      Brcobranca::Boleto::BancoBrasil.new(boleto_attrs.except(:conexao_enderecos))
     when 104
-      Brcobranca::Boleto::Caixa.new(boleto_attrs)
+      Brcobranca::Boleto::Caixa.new(boleto_attrs.except(:conexao_enderecos))
     end
   end
 
