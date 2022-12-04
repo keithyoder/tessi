@@ -3,7 +3,7 @@
 class ContratosController < ApplicationController
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
-  before_action :set_contrato, only: %i[show edit update destroy renovar termo update_assinatura]
+  before_action :set_contrato, only: %i[show edit update destroy renovar termo update_assinatura autentique]
   layout 'print', only: [:termo]
 
   # GET /contratos
@@ -81,6 +81,7 @@ class ContratosController < ApplicationController
   def termo
     respond_to do |format|
       format.html { render :termo }
+      format.json { render :termo }
       format.pdf do
         render pdf: "termo", encoding: "UTF-8", zoom: 1.2, margin: { top: 15, bottom: 15, left: 15, right: 15 }
       end
@@ -163,6 +164,36 @@ class ContratosController < ApplicationController
         format.html { render :edit }
         format.json { render json: @contrato.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+
+  def autentique
+    pdf = WickedPdf.new.pdf_from_string(
+      ContratosController.render(
+        template: 'contratos/termo.pdf',
+        assigns: { contrato: @contrato }
+      ),
+      encoding: "UTF-8",
+      zoom: 1.2,
+      margin: { top: 15, bottom: 18, left: 15, right: 15  }
+    )
+
+    variables = JSON.parse(ContratosController.render(
+      template: 'contratos/termo.json',
+      assigns: { contrato: @contrato }
+    ), {:symbolize_names => true})
+
+    result = Autentique::Client.query(
+      Autentique::CriarDocumento,
+      variables: variables,
+      file: UploadIO.new(StringIO.new(pdf), 'application/pdf', 'termo.pdf')
+    )
+
+    puts result.original_hash
+    
+    respond_to do |format|
+      format.html { redirect_to @contrato, notice: 'Termo de adesão enviado com sucesso.' }
     end
   end
 

@@ -8,7 +8,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :atendimentos do
     get :encerrar, on: :member
   end
-  resources :os
+  resources :os do
+    get :impressao, on: :member
+  end
   resources :classificacoes
   resources :clasificacoes
   resources :excecoes
@@ -35,7 +37,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     get :renovar, on: :member
     get :termo, on: :member
     get :churn, on: :collection
+    get :assinatura, on: :member
+    get :autentique, on: :member
   end
+  patch '/contratos/:id/assinatura' => 'contratos#update_assinatura'
   resources :conexoes do
     get :suspenso, on: :collection
     get :integrar, on: :collection
