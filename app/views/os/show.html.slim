@@ -17,3 +17,5 @@
         = render 'shared/field_card', {campo: "Fechada em", valor: @os.fechamento}
         = render 'shared/field_card', {campo: "Descrição", valor: @os.descricao}
         = render 'shared/field_card', {campo: "Encerramento", valor: @os.encerramento}
+        - if @os.conexao&.link_google_maps
+          = render 'shared/field_card', {campo: @os.pessoa.nome, valor: link_to(@os.conexao.link_google_maps)}

@@ -120,6 +120,12 @@ class Conexao < ApplicationRecord
              .count.positive?
   end
 
+  def link_google_maps
+    if latitude && longitude
+      "http://maps.google.com/maps?q=#{latitude},#{longitude}"
+    end
+  end
+
   def integrar
     atualizar_senha(true)
     atualizar_ip_e_mac(true)

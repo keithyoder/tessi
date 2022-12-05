@@ -83,7 +83,7 @@ class ContratosController < ApplicationController
       format.html { render :termo }
       format.json { render :termo }
       format.pdf do
-        render pdf: "termo", encoding: "UTF-8", zoom: 1.2, margin: { top: 15, bottom: 15, left: 15, right: 15 }
+        render pdf: "termo", encoding: "UTF-8", zoom: 1.2, margin: { top: 15, bottom: 15, left: 15, right: 15 }, page_size: 'A4'
       end
     end
   end
@@ -176,7 +176,8 @@ class ContratosController < ApplicationController
       ),
       encoding: "UTF-8",
       zoom: 1.2,
-      margin: { top: 15, bottom: 18, left: 15, right: 15  }
+      margin: { top: 15, bottom: 18, left: 15, right: 15  },
+      page_size: 'A4'
     )
 
     variables = JSON.parse(ContratosController.render(
