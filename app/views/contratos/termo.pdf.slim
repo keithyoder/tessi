@@ -98,9 +98,9 @@ html
             table.full-width
               thead
                 tr
-                  th
+                  th width="50%"
                     span.termo.variable TAXA DE INSTALA&Ccedil;&Atilde;O
-                  th
+                  th width="50%"
                     span.termo.variable MENSALIDADE ASSINATURA SCM
               tbody
                 tr
@@ -113,21 +113,22 @@ html
                 tr
                   td
                     p.termo.campo  N&uacute;mero de Parcelas:
-                    span.termo.variable = @contrato.parcelas_instalacao if @contrato.valor_instalacao > 0
+                    span.termo.variable = parcelas_instalacao_display
                   td
                     p.termo.campo  Vencimento da Mensalidade da Assinatura SCM:
                     span.termo.variable = "DIA #{@contrato.dia_vencimento}"
                 tr
                   td
-                    p.termo.campo  Data(s) de Vencimento(s)
-                    span.termo.variable = @contrato.parcelas_instalacao if @contrato.valor_instalacao > 0
+                    span.termo.campo  Data(s) de Vencimento(s)
+                    br
+                    span.termo.variable = parcelas_vencimento
                   td
                     p.termo.campo  Documento de Cobran&ccedil;a:
                     span.termo.variable = @contrato.pagamento_perfil.forma_pagamento
                 tr
                   td
                     p.termo.campo  Valor da Parcela:
-                    span.termo.variable = number_to_currency((@contrato.valor_instalacao / @contrato.parcelas_instalacao).round(2)) if @contrato.valor_instalacao > 0
+                    span.termo.variable = number_to_currency((@contrato.valor_instalacao / @contrato.parcelas_instalacao).round(2)) if @contrato.valor_instalacao > 0 && @contrato.parcelas_instalacao > 0
                   td
                     p.termo.campo  Entrega da Cobran&ccedil;a:
                     span.termo.variable VIA ELETRÔNICA
