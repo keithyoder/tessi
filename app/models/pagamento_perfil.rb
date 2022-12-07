@@ -43,7 +43,7 @@ class PagamentoPerfil < ApplicationRecord
     case tipo
     when 'Boleto', 'API'
       'Boleto Bancário'
-    when tipo == 'Débito Automático'
+    when 'Débito Automático'
       if nome == 'Cielo'
         'Cartão de Crédito'
       else
