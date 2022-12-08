@@ -13,5 +13,5 @@
             - contrato = Contrato.find_by(id: documento["name"].scan(/\d+/).first)
             tr
               td = documento["name"]
-              td = link_to contrato&.pessoa&.name, contrato
+              td = link_to contrato&.pessoa&.nome, contrato
               td = l(documento["created_at"].to_date)
