@@ -56,6 +56,7 @@ class Ability
     can :encerrar, Atendimento.por_responsavel(user).abertos
     can :mapa, Servidor
     can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
+    can :impressao, Os
     cannot :update, Os.fechadas
     can :create, [Excecao]
   end
@@ -88,7 +89,7 @@ class Ability
     can :destroy, Conexao
     can %i[update liquidacao estornar cancelar gerar_nf], Fatura
     can %i[create update], [Retorno, Contrato]
-    can %i[destroy termo], Contrato
+    can %i[destroy termo pendencias], Contrato
     can :remessa, PagamentoPerfil
   end
 end

@@ -37,6 +37,15 @@ class ContratosController < ApplicationController
     end
   end
 
+  def pendencias
+    puts Autentique::Client.query(
+      Autentique::DocumentosComPendencia
+    ).original_hash
+    @documentos = Autentique::Client.query(
+      Autentique::DocumentosComPendencia
+    ).original_hash["data"]["documents"]["data"]
+  end
+
   def churn
     meses = Contrato
             .select("date_trunc('month', adesao) as mes, count(*) as adesoes, min(cancelamentos.quantos) as cancelamentos")
