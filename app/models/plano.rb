@@ -3,10 +3,10 @@
 require 'csv'
 
 class Plano < ApplicationRecord
-  has_many :plano_verificar_atributos
-  has_many :plano_enviar_atributos
-  has_many :conexoes
-  scope :ativos, ->(plano_atual=nil) { where('ativo').or(Plano.where(id: plano_atual)) }
+  has_many :plano_verificar_atributos, dependent: :destroy
+  has_many :plano_enviar_atributos, dependent: :destroy
+  has_many :conexoes, dependent: :restrict_with_error
+  scope :ativos, ->(plano_atual = nil) { where('ativo').or(Plano.where(id: plano_atual)) }
 
   after_save do
     atr = PlanoEnviarAtributo.where(plano: self, atributo: 'Mikrotik-Rate-Limit').first_or_create
@@ -31,7 +31,7 @@ class Plano < ApplicationRecord
     attributes = %w[id nome mensalidade download upload burst]
     CSV.generate(headers: true) do |csv|
       csv << attributes
-      all.each do |plano|
+      all.find_each do |plano|
         csv << attributes.map { |attr| plano.send(attr) }
       end
     end
@@ -49,7 +49,7 @@ class Plano < ApplicationRecord
       burstup = upload * 1024
       burstdown = download * 1024
     end
-    format('%{upload}M/%{download}M %{burstup}K/%{burstdown}K %{upload}M/%{download}M 60/60 8 %{upload}M/%{download}M',
+    format('%<upload>sM/%<download>sM %<burstup>sK/%<burstdown>sK %<upload>sM/%<download>sM 60/60 8 %<upload>sM/%<download>sM',
            upload: upload, download: download, burstup: burstup, burstdown: burstdown)
   end
 
