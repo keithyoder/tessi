@@ -9,6 +9,8 @@ class WebhookEventoJob < ApplicationJob
     case evento&.webhook&.tipo
     when 'gerencianet'
       GerencianetClient.processar_webhook(evento)
+    when 'autentique'
+      Autentique::processar_webhook(evento)
     end
   end
 end

@@ -117,4 +117,25 @@ module Autentique
     }
   GRAPHQL
 
+  def processar_webhook(evento)
+    Rails.logger.info 'Inciando processamento'
+    return unless evento.webhook.tipo == "autentique" && evento.processed_at.blank?
+
+    documento = evento.body['documento']
+    contrato = Contrato.find_by(id: documento["nome"].scan(/\d+/).first)
+    return unless contrato
+
+    documentos = [] if documentos.blank?
+    contrato.update(documentos: 
+      documentos += [
+        {
+          'data': documento['created'],
+          'nome': documento['nome'],
+          'link': evento.body['arquivo']['assinado']
+        }
+      ]
+    )
+    Rails.logger.info 'Webhook processado'
+    evento.update(processed_at: DateTime.now)
+  end
 end
