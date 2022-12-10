@@ -62,14 +62,15 @@ class ServidoresController < ApplicationController
   def mapa
     @conectadas = @servidor.conexoes
                            .conectada
-                           .includes(:pessoa, :logradouro, :bairro, :ponto)
+                           .includes(:pessoa, :logradouro, :bairro, :ponto, :logradouro_pessoa)
                            .where.not(latitude: nil)
-                           .to_json(include: %i[pessoa logradouro bairro ponto])
+                           .to_json(include: %i[pessoa logradouro bairro ponto logradouro_pessoa])
     @desconectadas = @servidor.conexoes
                               .desconectada
-                              .includes(:pessoa, :logradouro, :bairro, :ponto)
+                              .includes(:pessoa, :logradouro, :bairro, :ponto, :logradouro_pessoa)
                               .where.not(latitude: nil)
-                              .to_json(include: %i[pessoa logradouro bairro ponto])
+                              .to_json(include: %i[pessoa logradouro bairro ponto logradouro_pessoa])
+    puts @desconectadas
   end
 
   # POST /servidores

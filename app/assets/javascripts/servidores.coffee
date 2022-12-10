@@ -22,9 +22,14 @@ getBounds = (conectadas, desconectadas) ->
   return bounds
 
 infoWindow = (conexao) ->
+  if conexao.logradouro_id == null
+    endereco = "#{conexao.logradouro_pessoa.nome}, #{conexao.pessoa.numero} - #{conexao.bairro.nome}"
+  else
+    endereco = "#{conexao.logradouro.nome}, #{conexao.numero} - #{conexao.bairro.nome}"
+
   infowindow = new google.maps.InfoWindow({
     content: "<h4><a href=/conexoes/#{conexao.id}>#{conexao.pessoa.nome}</a></h4>" +
-    "<div id='bodyContent'>#{conexao.logradouro.nome}, #{conexao.pessoa.numero} - #{conexao.bairro.nome}<br>"+
+    "<div id='bodyContent'>#{endereco}<br>"+
     "#{conexao.ponto.nome} - #{int2ip(conexao.ip.addr)}</div>"
   })
 
