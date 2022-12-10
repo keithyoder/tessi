@@ -9,7 +9,7 @@ class Conexao < ApplicationRecord
   belongs_to :contrato, optional: true
   has_one :cidade, through: :pessoa
   belongs_to :logradouro, optional: true
-  has_one :pessoa_logradouro, through: :pessoa
+  has_one :logradouro, through: :pessoa
   has_one :bairro, through: :pessoa
   has_many :faturas, through: :contrato
   has_many :conexao_enviar_atributos, dependent: :delete_all
