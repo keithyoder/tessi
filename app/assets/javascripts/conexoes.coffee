@@ -50,3 +50,23 @@ window.formatMAC = ->
     v = v.substring(0, 17)
   $("#conexao_mac").val(v)
   return
+
+window.criar_mapa = ->
+  latlng = new (google.maps.LatLng)($('#conexao_latitude').val(), $('#conexao_longitude').val())
+  map = new (google.maps.Map)(document.getElementById('map_canvas'),
+    zoom: 18
+    center: latlng
+  )
+
+  myMarker = new (google.maps.Marker)(
+    map: map
+    position: latlng
+    draggable: true
+  )
+
+  google.maps.event.addListener myMarker, 'dragend', (evt) ->
+    $('#conexao_latitude').val evt.latLng.lat
+    $('#conexao_longitude').val evt.latLng.lng
+    return
+
+  return

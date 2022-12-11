@@ -1,4 +1,5 @@
 = javascript_include_tag params[:controller]
+= stylesheet_link_tag params[:controller]
 = simple_form_for(@conexao) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -51,6 +52,8 @@
         = f.input :bloqueado
         = f.input :inadimplente
         = f.input :auto_bloqueio
+    .row
+      #map_canvas
   .form-actions
     = button_tag( type: 'button', onclick: "getConexaoLocation()", class: 'btn btn-primary') do
       i.fa.fa-location_arrow aria-hidden="true" 
@@ -59,3 +62,4 @@
     = button_tag(:class => "btn btn-primary") do
       i.fas.fa-save aria-hidden="true" 
       | &nbsp; Salvar
+= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{Rails.application.credentials.google_maps_api_key}&callback=criar_mapa&libraries=&v=weekly", async: true
