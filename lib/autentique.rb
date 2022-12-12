@@ -117,7 +117,7 @@ module Autentique
     }
   GRAPHQL
 
-  def processar_webhook(evento)
+  def self.processar_webhook(evento)
     Rails.logger.info 'Inciando processamento'
     return unless evento.webhook.tipo == "autentique" && evento.processed_at.blank?
 
