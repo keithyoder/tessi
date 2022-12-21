@@ -15,6 +15,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :clasificacoes
   resources :excecoes
   resources :ip_redes
+  resources :nf21s, only: %i[show]
   resources :nf21s do
     get 'competencia/:mes', action: :competencia, as: :competencia, on: :collection
   end

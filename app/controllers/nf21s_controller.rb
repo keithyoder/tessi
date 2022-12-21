@@ -3,30 +3,17 @@
 require 'stringio'
 
 class Nf21sController < ApplicationController
-  before_action :set_nf21, only: %i[show edit update destroy]
+  before_action :set_nf21, only: %i[show]
   load_and_authorize_resource
-
-  # GET /nf21s
-  # GET /nf21s.json
-  def index
-    @nf21s = Nf21.all
-  end
 
   # GET /nf21s/1
   # GET /nf21s/1.json
   def show
     respond_to do |format|
-      format.pdf { render :nf }
+      format.pdf
+      format.html { redirect_to nf21_path(@nf21, format: :pdf) }
     end
   end
-
-  # GET /nf21s/new
-  def new
-    @nf21 = Nf21.new
-  end
-
-  # GET /nf21s/1/edit
-  def edit; end
 
   def competencia
     cadastro = StringIO.new
@@ -60,46 +47,6 @@ class Nf21sController < ApplicationController
       disposition: 'attachment',
       filename: "competencia-#{params[:mes]}.zip"
     )
-  end
-
-  # POST /nf21s
-  # POST /nf21s.json
-  def create
-    @nf21 = Nf21.new(nf21_params)
-
-    respond_to do |format|
-      if @nf21.save
-        format.html { redirect_to @nf21, notice: 'Nf21 was successfully created.' }
-        format.json { render :show, status: :created, location: @nf21 }
-      else
-        format.html { render :new }
-        format.json { render json: @nf21.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /nf21s/1
-  # PATCH/PUT /nf21s/1.json
-  def update
-    respond_to do |format|
-      if @nf21.update(nf21_params)
-        format.html { redirect_to @nf21, notice: 'Nf21 was successfully updated.' }
-        format.json { render :show, status: :ok, location: @nf21 }
-      else
-        format.html { render :edit }
-        format.json { render json: @nf21.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /nf21s/1
-  # DELETE /nf21s/1.json
-  def destroy
-    @nf21.destroy
-    respond_to do |format|
-      format.html { redirect_to nf21s_url, notice: 'Nf21 was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private

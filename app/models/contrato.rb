@@ -180,6 +180,10 @@ class Contrato < ApplicationRecord
     )
   end
 
+  def endereco_instalacao_diferente?
+    conexoes.any? { |conexao| conexao.logradouro.present? }
+  end
+
   def enderecos
     return ["#{pessoa.endereco} - #{pessoa.logradouro.bairro.nome_cidade_uf}"] unless conexoes.count > 0
 
