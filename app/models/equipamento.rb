@@ -12,4 +12,8 @@ class Equipamento < ApplicationRecord
   }
 
   has_one_attached :imagem
+
+  def descricao
+    "#{fabricante} #{modelo}"
+  end
 end
