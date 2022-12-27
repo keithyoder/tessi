@@ -23,7 +23,7 @@ table.full-width
         p.termo.campo MAC:
         span.termo.variable
           =@os.conexao.mac
-    -if @os.conexao.ponto.tecnologia == :Fibra
+    -if @os.conexao.ponto.tecnologia == 'Fibra'
       tr 
         td colspan="3" 
             p.termo.campo Usuário:
