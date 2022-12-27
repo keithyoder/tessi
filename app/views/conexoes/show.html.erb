@@ -43,7 +43,7 @@
             <% end %>
             <%= render 'shared/field_card', {campo: "Usuário", valor: @conexao.usuario} %>
             <%= render 'shared/field_card', {campo: "Senha", valor: @conexao.senha} %>
-            <%= render 'shared/field_card', {campo: "Equipamento", valor: @conexao.equipamento&.modelo} %>
+            <%= render 'shared/field_card', {campo: "Equipamento", valor: @conexao.equipamento&.descricao} %>
             <%= render 'shared/field_card', {campo: "MAC", valor: @conexao.mac} %>
             <%= link_to @conexao.plano do %>
               <%= render 'shared/field_card', {campo: "Plano", valor: @conexao.plano.nome} %>

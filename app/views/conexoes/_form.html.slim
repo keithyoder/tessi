@@ -47,7 +47,7 @@
       .col-3
         = f.input :longitude
       .col-3 
-        = f.association :equipamento, colletion: Equipamento.all, label_method: :modelo
+        = f.association :equipamento, colletion: Equipamento.all, label_method: :descricao
       .col
         = f.input :bloqueado
         = f.input :inadimplente
