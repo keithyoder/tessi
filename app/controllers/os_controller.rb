@@ -3,6 +3,7 @@
 class OsController < ApplicationController
   before_action :set_os, only: %i[show edit update destroy]
   before_action :set_scope, only: %i[index show new]
+  layout 'print', only: [:impressao]
   load_and_authorize_resource
 
   # GET /os or /os.json
@@ -20,7 +21,16 @@ class OsController < ApplicationController
   end
 
   # GET /os/1 or /os/1.json
-  def show; end
+  def show
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render :show }
+      format.pdf do
+        render pdf: 'show', encoding: 'UTF-8', zoom: 1.2, margin: { top: 15, bottom: 15, left: 15, right: 15 },
+               page_size: 'A4'
+      end
+    end
+  end
 
   # GET /os/new
   def new
@@ -39,7 +49,7 @@ class OsController < ApplicationController
 
     respond_to do |format|
       if @os.save
-        format.html { redirect_to @os, notice: 'OS criado com sucesso.' }
+        format.html { redirect_to @os, notice: 'OS criada com sucesso.' }
         format.json { render :show, status: :created, location: @os }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -50,8 +60,7 @@ class OsController < ApplicationController
 
   # PATCH/PUT /os/1 or /os/1.json
   def update
-    @os.fechamento = Time.now if params[:commit].present? && params[:commit] == 'Encerrar'
-    puts os_params
+    @os.fechamento = Time.zone.now if params[:commit].present? && params[:commit] == 'Encerrar'
     respond_to do |format|
       if @os.update(os_params.except(:fechamento))
         format.html { redirect_to @os, notice: 'OS atualizada com sucesso.' }

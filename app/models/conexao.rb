@@ -61,11 +61,11 @@ class Conexao < ApplicationRecord
   RADIUS_PPPOE_IP = 'Framed-IP-Address'
   RADIUS_RATE_LIMIT = 'Mikrotik-Rate-Limit'
 
-  validates_presence_of :usuario, :senha
-  validates_format_of :mac,
-                      with: /\A([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}\z/i,
+  validates :usuario, :senha, presence: true
+  validates :mac,
+            format: { with: /\A([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}\z/i,
                       on: %i[create update],
-                      message: 'Endereço MAC inválido'
+                      message: 'Endereço MAC inválido' }
 
   after_touch :save
   after_save do
@@ -81,7 +81,7 @@ class Conexao < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << attributes
 
-      all.each do |conexao|
+      all.find_each do |conexao|
         csv << [
           conexao.id,
           conexao.pessoa.nome,
@@ -121,15 +121,21 @@ class Conexao < ApplicationRecord
   end
 
   def link_google_maps
-    if latitude && longitude
-      "http://maps.google.com/maps?q=#{latitude},#{longitude}"
-    end
+    return unless latitude && longitude
+
+    "http://maps.google.com/maps?q=#{latitude},#{longitude}"
   end
 
   def integrar
     atualizar_senha(true)
     atualizar_ip_e_mac(true)
     atualizar_velocidade(true)
+  end
+
+  def endereco
+    return "#{pessoa.endereco} - #{pessoa.logradouro.bairro.nome_cidade_uf}" if logradouro.blank?
+
+    "#{logradouro.nome} - #{logradouro.bairro.nome_cidade_uf}"
   end
 
   private
@@ -172,7 +178,7 @@ class Conexao < ApplicationRecord
     return unless forcar || saved_change_to_velocidade?
 
     conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).destroy_all
-    return unless velocidade.present?
+    return if velocidade.blank?
 
     atr = conexao_enviar_atributos.where(atributo: RADIUS_RATE_LIMIT).first_or_create
     atr.update!(op: '=', valor: velocidade)
