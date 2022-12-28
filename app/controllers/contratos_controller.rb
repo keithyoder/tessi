@@ -31,19 +31,16 @@ class ContratosController < ApplicationController
       format.csv do
         send_data(
           @contratos.except(:limit, :offset).to_csv,
-          filename: "contratos-#{Date.today}.csv"
+          filename: "contratos-#{Time.zone.today}.csv"
         )
       end
     end
   end
 
   def pendencias
-    puts Autentique::Client.query(
-      Autentique::DocumentosComPendencia
-    ).original_hash
     @documentos = Autentique::Client.query(
       Autentique::DocumentosComPendencia
-    ).original_hash["data"]["documents"]["data"]
+    ).original_hash['data']['documents']['data']
   end
 
   def churn
@@ -63,17 +60,6 @@ class ContratosController < ApplicationController
                         .where(vencimento: 1.day.ago..Date::Infinity.new)
                         .order(:vencimento)
     render :carne
-
-    #result = []
-    #Brcobranca.configuration.gerador = :rghost_carne
-    #@contrato.faturas
-    #         .where(liquidacao: nil)
-    #         .where(vencimento: 1.day.ago..Date::Infinity.new)
-    #         .order(:vencimento).each do |fatura|
-    #  result << fatura.boleto
-    #end
-    #send_data Brcobranca::Boleto::Template::RghostCarne.lote_carne(result), filename: 'boletos.pdf', type: :pdf,
-    #                                                                        disposition: 'inline'
   end
 
   # GET /contratos/1
@@ -92,7 +78,8 @@ class ContratosController < ApplicationController
       format.html { render :termo }
       format.json { render :termo }
       format.pdf do
-        render pdf: "termo", encoding: "UTF-8", zoom: 1.2, margin: { top: 15, bottom: 15, left: 15, right: 15 }, page_size: 'A4'
+        render pdf: 'termo', encoding: 'UTF-8', zoom: 1.2, margin: { top: 15, bottom: 15, left: 15, right: 15 },
+               page_size: 'A4'
       end
     end
   end
@@ -104,7 +91,7 @@ class ContratosController < ApplicationController
     @contrato.valor_instalacao = 0
     @contrato.parcelas_instalacao = 0
     @contrato.primeiro_vencimento = 1.month.from_now
-    @contrato.dia_vencimento = Date.today.day
+    @contrato.dia_vencimento = Time.zone.today.day
   end
 
   # GET /contratos/1/edit
@@ -152,7 +139,9 @@ class ContratosController < ApplicationController
         if verificar_conexoes_planos?
           format.html { redirect_to @contrato, notice: 'Contrato atualizado com sucesso.' }
         else
-          format.html { redirect_to @contrato, flash: {error: 'Plano da conexão é diferente que o plano do contrato.' } }
+          format.html do
+            redirect_to @contrato, flash: { error: 'Plano da conexão é diferente que o plano do contrato.' }
+          end
         end
         format.json { render :show, status: :ok, location: @contrato }
       else
@@ -176,23 +165,22 @@ class ContratosController < ApplicationController
     end
   end
 
-
   def autentique
     pdf = WickedPdf.new.pdf_from_string(
       ContratosController.render(
         template: 'contratos/termo.pdf',
         assigns: { contrato: @contrato }
       ),
-      encoding: "UTF-8",
+      encoding: 'UTF-8',
       zoom: 1.2,
-      margin: { top: 15, bottom: 18, left: 15, right: 15  },
+      margin: { top: 15, bottom: 18, left: 15, right: 15 },
       page_size: 'A4'
     )
 
     variables = JSON.parse(ContratosController.render(
-      template: 'contratos/termo.json',
-      assigns: { contrato: @contrato }
-    ), {:symbolize_names => true})
+                             template: 'contratos/termo.json',
+                             assigns: { contrato: @contrato }
+                           ), { symbolize_names: true })
 
     result = Autentique::Client.query(
       Autentique::CriarDocumento,
@@ -200,8 +188,6 @@ class ContratosController < ApplicationController
       file: UploadIO.new(StringIO.new(pdf), 'application/pdf', 'termo.pdf')
     )
 
-    puts result.original_hash
-    
     respond_to do |format|
       format.html { redirect_to @contrato, notice: 'Termo de adesão enviado com sucesso.' }
     end
@@ -227,12 +213,11 @@ class ContratosController < ApplicationController
   def assinatura_params
     params.require(:contrato).permit(
       :billing_nome_completo, :billing_cpf, :billing_endereco, :billing_endereco_numero,
-      :billing_bairro, :billing_cidade, :billing_estado, :billing_cep, :cartao_parcial,
+      :billing_bairro, :billing_cidade, :billing_estado, :billing_cep, :cartao_parcial
     )
   end
 
   def verificar_conexoes_planos?
-    @contrato.conexoes.all? { |c| c.plano == @contrato.plano}
+    @contrato.conexoes.all? { |c| c.plano == @contrato.plano }
   end
-
 end

@@ -96,22 +96,21 @@ module Autentique
         data {
           id
           name
-          refusable
-          sortable
           created_at
           signatures {
             public_id
             name
             email
-            created_at
-            action { name }
-            link { short_link }
-            user { id name email }
-            viewed { created_at }
-            signed { created_at }
-            rejected { created_at }
+            user { id name email phone }
+            delivery_method
+            email_events {
+              sent
+              opened
+              delivered
+              refused
+              reason
+            }
           }
-          files { original signed }
         }
       }
     }
@@ -119,22 +118,21 @@ module Autentique
 
   def self.processar_webhook(evento)
     Rails.logger.info 'Inciando processamento'
-    return unless evento.webhook.tipo == "autentique" && evento.processed_at.blank?
+    return unless evento.webhook.tipo == 'autentique' && evento.processed_at.blank?
 
     documento = evento.body['documento']
-    contrato = Contrato.find_by(id: documento["nome"].scan(/\d+/).first)
+    contrato = Contrato.find_by(id: documento['nome'].scan(/\d+/).first)
     return unless contrato
 
     documentos = [] if documentos.blank?
-    contrato.update(documentos: 
+    contrato.update(documentos:
       documentos += [
         {
           'data': documento['created'],
           'nome': documento['nome'],
           'link': evento.body['arquivo']['assinado']
         }
-      ]
-    )
+      ])
     Rails.logger.info 'Webhook processado'
     evento.update(processed_at: DateTime.now)
   end
