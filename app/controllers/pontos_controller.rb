@@ -106,7 +106,7 @@ class PontosController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def ponto_params
     params.require(:ponto).permit(
-      :nome, :sistema, :tecnologia, :servidor_id, :ip, :usuario, :senha, :equipamento
+      :nome, :sistema, :tecnologia, :servidor_id, :ip, :usuario, :senha, :equipamento, :ipv6
     )
   end
 end

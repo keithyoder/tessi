@@ -18,6 +18,9 @@ ul.nav.nav-pills
               = render 'shared/field_card', { campo: 'Servidor', valor: @ponto.servidor.nome }
             = link_to "http://#{@ponto.ip}", target: '_blank' do
               = render 'shared/field_card', { campo: 'IP', valor: @ponto.ip }
+            -if @ponto.ipv6.present?
+              = link_to "http://[#{@ponto.ipv6}]", target: '_blank' do
+                = render 'shared/field_card', { campo: 'IPv6', valor: @ponto.ipv6 }
             = render 'shared/field_card', { campo: 'Usuário', valor: @ponto.usuario }
             = render 'shared/field_card', { campo: 'Conexões', valor: @ponto.conexoes.count }
             = render 'shared/field_card', { campo: 'Bloqueados', valor: @ponto.conexoes.bloqueado.count }

@@ -11,16 +11,19 @@
       <div class="col">
         <%= f.input :sistema, collection: Ponto.sistemas.keys %>
       </div>
-    </div>
-    <div class="row">
       <div class="col">
         <%= f.input :tecnologia, collection: Ponto.tecnologias.keys %>
       </div>
+    </div>
+    <div class="row">
       <div class="col">
         <%= f.association :servidor, collection: Servidor.ativo.order(:nome), label_method: :nome %>
       </div>
       <div class="col">
         <%= f.input :ip, as: :string %>
+      </div>
+      <div class="col">
+        <%= f.input :ipv6, as: :string %>
       </div>
     </div>
     <div class="row">
