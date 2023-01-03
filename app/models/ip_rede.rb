@@ -2,13 +2,20 @@
 
 class IpRede < ApplicationRecord
   belongs_to :ponto
+  ransacker :rede_string do
+    Arel.sql("rede::text")
+  end
 
   def cidr
-    "#{rede.to_string}/#{rede.prefix}" unless rede.nil?
+    "#{rede}/#{rede.prefix}" unless rede.nil?
   end
 
   def ips_quantidade
-    rede.to_range.count - 4
+    if rede.ipv6?
+      2**(56 - rede.prefix)
+    else
+      rede.to_range.count - 4
+    end
   end
 
   def to_a
