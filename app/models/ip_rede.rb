@@ -19,6 +19,8 @@ class IpRede < ApplicationRecord
   end
 
   def to_a
+    return [] if rede.ipv6?
+
     rede.to_range.map(&:to_s)[3...-1]
   end
 
