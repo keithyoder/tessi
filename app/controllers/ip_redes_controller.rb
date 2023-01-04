@@ -31,7 +31,7 @@ class IpRedesController < ApplicationController
 
     respond_to do |format|
       if @ip_rede.save
-        format.html { redirect_to @ip_rede, notice: 'Ip rede was successfully created.' }
+        format.html { redirect_to @ip_rede, notice: 'Rede IP criada com sucesso.' }
         format.json { render :show, status: :created, location: @ip_rede }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class IpRedesController < ApplicationController
   def update
     respond_to do |format|
       if @ip_rede.update(ip_rede_params)
-        format.html { redirect_to @ip_rede, notice: 'Ip rede was successfully updated.' }
+        format.html { redirect_to @ip_rede, notice: 'Rede IP atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @ip_rede }
       else
         format.html { render :edit }
@@ -73,6 +73,6 @@ class IpRedesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def ip_rede_params
-    params.require(:ip_rede).permit(:rede, :ponto_id)
+    params.require(:ip_rede).permit(:rede, :ponto_id, :subnet)
   end
 end

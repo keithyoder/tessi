@@ -116,12 +116,12 @@ prawn_document(page_size: 'A4', margin: [20.mm, 20.mm, 20.mm, 20.mm]) do |pdf|
   pdf.text_box "Período de Utilização: #{l(@nf21.fatura.periodo_inicio)} - #{l(@nf21.fatura.periodo_fim)}", size: 10,
                                                                                                             at: [esquerda, 144.mm], width: 85.mm, height: 8.mm
   pdf.text_box "Fatura de Referência: #{@nf21.fatura.id.to_s.rjust(8, '0')}", size: 10, at: [esquerda, 138.mm],
-                                                                              width: 85.mm, height: 8.mm
+                                                                              width: 82.mm, height: 8.mm
   if @nf21.fatura.contrato.endereco_instalacao_diferente?
-    pdf.text_box 'Endereço de Instalação:', size: 10, at: [esquerda, 132.mm], width: 85.mm, height: 8.mm
+    pdf.text_box 'Endereço de Instalação:', size: 10, at: [esquerda, 132.mm], width: 82.mm, height: 8.mm
     y = 126
     @nf21.fatura.contrato.enderecos.each do |endereco|
-      pdf.text_box endereco, size: 10, at: [esquerda, y.mm], width: 85.mm, height: 8.mm
+      pdf.text_box endereco, size: 10, at: [esquerda, y.mm], width: 82.mm, height: 9.mm
       y -= 6
     end
   end
