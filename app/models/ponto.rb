@@ -91,9 +91,9 @@ class Ponto < ApplicationRecord
     ips
   end
 
-  def ips_disponiveis
+  def ipv4_disponiveis
     ips = []
-    ip_redes.each do |rede|
+    ip_redes.ipv4.each do |rede|
       ips += rede.ips_disponiveis
     end
     ips

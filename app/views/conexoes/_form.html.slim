@@ -24,7 +24,7 @@
       .col
         = f.association :ponto, collection: Ponto.ativo.order(:nome), label_method: :nome, input_html: {onchange: 'carregarIPs()'}
       .col-2
-        = f.input :ip.to_s, collection: [@conexao.ip.to_s] + (@conexao.ponto&.ips_disponiveis).to_a
+        = f.input :ip.to_s, collection: [@conexao.ip.to_s] + (@conexao.ponto&.ipv4_disponiveis).to_a
       .col
         = f.input :usuario
       .col-2
