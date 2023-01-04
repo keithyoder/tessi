@@ -27,7 +27,7 @@ window.getConexaoLocation = ->
 window.carregarIPs = ->
   ponto = $("#conexao_ponto_id").val()
   $.ajax
-    url: "/pontos/#{ponto}.json?ips"
+    url: "/pontos/#{ponto}.json?ipv4"
     method: 'GET'
     dataType: 'json'
     error: (xhr, status, error) ->

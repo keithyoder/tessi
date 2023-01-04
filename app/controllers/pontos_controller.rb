@@ -35,12 +35,12 @@ class PontosController < ApplicationController
     @conexao_q.sorts = 'ip'
     @conexoes = @conexao_q.result.page params[:conexoes_page]
     @autenticacoes = @ponto.autenticacoes
-    @ips = @ponto.ips_disponiveis if params.key?(:ips)
+    @ips = @ponto.ipv4_disponiveis if params.key?(:ipv4)
     @params = conexoes_params(params)
     respond_to do |format|
       format.html # show.html.erb
       format.kml
-      if params.key?(:ips)
+      if params.key?(:ipv4)
         format.json { render json: @ips }
       else
         format.json
