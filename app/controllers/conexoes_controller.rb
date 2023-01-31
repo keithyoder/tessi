@@ -9,7 +9,7 @@ class ConexoesController < ApplicationController
   # GET /conexoes
   # GET /conexoes.json
   def index
-    conexao = Conexao.includes(:pessoa)
+    conexao = Conexao.includes(:pessoa, :plano, :ponto)
     conexao = conexao.sem_autenticar if params.key?(:sem_autenticar)
     conexao = conexao.bloqueado if params.key?(:suspensas)
     conexao = conexao.ativo if params.key?(:ativas)
@@ -21,6 +21,10 @@ class ConexoesController < ApplicationController
 
     @conexao_q = conexao.ransack(params[:conexao_q])
     @conexoes = @conexao_q.result.page params[:conexoes_page]
+    respond_to do |format|
+      format.html
+      format.csv { send_data @conexoes.except(:limit, :offset).to_csv, filename: "conexoes-#{Date.today}.csv" }
+    end
   end
 
   def suspenso
