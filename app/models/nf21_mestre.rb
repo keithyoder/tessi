@@ -84,8 +84,10 @@ class Nf21Mestre < Fixy::Record
   field_value :cnpj_emitente,       -> { Setting.cnpj }
   field_value :fatura_comercial,    -> { @nf.fatura.id }
   field_value :valor_fatura,        -> { @nf.fatura.base_calculo_icms }
+  # futuramente vai precisar colocar data inicio e data final da prestacao de servicos.
   field_value :leitura_anterior,    -> { nil }
   field_value :leitura_atual,       -> { nil }
+  #########
   field_value :brancos_1,           -> { '' }
   field_value :brancos_2,           -> { 0 }
   field_value :informacoes,         -> { '' }
@@ -126,7 +128,8 @@ class Nf21Mestre < Fixy::Record
     cnpj = format_value(@nf.fatura.pessoa.cpf_cnpj, 14, :numeric)
     nf = format_value(@nf.numero, 9, :numeric)
     valor = format_value(@nf.fatura.base_calculo_icms, 12, :amount)
-    icms = format_value(@nf.fatura.base_calculo_icms, 12, :amount)
+    #icms = format_value(@nf.fatura.base_calculo_icms, 12, :amount)
+    icms = format_value(0, 12, :amount)
     icms_valor = format_value(@nf.fatura.valor_icms, 12, :amount)
     emissao = format_value(@nf.emissao, 8, :date)
     emitente = format_value(Setting.cnpj, 14, :numeric)
