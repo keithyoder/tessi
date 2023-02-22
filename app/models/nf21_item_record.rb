@@ -81,10 +81,10 @@ class Nf21ItemRecord < Fixy::Record
   field_value :valor_total,           -> { @nf.fatura.base_calculo_icms }
   field_value :desconto,              -> { 0 }
   field_value :acrescimos,            -> { 0 }
-  field_value :bc_icms,               -> { @nf.fatura.base_calculo_icms }
+  field_value :bc_icms,               -> { 0 }
   field_value :icms,                  -> { @nf.fatura.valor_icms }
   field_value :isentas,               -> { 0 }
-  field_value :outros_valores,        -> { 0 }
+  field_value :outros_valores,        -> { @nf.fatura.base_calculo_icms }
   field_value :aliquota,              -> { 0 }
   field_value :situacao,              -> { 'N' }
   field_value :contrato,              -> { @nf.fatura.contrato.id }

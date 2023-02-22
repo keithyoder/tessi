@@ -72,10 +72,10 @@ class Nf21Mestre < Fixy::Record
   field_value :serie,               -> { @nf.serie }
   field_value :numero,              -> { @nf.numero }
   field_value :valor_total,         -> { @nf.fatura.base_calculo_icms }
-  field_value :bc_icms,             -> { @nf.fatura.base_calculo_icms }
+  field_value :bc_icms,             -> { 0 }
   field_value :icms,                -> { @nf.fatura.valor_icms }
   field_value :isentas,             -> { 0 }
-  field_value :outros_valores,      -> { 0 }
+  field_value :outros_valores,      -> { @nf.fatura.base_calculo_icms }
   field_value :situacao,            -> { 'N' }
   field_value :referencia_item,     -> { @nf.referencia_item }
   field_value :numero_terminal,     -> { @nf.terminal }
