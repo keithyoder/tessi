@@ -46,7 +46,7 @@ class IpRede < ApplicationRecord
     resultado = []
     until ip.to_i > fim
       resultado << ip.to_s
-      ip = IPAddr.new ip.to_i + step, 30
+      ip = IPAddr.new ip.to_i + step, Socket::AF_INET6
     end
     resultado
   end
