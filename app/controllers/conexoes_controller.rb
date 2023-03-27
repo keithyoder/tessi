@@ -23,7 +23,7 @@ class ConexoesController < ApplicationController
     @conexoes = @conexao_q.result.page params[:conexoes_page]
     respond_to do |format|
       format.html
-      format.csv { send_data @conexoes.except(:limit, :offset).to_csv, filename: "conexoes-#{Date.today}.csv" }
+      format.csv { send_data @conexoes.except(:limit, :offset).to_csv, filename: "conexoes-#{Time.zone.today}.csv" }
     end
   end
 
@@ -33,7 +33,7 @@ class ConexoesController < ApplicationController
     @conexoes = @q.result.page params[:page]
     respond_to do |format|
       format.html
-      format.csv { send_data @conexoes.except(:limit, :offset).to_csv, filename: "suspensos-#{Date.today}.csv" }
+      format.csv { send_data @conexoes.except(:limit, :offset).to_csv, filename: "suspensos-#{Time.zone.today}.csv" }
     end
   end
 
@@ -69,7 +69,7 @@ class ConexoesController < ApplicationController
 
   # GET /conexoes/1/edit
   def edit
-    get_caixas
+    set_caixas
     set_contratos
   end
 
@@ -126,7 +126,7 @@ class ConexoesController < ApplicationController
     @contratos = @conexao.pessoa.contratos.ativos.disponiveis.or Contrato.where(id: @conexao.contrato_id)
   end
 
-  def get_caixas
+  def set_caixas
     @caixas = @conexao.ponto.caixas
                       .joins(:fibra_rede, :ponto)
                       .order('pontos.nome, fibra_caixas.nome').all
@@ -135,7 +135,7 @@ class ConexoesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def conexao_params
     params.require(:conexao).permit(
-      :pessoa_id, :plano_id, :ponto_id, :ip, :velocidade, :bloqueado,
+      :pessoa_id, :plano_id, :ponto_id, :ip, :ipv6, :velocidade, :bloqueado,
       :auto_bloqueio, :usuario, :senha, :observacao, :inadimplente,
       :tipo, :mac, :contrato_id, :caixa_id, :porta, :latitude, :longitude,
       :equipamento_id, :logradouro_id, :numero, :complemento

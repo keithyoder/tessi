@@ -99,6 +99,14 @@ class Ponto < ApplicationRecord
     ips
   end
 
+  def ipv6_disponiveis
+    ips = []
+    ip_redes.ipv6.each do |rede|
+      ips += rede.ips_disponiveis
+    end
+    ips
+  end
+
   private
 
   def snmp_manager
