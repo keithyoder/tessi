@@ -77,7 +77,7 @@ class ConexoesController < ApplicationController
   # POST /conexoes.json
   def create
     @conexao = Conexao.new(conexao_params)
-    get_caixas
+    set_caixas
     respond_to do |format|
       if @conexao.save
         format.html { redirect_to @conexao, notice: 'Conexão criada com sucesso.' }
@@ -92,7 +92,7 @@ class ConexoesController < ApplicationController
   # PATCH/PUT /conexoes/1
   # PATCH/PUT /conexoes/1.json
   def update
-    get_caixas
+    set_caixas
     set_contratos
     respond_to do |format|
       if @conexao.update(conexao_params)
