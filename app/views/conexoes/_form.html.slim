@@ -32,8 +32,8 @@
     .row
       .col-3
         = f.input :mac, input_html: {onkeyup: 'formatMAC()'}
-      .col-3
-        = f.input :ipv6, collection: [@conexao.ipv6.to_s] + (@conexao.ponto&.ipv6_disponiveis).to_a
+      //.col-3
+      //  = f.input :ipv6, collection: [@conexao.ipv6.to_s] + (@conexao.ponto&.ipv6_disponiveis).to_a
       .col
         = f.input :velocidade
     .row
