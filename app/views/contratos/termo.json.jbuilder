@@ -1,15 +1,14 @@
 json.document do
-  json.name "Termo de Adesão #{@contrato.id}"
+  json.name "Termo #{@contrato.id}"
   json.footer "BOTTOM"
 end
 json.signers do
   json.child! do
-    json.email "keith.yoder@gmail.com"
-    #json.sms "+5587991638812"
+    json.phone "+55#{@contrato.pessoa.telefone1.gsub(/[^0-9]/, '')}"
+    json.delivery_method "DELIVERY_METHOD_WHATSAPP"
     json.action "SIGN"
     json.configs do
-      #json.cpf CPF.new(@contrato.pessoa.cpf).stripped
-      json.cpf '00910644497'
+      json.cpf CPF.new(@contrato.pessoa.cpf).stripped
     end
     json.positions do
       json.child! do
