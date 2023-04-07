@@ -10,31 +10,5 @@ json.signers do
     json.configs do
       json.cpf CPF.new(@contrato.pessoa.cpf).stripped
     end
-    json.positions do
-      json.child! do
-        json.x "8.0"
-        json.y "41.5"
-        json.z 3
-        json.element "SIGNATURE"
-      end
-      json.child! do
-        json.x "15.0"
-        json.y "46.0"
-        json.z 3
-        json.element "NAME"
-      end
-      json.child! do
-        json.x "19.0"
-        json.y "51.5"
-        json.z 3
-        json.element "CPF"
-      end
-      json.child! do
-        json.x "23.0"
-        json.y "37.0"
-        json.z 3
-        json.element "DATE"
-      end
-    end
   end
 end
