@@ -30,7 +30,7 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    return unless user.present?
+    return if user.blank?
 
     todos(user) if user.role?
     if user.admin?
@@ -88,7 +88,7 @@ class Ability
     can :update, Cidade
     can :destroy, Conexao
     can %i[update liquidacao estornar cancelar gerar_nf], Fatura
-    can %i[create update], [Retorno, Contrato]
+    can %i[create update autentique], [Retorno, Contrato]
     can %i[destroy termo pendencias], Contrato
     can :remessa, PagamentoPerfil
   end

@@ -25,6 +25,10 @@ ul.nav.nav-pills
           = link_to(boletos_contrato_path(format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do
             i.fa.fa-bank.fa-lg[aria-hidden="true"]
             |  Boletos 
+          - if @contrato.documentos.blank? && can?(:autentique, @contrato)
+            = link_to(autentique_contrato_path(@contrato), class: "btn btn-sm btn-outline-dark") do
+              i.fa.fa-bank.fa-lg[aria-hidden="true"]
+              |  Assinar 
           = link_to(termo_contrato_url(@contrato, format: :pdf), class: "btn btn-sm btn-outline-dark", target: "_blank") do
             i.fa.fa-print.fa-lg[aria-hidden="true"]
     .card-body
