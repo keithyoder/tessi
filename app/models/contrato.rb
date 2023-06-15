@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'autentique'
-
 class Contrato < ApplicationRecord
   belongs_to :pessoa
   belongs_to :plano
@@ -164,6 +162,7 @@ class Contrato < ApplicationRecord
   end
 
   def vincular_documento(id)
+    require 'autentique'
     documento = Autentique::Client.query(
       Autentique::ResgatarDocumento,
       variables: {"id": id}

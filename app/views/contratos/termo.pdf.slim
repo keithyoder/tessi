@@ -68,11 +68,13 @@ html
                     span.termo VELOCIDADE DE DOWNLOAD/UPLOAD
                   th
                     span.termo GARANTIA DE BANDA
+                  th
+                    span.termo PRAZO DE CONTRATAÇÃO
               tbody
                 tr
-                  td style=("width: 25%;") 
+                  td style=("width: 20%;") 
                     span.termo.variable =@contrato.plano.nome
-                  td style=("width: 60%;") 
+                  td style=("width: 50%;") 
                     p
                       span.termo 
                         | Velocidade
@@ -80,10 +82,14 @@ html
                         | Mbps download /
                         span.variable =<> @contrato.plano.upload
                         | Mbps upload
-                  td style=("width: 15%;") 
+                  td style=("width: 15%; text-align: center") 
                     p
                       span.termo 
                         span.variable => "#{@contrato.plano.garantia} %"
+                  td style=("width: 15%; text-align: center") 
+                    p
+                      span.termo 
+                        span.variable => "#{@contrato.prazo_meses} meses"
             p
               span.termo
                 strong CL&Aacute;USULA 4&ordf; - DOS VALORES, FORMAS DE PAGAMENTOS E VENCIMENTOS
