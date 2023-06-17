@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'graphql/client'
-require 'graphql/client/http'
+  require 'graphql/client'
+  require 'graphql/client/http'
 
 module Autentique
-  HTTP = GraphQL::Client::HTTP.new('https://api.autentique.com.br/v2/graphql') do
+  AUTENTIQUE_HTTP = GraphQL::Client::HTTP.new('https://api.autentique.com.br/v2/graphql') do
     def headers(_context)
       { "Authorization": "Bearer #{Rails.application.credentials.autentique_key}" }
     end
   end
-  Schema = GraphQL::Client.load_schema(HTTP)
-  Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
+  Schema = GraphQL::Client.load_schema(AUTENTIQUE_HTTP)
+  Client = GraphQL::Client.new(schema: Schema, execute: AUTENTIQUE_HTTP)
   ResgatarDocumento = Autentique::Client.parse <<-'GRAPHQL'
     query($id: UUID!) {
       document(id: $id) {

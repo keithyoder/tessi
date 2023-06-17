@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ContratosController < ApplicationController
+  require 'autentique'
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource
   before_action :set_contrato, only: %i[show edit update destroy renovar termo update_assinatura autentique]

@@ -191,7 +191,7 @@ GEM
       http (~> 0.9, >= 0.9.8)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    graphql (2.0.20)
+    graphql (2.0.22)
     hitimes (2.0.0)
     http (0.9.9)
       addressable (~> 2.3)
