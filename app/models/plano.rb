@@ -49,8 +49,13 @@ class Plano < ApplicationRecord
       burstup = upload * 1024
       burstdown = download * 1024
     end
-    format('%<upload>sM/%<download>sM %<burstup>sK/%<burstdown>sK %<upload>sM/%<download>sM 60/60 8 %<upload>sM/%<download>sM',
-           upload: upload, download: download, burstup: burstup, burstdown: burstdown)
+    if download == 0
+      format('1k/ik 1k/1k 1k/1k 60/60 8 1k/1k',
+             upload: upload, download: download, burstup: burstup, burstdown: burstdown)
+    else
+      format('%<upload>sM/%<download>sM %<burstup>sK/%<burstdown>sK %<upload>sM/%<download>sM 60/60 8 %<upload>sM/%<download>sM',
+             upload: upload, download: download, burstup: burstup, burstdown: burstdown)
+      end
   end
 
   def burst_as_string
