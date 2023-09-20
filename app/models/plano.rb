@@ -50,7 +50,7 @@ class Plano < ApplicationRecord
       burstdown = download * 1024
     end
     if download == 0
-      format('1k/ik 1k/1k 1k/1k 60/60 8 1k/1k',
+      format('1k/1k 1k/1k 1k/1k 60/60 8 1k/1k',
              upload: upload, download: download, burstup: burstup, burstdown: burstdown)
     else
       format('%<upload>sM/%<download>sM %<burstup>sK/%<burstdown>sK %<upload>sM/%<download>sM 60/60 8 %<upload>sM/%<download>sM',
