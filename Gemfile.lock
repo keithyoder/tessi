@@ -8,6 +8,14 @@ GIT
       multipart-post
 
 GIT
+  remote: https://github.com/keithyoder/nfcom-ruby.git
+  revision: 99362476da35be3c657ddabe05d9eb1033df70d5
+  specs:
+    nfcom (0.1.0)
+      httparty (~> 0.21)
+      nokogiri (~> 1.15)
+
+GIT
   remote: https://github.com/kivanio/brcobranca.git
   revision: 246c1ead754a9e978c490fe1aebc9fa295a020e1
   ref: 246c1ea
@@ -538,6 +546,7 @@ DEPENDENCIES
   multipart-post
   net-ping
   net-ssh
+  nfcom!
   oauth2
   pg
   popper_js
