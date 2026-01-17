@@ -137,7 +137,7 @@ class Fatura < ApplicationRecord
   end
 
   def estornar?
-    liquidacao.present? && retorno.blank? && nf21.blank?
+    liquidacao.present? && retorno.blank? && nf21.blank? && nfcom_notas.empty?
   end
 
   def cancelar?

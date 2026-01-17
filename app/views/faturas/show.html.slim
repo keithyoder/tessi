@@ -77,8 +77,8 @@
           i.fas.fa-window-close aria-hidden="true" 
           | &nbsp Cancelar
     '
-    - if can?(:gerar_nf, @fatura) && @fatura.gerar_nota?
-      = link_to gerar_nf_fatura_path do
-        = button_tag(:class => "btn btn-success") do
-          i.fas.fa-file-invoice aria-hidden="true" 
-          | &nbsp Gerar NF
+    / - if can?(:gerar_nf, @fatura) && @fatura.gerar_nota?
+    /   = link_to gerar_nf_fatura_path do
+    /     = button_tag(:class => "btn btn-success") do
+    /       i.fas.fa-file-invoice aria-hidden="true" 
+    /       | &nbsp Gerar NF
