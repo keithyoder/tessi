@@ -21,6 +21,7 @@ class Fatura < ApplicationRecord
   has_one :plano, through: :contrato
   has_one :nf21
   has_one_attached :nf_pdf
+  has_many :nfcom_notas
   paginates_per 18
   scope :pagas, -> { where.not(liquidacao: nil) }
   scope :em_aberto, -> { where(liquidacao: nil, cancelamento: nil) }

@@ -4,6 +4,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :equipamentos
   get 'sac/inadimplencia'
   get 'sac/suspensao'
+  resources :nfcom_notas, only: [:show] 
   resources :atendimento_detalhes, only: %i[new create index]
   resources :atendimentos do
     get :encerrar, on: :member
