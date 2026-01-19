@@ -32,13 +32,11 @@ gem 'jbuilder', '~> 2.5'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
-gem 'ffi', '~> 1.15'
-
+gem 'bootsnap', '~> 1.16.0'       # latest version compatible with Ruby 2.7
+gem 'bigdecimal', '~> 2.0'        # avoid 3.x+ which requires Ruby >= 3.0
+gem 'ffi', '~> 1.15.5'              # last version supporting Ruby 2.7
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
