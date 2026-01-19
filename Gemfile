@@ -3,10 +3,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.4'
+ruby '2.7.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.8.1'
+gem 'rails', '~> 5.2.8'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 gem 'pg'
@@ -50,9 +50,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'capistrano-sidekiq'
   gem 'rubocop-rails'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :test do
@@ -69,7 +69,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'barby'
 gem 'bcrypt_pbkdf'
 gem 'bootstrap', '~> 4'
-gem 'brcobranca', git: 'https://github.com/kivanio/brcobranca.git', :ref => '246c1ea'
+gem 'brcobranca', git: 'https://github.com/kivanio/brcobranca.git', ref: '246c1ea'
 gem 'cancancan'
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-passenger', '~> 0.2.1'
@@ -81,13 +81,13 @@ gem 'cpf_cnpj'
 gem 'devise'
 gem 'ed25519'
 gem 'extensobr'
-gem 'graphql-client', git: 'https://github.com/keithyoder/graphql-client.git'
-gem 'multipart-post'
 gem 'fixy'
 gem 'font_awesome5_rails'
 gem 'geocoder'
 gem 'gerencianet'
-#gem 'gerencianet', path: '../gn-api-sdk-ruby/'
+gem 'graphql-client', git: 'https://github.com/keithyoder/graphql-client.git'
+gem 'multipart-post'
+# gem 'gerencianet', path: '../gn-api-sdk-ruby/'
 gem 'httparty'
 gem 'image_processing'
 gem 'jquery-rails'
