@@ -88,6 +88,7 @@ GEM
     barby (0.6.9)
     base64 (0.3.0)
     bcrypt (3.1.21)
+    bcrypt_pbkdf (1.1.2)
     bcrypt_pbkdf (1.1.2-arm64-darwin)
     bigdecimal (1.4.4)
     bindex (0.8.1)
@@ -266,6 +267,7 @@ GEM
     method_source (1.1.0)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (5.26.1)
     msgpack (1.8.0)
     mtik (4.1.2)
@@ -287,6 +289,9 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.5)
+    nokogiri (1.15.7)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.15.7-arm64-darwin)
       racc (~> 1.4)
     oauth2 (2.0.18)
@@ -531,7 +536,9 @@ GEM
       nokogiri (~> 1.8)
 
 PLATFORMS
+  arm64-darwin-23
   arm64-darwin-24
+  x86_64-linux
 
 DEPENDENCIES
   barby
@@ -615,4 +622,4 @@ RUBY VERSION
    ruby 2.7.7p221
 
 BUNDLED WITH
-   2.4.22
+   2.7.1
