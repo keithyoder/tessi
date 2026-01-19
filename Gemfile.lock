@@ -91,7 +91,7 @@ GEM
     bcrypt_pbkdf (1.1.2)
     bigdecimal (3.3.1)
     bindex (0.8.1)
-    bootsnap (1.16.0)
+    bootsnap (1.21.1)
       msgpack (~> 1.2)
     bootstrap (4.6.2.1)
       autoprefixer-rails (>= 9.1.0)
@@ -535,6 +535,7 @@ DEPENDENCIES
   devise
   ed25519
   extensobr
+  ffi (~> 1.15)
   fixy
   font_awesome5_rails
   geocoder
@@ -591,4 +592,4 @@ RUBY VERSION
    ruby 2.7.7p221
 
 BUNDLED WITH
-   2.3.12
+   2.4.22
