@@ -34,13 +34,3 @@ set :passenger_restart_with_touch, true      # restart Passenger by touching tmp
 # Optional Airbrussh formatting
 set :format, :airbrussh
 set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
-
-namespace :deploy do
-  task :clean_bundle_cache do
-    on roles(:app) do
-      execute "rm -rf #{shared_path}/bundle/ruby/*"
-    end
-  end
-end
-
-before 'deploy:updated', 'deploy:clean_bundle_cache'
