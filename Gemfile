@@ -33,8 +33,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
 gem 'bootsnap', '~> 1.16.0'       # latest version compatible with Ruby 2.7
-gem 'bigdecimal', '~> 2.0'        # avoid 3.x+ which requires Ruby >= 3.0
+gem 'bigdecimal', '~> 1.4'        # avoid 3.x+ which requires Ruby >= 3.0
 gem 'ffi', '~> 1.15.5'              # last version supporting Ruby 2.7
+gem 'openssl', '~> 2.2'      # Ruby 2.7 compatible
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
