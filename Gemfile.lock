@@ -588,6 +588,7 @@ DEPENDENCIES
   rails (~> 5.2.8)
   rails-settings-cached (~> 2.0)
   rails4-autocomplete
+  rake (~> 13.0)
   ransack
   rubocop-rails
   ruby_ami
