@@ -307,7 +307,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pdf-core (0.9.0)
-    pg (1.6.3)
+    pg (1.3.5)
     popper_js (1.16.1)
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
@@ -577,7 +577,7 @@ DEPENDENCIES
   nfcom!
   oauth2
   openssl (~> 2.2)
-  pg (~> 1.3)
+  pg (~> 1.3.5)
   popper_js
   prawn-qrcode
   prawn-rails
