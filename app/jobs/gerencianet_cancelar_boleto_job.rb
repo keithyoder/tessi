@@ -7,7 +7,7 @@ class GerencianetCancelarBoletoJob < ApplicationJob
       id: id_externo
     }
       
-    GerencianetClient.cliente.cancel_charge(params: params)
+    GerencianetClient.cliente.cancelCharge(params: params)
   end
 end
   
