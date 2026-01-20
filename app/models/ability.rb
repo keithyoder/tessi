@@ -38,14 +38,14 @@ class Ability
     can :impressao, Os
     can :create, Excecao
 
-    cannot :update, Os.where.not(fechamento: nil)
+    cannot :update, Os, ["fechamento IS NOT NULL"]
   end
 
   # Admin permissions
   def admin_permissions
     can :manage, :all
     cannot :destroy, Estado
-    cannot :encerrar, Atendimento.where.not(fechamento: nil)
+    cannot :encerrar, Atendimento, ["fechamento IS NOT NULL"]
   end
 
   # Level 1 technician
