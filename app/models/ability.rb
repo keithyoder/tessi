@@ -37,15 +37,14 @@ class Ability
     can %i[create update], [Bairro, Logradouro, Conexao, Pessoa, Os, Atendimento, AtendimentoDetalhe]
     can :impressao, Os
     can :create, Excecao
-
-    cannot :update, Os, ["fechamento IS NOT NULL"]
+    can :update, Os, fechamento: nil
   end
 
   # Admin permissions
   def admin_permissions
     can :manage, :all
     cannot :destroy, Estado
-    cannot :encerrar, Atendimento, ["fechamento IS NOT NULL"]
+    can :encerrar, Atendimento, fechamento: nil
   end
 
   # Level 1 technician
