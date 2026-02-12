@@ -201,7 +201,7 @@ class GerencianetClient
       token: notificacao
     }
 
-    cliente.get_notification(params: params)
+    cliente.getNotification(params: params)
   end
 
   def self.processar_webhook(evento)
